@@ -1,0 +1,16 @@
+@import "../../../styles/variables";
+@import "../../../styles/colors";
+
+.footer {
+    background: $background;
+    padding: 70px 0 50px 0;
+    position: relative;
+}
+
+.footerContainer {
+    margin: auto;
+    padding: 16px;
+    width: 100%;
+    max-width: $max-width;
+    color: #ffffff;
+}

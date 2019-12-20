@@ -1,0 +1,37 @@
+@import "../../../styles/colors";
+@import "../../../styles/variables";
+
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: $background;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.navContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    max-width: $max-width;
+    width: 100%;
+    padding: 16px;
+}
+
+.navItem {
+    margin: 0 20px;
+    font-size: 12pt;
+    cursor: pointer;
+    transition: color .5s;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #ffffff;
+
+    &:hover {
+        color: $highlight;
+    }
+}
