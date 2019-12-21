@@ -1,5 +1,8 @@
 {
-  "watch": ["server", "controllers", "components", "pages", "styles"],
-  "exec": "ts-node --project tsconfig.server.json server/index.ts",
-  "ext": "js ts scss"
+    "watch": [
+        "server",
+        "controllers"
+    ],
+    "exec": "ts-node --project tsconfig.server.json server/index.ts",
+    "ext": "js ts scss"
 }

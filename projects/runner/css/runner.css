@@ -1,0 +1,809 @@
+@keyframes runnerAnimation {
+  0%, 100% {
+    transform: rotate(-9deg);
+    left: 357px;
+    top: 238px; }
+  4.16% {
+    transform: rotate(-9deg);
+    left: 357px;
+    top: 238px; }
+  8.33% {
+    transform: rotate(-8deg);
+    left: 358px;
+    top: 240px; }
+  12.5% {
+    transform: rotate(-5deg);
+    left: 359px;
+    top: 241px; }
+  16.66% {
+    transform: rotate(-2deg);
+    left: 363px;
+    top: 245px; }
+  20.83% {
+    transform: rotate(1deg);
+    left: 367px;
+    top: 252px; }
+  25% {
+    transform: rotate(5deg);
+    left: 370px;
+    top: 257px; }
+  29.16% {
+    transform: rotate(2deg);
+    left: 368px;
+    top: 253px; }
+  33.33% {
+    transform: rotate(-1deg);
+    left: 364px;
+    top: 248px; }
+  37.5% {
+    transform: rotate(-4deg);
+    left: 361px;
+    top: 244px; }
+  41.66% {
+    transform: rotate(-7deg);
+    left: 359px;
+    top: 239px; }
+  45.83% {
+    transform: rotate(-9deg);
+    left: 356px;
+    top: 238px; }
+  50% {
+    transform: rotate(-8deg);
+    left: 356px;
+    top: 238px; }
+  54.16% {
+    transform: rotate(-8deg);
+    left: 356px;
+    top: 238px; }
+  58.33% {
+    transform: rotate(-7deg);
+    left: 358px;
+    top: 239px; }
+  62.50% {
+    transform: rotate(-5deg);
+    left: 360px;
+    top: 243px; }
+  66.66% {
+    transform: rotate(-2deg);
+    left: 363px;
+    top: 248px; }
+  70.83% {
+    transform: rotate(2deg);
+    left: 367px;
+    top: 254px; }
+  75% {
+    transform: rotate(5deg);
+    left: 370px;
+    top: 259px; }
+  79.16% {
+    transform: rotate(2deg);
+    left: 367px;
+    top: 254px; }
+  83.33% {
+    transform: rotate(-1deg);
+    left: 364px;
+    top: 248px; }
+  87.5% {
+    transform: rotate(-4deg);
+    left: 361px;
+    top: 243px; }
+  91.66% {
+    transform: rotate(-7deg);
+    left: 358px;
+    top: 239px; }
+  95.83% {
+    transform: rotate(-9deg);
+    left: 357px;
+    top: 238px; } }
+@keyframes legAnimation {
+  0%, 100% {
+    transform: rotate(-61deg); }
+  4.16% {
+    transform: rotate(-53deg); }
+  8.33% {
+    transform: rotate(-42deg); }
+  12.5% {
+    transform: rotate(-31deg); }
+  16.66% {
+    transform: rotate(-19deg); }
+  20.83% {
+    transform: rotate(-9deg); }
+  25% {
+    transform: rotate(-9deg); }
+  29.16% {
+    transform: rotate(-2deg); }
+  33.33% {
+    transform: rotate(9deg); }
+  37.5% {
+    transform: rotate(18deg); }
+  41.66% {
+    transform: rotate(27deg); }
+  45.83% {
+    transform: rotate(32deg); }
+  50% {
+    transform: rotate(35deg); }
+  54.16% {
+    transform: rotate(39deg); }
+  58.33% {
+    transform: rotate(25deg); }
+  62.50% {
+    transform: rotate(1deg); }
+  66.66% {
+    transform: rotate(-13deg); }
+  70.83% {
+    transform: rotate(-23deg); }
+  75% {
+    transform: rotate(-32deg); }
+  79.16% {
+    transform: rotate(-36deg); }
+  83.33% {
+    transform: rotate(-58deg); }
+  87.5% {
+    transform: rotate(-68deg); }
+  91.66% {
+    transform: rotate(-64deg); }
+  95.83% {
+    transform: rotate(-62deg); } }
+@keyframes calfAnimation {
+  0%, 100% {
+    transform: rotate(19deg); }
+  4.16% {
+    transform: rotate(3deg); }
+  8.33% {
+    transform: rotate(1deg); }
+  12.5% {
+    transform: rotate(0deg); }
+  16.66% {
+    transform: rotate(0deg); }
+  20.83% {
+    transform: rotate(0deg); }
+  25% {
+    transform: rotate(0deg); }
+  29.16% {
+    transform: rotate(0deg); }
+  33.33% {
+    transform: rotate(5deg); }
+  37.5% {
+    transform: rotate(22deg); }
+  41.66% {
+    transform: rotate(27deg); }
+  45.83% {
+    transform: rotate(39deg); }
+  50% {
+    transform: rotate(37deg); }
+  54.16% {
+    transform: rotate(34deg); }
+  58.33% {
+    transform: rotate(57deg); }
+  62.50% {
+    transform: rotate(83deg); }
+  66.66% {
+    transform: rotate(78deg); }
+  70.83% {
+    transform: rotate(67deg); }
+  75% {
+    transform: rotate(73deg); }
+  79.16% {
+    transform: rotate(73deg); }
+  83.33% {
+    transform: rotate(73deg); }
+  87.5% {
+    transform: rotate(55deg); }
+  91.66% {
+    transform: rotate(35deg); }
+  95.83% {
+    transform: rotate(24deg); } }
+@keyframes shoesAnimation {
+  0%, 100% {
+    transform: rotate(-20deg); }
+  4.16% {
+    transform: rotate(-20deg); }
+  8.33% {
+    transform: rotate(0deg); }
+  12.5% {
+    transform: rotate(31deg); }
+  16.66% {
+    transform: rotate(31deg); }
+  20.83% {
+    transform: rotate(7deg); }
+  25% {
+    transform: rotate(0deg); }
+  29.16% {
+    transform: rotate(0deg); }
+  33.33% {
+    transform: rotate(22deg); }
+  37.5% {
+    transform: rotate(43deg); }
+  41.66% {
+    transform: rotate(49deg); }
+  45.83% {
+    transform: rotate(49deg); }
+  50% {
+    transform: rotate(48deg); }
+  54.16% {
+    transform: rotate(42deg); }
+  58.33% {
+    transform: rotate(18deg); }
+  62.50% {
+    transform: rotate(1deg); }
+  66.66% {
+    transform: rotate(1deg); }
+  70.83% {
+    transform: rotate(1deg); }
+  75% {
+    transform: rotate(1deg); }
+  79.16% {
+    transform: rotate(1deg); }
+  83.33% {
+    transform: rotate(11deg); }
+  87.5% {
+    transform: rotate(8deg); }
+  91.66% {
+    transform: rotate(-11deg); }
+  95.83% {
+    transform: rotate(-22deg); } }
+:root {
+  --frame: 0; }
+
+@keyframes headAnimation {
+  0%, 100% {
+    transform: rotate(-17deg);
+    left: -4px; }
+  4.16% {
+    transform: rotate(-15deg);
+    left: -3px; }
+  8.33% {
+    transform: rotate(-14deg);
+    left: -3px; }
+  12.5% {
+    transform: rotate(-15deg);
+    left: -2px; }
+  16.66% {
+    transform: rotate(-12deg);
+    left: 0; }
+  20.83% {
+    transform: rotate(-5deg);
+    left: 6px; }
+  25% {
+    transform: rotate(-2deg);
+    left: 10px; }
+  29.16% {
+    transform: rotate(9deg);
+    left: 15px; }
+  33.33% {
+    transform: rotate(13deg);
+    left: 15px; }
+  37.5% {
+    transform: rotate(9deg);
+    left: 11px; }
+  41.66% {
+    transform: rotate(-1deg);
+    left: 4px; }
+  45.83% {
+    transform: rotate(-10deg);
+    left: 2px; }
+  50% {
+    transform: rotate(-14deg);
+    left: -5px; }
+  54.16% {
+    transform: rotate(-16deg);
+    left: -5px; }
+  58.33% {
+    transform: rotate(-17deg);
+    left: -5px; }
+  62.50% {
+    transform: rotate(-15deg);
+    left: -2px; }
+  66.66% {
+    transform: rotate(-10deg);
+    left: 1px; }
+  70.83% {
+    transform: rotate(-4deg);
+    left: 7px; }
+  75% {
+    transform: rotate(5deg);
+    left: 14px; }
+  79.16% {
+    transform: rotate(10deg);
+    left: 15px; }
+  83.33% {
+    transform: rotate(4deg);
+    left: 8px; }
+  87.5% {
+    transform: rotate(-3deg);
+    left: 3px; }
+  91.66% {
+    transform: rotate(-10deg);
+    left: -1px; }
+  95.83% {
+    transform: rotate(-14deg);
+    left: -1px; } }
+@keyframes armAnimation {
+  0%, 100% {
+    transform: rotate(95deg); }
+  4.16% {
+    transform: rotate(94deg); }
+  8.33% {
+    transform: rotate(94deg); }
+  12.5% {
+    transform: rotate(88deg); }
+  16.66% {
+    transform: rotate(79deg); }
+  20.83% {
+    transform: rotate(71deg); }
+  25% {
+    transform: rotate(61deg); }
+  29.16% {
+    transform: rotate(56deg); }
+  33.33% {
+    transform: rotate(18deg); }
+  37.5% {
+    transform: rotate(-17deg); }
+  41.66% {
+    transform: rotate(-38deg); }
+  45.83% {
+    transform: rotate(-54deg); }
+  50% {
+    transform: rotate(-65deg); }
+  54.16% {
+    transform: rotate(-67deg); }
+  58.33% {
+    transform: rotate(-68deg); }
+  62.50% {
+    transform: rotate(-53deg); }
+  66.66% {
+    transform: rotate(-38deg); }
+  70.83% {
+    transform: rotate(-20deg); }
+  75% {
+    transform: rotate(-2deg); }
+  79.16% {
+    transform: rotate(14deg); }
+  83.33% {
+    transform: rotate(41deg); }
+  87.5% {
+    transform: rotate(64deg); }
+  91.66% {
+    transform: rotate(83deg); }
+  95.83% {
+    transform: rotate(92deg); } }
+@keyframes handAnimation {
+  0%, 100% {
+    transform: rotate(-25deg); }
+  4.16% {
+    transform: rotate(-22deg); }
+  8.33% {
+    transform: rotate(-21deg); }
+  12.5% {
+    transform: rotate(-21deg); }
+  16.66% {
+    transform: rotate(-17deg); }
+  20.83% {
+    transform: rotate(-20deg); }
+  25% {
+    transform: rotate(-22deg); }
+  29.16% {
+    transform: rotate(-33deg); }
+  33.33% {
+    transform: rotate(-29deg); }
+  37.5% {
+    transform: rotate(-22deg); }
+  41.66% {
+    transform: rotate(-24deg); }
+  45.83% {
+    transform: rotate(-24deg); }
+  50% {
+    transform: rotate(-20deg); }
+  54.16% {
+    transform: rotate(-20deg); }
+  58.33% {
+    transform: rotate(-23deg); }
+  62.50% {
+    transform: rotate(-40deg); }
+  66.66% {
+    transform: rotate(-46deg); }
+  70.83% {
+    transform: rotate(-47deg); }
+  75% {
+    transform: rotate(-42deg); }
+  79.16% {
+    transform: rotate(-37deg); }
+  83.33% {
+    transform: rotate(-33deg); }
+  87.5% {
+    transform: rotate(-31deg); }
+  91.66% {
+    transform: rotate(-31deg); }
+  95.83% {
+    transform: rotate(-27deg); } }
+@keyframes neckAnimation {
+  0%, 100% {
+    transform: rotate(-10deg);
+    left: 18px; }
+  4.16% {
+    transform: rotate(-5deg);
+    left: 19px; }
+  8.33% {
+    transform: rotate(-5deg);
+    left: 19px; }
+  12.5% {
+    transform: rotate(-5deg);
+    left: 19px; }
+  16.66% {
+    transform: rotate(-5deg);
+    left: 19px; }
+  20.83% {
+    transform: rotate(-1deg);
+    left: 21px; }
+  25% {
+    transform: rotate(-1deg);
+    left: 22px; }
+  29.16% {
+    transform: rotate(-1deg);
+    left: 22px; }
+  33.33% {
+    transform: rotate(4deg);
+    left: 21px; }
+  37.5% {
+    transform: rotate(1deg);
+    left: 19px; }
+  41.66% {
+    transform: rotate(1deg);
+    left: 18px; }
+  45.83% {
+    transform: rotate(-2deg);
+    left: 20px; }
+  50% {
+    transform: rotate(-9deg);
+    left: 18px; }
+  54.16% {
+    transform: rotate(-9deg);
+    left: 18px; }
+  58.33% {
+    transform: rotate(-5deg);
+    left: 19px; }
+  62.50% {
+    transform: rotate(-5deg);
+    left: 19px; }
+  66.66% {
+    transform: rotate(-1deg);
+    left: 20px; }
+  70.83% {
+    transform: rotate(-1deg);
+    left: 20px; }
+  75% {
+    transform: rotate(5deg);
+    left: 23px; }
+  79.16% {
+    transform: rotate(5deg);
+    left: 23px; }
+  83.33% {
+    transform: rotate(2deg);
+    left: 20px; }
+  87.5% {
+    transform: rotate(1deg);
+    left: 18px; }
+  91.66% {
+    transform: rotate(-3deg);
+    left: 19px; }
+  95.83% {
+    transform: rotate(-3deg);
+    left: 19px; } }
+body {
+  margin: 0;
+  background-color: #118ac6;
+  width: 100vw;
+  height: 100vh; }
+
+.canvas {
+  width: 800px;
+  height: 600px;
+  margin: auto;
+  position: relative; }
+
+.runner {
+  position: absolute;
+  width: 60px;
+  height: 145px;
+  animation: runnerAnimation 0.9s infinite; }
+.runner .body {
+  background-color: #aa2c75;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 145px;
+  border-radius: 30px;
+  z-index: 20; }
+.runner .body:before {
+  color: #85205d;
+  display: block;
+  position: absolute;
+  content: '15';
+  width: 40px;
+  height: 6px;
+  right: 7px;
+  top: 31px;
+  font-size: 40px;
+  font-family: monospace;
+  font-weight: bold;
+  letter-spacing: -3px; }
+.runner .body:after {
+  background-color: #0c5175;
+  display: block;
+  position: absolute;
+  content: '';
+  width: 60px;
+  height: 41px;
+  bottom: 0;
+  left: 0;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px; }
+.runner .head {
+  background-color: #f7b6a2;
+  position: absolute;
+  width: 64px;
+  height: 70px;
+  border-radius: 0 0 56px 56px;
+  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1);
+  z-index: 20;
+  top: -78px;
+  animation: headAnimation 0.9s infinite; }
+.runner .head .eye {
+  background-color: #965549;
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 4px;
+  top: 28px; }
+.runner .head .eye.left {
+  left: 53px; }
+.runner .head .eye.right {
+  left: 27px; }
+.runner .head .eye:before {
+  background-color: #aa6961;
+  display: block;
+  position: absolute;
+  content: '';
+  width: 11px;
+  height: 5px;
+  top: -8px;
+  left: -2px;
+  border-radius: 3px; }
+.runner .head .smile {
+  background-color: #ffffff;
+  position: absolute;
+  top: 43px;
+  left: 38px;
+  width: 15px;
+  height: 11px;
+  border-bottom-left-radius: 21px;
+  border-bottom-right-radius: 15px; }
+.runner .head .hair-dark {
+  background-color: #965549;
+  position: absolute;
+  top: -22px;
+  left: 0;
+  width: 64px;
+  height: 24px;
+  border-top-right-radius: 15px;
+  transform: rotate(-2deg); }
+.runner .head .hair-dark:after {
+  background-color: #965549;
+  display: block;
+  position: absolute;
+  content: '';
+  width: 12px;
+  height: 12px;
+  top: 0;
+  left: -9px;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 15px; }
+.runner .head .hair {
+  background-color: #aa6961;
+  position: absolute;
+  top: -8px;
+  left: 0;
+  width: 21px;
+  height: 43px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 2px; }
+.runner .head .band {
+  background-color: #0c6196;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 65px;
+  height: 12px;
+  transform: rotate(-1deg);
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.2); }
+.runner .neck {
+  background-color: #f7b6a2;
+  position: absolute;
+  top: -20px;
+  left: 22px;
+  width: 20px;
+  height: 30px;
+  z-index: 10;
+  animation: neckAnimation 0.9s infinite; }
+.runner .arm {
+  background-color: #f7b6a2;
+  position: absolute;
+  width: 22px;
+  height: 76px;
+  border-radius: 14px;
+  transform-origin: 50% 10px;
+  animation: armAnimation 0.9s infinite; }
+.runner .arm.left {
+  top: 9px;
+  left: 30px;
+  animation-delay: -0.45s;
+  z-index: 10; }
+.runner .arm.left .hand {
+  animation-delay: -0.45s; }
+.runner .arm.right {
+  top: 9px;
+  left: 9px;
+  z-index: 50; }
+.runner .arm.right .hand:after {
+  background-color: #ffffff;
+  display: block;
+  position: absolute;
+  content: '';
+  width: 22px;
+  height: 6px;
+  bottom: 20px;
+  border-width: 5px 0 5px 0;
+  border-style: solid;
+  border-color: #10736d;
+  left: 0; }
+.runner .arm:before {
+  background-color: #f7b6a2;
+  display: block;
+  position: absolute;
+  content: '';
+  width: 26px;
+  height: 26px;
+  top: -2px;
+  left: -2px;
+  border-radius: 13px; }
+.runner .arm .hand {
+  background-color: #f7b6a2;
+  position: absolute;
+  top: calc(100% - 20px);
+  left: 0;
+  width: 22px;
+  height: 76px;
+  border-radius: 14px;
+  transform-origin: 50% 10px;
+  animation: handAnimation 0.9s infinite; }
+.runner .arm .hand:before {
+  background-color: #f7b6a2;
+  display: block;
+  position: absolute;
+  content: '';
+  width: 30px;
+  height: 30px;
+  bottom: -8px;
+  left: 0;
+  border-radius: 15px; }
+.runner .leg {
+  background-color: #f7b6a2;
+  position: absolute;
+  width: 22px;
+  height: 90px;
+  border-radius: 12px;
+  transform-origin: 50% 10px;
+  top: 108px;
+  animation: legAnimation 0.9s infinite; }
+.runner .leg:before {
+  display: block;
+  position: absolute;
+  content: '';
+  width: 22px;
+  height: 50px;
+  top: 0;
+  left: 0;
+  border-radius: 12px 12px 0 0; }
+.runner .leg:after {
+  display: block;
+  position: absolute;
+  content: '';
+  width: 26px;
+  height: 26px;
+  top: -2px;
+  left: -2px;
+  border-radius: 13px; }
+.runner .leg.left {
+  z-index: 10;
+  left: 37px;
+  animation-delay: -0.45s; }
+.runner .leg.left:after, .runner .leg.left:before {
+  background-color: #10719e; }
+.runner .leg.left .calf {
+  animation-delay: -0.45s; }
+.runner .leg.right {
+  z-index: 40;
+  left: 7px; }
+.runner .leg.right:after, .runner .leg.right:before {
+  background-color: #084969; }
+.runner .leg .calf {
+  background-color: #f7b6a2;
+  position: absolute;
+  width: 22px;
+  height: 90px;
+  border-radius: 14px;
+  transform-origin: 50% 10px;
+  top: calc(100% - 20px);
+  left: 0;
+  animation: calfAnimation 0.9s infinite; }
+.runner .leg .calf:before {
+  background-color: #10736d;
+  display: block;
+  position: absolute;
+  content: '';
+  width: 22px;
+  height: 57px;
+  bottom: 0;
+  left: 0;
+  border-radius: 0 0 12px 12px; }
+.runner .leg .calf:after {
+  background-color: #ffffff;
+  display: block;
+  position: absolute;
+  content: '';
+  width: 22px;
+  height: 5px;
+  bottom: 45px;
+  left: 0; }
+.runner .shoes {
+  background-color: #85205d;
+  position: absolute;
+  width: 37px;
+  height: 12px;
+  border-radius: 7px 15px 0 0;
+  transform-origin: 50% 10px;
+  top: calc(100% - 5px);
+  left: -6px;
+  animation: shoesAnimation 0.9s infinite; }
+.runner .shoes:before {
+  background-color: #aa2c75;
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 7px;
+  border-radius: 6px 6px 0 0;
+  top: -7px;
+  left: 13px; }
+.runner .shoes:after {
+  background-color: #10719e;
+  content: '';
+  position: absolute;
+  width: 39px;
+  height: 5px;
+  border-radius: 0 3px 0 0;
+  bottom: -5px;
+  left: 0; }
+.runner .shoes.left {
+  animation-delay: -0.45s; }
+.runner .shoes .arrow {
+  background-color: #ffffff;
+  position: absolute;
+  width: 20px;
+  height: 14px;
+  border-radius: 3px 10px 0 0;
+  transform-origin: 50% 10px;
+  top: -7px;
+  left: -12px;
+  transform: rotate(-20deg); }
+.runner .shoes .arrow:after {
+  background-color: #ffffff;
+  content: '';
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 0 0 0 7px;
+  bottom: 0;
+  left: -6px; }
+
+/*# sourceMappingURL=style.css.map */

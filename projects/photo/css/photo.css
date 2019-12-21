@@ -1,0 +1,18 @@
+input {
+	margin:0;
+}
+
+#all{
+	margin-top: 4em;
+	text-align:center;
+}
+
+#content{
+	overflow:hidden;
+	margin:auto;
+        margin-top: 20px;
+}
+
+#range{
+    width: 400px;
+}

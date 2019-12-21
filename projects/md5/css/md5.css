@@ -1,0 +1,102 @@
+
+body {
+
+    margin: 0;
+    padding: 0;
+    background: #0E0E0E url("/images/projects/md5-bg.png") repeat;
+    font-family: 'Abel', sans-serif;
+    font-size: 18px;
+    color: #757575;
+}
+
+form {
+
+    text-align: center;
+}
+
+input#password {
+    padding: 10px 10px;
+    background: #262626;
+    text-align: center;
+    border: 1px double #171717;
+    border-right-color: #333333;
+    border-left-color: #333333;
+    font-family: 'Abel', sans-serif;
+    color: white;
+    font-size: 16px;
+    display: inline-block;
+    width: 600px;
+    max-width: 100vw;
+}
+
+label#pass, button {
+    display: block;
+    margin: auto;
+}
+
+button {
+    padding: 4px 7px;
+    background: #1D581E;
+    width: 100px;
+    border: 1px double #0A581E;
+    border-right-color: #4F584F;
+    border-left-color: #4F584F;
+    font-family: 'Abel', sans-serif;
+    margin: 10px auto;
+    font-size: 20px;
+    cursor: pointer;
+    color: #fff;
+}
+::selection,
+::-moz-selection {
+    color: white;
+    background: #ffb7b7; /* Gecko Browsers */
+}
+.hash{
+    margin-top: 30px;
+    text-align: center;
+}
+.content{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+}
+input#hash{
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border:0;
+    outline:none;
+    width: 350px;
+    text-align: center;
+    padding: 10px 5px;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+.pass-input{
+    position: relative;
+}
+
+.show-pass{
+    position: absolute;
+    top: 0;
+    left: 10px;
+    font-size: 25px;
+    height: 40px;
+    line-height: 40px;
+    color: white;
+    cursor: pointer;
+}
+
+.text-mode .show-pass:before{
+    display: block;
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 30px;
+    top: 20px;
+    left: -3px;
+    transform: rotate(-30deg);
+    background-color: #fff;
+}

@@ -1,0 +1,1 @@
+<canvas id="rock-paper-scissors"></canvas>

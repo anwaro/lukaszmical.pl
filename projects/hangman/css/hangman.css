@@ -1,0 +1,110 @@
+.hidden{
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+}
+
+#photo{
+    width: 300px;
+    height: 300px;
+    display: none;
+    margin-top: 20px;
+    position: relative;
+    -webkit-transition: all 600ms ease;
+    -moz-transition: all 600ms ease;
+    -ms-transition: all 600ms ease;
+    -o-transition: all 600ms ease;
+    transition: all 600ms ease;
+}
+
+#wordDiv{
+    overflow: hidden;
+    margin : 20px;
+    height: 50px;
+}
+
+.word{
+    width: 50px;
+    height: 50px;
+    border-bottom: 2px solid black;
+    float: left;
+    margin-left: 5px;
+    
+}
+
+.word.ok{
+    background: rgba(173, 255, 47, 0.3);
+}
+.word.fail{
+    background: rgba(255,0,0,0.3);
+}
+
+#alphabet{
+    margin : 20px;
+    overflow: hidden;
+    display: inline-block;
+    width: 414px;
+    
+}
+
+#alphabet button{
+    width: 40px;
+    height: 40px;
+    margin: 3px;
+    border : 0;
+    background: silver;
+    cursor: pointer;
+    
+}
+
+#alphabet button.ok{
+    background: greenyellow;
+}
+
+#alphabet button.fail{
+    background: red;
+}
+
+#hangman{
+    overflow: hidden;
+    display: inline-block;
+    margin: 20px;
+    position: relative;
+}
+
+#left{
+    float: left;
+    
+}
+
+#right{
+    float: left;
+    overflow: hidden;
+}
+
+#info{
+    position: absolute;
+    top: 0;
+    left: 75px;
+    width: 150px;
+    height: 75px;
+    display: none;
+}
+
+#new{
+    position: absolute;
+    top: 170px;
+    left: 150px;
+    width: 100px;
+    height: 50px;
+    display: none;
+    cursor: pointer;
+    
+}
+
+#load{
+    position: absolute;
+    z-index: 99;
+    top:22px;
+    left:22px;
+}

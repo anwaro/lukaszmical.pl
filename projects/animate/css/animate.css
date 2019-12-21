@@ -1,0 +1,27 @@
+body{
+	margin:0;
+	background-color:rgb(61, 61, 61);
+}
+
+#allDivs{
+	margin-top:4em;
+	position:relative;
+	width:500px;
+	height:400px;
+	top: 5em;
+	margin:auto;
+
+}
+
+.boxD{
+	position:absolute;
+	width:100px;
+	height:100px;
+	float:left;
+	background:silver;
+}
+
+#reset{
+	margin:auto;
+	margin-top: 4em;
+}

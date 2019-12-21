@@ -1,0 +1,32 @@
+
+canvas {
+    background-color: #2a65a0;
+}
+
+.row-box {
+    position: relative;
+}
+
+.play {
+    min-width: 150px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+.tetris-area {
+    margin: 30px auto;
+    width: 300px;
+    height: 370px;
+}
+
+.rotate, .move-left, .move-right, .move-down {
+    font-size: 40px;
+    height: 50px;
+    line-height: 50px;
+    float: left;
+    width: 25%;
+    color: #4d686d;
+}

@@ -1,0 +1,72 @@
+
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes cursor {
+    0%   {border-right: 2px solid rgba(0, 0, 0, 0);}
+    50%  {border-right: 2px solid green;}
+    100% {border-right: 2px solid rgba(0, 0, 0, 0);}
+}
+
+/* Standard syntax */
+@keyframes cursor {
+    0%   {border-right: 2px solid rgba(0, 0, 0, 0);}
+    50%  {border-right: 2px solid green;}
+    100% {border-right: 2px solid rgba(0, 0, 0, 0);}
+}
+
+.active>.cursor{
+    
+    -webkit-animation-name: cursor; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 1s; /* Chrome, Safari, Opera */
+    -webkit-animation-iteration-count: infinite; /* Chrome, Safari, Opera */
+    animation-name: cursor;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
+.inactive>.cursor{
+    border-right: 2px solid rgba(0, 128, 0, 0.74);;
+}
+
+.mathcode{
+    min-height: 42px;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid #00c;
+    padding: 5px !important;
+}
+.mb{
+    height: 30px;
+    font-size: 20px;
+    overflow: hidden;
+    float:left;
+    border-right: 2px solid rgba(0, 0, 0, 0);
+}
+/* bracket*/
+.br{
+    color: #f50; 
+}
+
+/* oerator and dot*/
+.op{
+    color: royalblue; 
+}
+
+/* x variable*/
+.va{
+    color: brown; 
+}
+
+/* function*/
+.fu{
+    color: goldenrod;
+}
+
+/* const e, pi*/
+.co{
+    color: #9C27B0; 
+}
+
+/*number*/
+.nu{
+    color: darkmagenta;
+}

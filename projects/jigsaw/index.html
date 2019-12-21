@@ -1,0 +1,74 @@
+<div id="puzzles">
+    <span id="reset" class="icon fa-reply">
+
+    </span>
+    <img id="imageView" height="200" src>
+    <article id="select">
+        <div class="container">
+            <div class="row rel">
+                <div class="4u">
+                    <section id="select1" class="box style1">
+                        <span class="icon featured fa-file-image-o"> </span>
+                        <h3>Obraz z koputera</h3>
+                    </section>
+                </div>
+                <div class="4u">
+                    <section id="select2" class="box style1">
+                        <span class="icon featured fa-globe"> </span>
+                        <h3>Podaj URL obrazka</h3>
+                    </section>
+                </div>
+                <div class="4u">
+                    <section id="select3" class="box style1">
+                        <span class="icon featured fa-th-large"> </span>
+                        <h3>Wybierz z dostępnych</h3>
+                    </section>
+                </div>
+
+                <div class="URL box">
+                    URL obrazka
+                    <input type="text" name="photoURL" id="photoURL" value="/asset/jigsaw/image/sample.jpg">
+                    <span id="confirmURL" class="icon fa-arrow-right"> </span>
+                </div>
+                <input type="file" accept="image/*" id="image">
+            </div>
+        </div>
+    </article>
+
+    <div class="MSG box" id="message"></div>
+
+    <div id="sample" class="container">
+        <div class="row">
+            <div class="sampleImg">
+                <a class="image featured" onclick="newGame('SAM', 1);">
+                    <img src="/asset/jigsaw/image/image1.jpg" alt=""/>
+                </a>
+            </div>
+            <div class="sampleImg">
+                <a class="image featured" onclick="newGame('SAM', 2);">
+                    <img src="/asset/jigsaw/image/image2.jpg" alt=""/>
+                </a>
+            </div>
+            <div class="sampleImg">
+                <a class="image featured" onclick="newGame('SAM', 3);">
+                    <img src="/asset/jigsaw/image/image3.jpg" alt=""/>
+                </a>
+            </div>
+            <div class="sampleImg">
+                <a class="image featured" onclick="newGame('SAM', 4);">
+                    <img src="/asset/jigsaw/image/image4.jpg" alt=""/>
+                </a>
+            </div>
+            <div class="sampleImg">
+                <a class="image featured" onclick="newGame('SAM', 5);">
+                    <img src="/asset/jigsaw/image/image5.jpg" alt=""/>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div id="puzzleArea">
+        <div id="puzzleAreaLay"></div>
+    </div>
+</div>
+
+

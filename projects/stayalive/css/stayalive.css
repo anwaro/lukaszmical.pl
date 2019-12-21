@@ -1,0 +1,145 @@
+
+
+#load{
+	margin-top:100px;
+	background:url(../image/loader.gif);
+	height:256px;
+	width:256px;
+}
+
+#game{
+	display:none;
+	position:relative;
+	overflow:hidden;
+	margin:auto;
+	height:500px;
+	width:800px;
+}
+
+.h{
+	color: #256EF0 !important;
+}
+
+
+#gameInfo{
+	position:absolute;
+	z-index: 9;
+	height:100%;
+	width:100%;
+}
+
+
+#gameScoreInfo{
+	height:20px;
+	width:100%;
+	color:white;
+	font-size:12px;
+	background:rgba(0, 0, 0, 0.8);
+}
+
+
+#playGame{
+	height:24px;
+	width:150px;
+	padding:10px;
+	color:rgb(1, 224, 82);
+	text-align:center;
+	font-size:24px;
+	font-weight: bold;
+	cursor:pointer
+}
+#StayAlive{
+	height:100%;
+	width:100%;
+	cursor: none;
+	background: rgba(0,0,0,.9);
+}
+
+.first-block{
+	background:rgba(114, 114, 114, 0.42);
+	padding:1%;
+
+}
+
+#time{
+	float: left;
+	font-size: 80%;
+	padding: 0px;
+	height: 20px;
+}
+
+#gameSound{
+	width:20px;
+	height:20px;
+	float:right;
+	cursor:pointer;
+	background:url(../image/on.png);
+	margin-right:5px;
+}
+
+#gameSound.off{
+	background:url(../image/off.png);
+}
+.next-block{
+	background:rgba(114, 114, 114, 0.42);
+	padding:1%;
+}
+
+@media only screen and (max-width: 750px) {
+
+	#gameInfo{
+		padding-top:20px;
+	}	
+	.first-block{
+		margin-top:10px;
+		height:25%;
+		width:70%;
+		margin:auto;
+	}
+	.next-block{
+		border-top:1px solid rgb(114, 114, 114);
+		margin-top:5px;
+		height:25%;
+		width:70%;
+		margin:auto;
+	}
+
+}
+
+
+@media only screen and (min-width: 500px) {
+	#gameInfo{
+		padding-top:30px;
+	}
+	.first-block{
+		margin-top:10px;
+		height:25%;		
+		width:40%;
+		margin:auto;		
+	}
+	.next-block{
+		border-top:1px solid rgb(114, 114, 114);
+		margin-top:5px;
+		height:25%;
+		width:40%;
+		margin:auto;
+	}
+}
+
+@media only screen and (min-width: 1024px){
+	#gameInfo{
+		padding-top:160px;
+	}	
+	.first-block{
+		height:160px;		
+		width:25%;
+		margin-left:7%;
+		float:left;
+	}  
+	.next-block{
+		height:160px;		
+		width:25%;
+		margin-left:3%;
+		float:left;
+	}
+}

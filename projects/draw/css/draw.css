@@ -1,0 +1,239 @@
+body {
+    margin: 0px;
+    background: rgb(30, 30, 30);
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#contener {
+    width: 800px;
+    margin: 4em auto auto;
+}
+
+.boxx {
+    width: 30px;
+    height: 30px;
+    float: left;
+    border-radius: 5px;
+    margin: 5px;
+    background: white;
+    cursor: pointer;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.boxl {
+    width: 60px;
+    height: 30px;
+    float: left;
+    border-radius: 5px;
+    margin: 5px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 1.4em;
+    text-align: center;
+}
+
+.boxll {
+    width: 80px;
+    height: 30px;
+    float: left;
+    border-radius: 5px;
+    margin: 5px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 1.4em;
+    text-align: center;
+}
+
+#menu {
+    overflow: hidden;
+    height: 50px;
+
+}
+
+#color {
+    background: white;
+}
+
+#size {
+    overflow: hidden;
+}
+
+#lineW {
+    float: left;
+    width: 40px;
+    height: 30px;
+}
+
+#lineS {
+    float: left;
+    width: 40px;
+    height: 30px;
+}
+
+#sizeControl {
+    background: #D2D2D2;
+    float: left;
+    height: 30px;
+    width: 20px;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+}
+
+#sizeUp {
+    width: 20px;
+    height: 15px;
+    background: url(../image/up.png);
+
+}
+
+#sizeUp:hover {
+    background: #A19F9F url(../image/up.png);
+}
+
+#sizeDown {
+    width: 20px;
+    height: 15px;
+    background: url(../image/down.png);
+
+}
+
+#sizeDown:hover {
+    background: #A19F9F url(../image/down.png);
+}
+
+#type {
+    background-image: url(../image/q1.png);
+}
+
+
+#typeOption {
+    position: absolute;
+    margin-top: 30px;
+    z-index: 9;
+    width: 120px;
+    margin-left: -45px;
+    display: none;
+    border-radius: 5px;
+    background: silver;
+}
+
+#typeOption:hover, #type:hover > #typeOption {
+    display: block;
+}
+
+.q1 {
+    background-image: url(../image/q1.png);
+}
+
+.q2 {
+    background-image: url(../image/q2.png);
+}
+
+.q3 {
+    background-image: url(../image/q3.png);
+}
+
+.q4 {
+    background-image: url(../image/q4.png);
+}
+
+.q5 {
+    background-image: url(../image/q5.png);
+}
+
+.q6 {
+    background-image: url(../image/q6.png);
+}
+
+input, textarea, keygen, select, button {
+    margin: 0em;
+    font: -webkit-small-control;
+    color: initial;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+}
+
+input[type="color" ] {
+    -webkit-appearance: normal;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    border: 0;
+    padding: 0;
+}
+
+#drawDiv {
+    position: relative;
+}
+
+#drawCanvas {
+}
+
+#drawCanvasCover {
+    cursor: url(../image/pen.png), crosshair;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+}
+
+#undo {
+    background-image: url(../image/undo_off.png);
+}
+
+#redo {
+    background-image: url(../image/redo_off.png);
+}
+
+#redo.on {
+    background-image: url(../image/redo.png);
+}
+
+#undo.on {
+    background-image: url(../image/undo.png);
+}
+
+#fontColor {
+    position: relative;
+    font-weight: 600;
+}
+
+#in_color {
+    opacity: 0;
+}
+
+#in_f_color {
+    position: absolute;
+    opacity: 0;
+    z-index: 9;
+    left: 0;
+    top: 0;
+}
+
+#bold {
+    font-weight: 900;
+    font-weight: 600;
+}
+
+#under {
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+#italic {
+    font-style: italic;
+    font-weight: 600;
+}
+
+.on {
+    background: silver;
+}
