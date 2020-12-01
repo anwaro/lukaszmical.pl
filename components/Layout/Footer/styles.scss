@@ -1,5 +1,6 @@
 @import "../../../styles/variables";
 @import "../../../styles/colors";
+@import "../../../styles/mixin";
 
 .footer {
     background: $background;
@@ -8,9 +9,8 @@
 }
 
 .footerContainer {
+    @include containerPadding(16px);
     margin: auto;
-    padding: 16px;
-    width: 100%;
     max-width: $max-width;
     color: #ffffff;
 }

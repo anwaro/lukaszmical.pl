@@ -1,6 +1,7 @@
-import {Router, Request, Response} from "express";
-import Server from "next/dist/next-server/server/next-server";
+import {IncomingMessage, ServerResponse} from 'http';
 
+import {Router} from 'express';
+import Server from 'next/dist/next-server/server/next-server';
 
 class PageController {
     private readonly router: Router;
@@ -16,8 +17,8 @@ class PageController {
         return this.router;
     };
 
-    private getProject = (req: Request, res: Response) => {
-        return this.app.render(req, res, '/project')
+    private getProject = (req: IncomingMessage, res: ServerResponse) => {
+        return this.app.render(req, res, '/project');
     };
 }
 

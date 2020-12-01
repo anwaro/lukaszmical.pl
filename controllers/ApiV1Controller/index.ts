@@ -1,5 +1,6 @@
-import {Router} from "express";
-import ProjectApi from "./ProjectApi";
+import {Router} from 'express';
+
+import ProjectApi from './ProjectApi';
 
 class ApiV1Controller {
     private readonly router: Router;
@@ -23,8 +24,6 @@ class ApiV1Controller {
 
         return this.router;
     };
-
 }
 
 export default ApiV1Controller;
-

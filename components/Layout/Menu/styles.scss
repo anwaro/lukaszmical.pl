@@ -1,5 +1,6 @@
 @import "../../../styles/colors";
 @import "../../../styles/variables";
+@import "../../../styles/mixin";
 
 .nav {
     position: fixed;
@@ -13,17 +14,17 @@
 }
 
 .navContainer {
+    @include containerPadding(16px);
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     max-width: $max-width;
     width: 100%;
-    padding: 16px;
 }
 
 .navItem {
-    margin: 0 20px;
+    margin-right: 40px;
     font-size: 12pt;
     cursor: pointer;
     transition: color .5s;

@@ -1,6 +1,8 @@
-import {Router} from "express";
-import {Project, projects} from "./projects";
-import renderProject from "../../utils/renderProject";
+import {Router} from 'express';
+
+import renderProject from '../../utils/renderProject';
+
+import {Project, projects} from './projects';
 // import html from "./index.html";
 
 // const html = require("./index.html");
@@ -17,7 +19,7 @@ class Index {
             const project = this.getProject(req.params.slug);
             if (project) {
                 const response = await renderProject(project);
-                return res.send(response)
+                return res.send(response);
             }
             res.send('Not found');
         });
@@ -27,9 +29,7 @@ class Index {
 
     getProject = (slug: string): Project | undefined => {
         return projects.hasOwnProperty(slug) ? projects[slug] : undefined;
-    }
-
+    };
 }
 
 export default Index;
-

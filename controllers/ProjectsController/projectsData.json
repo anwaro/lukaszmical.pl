@@ -3,15 +3,8 @@
         "url": "stayalive",
         "name": "Stay Alive",
         "description": "Ruszaj piłką i unikaj min",
-        "css": [
-            "stayalive.css"
-        ],
-        "js": [
-            "myQuery.js",
-            "buzz.min.js",
-            "CanvasCurve.js",
-            "StayAlive.js"
-        ],
+        "css": ["stayalive.css"],
+        "js": ["myQuery.js", "buzz.min.js", "CanvasCurve.js", "StayAlive.js"],
         "date": "2014-11-12",
         "blank": true
     },
@@ -19,13 +12,8 @@
         "url": "draw",
         "name": "Paint",
         "description": "Internetowy paint",
-        "css": [
-            "draw.css"
-        ],
-        "js": [
-            "myQuery.js",
-            "draw.js"
-        ],
+        "css": ["draw.css"],
+        "js": ["myQuery.js", "draw.js"],
         "date": "2015-05-28",
         "blank": true
     },
@@ -33,13 +21,8 @@
         "url": "flappy",
         "name": "Flappy Birds",
         "description": "Popularna gra flappy birds.",
-        "css": [
-            "flappy.css"
-        ],
-        "js": [
-            "myQuery.js",
-            "flappy-bird.js"
-        ],
+        "css": ["flappy.css"],
+        "js": ["myQuery.js", "flappy-bird.js"],
         "date": "2015-05-20",
         "blank": true
     },
@@ -47,12 +30,8 @@
         "url": "plot",
         "name": "Wykresy ",
         "description": "Aplikacja do rysowania wykresu funkcji.",
-        "css": [
-            "plot.css"
-        ],
-        "js": [
-            "math.js"
-        ],
+        "css": ["plot.css"],
+        "js": ["math.js"],
         "date": "2015-05-27",
         "blank": true
     },
@@ -60,13 +39,8 @@
         "url": "animate",
         "name": "Animacja",
         "description": "Prosta animacja",
-        "css": [
-            "animate.css"
-        ],
-        "js": [
-            "myQuery.js",
-            "animate.js"
-        ],
+        "css": ["animate.css"],
+        "js": ["myQuery.js", "animate.js"],
         "date": "2015-05-22",
         "blank": true
     },
@@ -74,9 +48,7 @@
         "url": "photofilter",
         "name": "Photo filter",
         "description": "Dodaje filtry do zdjęcia.",
-        "css": [
-            "photofilter.css"
-        ],
+        "css": ["photofilter.css"],
         "js": [
             "myQuery.js",
             "colorPicker.js",
@@ -90,13 +62,8 @@
         "url": "puzzles",
         "name": "Puzzle",
         "description": "Układaj puzzle z własnych zdjęć",
-        "css": [
-            "puzzles.css"
-        ],
-        "js": [
-            "myQuery.js",
-            "puzzles.js"
-        ],
+        "css": ["puzzles.css"],
+        "js": ["myQuery.js", "puzzles.js"],
         "date": "2015-05-14",
         "blank": true
     },
@@ -104,14 +71,8 @@
         "url": "math",
         "name": "Wykresy ",
         "description": "Aplikacja do rysowania wykresu funkcji.",
-        "css": [
-            "math.css",
-            "mathcode.css"
-        ],
-        "js": [
-            "mathcode.js",
-            "math.new.js"
-        ],
+        "css": ["math.css", "mathcode.css"],
+        "js": ["mathcode.js", "math.new.js"],
         "date": "2015-05-06",
         "blank": true
     },
@@ -119,12 +80,8 @@
         "url": "photo",
         "name": "Pixel photo",
         "description": "Dodaje efekt łączenia kolorów w większe piksele.",
-        "css": [
-            "photo.css"
-        ],
-        "js": [
-            "photo.js"
-        ],
+        "css": ["photo.css"],
+        "js": ["photo.js"],
         "date": "2015-05-06",
         "blank": true
     },
@@ -132,16 +89,8 @@
         "url": "temp",
         "name": "Tenperatura",
         "description": "Temperaturę na ziemi w zależności od parametrów.",
-        "css": [
-            "temp.css"
-        ],
-        "js": [
-            "setting.js",
-            "engine.js",
-            "draw.js",
-            "event.js",
-            "main.js"
-        ],
+        "css": ["temp.css"],
+        "js": ["setting.js", "engine.js", "draw.js", "event.js", "main.js"],
         "date": "2014-06-12",
         "blank": true
     },
@@ -150,9 +99,7 @@
         "name": "Bilard",
         "description": "Bilard",
         "css": [],
-        "js": [
-            "billiards.js"
-        ],
+        "js": ["billiards.js"],
         "date": "2015-05-22",
         "blank": true
     },
@@ -160,12 +107,8 @@
         "url": "squash",
         "name": "Squash",
         "description": "Squash",
-        "css": [
-            "squash.css"
-        ],
-        "js": [
-            "squash.js"
-        ],
+        "css": ["squash.css"],
+        "js": ["squash.js"],
         "date": "2015-05-21",
         "blank": true
     },
@@ -173,13 +116,8 @@
         "url": "test",
         "name": "Test",
         "description": "Test",
-        "css": [
-            "test.css"
-        ],
-        "js": [
-            "myQuery.js",
-            "test.js"
-        ],
+        "css": ["test.css"],
+        "js": ["myQuery.js", "test.js"],
         "date": "2015-05-20",
         "blank": true
     },
@@ -188,9 +126,7 @@
         "name": "Tetris",
         "description": "Tetris",
         "css": [],
-        "js": [
-            "tetris.js"
-        ],
+        "js": ["tetris.js"],
         "date": "2015-05-21",
         "blank": true
     },
@@ -198,16 +134,8 @@
         "url": "graph",
         "name": "Graph",
         "description": "Aplikacja rysująca wykresy",
-        "css": [
-            "codemirror.css",
-            "graph.css"
-        ],
-        "js": [
-            "myQuery.js",
-            "codemirror.js",
-            "graph.js",
-            "demoGraph.js"
-        ],
+        "css": ["codemirror.css", "graph.css"],
+        "js": ["myQuery.js", "codemirror.js", "graph.js", "demoGraph.js"],
         "date": "2015-11-07",
         "blank": true
     },
@@ -215,12 +143,8 @@
         "url": "jigsaw",
         "name": "Układanka",
         "description": "Układanka z zdjęcia",
-        "css": [
-            "jigsaw.css"
-        ],
-        "js": [
-            "jigsaw.js"
-        ],
+        "css": ["jigsaw.css"],
+        "js": ["jigsaw.js"],
         "date": "2015-11-09",
         "blank": true
     },
@@ -228,13 +152,8 @@
         "url": "record",
         "name": "Record",
         "description": "Nagrywanie filmu z elementu canvas",
-        "css": [
-            "record.css"
-        ],
-        "js": [
-            "record.js",
-            "demoRecord.js"
-        ],
+        "css": ["record.css"],
+        "js": ["record.js", "demoRecord.js"],
         "date": "2015-11-12",
         "blank": true
     },
@@ -242,12 +161,8 @@
         "url": "clock",
         "name": "Clock",
         "description": "Zegarek analogowy",
-        "css": [
-            "clock.css"
-        ],
-        "js": [
-            "clock.js"
-        ],
+        "css": ["clock.css"],
+        "js": ["clock.js"],
         "date": "2015-11-13",
         "blank": true
     },
@@ -255,13 +170,8 @@
         "url": "hangman",
         "name": "Wisielec",
         "description": "Gra wisielec",
-        "css": [
-            "hangman.css"
-        ],
-        "js": [
-            "myQuery.js",
-            "hangman.js"
-        ],
+        "css": ["hangman.css"],
+        "js": ["myQuery.js", "hangman.js"],
         "date": "2015-11-18",
         "blank": true
     },
@@ -269,12 +179,8 @@
         "url": "mp3player",
         "name": "Mp3 Player",
         "description": "Odtwarzacz muzyki",
-        "css": [
-            "mp3player.css"
-        ],
-        "js": [
-            "mp3player.js"
-        ],
+        "css": ["mp3player.css"],
+        "js": ["mp3player.js"],
         "date": "2015-11-19",
         "blank": true
     },
@@ -282,14 +188,8 @@
         "url": "car3d",
         "name": "Car 3D model",
         "description": "Model samochodu ",
-        "css": [
-            "car3D.css"
-        ],
-        "js": [
-            "three.min.js",
-            "OBJLoader.js",
-            "car3D.js"
-        ],
+        "css": ["car3D.css"],
+        "js": ["three.min.js", "OBJLoader.js", "car3D.js"],
         "date": "2016-02-12",
         "blank": true
     },
@@ -297,12 +197,8 @@
         "url": "jump",
         "name": "Jump",
         "description": "-",
-        "css": [
-            "jump.css"
-        ],
-        "js": [
-            "jump.js"
-        ],
+        "css": ["jump.css"],
+        "js": ["jump.js"],
         "date": "2016-02-20",
         "blank": true
     },
@@ -310,12 +206,8 @@
         "url": "gauss",
         "name": "Gauss",
         "description": "Rozkład liczb pseudolosowych",
-        "css": [
-            "gauss.css"
-        ],
-        "js": [
-            "gauss.js"
-        ],
+        "css": ["gauss.css"],
+        "js": ["gauss.js"],
         "date": "2016-02-23",
         "blank": true
     },
@@ -323,13 +215,8 @@
         "url": "mathcode",
         "name": "Math Code",
         "description": "Kod funckcji",
-        "css": [
-            "mathcode.css"
-        ],
-        "js": [
-            "mathcode.js",
-            "demo.js"
-        ],
+        "css": ["mathcode.css"],
+        "js": ["mathcode.js", "demo.js"],
         "date": "2016-03-10",
         "blank": true
     },
@@ -337,14 +224,8 @@
         "url": "photoeditor",
         "name": "Edytor zdjęć",
         "description": "Dodaje filtry do zdjęcia.",
-        "css": [
-            "photoeditor.css"
-        ],
-        "js": [
-            "colorpicker.js",
-            "photo.filter.mask.js",
-            "photoeditor.js"
-        ],
+        "css": ["photoeditor.css"],
+        "js": ["colorpicker.js", "photo.filter.mask.js", "photoeditor.js"],
         "date": "2016-03-10",
         "blank": true
     },
@@ -353,10 +234,7 @@
         "name": "Kolor picker",
         "description": "",
         "css": [],
-        "js": [
-            "colorpicker.js",
-            "demo.js"
-        ],
+        "js": ["colorpicker.js", "demo.js"],
         "date": "2016-03-14",
         "blank": true
     },
@@ -364,12 +242,8 @@
         "url": "rubikscube",
         "name": "Kostka rubika",
         "description": "",
-        "css": [
-            "rubikscube.css"
-        ],
-        "js": [
-            "rubikscube.js"
-        ],
+        "css": ["rubikscube.css"],
+        "js": ["rubikscube.js"],
         "date": "2016-03-16",
         "blank": true
     },
@@ -377,12 +251,8 @@
         "url": "graf",
         "name": "Graf",
         "description": "Grafik",
-        "css": [
-            "graf.css"
-        ],
-        "js": [
-            "graf.js"
-        ],
+        "css": ["graf.css"],
+        "js": ["graf.js"],
         "date": "2016-06-02",
         "blank": true
     },
@@ -390,12 +260,8 @@
         "url": "sync",
         "name": "Sync",
         "description": "-",
-        "css": [
-            "sync.css"
-        ],
-        "js": [
-            "sync.js"
-        ],
+        "css": ["sync.css"],
+        "js": ["sync.js"],
         "date": "2016-06-29",
         "blank": true
     },
@@ -403,14 +269,8 @@
         "url": "canvas3d",
         "name": "Canvas 3D",
         "description": "Biblioteka 3d",
-        "css": [
-            "canvas3d.css"
-        ],
-        "js": [
-            "object3d.js",
-            "canvas3d.js",
-            "demo3d.js"
-        ],
+        "css": ["canvas3d.css"],
+        "js": ["object3d.js", "canvas3d.js", "demo3d.js"],
         "date": "2016-09-27",
         "blank": true
     },
@@ -418,9 +278,7 @@
         "url": "my-query",
         "name": "myQuery",
         "description": "Mała biblioteka js",
-        "css": [
-            "myQuery.css"
-        ],
+        "css": ["myQuery.css"],
         "js": [],
         "date": "2016-09-19",
         "blank": true
@@ -429,15 +287,8 @@
         "url": "visualizer",
         "name": "Visualiser 3D",
         "description": "Audio visualizer 3D",
-        "css": [
-            "visualizer.css"
-        ],
-        "js": [
-            "myQuery.js",
-            "object3d.js",
-            "canvas3d.js",
-            "visualizer.js"
-        ],
+        "css": ["visualizer.css"],
+        "js": ["myQuery.js", "object3d.js", "canvas3d.js", "visualizer.js"],
         "date": "2016-09-20",
         "blank": true
     },
@@ -445,14 +296,8 @@
         "url": "audio",
         "name": "Audio Visualizer 3D",
         "description": "",
-        "css": [
-            "audio.css"
-        ],
-        "js": [
-            "myQuery.js",
-            "glMatrix-0.9.5.min.js",
-            "audio.js"
-        ],
+        "css": ["audio.css"],
+        "js": ["myQuery.js", "glMatrix-0.9.5.min.js", "audio.js"],
         "date": "2016-09-23",
         "blank": true
     },
@@ -460,13 +305,8 @@
         "url": "life",
         "name": "Gra w życie",
         "description": "",
-        "css": [
-            "life.css"
-        ],
-        "js": [
-            "myQuery.js",
-            "life.js"
-        ],
+        "css": ["life.css"],
+        "js": ["myQuery.js", "life.js"],
         "date": "2016-10-02",
         "blank": true
     },
@@ -474,13 +314,8 @@
         "url": "run",
         "name": "Run calculator",
         "description": "Calculate speed, pace, distance and time",
-        "css": [
-            "bootstrap.min.css",
-            "run.css"
-        ],
-        "js": [
-            "run.js"
-        ],
+        "css": ["bootstrap.min.css", "run.css"],
+        "js": ["run.js"],
         "date": "2017-06-07",
         "blank": true
     },
@@ -488,12 +323,8 @@
         "url": "text",
         "name": "Text Statistics",
         "description": "Text Statistics",
-        "css": [
-            "text.css"
-        ],
-        "js": [
-            "text.js"
-        ],
+        "css": ["text.css"],
+        "js": ["text.js"],
         "date": "2017-06-16",
         "blank": true
     },
@@ -501,12 +332,8 @@
         "url": "grid",
         "name": "Particle",
         "description": "Cząstki oddziałujące z kursorem",
-        "css": [
-            "grid.css"
-        ],
-        "js": [
-            "grid.js"
-        ],
+        "css": ["grid.css"],
+        "js": ["grid.js"],
         "date": "2017-06-28",
         "blank": true
     },
@@ -514,12 +341,8 @@
         "url": "drop",
         "name": "Drops",
         "description": "Ruch bąbelków",
-        "css": [
-            "drop.css"
-        ],
-        "js": [
-            "drop.js"
-        ],
+        "css": ["drop.css"],
+        "js": ["drop.js"],
         "date": "2017-07-11",
         "blank": true
     },
@@ -527,12 +350,8 @@
         "url": "rock-paper-scissors",
         "name": "Kamień papier nożyce",
         "description": "Kamień papier nożyce",
-        "css": [
-            "rock-paper-scissors.css"
-        ],
-        "js": [
-            "rock-paper-scissors.js"
-        ],
+        "css": ["rock-paper-scissors.css"],
+        "js": ["rock-paper-scissors.js"],
         "date": "2017-07-20",
         "blank": true
     },
@@ -540,13 +359,8 @@
         "url": "md5",
         "name": "Md5 Generator",
         "description": "This online tool allows you to generate the MD5 hash of any string.",
-        "css": [
-            "md5.css"
-        ],
-        "js": [
-            "md5.js",
-            "index.js"
-        ],
+        "css": ["md5.css"],
+        "js": ["md5.js", "index.js"],
         "date": "2018-07-01",
         "blank": true
     },
@@ -555,9 +369,7 @@
         "name": "Animal",
         "description": "Animal animation",
         "css": [],
-        "js": [
-            "animal.js"
-        ],
+        "js": ["animal.js"],
         "date": "2018-12-27",
         "blank": true
     },
@@ -565,9 +377,7 @@
         "url": "runner",
         "name": "Runner",
         "description": "Runner animation",
-        "css": [
-            "runner.css"
-        ],
+        "css": ["runner.css"],
         "js": [],
         "date": "2018-12-27",
         "blank": true

@@ -1,11 +1,12 @@
-import fs from "fs";
+import fs from 'fs';
 
-import {Project} from "../controllers/ProjectsController/projects";
-import render from "./render";
+import {Project} from '../controllers/ProjectsController/projects';
+
+import render from './render';
 
 const jsTag = (path: string) => `<script src="${path}"></script>`;
 const cssTag = (path: string) => `<link rel="stylesheet" href="${path}" />`;
-const assetUrl = (path: string) => `/asset/${path}`;
+const assetUrl = (path: string) => `/assets/${path}`;
 
 const getFilePath = (file: string) => {
     return `${__dirname}/../${file}`;
@@ -13,7 +14,7 @@ const getFilePath = (file: string) => {
 
 const getMainTemplate = (): Promise<string> => {
     return new Promise((resolve, reject) => {
-        fs.readFile(getFilePath("projects/template.html"), (error, content) => {
+        fs.readFile(getFilePath('projects/template.html'), (error, content) => {
             resolve(content.toString());
             reject(error);
         });
@@ -22,22 +23,31 @@ const getMainTemplate = (): Promise<string> => {
 
 const getProjectHtml = async (project: Project): Promise<string> => {
     return new Promise((resolve, reject) => {
-        fs.readFile(getFilePath(`projects/${project.url}/index.html`), (error, content) => {
-            resolve(content.toString());
-            reject(error);
-        });
+        fs.readFile(
+            getFilePath(`projects/${project.url}/index.html`),
+            (error, content) => {
+                resolve(content.toString());
+                reject(error);
+            },
+        );
     });
 };
 
-const createCssAsset = (project: Project) => project.css.map((file: string) => {
-    const path = file === "theme.css" ? file : `${project.url}/css/${file}`;
-    return cssTag(assetUrl(path));
-}).join("\n");
+const createCssAsset = (project: Project) =>
+    project.css
+        .map((file: string) => {
+            const path = file === 'theme.css' ? file : `${project.url}/css/${file}`;
+            return cssTag(assetUrl(path));
+        })
+        .join('\n');
 
-const createJsAsset = (project: Project) => project.js.map((file: string) => {
-    const path = file === "myQuery.js" ? file : `${project.url}/js/${file}`;
-    return jsTag(assetUrl(path));
-}).join("\n");
+const createJsAsset = (project: Project) =>
+    project.js
+        .map((file: string) => {
+            const path = file === 'myQuery.js' ? file : `${project.url}/js/${file}`;
+            return jsTag(assetUrl(path));
+        })
+        .join('\n');
 
 const renderProject = (project: Project) => {
     return new Promise(async (resolve) => {
@@ -51,10 +61,9 @@ const renderProject = (project: Project) => {
                 content: projectHtml,
                 css: createCssAsset(project),
                 script: createJsAsset(project),
-            })
+            }),
         );
     });
 };
-
 
 export default renderProject;

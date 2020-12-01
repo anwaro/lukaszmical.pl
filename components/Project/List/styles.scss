@@ -1,0 +1,11 @@
+@import "../../../styles/variables";
+@import "../../../styles/colors";
+
+.listWrapper {
+    width: 100%;
+    overflow: hidden;
+    
+    .list {
+        position: relative;
+    }
+}
