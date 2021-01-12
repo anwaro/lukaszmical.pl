@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "projects",
+  "info": {
+    "name": "projects"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "slug": {
+      "type": "string",
+      "unique": true,
+      "required": true
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "css": {
+      "type": "json"
+    },
+    "js": {
+      "type": "json"
+    },
+    "globalCss": {
+      "type": "boolean"
+    },
+    "globalJs": {
+      "type": "boolean"
+    },
+    "createdAt": {
+      "type": "date"
+    }
+  }
+}
