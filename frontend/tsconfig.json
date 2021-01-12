@@ -1,0 +1,69 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "jsx": "preserve",
+        "lib": [
+            "dom",
+            "es6",
+            "es2017"
+        ],
+        "baseUrl": ".",
+        "moduleResolution": "node",
+        "strict": true,
+        "allowJs": true,
+        "noEmit": true,
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "isolatedModules": true,
+        "removeComments": false,
+        "preserveConstEnums": true,
+        "sourceMap": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "paths": {
+            "~components/*": [
+                "components/*"
+            ],
+            "~sections/*": [
+                "components/sections/types/*"
+            ],
+            "~graphql/*": [
+                "graphql/*"
+            ],
+            "~interfaces/*": [
+                "interfaces/*"
+            ],
+            "~pages/*": [
+                "pages/*"
+            ],
+            "~scss/*": [
+                "scss/*"
+            ],
+            "~static/*": [
+                "static/*"
+            ],
+            "~store/*": [
+                "store/*"
+            ],
+            "~util/*": [
+                "util/*"
+            ]
+        }
+    },
+    "exclude": [
+        "dist",
+        ".next",
+        "out",
+        "next.config.js"
+    ],
+    "include": [
+        "next-env.d.ts",
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.html"
+    ]
+}

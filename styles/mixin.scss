@@ -1,8 +1,0 @@
-@import "./variables";
-
-@mixin containerPadding($vertical) {
-    padding: $vertical $padding-small;
-    @media (min-width: $break-large) {
-        padding: $vertical $padding-large;
-    }
-}
