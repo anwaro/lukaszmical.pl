@@ -25,6 +25,9 @@
         "forceConsistentCasingInFileNames": true,
         "resolveJsonModule": true,
         "paths": {
+            "~controllers/*": [
+                "controllers/*"
+            ],
             "~components/*": [
                 "components/*"
             ],

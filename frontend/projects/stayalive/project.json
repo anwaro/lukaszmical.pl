@@ -1,0 +1,7 @@
+{
+    "name": "Stay Alive",
+    "description": "Ruszaj piłką i unikaj min",
+    "requireThemeCss": false,
+    "requireMyQuery": true,
+    "createdAt": "2014-11-12"
+}

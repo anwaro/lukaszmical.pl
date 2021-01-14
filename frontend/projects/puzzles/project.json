@@ -1,0 +1,7 @@
+{
+    "name": "Puzzle",
+    "description": "Układaj puzzle z własnych zdjęć",
+    "requireThemeCss": true,
+    "requireMyQuery": true,
+    "createdAt": "2015-05-14"
+}

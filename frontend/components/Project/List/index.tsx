@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {Project} from '~controllers/ProjectsController/projects';
+import {Project} from '~interfaces/project';
 
 import ProjectItem from './Item';
 import styles from './styles.scss';
@@ -30,7 +30,7 @@ const ProjectList = ({projects}: ProjectListProps) => {
             >
                 {projects.map((project, i) => (
                     <ProjectItem
-                        key={project.url}
+                        key={project.slug}
                         project={project}
                         width={itemWidth}
                         height={itemHeight}

@@ -1,0 +1,7 @@
+{
+    "name": "Pixel photo",
+    "description": "Dodaje efekt łączenia kolorów w większe piksele.",
+    "requireThemeCss": false,
+    "requireMyQuery": false,
+    "createdAt": "2015-05-06"
+}

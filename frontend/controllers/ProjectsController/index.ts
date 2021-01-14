@@ -1,8 +1,7 @@
 import {Router} from 'express';
 
-import renderProject from '../../utils/renderProject';
-
-import {Project, projects} from './projects';
+import config from '../../config/Config';
+import {getProjectInfo, renderProject} from '../../utils/project';
 
 class Index {
     private readonly router: Router;
@@ -13,19 +12,16 @@ class Index {
 
     public getRouter = () => {
         this.router.get('/:slug', async (req, res) => {
-            const project = this.getProject(req.params.slug);
+            const minFile = config.NODE_ENV === 'production';
+            const project = await getProjectInfo(req.params.slug, minFile);
             if (project) {
-                const response = await renderProject(project);
+                const response = await renderProject(project, minFile);
                 return res.send(response);
             }
-            res.send('Not found');
+            res.send('Not found :)');
         });
 
         return this.router;
-    };
-
-    getProject = (slug: string): Project | undefined => {
-        return projects.find((p) => p.slug === slug);
     };
 }
 

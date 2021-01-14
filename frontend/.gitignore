@@ -1,5 +1,6 @@
 # Dependency directories
 node_modules/
+yarn-error.log
 
 # next.js build output
 .next
@@ -8,3 +9,4 @@ node_modules/
 dist
 
 .idea
+.env.local

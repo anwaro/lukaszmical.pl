@@ -1,0 +1,7 @@
+{
+    "name": "Tenperatura",
+    "description": "Temperaturę na ziemi w zależności od parametrów.",
+    "requireThemeCss": false,
+    "requireMyQuery": false,
+    "createdAt": "2014-06-12"
+}

@@ -1,0 +1,7 @@
+{
+    "name": "Clock",
+    "description": "Zegarek analogowy",
+    "requireThemeCss": false,
+    "requireMyQuery": false,
+    "createdAt": "2015-11-13"
+}

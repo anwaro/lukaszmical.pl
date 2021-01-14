@@ -1,0 +1,7 @@
+{
+    "name": "Edytor zdjęć",
+    "description": "Dodaje filtry do zdjęcia.",
+    "requireThemeCss": false,
+    "requireMyQuery": true,
+    "createdAt": "2016-03-10"
+}

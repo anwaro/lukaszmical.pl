@@ -1,17 +1,28 @@
+import {GetStaticProps} from 'next';
 import React from 'react';
 
 import ProjectList from '~components/Project/List';
-import {projects} from '~controllers/ProjectsController/projects';
 
 import Index from '../components/Layout/Layout';
+import {getProjectsInfos} from '../utils/project';
 
-const Projects = () => (
+const Projects = ({projects}) => (
     <Index>
         <div>Projects</div>
         <div>
-            <ProjectList projects={Object.values(projects)} />
+            <ProjectList projects={projects} />
         </div>
     </Index>
 );
+
+export const getStaticProps: GetStaticProps = async () => {
+    const projects = await getProjectsInfos();
+
+    return {
+        props: {
+            projects,
+        },
+    };
+};
 
 export default Projects;

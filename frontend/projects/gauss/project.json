@@ -1,0 +1,7 @@
+{
+    "name": "Gauss",
+    "description": "Rozkład liczb pseudolosowych",
+    "requireThemeCss": false,
+    "requireMyQuery": false,
+    "createdAt": "2016-02-23"
+}

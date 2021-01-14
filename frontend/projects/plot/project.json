@@ -1,0 +1,7 @@
+{
+    "name": "Wykresy ",
+    "description": "Aplikacja do rysowania wykresu funkcji.",
+    "requireThemeCss": true,
+    "requireMyQuery": false,
+    "createdAt": "2015-05-27"
+}
