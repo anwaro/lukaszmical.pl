@@ -1,31 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
-import Index from '../../components/Layout/Layout';
-import {firestore} from '../../config/Firebase.config';
+import Index from '../../src/components/Layout/Layout';
 
 const Hajs = () => {
-    const [projects, setProjects] = useState([]);
-
-    useEffect(() => {
-        firestore.collection('projects').onSnapshot((querySnapshot) => {
-            const list: any[] = [];
-            querySnapshot.forEach((doc) => {
-                const {slug, name} = doc.data();
-                list.push({
-                    id: doc.id,
-                    slug,
-                    name,
-                });
-            });
-            setProjects(list);
-            console.log(list);
-        });
-    }, []);
+    const [projects, setProjects] = useState<Array<{id: number}>>([]);
 
     const addProject = () => {
-        firestore
-            .collection('projects')
-            .add({name: Math.random(), slug: 'setAsyncCallStackDepth'});
+        setProjects([...projects, {id: Math.random()}]);
     };
 
     return (

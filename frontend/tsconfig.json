@@ -26,34 +26,37 @@
         "resolveJsonModule": true,
         "paths": {
             "~controllers/*": [
-                "controllers/*"
+                "src/controllers/*"
             ],
             "~components/*": [
-                "components/*"
+                "src/components/*"
             ],
             "~sections/*": [
-                "components/sections/types/*"
+                "src/components/sections/types/*"
             ],
             "~graphql/*": [
-                "graphql/*"
+                "src/graphql/*"
             ],
             "~interfaces/*": [
-                "interfaces/*"
+                "src/interfaces/*"
             ],
             "~pages/*": [
                 "pages/*"
             ],
             "~scss/*": [
-                "scss/*"
+                "src/scss/*"
             ],
             "~static/*": [
-                "static/*"
+                "src/static/*"
+            ],
+            "~styles/*": [
+                "src/styles/*"
             ],
             "~store/*": [
-                "store/*"
+                "src/store/*"
             ],
-            "~util/*": [
-                "util/*"
+            "~utils/*": [
+                "src/utils/*"
             ]
         }
     },
@@ -64,6 +67,7 @@
         "next.config.js"
     ],
     "include": [
+        "src/typings/*",
         "next-env.d.ts",
         "**/*.ts",
         "**/*.tsx",

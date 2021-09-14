@@ -36,7 +36,7 @@ function newGame(type, nr) {
             $$("#puzzleArea").fadeIn(300);
         });
 
-        src = "/asset/jigsaw/image/img" + (nr || 1) + ".jpg";
+        src = "/assets/jigsaw/image/img" + (nr || 1) + ".jpg";
         //src = "img/img"+(nr||1)+".jpg";
         imageInfo();
     }

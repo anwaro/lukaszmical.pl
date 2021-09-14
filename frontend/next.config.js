@@ -1,5 +1,6 @@
-const withSass = require('@zeit/next-sass');
+const {i18n} = require('./next-i18next.config');
 
-module.exports = withSass({
+module.exports = {
     cssModules: true,
-});
+    i18n,
+};

@@ -2,11 +2,16 @@ import {GetStaticProps} from 'next';
 import React from 'react';
 
 import ProjectList from '~components/Project/List';
+import {Project} from '~interfaces/project';
 
-import Index from '../components/Layout/Layout';
-import {getProjectsInfos} from '../utils/project';
+import Index from '../src/components/Layout/Layout';
+import {getProjectsInfos} from '../src/utils/project';
 
-const Projects = ({projects}) => (
+type ProjectsProps = {
+    projects: Project[];
+};
+
+const Projects = ({projects}: ProjectsProps) => (
     <Index>
         <div>Projects</div>
         <div>
@@ -17,10 +22,11 @@ const Projects = ({projects}) => (
 
 export const getStaticProps: GetStaticProps = async () => {
     const projects = await getProjectsInfos();
-
     return {
         props: {
-            projects,
+            projects: projects
+                .filter((p) => p.published)
+                .sort((a, b) => a.order - b.order),
         },
     };
 };

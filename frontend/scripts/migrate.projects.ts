@@ -1,6 +1,7 @@
 import fs from 'fs';
 
 import {ProjectListItem} from '~interfaces/project';
+import {RunParams} from '~interfaces/scripts';
 
 const projects: ProjectListItem[] = [
     {
@@ -245,14 +246,6 @@ const projects: ProjectListItem[] = [
         createdAt: '2015-11-12',
     },
     {
-        slug: 'rock-paper-scissors',
-        name: 'Kamień papier nożyce',
-        description: 'Kamień papier nożyce',
-        requireThemeCss: false,
-        requireMyQuery: false,
-        createdAt: '2017-07-20',
-    },
-    {
         slug: 'rubikscube',
         name: 'Kostka rubika',
         description: '',
@@ -346,7 +339,10 @@ const getFilePath = (file: string) => {
     return `${__dirname}/../${file}`;
 };
 
-const saveProjectInfo = (projectName: string, content: string): Promise<void> => {
+export const saveProjectInfo = (
+    projectName: string,
+    content: string,
+): Promise<void> => {
     return new Promise((resolve, reject) => {
         fs.writeFile(
             getFilePath(`projects/${projectName}/project.json`),
@@ -362,7 +358,7 @@ const saveProjectInfo = (projectName: string, content: string): Promise<void> =>
     });
 };
 
-const run = async () => {
+const run = async (_params: RunParams) => {
     for (let project of projects) {
         await saveProjectInfo(
             project.slug,
@@ -373,8 +369,8 @@ const run = async () => {
                     requireThemeCss: project.requireThemeCss,
                     requireMyQuery: project.requireMyQuery,
                     createdAt: project.createdAt,
-                    order: 1,
-                    published: true,
+                    order: 100,
+                    published: false,
                 },
                 null,
                 4,
@@ -387,5 +383,4 @@ const run = async () => {
     return 'Done';
 };
 
-// eslint-disable-next-line no-console
-run().then((msg) => console.log(msg));
+export default run;

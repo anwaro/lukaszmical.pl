@@ -1,7 +1,10 @@
 {
+    "slug": "grid",
     "name": "Particle",
     "description": "Cząstki oddziałujące z kursorem",
     "requireThemeCss": false,
     "requireMyQuery": false,
-    "createdAt": "2017-06-28"
+    "createdAt": "2017-06-28",
+    "order": 8,
+    "published": true
 }

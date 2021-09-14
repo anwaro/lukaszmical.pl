@@ -3,5 +3,7 @@
     "description": "Ruszaj piłką i unikaj min",
     "requireThemeCss": false,
     "requireMyQuery": true,
-    "createdAt": "2014-11-12"
+    "createdAt": "2014-11-12",
+    "order": 3,
+    "published": true
 }

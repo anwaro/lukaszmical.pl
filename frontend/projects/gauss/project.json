@@ -1,7 +1,10 @@
 {
+    "slug": "gauss",
     "name": "Gauss",
     "description": "Rozkład liczb pseudolosowych",
     "requireThemeCss": false,
     "requireMyQuery": false,
-    "createdAt": "2016-02-23"
+    "createdAt": "2016-02-23",
+    "order": 36,
+    "published": true
 }

@@ -3,5 +3,7 @@
     "description": "Kod funckcji",
     "requireThemeCss": false,
     "requireMyQuery": false,
-    "createdAt": "2016-03-10"
+    "createdAt": "2016-03-10",
+    "order": 100,
+    "published": false
 }

@@ -3,5 +3,7 @@
     "description": "Biblioteka 3d",
     "requireThemeCss": false,
     "requireMyQuery": false,
-    "createdAt": "2016-09-27"
+    "createdAt": "2016-09-27",
+    "order": 100,
+    "published": false
 }

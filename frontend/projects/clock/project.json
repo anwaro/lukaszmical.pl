@@ -1,7 +1,10 @@
 {
+    "slug": "clock",
     "name": "Clock",
     "description": "Zegarek analogowy",
     "requireThemeCss": false,
     "requireMyQuery": false,
-    "createdAt": "2015-11-13"
+    "createdAt": "2015-11-13",
+    "order": 40,
+    "published": true
 }

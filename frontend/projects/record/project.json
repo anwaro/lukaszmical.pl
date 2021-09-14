@@ -1,7 +1,10 @@
 {
+    "slug": "record",
     "name": "Record",
     "description": "Nagrywanie filmu z elementu canvas",
     "requireThemeCss": false,
     "requireMyQuery": false,
-    "createdAt": "2015-11-12"
+    "createdAt": "2015-11-12",
+    "order": 42,
+    "published": true
 }

@@ -10,7 +10,7 @@ $puzzles = new function () {
         returnElement,
         isMove = false,
         size = 5,
-        frame = "/asset/puzzles/image/frame" + size + ".png",
+        frame = "/assets/puzzles/image/frame" + size + ".png",
         leyPuzzles = 0
     ;
 
@@ -49,7 +49,7 @@ $puzzles = new function () {
                 $$("#puzzleArea").fadeIn(300);
             });
 
-            src = "/asset/puzzles/image/img" + (nr || 1) + ".jpg";
+            src = "/assets/puzzles/image/img" + (nr || 1) + ".jpg";
             //src = "img/img"+(nr||1)+".jpg";
             imageInfo();
         }

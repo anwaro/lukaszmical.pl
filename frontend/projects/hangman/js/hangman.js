@@ -13,7 +13,7 @@ hangman = new function () {
 
         newGame.onclick = reset;
 
-        url = "/asset/hangman/image/";
+        url = "/assets/hangman/image/";
         //load.hide();
         newGame.css("background", "url(" + url + "new.jpg)");
         photo.show();

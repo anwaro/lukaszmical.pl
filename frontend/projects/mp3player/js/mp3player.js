@@ -75,8 +75,8 @@ mp3player = new function () {
         },
         url: {
             info: "/api/v1/projects/songs",
-            audio: "/asset/mp3player/sound/",
-            cover: "/asset/mp3player/covers/"
+            audio: "/assets/mp3player/sound/",
+            cover: "/assets/mp3player/covers/"
         },
         vis: {
             support: false,

@@ -1,0 +1,8 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixin";
+
+.main {
+    @include containerPadding(50px);
+    margin: auto;
+    max-width: $max-width;
+}

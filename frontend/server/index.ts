@@ -1,9 +1,9 @@
 import express from 'express';
 import next from 'next';
 
-import ApiV1Controller from '../controllers/ApiV1Controller';
-import PageController from '../controllers/PageController';
-import Index from '../controllers/ProjectsController';
+import ApiV1Controller from '../src/controllers/ApiV1Controller';
+import PageController from '../src/controllers/PageController';
+import Index from '../src/controllers/ProjectsController';
 
 const port = parseInt(process.env.PORT || '3000', 10);
 const dev = process.env.NODE_ENV !== 'production';
@@ -27,10 +27,7 @@ app.prepare().then(() => {
         return handle(req, res);
     });
 
-    server.listen(port, (error: Error) => {
-        if (error) {
-            throw error;
-        }
+    server.listen(port, () => {
         console.log(`> Ready on http://localhost:${port}`);
     });
 });

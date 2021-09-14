@@ -27,7 +27,7 @@ var colorPicker = {
         };
 
         colorPicker.img.onerror = function () {
-            this.src = "/asset/photofilter/image/color.png";
+            this.src = "/assets/photofilter/image/color.png";
         };
 
         colorPicker.img.src = colorPicker.getImageSrc();
@@ -35,7 +35,7 @@ var colorPicker = {
     },
 
     getImageSrc: function () {
-        return "/asset/photofilter/image/color.png";
+        return "/assets/photofilter/image/color.png";
     },
 
     init: function () {

@@ -1,11 +1,12 @@
 module.exports = {
     root: true,
-    extends: [
-        '@react-native-community',
-        'eslint:recommended',
-        'prettier/@typescript-eslint',
-    ],
+    env: {
+        browser: true,
+        node: true,
+        jest: true,
+    },
     parser: '@typescript-eslint/parser',
+    extends: ['eslint:recommended', 'prettier', 'plugin:prettier/recommended'],
     plugins: [
         '@typescript-eslint',
         'prettier',
@@ -13,7 +14,7 @@ module.exports = {
         'import',
         'eslint-plugin-node',
     ],
-    ignorePatterns: ['./typings', './next', './node_modules', 'projects'],
+    ignorePatterns: ['./src/typings', './next', './node_modules', './projects'],
     rules: {
         'no-eval': 'error',
         'import/first': 'error',

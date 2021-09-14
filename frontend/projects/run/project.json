@@ -1,7 +1,10 @@
 {
+    "slug": "run",
     "name": "Run calculator",
     "description": "Calculate speed, pace, distance and time",
     "requireThemeCss": false,
     "requireMyQuery": false,
-    "createdAt": "2017-06-07"
+    "createdAt": "2017-06-07",
+    "order": 28,
+    "published": true
 }

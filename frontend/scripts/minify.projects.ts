@@ -1,12 +1,14 @@
 import minify from 'minify';
 
+import {RunParams} from '~interfaces/scripts';
+
 import {
     filterAssetFile,
     getProjectCssFiles,
     getProjectJsFiles,
     getProjectsPath,
-} from '../utils/project';
-import {readDir, writeFile} from '../utils/projectFs';
+} from '../src/utils/project';
+import {readDir, writeFile} from '../src/utils/projectFs';
 
 const getProjectsFiles = async () => {
     const projects = await readDir(getProjectsPath(''));
@@ -42,7 +44,7 @@ const minifyProject = async (slug: string) => {
     await minifyFiles(cssFiles, slug, 'css', 'css');
 };
 
-(async () => {
+const run = async (_params: RunParams) => {
     const {projects, files} = await getProjectsFiles();
     await minifyFiles(filterAssetFile(files, false, 'js'), '', '', 'js');
     await minifyFiles(filterAssetFile(files, false, 'css'), '', '', 'css');
@@ -50,4 +52,6 @@ const minifyProject = async (slug: string) => {
     for (let project of projects) {
         await minifyProject(project);
     }
-})();
+};
+
+export default run;

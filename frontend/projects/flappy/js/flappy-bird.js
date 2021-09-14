@@ -3,7 +3,7 @@
 var $ = function (k) {
     return document.getElementById(k);
 };
-var urlPr = "/asset/flappy/image/";
+var urlPr = "/assets/flappy/image/";
 var game = {
     user: {
         best: 0,

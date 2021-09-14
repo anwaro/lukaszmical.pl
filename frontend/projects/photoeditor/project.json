@@ -1,7 +1,10 @@
 {
+    "slug": "photoeditor",
     "name": "Edytor zdjęć",
     "description": "Dodaje filtry do zdjęcia.",
     "requireThemeCss": false,
     "requireMyQuery": true,
-    "createdAt": "2016-03-10"
+    "createdAt": "2016-03-10",
+    "order": 14,
+    "published": true
 }

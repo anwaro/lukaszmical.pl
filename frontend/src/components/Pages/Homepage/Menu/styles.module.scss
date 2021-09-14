@@ -1,0 +1,46 @@
+.menu {
+    color: white;
+    width: 100%;
+
+    .menuItem {
+        font-size: 50px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: row;
+
+        .words {
+            position: relative;
+            height: 2.5em;
+            width: 50%;
+            font-weight: 900;
+
+            & > * {
+                position: absolute;
+                top: 0;
+                left: 0;
+                font-size: 2.5em;
+                transition: all 0.5s ease;
+            }
+
+            .word {
+            }
+
+            .hoverWord {
+                transform: translateX(-70px);
+                opacity: 0;
+            }
+
+            &:hover {
+                .word {
+                    transform: translateX(70px);
+                    opacity: 0;
+                }
+
+                .hoverWord {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}

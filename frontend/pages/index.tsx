@@ -1,11 +1,23 @@
+import {GetStaticProps} from 'next';
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations';
 import React from 'react';
 
-import Layout from '../components/Layout/Layout';
+import EmptyLayout from '~components/Layout/EmptyLayout';
+import Homepage from '~components/Pages/Homepage';
 
 const Index = () => (
-    <Layout>
-        <div>Home page.</div>
-    </Layout>
+    <EmptyLayout seo={{title: 'Łukasz Micał | Homepage'}}>
+        <Homepage />
+    </EmptyLayout>
 );
+
+export const getStaticProps: GetStaticProps = async ({locale, defaultLocale}) => ({
+    props: {
+        ...(await serverSideTranslations(locale || `${defaultLocale}`, [
+            'common',
+            'homepage',
+        ])),
+    },
+});
 
 export default Index;

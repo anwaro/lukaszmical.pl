@@ -31,15 +31,15 @@ SET = {
 
 
 SET.nam = [
-    "/asset/temp/image/crops.png",	// 0
-    "/asset/temp/image/desert.png",	// 1
-    "/asset/temp/image/forest.png",	// 2
-    "/asset/temp/image/ice.png",		// 3
-    "/asset/temp/image/meadow.png",	// 4
-    "/asset/temp/image/snow.png",		// 5
-    "/asset/temp/image/soil.png",		// 6
-    "/asset/temp/image/sun.png",		// 7
-    "/asset/temp/image/water.png"		// 8
+    "/assets/temp/image/crops.png",	// 0
+    "/assets/temp/image/desert.png",	// 1
+    "/assets/temp/image/forest.png",	// 2
+    "/assets/temp/image/ice.png",		// 3
+    "/assets/temp/image/meadow.png",	// 4
+    "/assets/temp/image/snow.png",		// 5
+    "/assets/temp/image/soil.png",		// 6
+    "/assets/temp/image/sun.png",		// 7
+    "/assets/temp/image/water.png"		// 8
 ];
 
 SET.img = [];

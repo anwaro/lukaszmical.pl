@@ -1,7 +1,10 @@
 {
+    "slug": "billiards",
     "name": "Bilard",
     "description": "Bilard",
     "requireThemeCss": false,
     "requireMyQuery": false,
-    "createdAt": "2015-05-22"
+    "createdAt": "2015-05-22",
+    "order": 16,
+    "published": true
 }

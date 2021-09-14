@@ -18,14 +18,14 @@ billiards = new function () {
         x = 500, y = 200,
         stick = {
             img: new Image(),
-            src: "/asset/billiards/image/stick.png",
+            src: "/assets/billiards/image/stick.png",
             load: function () {
                 this.img.src = this.src;
             }
         },
         table = {
             img: new Image(),
-            src: "/asset/billiards/image/table-tmp.png",
+            src: "/assets/billiards/image/table-tmp.png",
             load: function () {
                 this.img.src = this.src;
             }
