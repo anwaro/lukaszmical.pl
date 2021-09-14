@@ -4,7 +4,7 @@
     "description": "Lukasz Micał homepage.",
     "main": "index.js",
     "scripts": {
-        "dev": "nodemon",
+        "dev": "next dev",
         "build": "next build && tsc --project tsconfig.server.json",
         "start": "cross-env NODE_ENV=production node dist/index.js",
         "format": "prettier --write \"./**/*.+(js|jsx|ts|tsx|json|yml|yaml|css|md|vue)\"",
@@ -22,6 +22,7 @@
         "express": "4.17.1",
         "html-loader": "2.1.2",
         "i18next": "20.6.1",
+        "mime": "^2.5.2",
         "minify": "7.0.2",
         "next": "11.1.2",
         "next-i18next": "8.8.0",

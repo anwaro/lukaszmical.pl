@@ -31,8 +31,8 @@
             "~components/*": [
                 "src/components/*"
             ],
-            "~sections/*": [
-                "src/components/sections/types/*"
+            "~models/*": [
+                "src/models/*"
             ],
             "~graphql/*": [
                 "src/graphql/*"

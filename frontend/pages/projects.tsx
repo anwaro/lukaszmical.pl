@@ -14,9 +14,7 @@ type ProjectsProps = {
 const Projects = ({projects}: ProjectsProps) => (
     <Layout seo={{title: 'Projects'}}>
         <div>Projects</div>
-        <div>
-            <ProjectList projects={projects} />
-        </div>
+        <ProjectList projects={projects} />
     </Layout>
 );
 

@@ -123,7 +123,7 @@ hangman = new function () {
                 prepareWord();
             }
         };
-        xhttp.open("GET", "/api/v1/projects/random-word");
+        xhttp.open("GET", "/api/projects/hangman");
         xhttp.send();
     }
 };

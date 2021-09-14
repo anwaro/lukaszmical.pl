@@ -6,18 +6,11 @@ import styles from './styles.module.scss';
 
 type ProjectItemProps = {
     project: Project;
-    width: number;
-    height: number;
-    top: number;
-    left: number;
 };
 
-const ProjectItem = ({project, width, height, left, top}: ProjectItemProps) => (
-    <a href={`/project/${project.slug}`}>
-        <div
-            className={styles.item}
-            style={{width, height, transform: `translate(${left}px, ${top}px)`}}
-        >
+const ProjectItem = ({project}: ProjectItemProps) => (
+    <a href={`/projects/${project.slug}`}>
+        <div className={styles.item}>
             <img
                 className={styles.image}
                 src={`/assets/${project.slug}/image/cover.jpg`}
