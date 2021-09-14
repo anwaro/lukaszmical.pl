@@ -1,19 +1,19 @@
 /* global HTMLCanvasElement */
 
 _graph =new function(){
-    
-    
+
+
     graph= {};
     /*
      * This is canvas element
      */
     var canvas;
-    
-    
+
+
     /*
      * data
      */
-    
+
     graph.data = {};
     graph.col = {
         /*
@@ -21,28 +21,28 @@ _graph =new function(){
          */
         color : ["#EF6969", "#93EC30", "#ECB230", "#30ECDB", "#9B30EC", "#B12485", "#2470B1"],
     };
-    
+
     var ctx;
-    
+
     this.init = function(element, data, settings){
         setCanvas(element);
         setSettings(settings);
         prepareData(data);
         set();
         draw();
-        
+
     };
-    
+
     this.getSettings = function(){return  graph.defaultsetings;};
-    
+
     function setCanvas(cv){
         canvas = cv;
-        graph.defaultsetings.canvasWidth = canvas.width;        
+        graph.defaultsetings.canvasWidth = canvas.width;
         graph.defaultsetings.canvasHeight= canvas.height;
-        
+
         ctx = canvas.getContext("2d");
     }
-    
+
     function prepareData(data){
         _max(data);
         _min(data);
@@ -53,37 +53,37 @@ _graph =new function(){
         if(graph.defaultsetings.sortByValue){
             graph.data.data = data.sort(sortByValue);
         }
-        
+
         graph.data.len = data.length;
-        
+
     }
-    
+
     function sortByLabel(a, b){
         if (a[0] < b[0]) return -1;
         if (a[0] > b[0]) return 1;
         return 0;
     }
-    
+
     function sortByValue(a,b){
         if (a[1] < b[1]) return -1;
         if (a[1] > b[1]) return 1;
         return 0;
     }
-    
+
     function set(){
-        canvas.width = graph.defaultsetings.canvasWidth;        
+        canvas.width = graph.defaultsetings.canvasWidth;
         canvas.height = graph.defaultsetings.canvasHeight;
-        
+
     }
-    
+
     function draw(){
         prepareCol();
-        ctx.fillStyle = graph.defaultsetings.bgColor; 
+        ctx.fillStyle = graph.defaultsetings.bgColor;
         ctx.fillRect(0, 0, graph.defaultsetings.canvasWidth, graph.defaultsetings.canvasHeight);
-        
-        
+
+
         fillBorder();
-        
+
         var top = graph.defaultsetings.margin + graph.defaultsetings.titleSize;//
         if(graph.defaultsetings.threeD){
             top+=graph.col.margin;
@@ -106,21 +106,21 @@ _graph =new function(){
         }
         if(graph.defaultsetings.title !== ""){
             ctx.textAlign="center";
-            ctx.textBaseline="top"; 
-            ctx.fillStyle=graph.defaultsetings.titleColor; 
+            ctx.textBaseline="top";
+            ctx.fillStyle=graph.defaultsetings.titleColor;
             ctx.font= graph.defaultsetings.titleSize+'px Courier New';
-            
+
             ctx.fillText(graph.defaultsetings.title, graph.defaultsetings.canvasWidth/2, graph.defaultsetings.margin);
-            
+
         }
-        
+
     }
-    
+
     function drawColumn(x, y, w, h, m, i, _3d){
         ctx.save();
         ctx.beginPath();
         ctx.lineWidth = 1;
-        ctx.fillStyle = getColor(i, 0);            
+        ctx.fillStyle = getColor(i, 0);
         ctx.strokeStyle = getColor(i, 0);
         ctx.moveTo(x, y);
         ctx.lineTo(x, y+h);
@@ -130,11 +130,11 @@ _graph =new function(){
         ctx.stroke();
         ctx.fill();
         ctx.restore();
-        
+
         if(_3d){
-            ctx.fillStyle = getColor(i, -0.2);          
+            ctx.fillStyle = getColor(i, -0.2);
             ctx.strokeStyle = getColor(i, 0);
-            ctx.beginPath(); 
+            ctx.beginPath();
             ctx.moveTo(x, y);
             ctx.lineTo(x+m, y-m);
             ctx.lineTo(x+w+m, y-m);
@@ -142,8 +142,8 @@ _graph =new function(){
             ctx.lineTo(x, y);
             ctx.stroke();
             ctx.fill();
-            
-            ctx.beginPath(); 
+
+            ctx.beginPath();
             ctx.moveTo(x+w, y);
             ctx.lineTo(x+w+m, y-m);
             ctx.lineTo(x+w+m, y+h-m);
@@ -151,11 +151,11 @@ _graph =new function(){
             ctx.lineTo(x+w, y);
             ctx.stroke();
             ctx.fill();
-            
-            
+
+
         }
     }
-    
+
     function colorLuminance(hex, lum) {
 
 	// validate hex string
@@ -175,7 +175,7 @@ _graph =new function(){
 
 	return rgb;
     }
-    
+
     function fillBorder(){
         if(graph.defaultsetings.borderWidth){
             ctx.strokeStyle = graph.defaultsetings.borderColor;
@@ -189,72 +189,72 @@ _graph =new function(){
             ctx.stroke();
         }
     }
-    
+
     function setText(text, x, y, w, top, col){
         ctx.textAlign="center";
         ctx.font=graph.defaultsetings.valSize+'px Courier New';
         if(col){
-            if(top){ 
+            if(top){
                 ctx.textBaseline="bottom";
                 ctx.fillText(text, x+w/2, y-graph.col.margin);
             }
             else{
 
                 ctx.fillStyle="white";
-                ctx.textBaseline="top"; 
+                ctx.textBaseline="top";
                 ctx.fillText(text, x+w/2, y+5);
             }
         }
         else{
             ctx.font=graph.defaultsetings.labelSize+'px Courier New';
             ctx.textBaseline="top";
-            ctx.fillStyle=graph.defaultsetings.labelColor; 
+            ctx.fillStyle=graph.defaultsetings.labelColor;
             ctx.fillText(text, x+w/2, y);
-            
+
         }
-        
+
     }
-    
-    
+
+
     function getColor(i, lum){
         return colorLuminance(graph.col.color[i%graph.col.color.length], lum);
 
     }
-    
+
     function prepareCol(){
         var x = graph.defaultsetings.canvasWidth - 2* graph.defaultsetings.margin;
         x/=graph.data.len;
         graph.col.margin = 0.1 * x;
         graph.col.width = 0.8 * x;
-        
+
         graph.col.x = x;
-        
+
         var y = graph.defaultsetings.canvasHeight - 2*graph.defaultsetings.margin ;
         y -= graph.defaultsetings.title?(20+graph.defaultsetings.titleSize):0;
         y -=  graph.defaultsetings.labelSize;
-        
+
         if(graph.defaultsetings.threeD){
             y-=graph.col.margin;
             graph.col.width -= graph.col.margin/graph.data.len;
         }
-        
+
         graph.col.y = y;
         graph.col.ratio = y/graph.data.max;
-        
-        
+
+
     }
-    
-   
+
+
     function _max(data){
         var max = data[0][1];
         for(var i=0; i<data.length; i++){
             if(data[i][1]>max){
                 max = data[i][1];
             }
-        }        
+        }
         graph.data.max = max;
     }
-    
+
     function _min(data){
         var min = data[0][1];
         for(var i=0; i<data.length; i++){
@@ -264,7 +264,7 @@ _graph =new function(){
         }
         graph.data.min = min;
     }
-    
+
     function setSettings(settings){
         if(typeof settings === "object"){
             for(var setting in settings){
@@ -272,17 +272,17 @@ _graph =new function(){
             }
         }
     }
-    
+
     function log(k){
-        console.log(k);
+        // console.log(k);
     }
-    
+
     graph.defaultsetings={
         /*
          * Graph's title
          */
         title : " ",
-        
+
         /*
          * Graph's title
          */
@@ -291,67 +291,67 @@ _graph =new function(){
          * Graph's title
          */
         titleColor : "",
-        
+
         /*
          * background color
          */
         bgColor : "#C5C5C5",
-        
-        
+
+
         /*
          * margin
          */
         margin : 5,
-        
+
         /*
-         * 
+         *
          */
         labelSize : 20,
-        
+
         /*
-         * 
+         *
          */
         labelColor : "black",
-        
-        
+
+
         /*
-         * 
+         *
          */
         valSize : 20,
-                
+
         /*
          * Border width
          */
         borderWidth : 1,
-        
+
         /*
          * border color
          */
         borderColor : "#282828",
-        
+
         /*
          * Sort by x argument
          */
         sortByValue : false,
-        
+
         /*
          * Sort by y argument
          */
         sortByLabel : false,
-        
+
         /*
          *  3D column
          */
-        
+
         threeD : false,
-        
+
         /*
          * canvas width
          */
         canvasWidth: 300,
-        
+
         /*
-         * canvas height 
+         * canvas height
          */
         canvasHeight : 300
     };

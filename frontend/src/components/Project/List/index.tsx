@@ -11,13 +11,8 @@ type ProjectListProps = {
 };
 
 const ProjectList = ({projects}: ProjectListProps) => {
-    const {
-        itemWidth,
-        itemHeight,
-        containerWidth,
-        containerHeight,
-        columns,
-    } = useGridLayout(projects.length, 3);
+    const {itemWidth, itemHeight, containerWidth, containerHeight, columns} =
+        useGridLayout(projects.length, 3);
 
     const cTop = (i: number) => Math.floor(i / columns) * (itemHeight + 10);
     const cLeft = (i: number) => (i % columns) * (itemWidth + 10);

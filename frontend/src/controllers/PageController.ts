@@ -1,18 +1,20 @@
 import {IncomingMessage, ServerResponse} from 'http';
 
 import {Router} from 'express';
-import Server from 'next/dist/next-server/server/next-server';
+// import Server from 'next/dist/next-server/server/next-server';
+import {NextServer} from 'next/dist/server/next';
 
 class PageController {
     private readonly router: Router;
-    private app: Server;
+    private app: NextServer;
 
-    constructor(app: Server) {
+    constructor(app: NextServer) {
         this.router = Router();
         this.app = app;
     }
 
     public getRouter = () => {
+        // @ts-ignore
         this.router.get('/projects/:token', this.getProject);
         return this.router;
     };

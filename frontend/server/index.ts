@@ -1,3 +1,5 @@
+import {ServerResponse} from 'http';
+
 import express from 'express';
 import next from 'next';
 
@@ -24,7 +26,7 @@ app.prepare().then(() => {
     server.use('/', pageController.getRouter());
 
     server.all('*', (req, res) => {
-        return handle(req, res);
+        return handle(req, res as ServerResponse);
     });
 
     server.listen(port, () => {

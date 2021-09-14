@@ -1,7 +1,7 @@
 /* global ctx2, canvas2, canvas, input, $$, ctx, colorPicker */
 
 window._c = function (ar) {
-    console.log(ar);
+    // console.log(ar);
 };
 
 $photo = new function () {
@@ -193,7 +193,6 @@ $photo = new function () {
                     k = parseInt(p[i].value);
                 }
             }
-            console.log(k)
             for (var i = 0; i < photoData.height; i++) {
                 for (var j = 0; j < photoData.width; j++) {
                     s = (newPhoto[i][j].r + newPhoto[i][j].g + newPhoto[i][j].b) / 3;

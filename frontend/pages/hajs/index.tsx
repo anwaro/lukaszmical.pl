@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import Index from '../../src/components/Layout/Layout';
+import Layout from '../../src/components/Layout/Layout';
 
 const Hajs = () => {
     const [projects, setProjects] = useState<Array<{id: number}>>([]);
@@ -10,7 +10,7 @@ const Hajs = () => {
     };
 
     return (
-        <Index>
+        <Layout seo={{title: 'Hajs'}}>
             <div>Projects</div>
             <div>
                 <button onClick={addProject}>Add project</button>
@@ -20,7 +20,7 @@ const Hajs = () => {
                     </div>
                 ))}
             </div>
-        </Index>
+        </Layout>
     );
 };
 

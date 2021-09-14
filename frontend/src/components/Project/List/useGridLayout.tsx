@@ -16,13 +16,14 @@ export default function useGridLayout(
     const [itemWidth, setItemWidth] = useState(bodyWidth() / columnNumber);
     const windowWidthRef = useRef(windowWidth);
 
-    const padding = useMemo(() => 2 * (windowWidth <= breakPoint ? 15 : 30), [
-        windowWidth,
-    ]);
-    const containerWidth = useMemo(() => Math.min(maxWidth, windowWidth) - padding, [
-        windowWidth,
-        padding,
-    ]);
+    const padding = useMemo(
+        () => 2 * (windowWidth <= breakPoint ? 15 : 30),
+        [windowWidth],
+    );
+    const containerWidth = useMemo(
+        () => Math.min(maxWidth, windowWidth) - padding,
+        [windowWidth, padding],
+    );
     const itemHeight = useMemo(() => itemWidth * imageRatio, [itemWidth]);
 
     const containerHeight = useMemo(() => {

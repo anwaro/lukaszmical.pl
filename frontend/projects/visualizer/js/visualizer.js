@@ -78,7 +78,7 @@ function init(id) {
     canvas.height = canvasSetting.height;
     var ctx = canvas.getContext("2d");
     canvas3d = new Canvas3d(ctx, scene);
-    console.log(canvas3d);
+    // console.log(canvas3d);
     setInterval(function () {
         rotate();
     }, 50);

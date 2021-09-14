@@ -131,13 +131,6 @@ function Animal() {
     };
 
     this.parseString = function (lines) {
-        console.log(this.shuffle(
-            lines.split(";").map((line) =>
-                line.split("-").map((point) =>
-                    point.split(",").map((c) => parseInt(c))
-                )
-            )
-        ));
         return this.shuffle(
             lines.split(";").map((line) =>
                 line.split("-").map((point) =>
@@ -185,7 +178,6 @@ function Animal() {
 
     this.value = function (value, a) {
         let pValue = parseInt(value);
-        isNaN(pValue) && console.log(a);
         return isNaN(pValue) ? 0 : pValue;
     };
 

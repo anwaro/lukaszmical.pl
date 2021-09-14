@@ -208,7 +208,7 @@ function reset() {
 
 document.querySelector("#reset").addEventListener('click', reset);
 document.querySelector("#select1").addEventListener('click', () => {
-    console.log($$('.URL'));
+    // console.log($$('.URL'));
     $$('.URL').hide();
     $$('#image').click();
 });

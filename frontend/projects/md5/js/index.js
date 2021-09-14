@@ -16,6 +16,6 @@ showPass.addEventListener('click', function () {
 });
 
 generate.addEventListener('click', function () {
-    console.log(input.value);
+    // console.log(input.value);
     output.value = window.md5(input.value);
 });
