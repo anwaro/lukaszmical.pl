@@ -1,88 +1,107 @@
-.hidden{
+body {
+    background: black;
+    margin: 0;
+}
+
+.hidden {
     overflow: hidden;
     width: 1px;
     height: 1px;
 }
 
-#photo{
+#photo {
     width: 300px;
     height: 300px;
     display: none;
-    margin-top: 20px;
+    margin: 20px auto auto;
     position: relative;
-    -webkit-transition: all 600ms ease;
-    -moz-transition: all 600ms ease;
-    -ms-transition: all 600ms ease;
-    -o-transition: all 600ms ease;
     transition: all 600ms ease;
+    filter: invert(1);
 }
 
-#wordDiv{
+#wordDiv {
     overflow: hidden;
-    margin : 20px;
+    margin: 20px;
     height: 50px;
+    display: flex;
+    justify-content: center;
 }
 
-.word{
+.word {
     width: 50px;
     height: 50px;
     border-bottom: 2px solid black;
     float: left;
     margin-left: 5px;
-    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #444;
+
 }
 
-.word.ok{
-    background: rgba(173, 255, 47, 0.3);
-}
-.word.fail{
-    background: rgba(255,0,0,0.3);
+.word.ok {
+    background: rgb(173, 255, 47);
 }
 
-#alphabet{
-    margin : 20px;
+.word.fail {
+    background: rgb(255, 0, 0);
+}
+
+#alphabet {
+    padding: 20px;
     overflow: hidden;
     display: inline-block;
     width: 414px;
-    
+
 }
 
-#alphabet button{
+#alphabet button {
     width: 40px;
     height: 40px;
     margin: 3px;
-    border : 0;
+    border: 0;
     background: silver;
     cursor: pointer;
-    
+
 }
 
-#alphabet button.ok{
+#alphabet button.ok {
     background: greenyellow;
 }
 
-#alphabet button.fail{
+#alphabet button.fail {
     background: red;
 }
 
-#hangman{
-    overflow: hidden;
-    display: inline-block;
+#hangman {
+    display: flex;
+    justify-content: center;
     margin: 20px;
     position: relative;
+    flex-direction: column;
 }
 
-#left{
+@media (min-width: 800px) {
+    #hangman {
+        flex-direction: row;
+    }
+}
+
+
+#left {
     float: left;
-    
+
 }
 
-#right{
-    float: left;
-    overflow: hidden;
+#right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-#info{
+#info {
     position: absolute;
     top: 0;
     left: 75px;
@@ -91,7 +110,7 @@
     display: none;
 }
 
-#new{
+#new {
     position: absolute;
     top: 170px;
     left: 150px;
@@ -99,12 +118,28 @@
     height: 50px;
     display: none;
     cursor: pointer;
-    
+
 }
 
-#load{
+#load {
     position: absolute;
     z-index: 99;
-    top:22px;
-    left:22px;
+    top: 22px;
+    left: 22px;
+}
+
+#load {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#load img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
 }

@@ -3,21 +3,21 @@ import React from 'react';
 
 import ProjectList from '~components/Project/List';
 import {Project} from '~interfaces/project';
+import {getProjectsInfos} from '~utils/project';
 
-import Index from '../src/components/Layout/Layout';
-import {getProjectsInfos} from '../src/utils/project';
+import Layout from '../src/components/Layout/Layout';
 
 type ProjectsProps = {
     projects: Project[];
 };
 
 const Projects = ({projects}: ProjectsProps) => (
-    <Index>
+    <Layout seo={{title: 'Projects'}}>
         <div>Projects</div>
         <div>
             <ProjectList projects={projects} />
         </div>
-    </Index>
+    </Layout>
 );
 
 export const getStaticProps: GetStaticProps = async () => {

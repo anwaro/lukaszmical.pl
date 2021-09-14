@@ -1,6 +1,9 @@
-#app-hist{
+body {
+    background: #444;
+}
+
+#app-hist {
     width: 720px;
-    height: 500px;
     background-color: rgba(0, 0, 0, 0.58);
     margin: auto;
     margin-top: 20px;
@@ -8,29 +11,29 @@
     font-size: 20px;
 }
 
-#app-control{
+#app-control {
     width: 720px;
     height: 50px;
     padding: 10px 0;
 }
 
-#count-rand, #count-itaration{
+#count-rand, #count-itaration {
     width: 40px;
     height: 25px;
     font-size: 15px;
     line-height: 15px;
 }
 
-#progress-bg{
+#progress-bg {
     margin: 0 10px;
     height: 20px;
     width: 700px;
     border-radius: 5px;
     background-color: #464646;
-    
+
 }
 
-#progress{
+#progress {
     height: 20px;
     width: 2px;
     border-radius: 5px;
@@ -40,28 +43,29 @@
     -o-transition: .1s ease-in-out;
     transition: .5s ease-in-out;
 }
-#histogram{
+
+#histogram {
     height: 400px;
     width: 700px;
     margin: 15px 10px;
     background-color: rgba(0, 0, 0, 0.3);
-    
+
 }
 
-.bar-bg{
+.bar-bg {
     width: 8px;
     height: 396px;
     margin: 1px;
-    float:left;
+    float: left;
     position: relative;
 }
 
-.bar{
+.bar {
     position: absolute;
     width: 8px;
     height: 2px;
     bottom: 0;
-    background-color: #62ABA1;   
+    background-color: #62ABA1;
     border-radius: 2px 2px 0 0;
     -webkit-transition: .1s ease-in-out;
     -moz-transition: .1s ease-in-out;

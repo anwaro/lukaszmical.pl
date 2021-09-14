@@ -43,6 +43,7 @@ export const filterAssetFile = (
     minType: boolean,
     assetType: AssetType,
 ) => {
+    files.sort((a, b) => a.toLocaleLowerCase().localeCompare(b.toLocaleLowerCase()));
     return files
         .filter((f) => f.includes(`.${assetType}`))
         .filter((f) => {

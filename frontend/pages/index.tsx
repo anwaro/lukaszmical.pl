@@ -2,13 +2,15 @@ import {GetStaticProps} from 'next';
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations';
 import React from 'react';
 
-import EmptyLayout from '~components/Layout/EmptyLayout';
-import Homepage from '~components/Pages/Homepage';
+import Layout from '~components/Layout/Layout';
+import HomepageMenu from '~components/Pages/Homepage/Menu';
+import PersonBackground from '~components/Pages/Homepage/PersonBackground';
 
 const Index = () => (
-    <EmptyLayout seo={{title: 'Łukasz Micał | Homepage'}}>
-        <Homepage />
-    </EmptyLayout>
+    <Layout seo={{title: 'Łukasz Micał | Homepage'}}>
+        <PersonBackground />
+        <HomepageMenu />
+    </Layout>
 );
 
 export const getStaticProps: GetStaticProps = async ({locale, defaultLocale}) => ({

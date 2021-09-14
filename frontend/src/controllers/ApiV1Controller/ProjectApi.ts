@@ -9,7 +9,8 @@ class ProjectApi {
 
     public getRouter = () => {
         this.router.get('/random-word', (_req, res) => {
-            res.send('Hello');
+            const randWords = ['Hello', 'World', 'TypeScript'];
+            res.send(randWords[Math.floor(Math.random() * randWords.length)]);
         });
 
         return this.router;

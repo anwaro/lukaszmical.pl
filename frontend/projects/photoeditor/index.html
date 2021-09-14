@@ -2,15 +2,19 @@
     <div id="photo-panel">
         <input type="file" id="photo-choser-input" accept="image/*">
         <label id="photo-choser-label" for="photo-choser-input">
-            <span id="photo-choser">Wybierz zdjęcie</span>
+            <div id="photo-choser">Wybierz zdjęcie</div>
         </label>
         <div id="photo-orginal" class="switch">
             ORGINAŁ
-            <button id="orginal-show" class="switcher true" value="true"> </button>
+            <button id="orginal-show" class="switcher true" value="true"></button>
         </div>
         <div id="photo-touse" class="switch">
             NAKŁADAJ
-            <button id="photo-use" class="switcher false" value="false"> </button>
+            <button id="photo-use" class="switcher false" value="false"></button>
+        </div>
+        <div id="" class="switch">
+            EFEKT
+            <input id="range" type="range" min="1" max="100" step="1" value="15"/>
         </div>
     </div>
 
@@ -45,9 +49,9 @@
         <div class="photoedit pixel">
             PIXEL
             <div class="photomenu">
-                <div data-edit="circle"  class="edit photooption circle">KÓŁKA</div>
-                <div data-edit="pixel"   class="edit photooption pixel">PIXEL</div>
-                <div data-edit="dots"    class="edit photooption dots">KROPKI</div>
+                <div data-edit="circle" class="edit photooption circle">KÓŁKA</div>
+                <div data-edit="pixel" class="edit photooption pixel">PIXEL</div>
+                <div data-edit="dots" class="edit photooption dots">KROPKI</div>
                 <div data-edit="randpix" class="edit photooption randpix">RANDPIX</div>
             </div>
         </div>
@@ -65,8 +69,6 @@
                 <div data-edit="lab" class="edit photooption lab">RAND</div>
             </div>
         </div>
-
-        <div><input id="range" type="range" min="1" max="100" step="1" value="15"/></div>
         <div id="mask" class="hide">
             <div id="mask-matrix"></div>
             <div data-edit='ownMask-3' id="mask-action" class="edit">GO</div>
@@ -75,8 +77,8 @@
 
 
     <div id="photo-canvas">
-        <canvas id="canvas-orginal"> </canvas>
-        <canvas id="canvas-input" style="display: none;"> </canvas>
-        <canvas id="canvas-output"> </canvas>
+        <canvas id="canvas-orginal"></canvas>
+        <canvas id="canvas-input" style="display: none;"></canvas>
+        <canvas id="canvas-output"></canvas>
     </div>
 </div>

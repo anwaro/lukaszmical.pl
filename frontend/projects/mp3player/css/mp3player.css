@@ -1,3 +1,7 @@
+body {
+    background: black;
+}
+
 *, *:before, *:after {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -102,7 +106,7 @@
 }
 
 #vol-up {
-    background-image: linear-gradient(to right, transparent 0, transparent 10px, #000000 10px, rgba(2, 2, 2, 0.9) 12px, transparent 12px);
+    background-image: linear-gradient(to right, transparent 0, transparent 10px, #000000 10px, #ffffffe6 12px, transparent 12px);
 
     position: absolute;
     width: 20px;
@@ -114,7 +118,7 @@
 }
 
 #vol-down {
-    background-image: linear-gradient(to right, transparent 0, transparent 10px, #000000 10px, rgba(2, 2, 2, 0.9) 12px, transparent 12px);
+    background-image: linear-gradient(to right, transparent 0, transparent 10px, #000000 10px, #ffffffe6 12px, transparent 12px);
     position: absolute;
     width: 20px;
     height: 60px;

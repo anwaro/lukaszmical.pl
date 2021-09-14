@@ -9,14 +9,16 @@ import styles from './styles.module.scss';
 
 export type LayoutProps = {
     seo: SeoProps;
+    showMenu?: boolean;
+    showFooter?: boolean;
 };
 
-const Layout: React.FC<LayoutProps> = ({children, seo}) => (
+const Layout: React.FC<LayoutProps> = ({children, seo, showFooter, showMenu}) => (
     <>
         <Seo {...seo} />
-        <Menu />
+        {showMenu && <Menu />}
         <main className={styles.main}>{children}</main>
-        <Footer />
+        {showFooter && <Footer />}
     </>
 );
 

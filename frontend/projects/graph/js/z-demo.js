@@ -12,7 +12,7 @@
     codeMirrorJsOwn = CodeMirror($$('#js-graph-own'), {'lineNumbers': true, 'readOnly': true});
     codeMirrorHtmlOwn = CodeMirror($$('#html-graph-own'), {'lineNumbers': true, 'readOnly': true, mode: "text/html"});
     val = '<html>\n\t<head>\n\t\t.\n\t\t.\n\t\t';
-    val += '<script src="http://lukaszmical.pl/js/projects/graph.js"></script> \n\t\t.\n\t\t.\n\t';
+    val += '<script src="https://lukaszmical.pl/assets/graph/js/graph.js"></script> \n\t\t.\n\t\t.\n\t';
     val += '</head>\n\t<body>\n\t\t.\n\t\t.\n\t\t';
     val += '<canvas id="graph-own" height="300" width="500"></canvas>\n\t\t.\n\t\t.\n\t</body>\n</html>';
     codeMirrorHtmlOwn.setValue(val);
@@ -106,11 +106,11 @@ function drawGraph() {
         var div = datainput[i];
         if (typeof div === "object") {
             data.push([div.children[0].value, parseFloat(div.children[1].value)]);
-            mirrorData += ('\n\t\t["' + div.children[0].value + '", ' + div.children[1].value + "],");
+            mirrorData += ('\n\t["' + div.children[0].value + '", ' + div.children[1].value + "],");
         }
     }
     mirrorData = mirrorData.substring(0, mirrorData.length - 1);
-    mirrorData += "\n\t];\nvar settings = {";
+    mirrorData += "\n];\nvar settings = {";
 
     var settinsinput = document.getElementsByClassName("graph-props");
     var set = false;
@@ -126,7 +126,7 @@ function drawGraph() {
     if (set) {
         mirrorData = mirrorData.substring(0, mirrorData.length - 1);
     }
-    mirrorData += "\n\t};\n";
+    mirrorData += "\n};\n";
     mirrorData += "document.getElementById('graph-own').graph(data, settings);";
 
     codeMirrorJsOwn.setValue(mirrorData);

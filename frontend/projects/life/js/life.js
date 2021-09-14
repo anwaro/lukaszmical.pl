@@ -77,14 +77,13 @@ function setData() {
 }
 
 function initVariable() {
-    size = value($$("#size"), 1, 10);
+    size = value($$("#size"), 1, 30);
     col = value($$("#col"), 10, 500);
     row = value($$("#row"), 10, 500);
-    margin = value($$("#margin"), 0, 10);
+    margin = value($$("#margin"), 0, 30);
     sizeTotal = 2 * margin + size;
     width = sizeTotal * col;
     height = sizeTotal * row;
-    console.log(height, width);
     canvas.height = height;
     canvas.width = width;
     setData();

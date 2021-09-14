@@ -7,8 +7,7 @@ import s from './styles.module.scss';
 export type HomepageMenuProps = {};
 
 const HomepageMenu: React.FC<HomepageMenuProps> = () => {
-    const {t, ready} = useTranslation('homepage');
-    console.log(t, ready);
+    const {t} = useTranslation('homepage');
     return (
         <div className={s.menu}>
             <MenuItem
@@ -18,16 +17,16 @@ const HomepageMenu: React.FC<HomepageMenuProps> = () => {
                 color={'white'}
             />
             <MenuItem
-                link="/work"
+                link="/projects"
                 text={t('iAm')}
                 textOnHover={t('work')}
-                color={'red'}
+                color={'#4c6280'}
             />
             <MenuItem
                 link="/contact"
                 text={t('name')}
                 textOnHover={t('contact')}
-                color={'red'}
+                color={'#4c6280'}
             />
         </div>
     );

@@ -2,7 +2,7 @@
     "slug": "life",
     "name": "Gra w życie",
     "description": "",
-    "requireThemeCss": true,
+    "requireThemeCss": false,
     "requireMyQuery": true,
     "createdAt": "2016-10-02",
     "order": 30,

@@ -1,3 +1,12 @@
+body {
+    background: black;
+    color: white;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 #photo {
     width: 100%;
     min-height: 500px;
@@ -12,7 +21,9 @@
 
 #photo-panel {
     margin: 10px auto;
-    width: 550px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 #photo-choser {
@@ -21,13 +32,14 @@
     width: 300px;
     height: 50px;
     float: left;
-    margin: 0 5px;
+    padding: 12px 0;
 }
 
 #photo-choser-label {
     overflow: hidden;
     width: 300px;
     height: 50px;
+    margin: 0 5px;
 }
 
 #photo-choser-input {
@@ -38,10 +50,11 @@
     border: 1px solid #D0D0D0;
     border-radius: 10px;
     margin: 0 5px;
-    width: 100px;
     float: left;
     font-size: 13px;
     line-height: 23px;
+    display: flex;
+    flex-direction: column;
 }
 
 .switcher {
@@ -99,6 +112,12 @@
 
 .photooption:first-child {
     margin-left: 0;
+}
+
+.photo-option{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .photoedit, .photooption {
