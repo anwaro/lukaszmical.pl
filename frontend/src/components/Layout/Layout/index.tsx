@@ -1,5 +1,6 @@
 import React from 'react';
 
+import LocaleSwitcher from '~components/Atoms/LocaleSwitcher';
 import Seo, {SeoProps} from '~components/Layout/Seo';
 
 import Footer from '../Footer';
@@ -18,7 +19,7 @@ const Layout: React.FC<LayoutProps> = ({children, seo, showFooter, showMenu}) =>
         <Seo {...seo} />
         {showMenu && <Menu />}
         <main className={styles.main}>{children}</main>
-        {showFooter && <Footer />}
+        {showFooter ? <Footer /> : <LocaleSwitcher fixed />}
     </>
 );
 

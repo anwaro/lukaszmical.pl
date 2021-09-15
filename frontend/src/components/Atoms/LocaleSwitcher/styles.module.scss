@@ -1,0 +1,21 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixin";
+
+.row {
+    display: flex;
+    flex-direction: row;
+
+    &.fixed {
+        position: fixed;
+        bottom: 5px;
+        right: 5px;
+
+    }
+
+    .link {
+        padding: 10px;
+        font-size: 12px;
+        color: #b4b4b4;
+        text-decoration: none;
+    }
+}
