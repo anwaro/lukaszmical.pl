@@ -1,10 +1,4 @@
 {
-    "slug": "tetris",
-    "name": "Tetris",
-    "description": "Tetris",
     "requireThemeCss": true,
-    "requireMyQuery": false,
-    "createdAt": "2015-05-21",
-    "order": 46,
-    "published": true
+    "requireMyQuery": false
 }

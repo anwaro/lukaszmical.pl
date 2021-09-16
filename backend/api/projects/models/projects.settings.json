@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "projects",
   "info": {
-    "name": "projects"
+    "name": "projects",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -10,31 +11,40 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "slug": {
+    "url": {
       "type": "string",
       "unique": true,
       "required": true
     },
     "name": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "description": {
-      "type": "text"
-    },
-    "css": {
-      "type": "json"
-    },
-    "js": {
-      "type": "json"
-    },
-    "globalCss": {
-      "type": "boolean"
-    },
-    "globalJs": {
-      "type": "boolean"
+      "type": "text",
+      "required": true
     },
     "createdAt": {
-      "type": "date"
+      "type": "date",
+      "required": true
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "project",
+        "external",
+        "page"
+      ]
+    },
+    "cover": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": true,
+      "pluginOptions": {}
     }
   }
 }

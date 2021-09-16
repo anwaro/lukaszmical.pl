@@ -1,9 +1,4 @@
 {
-    "name": "Audio Visualizer 3D",
-    "description": "",
     "requireThemeCss": false,
     "requireMyQuery": true,
-    "createdAt": "2016-09-23",
-    "order": 100,
-    "published": false
 }

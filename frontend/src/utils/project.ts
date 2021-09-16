@@ -1,4 +1,6 @@
-import {Project, ProjectWitAssets} from '~interfaces/project';
+import {ProjectConfig, ProjectWitAssets} from '~types/project';
+
+import {fetchProject} from '../api/fetchProject';
 
 import {readDir, readFile} from './projectFs';
 import renderHtml from './renderHtml';
@@ -73,14 +75,14 @@ export const getProjectInfoFile = async (slug: string) => {
     return {
         slug,
         ...JSON.parse(content),
-    } as Project;
+    } as ProjectConfig;
 };
 
 const pickTypeValue = <T>(type: AssetType, cssValue: T, jsValue: T): T =>
     type === 'css' ? cssValue : jsValue;
 
 export const createAsset = (
-    {slug, requireThemeCss, requireMyQuery, cssFiles, jsFiles}: ProjectWitAssets,
+    {url, requireThemeCss, requireMyQuery, cssFiles, jsFiles}: ProjectWitAssets,
     type: AssetType,
     minFile = false,
 ) => {
@@ -96,18 +98,18 @@ export const createAsset = (
               ]
             : []),
         ...pickTypeValue(type, cssFiles, jsFiles).map((file: string) =>
-            mapper(assetUrl(`${slug}/${type}/${file}`)),
+            mapper(assetUrl(`${url}/${type}/${file}`)),
         ),
     ].join('\n');
 };
 
 export const renderProject = async (project: ProjectWitAssets, minFile = true) => {
     const template = await getMainTemplate();
-    const projectHtml = await getProjectHtml(project.slug);
+    const projectHtml = await getProjectHtml(project.url);
 
     return renderHtml(template, {
-        title: project.name,
-        description: project.description,
+        title: `${project.name}`,
+        description: `${project.description}`,
         content: projectHtml,
         css: createAsset(project, 'css', minFile),
         script: createAsset(project, 'js', minFile),
@@ -124,11 +126,15 @@ export const getProjectInfo = async (
     }
     const cssFiles = await getProjectCssFiles(slug, minFile);
     const jsFiles = await getProjectJsFiles(slug, minFile);
+    const project = await fetchProject(slug);
     const projectFileInfo = await getProjectInfoFile(slug);
 
-    return {
-        ...projectFileInfo,
-        cssFiles,
-        jsFiles,
-    };
+    return project
+        ? {
+              ...projectFileInfo,
+              ...project,
+              cssFiles,
+              jsFiles,
+          }
+        : undefined;
 };

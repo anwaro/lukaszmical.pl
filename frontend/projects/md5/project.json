@@ -1,10 +1,4 @@
 {
-    "slug": "md5",
-    "name": "Md5 Generator",
-    "description": "This online tool allows you to generate the MD5 hash of any string.",
     "requireThemeCss": false,
-    "requireMyQuery": false,
-    "createdAt": "2018-07-01",
-    "order": 26,
-    "published": true
+    "requireMyQuery": false
 }

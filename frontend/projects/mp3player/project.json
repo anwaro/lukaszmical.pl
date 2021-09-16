@@ -1,10 +1,4 @@
 {
-    "slug": "mp3player",
-    "name": "Mp3 Player",
-    "description": "Odtwarzacz muzyki",
     "requireThemeCss": false,
-    "requireMyQuery": false,
-    "createdAt": "2015-11-19",
-    "order": 4,
-    "published": true
+    "requireMyQuery": false
 }

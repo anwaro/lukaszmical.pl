@@ -1,4 +1,7 @@
-export const queryToString = (query: string | string[], glue = '') => {
+export const queryToString = (query: string | string[] | undefined, glue = '') => {
+    if (typeof query === 'undefined') {
+        return '';
+    }
     if (typeof query === 'string') {
         return query;
     }

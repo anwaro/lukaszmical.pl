@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_blocks_videos",
+  "info": {
+    "name": "video",
+    "icon": "play",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "video": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "url": {
+      "type": "string"
+    },
+    "provider": {
+      "type": "enumeration",
+      "enum": [
+        "file",
+        "youtube",
+        "vimeo",
+        "streamable"
+      ],
+      "required": true,
+      "default": "file"
+    }
+  }
+}

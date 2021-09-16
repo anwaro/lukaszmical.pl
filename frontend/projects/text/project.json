@@ -1,9 +1,4 @@
 {
-    "name": "Text Statistics",
-    "description": "Text Statistics",
     "requireThemeCss": false,
-    "requireMyQuery": false,
-    "createdAt": "2017-06-16",
-    "order": 100,
-    "published": false
+    "requireMyQuery": false
 }

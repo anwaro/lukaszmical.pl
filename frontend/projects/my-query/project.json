@@ -1,9 +1,4 @@
 {
-    "name": "myQuery",
-    "description": "Mała biblioteka js",
     "requireThemeCss": false,
-    "requireMyQuery": false,
-    "createdAt": "2016-09-19",
-    "order": 100,
-    "published": false
+    "requireMyQuery": false
 }

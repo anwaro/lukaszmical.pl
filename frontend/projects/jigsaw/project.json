@@ -1,10 +1,4 @@
 {
-    "slug": "jigsaw",
-    "name": "Układanka",
-    "description": "Układanka z zdjęcia",
     "requireThemeCss": true,
-    "requireMyQuery": true,
-    "createdAt": "2015-11-09",
-    "order": 44,
-    "published": true
+    "requireMyQuery": true
 }

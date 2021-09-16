@@ -1,9 +1,4 @@
 {
-    "name": "Math Code",
-    "description": "Kod funckcji",
     "requireThemeCss": false,
-    "requireMyQuery": false,
-    "createdAt": "2016-03-10",
-    "order": 100,
-    "published": false
+    "requireMyQuery": false
 }
