@@ -1,9 +1,8 @@
 import fs from 'fs';
 
-import {ProjectListItem} from '~interfaces/project';
-import {RunParams} from '~interfaces/scripts';
+import {RunParams} from '~types/scripts';
 
-const projects: ProjectListItem[] = [
+const projects = [
     {
         slug: 'animal',
         name: 'Animal',
@@ -358,7 +357,8 @@ export const saveProjectInfo = (
     });
 };
 
-const run = async (_params: RunParams) => {
+// eslint-disable-next-line no-unused-vars
+const run = async (_: RunParams) => {
     for (let project of projects) {
         await saveProjectInfo(
             project.slug,

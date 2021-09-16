@@ -1,14 +1,13 @@
 import minify from 'minify';
 
-import {RunParams} from '~interfaces/scripts';
-
+import {RunParams} from '~types/scripts';
 import {
     filterAssetFile,
     getProjectCssFiles,
     getProjectJsFiles,
     getProjectsPath,
-} from '../src/utils/project';
-import {readDir, writeFile} from '../src/utils/projectFs';
+} from '~utils/project';
+import {readDir, writeFile} from '~utils/projectFs';
 
 const getProjectsFiles = async () => {
     const projects = await readDir(getProjectsPath(''));
@@ -37,6 +36,7 @@ const minifyFiles = async (
 };
 
 const minifyProject = async (slug: string) => {
+    // eslint-disable-next-line no-console
     console.info(`Start minify ${slug} project`);
     const jsFiles = await getProjectJsFiles(slug, false);
     const cssFiles = await getProjectCssFiles(slug, false);
@@ -44,6 +44,7 @@ const minifyProject = async (slug: string) => {
     await minifyFiles(cssFiles, slug, 'css', 'css');
 };
 
+// eslint-disable-next-line no-unused-vars
 const run = async (_params: RunParams) => {
     const {projects, files} = await getProjectsFiles();
     await minifyFiles(filterAssetFile(files, false, 'js'), '', '', 'js');

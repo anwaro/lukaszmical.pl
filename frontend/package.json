@@ -11,7 +11,7 @@
         "lint": "eslint \"./**/*.+(js|jsx|ts|tsx)\"",
         "lint:fix": "eslint --fix \"./**/*.+(js|jsx|ts|tsx)\"",
         "code": "yarn format && yarn lint:fix && yarn typescript",
-        "tn": "yarn  ts-node  --project tsconfig.server.json scripts/index.ts",
+        "tn": "yarn ts-node -r tsconfig-paths/register --project tsconfig.server.json scripts/index.ts",
         "types": "yarn apollo codegen:generate --localSchemaFile=../backend/exports/graphql/schema.graphql --target=typescript --tagName=gql --outputFlat ./src/types",
         "typescript": "tsc --noEmit"
     },
@@ -59,6 +59,7 @@
         "eslint-plugin-prettier": "4.0.0",
         "eslint-plugin-react": "7.25.1",
         "ts-node": "10.2.1",
+        "tsconfig-paths": "^3.11.0",
         "typescript": "4.4.3"
     }
 }

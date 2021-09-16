@@ -25,8 +25,8 @@
         "forceConsistentCasingInFileNames": true,
         "resolveJsonModule": true,
         "paths": {
-            "~controllers/*": [
-                "src/controllers/*"
+            "~pages/*": [
+                "pages/*"
             ],
             "~components/*": [
                 "src/components/*"
@@ -37,12 +37,6 @@
             "~graphql/*": [
                 "src/graphql/*"
             ],
-            "~interfaces/*": [
-                "src/interfaces/*"
-            ],
-            "~pages/*": [
-                "pages/*"
-            ],
             "~scss/*": [
                 "src/scss/*"
             ],
@@ -51,9 +45,6 @@
             ],
             "~styles/*": [
                 "src/styles/*"
-            ],
-            "~store/*": [
-                "src/store/*"
             ],
             "~utils/*": [
                 "src/utils/*"
@@ -70,7 +61,7 @@
         "next.config.js"
     ],
     "include": [
-        "src/typings/*",
+        "src/**/*",
         "next-env.d.ts",
         "**/*.ts",
         "**/*.tsx",

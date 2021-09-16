@@ -16,8 +16,8 @@ const PageSections: React.FC<PageSectionsProps> = ({page}) => {
 
     return (
         <>
-            {sections.map((section) => (
-                <Section key={section.id} section={section} />
+            {sections.map((section, i) => (
+                <Section key={i} section={section} />
             ))}
         </>
     );

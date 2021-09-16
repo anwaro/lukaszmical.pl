@@ -1,8 +1,8 @@
 @import "../../../styles/variables";
-@import "../../../styles/colors";
 @import "../../../styles/mixin";
 
-.image {
-    max-width: 100%;
-}
+.row {
+    display: flex;
+    flex-direction: row;
 
+}
