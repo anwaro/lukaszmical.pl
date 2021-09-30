@@ -17,7 +17,11 @@ const PGList: React.FC<PGListProps> = ({projects}) => {
             <Container>
                 <Row>
                     {projects.map((project) => (
-                        <ProjectLink href={project.url} type={project.type}>
+                        <ProjectLink
+                            key={project.url}
+                            href={project.url}
+                            type={project.type}
+                        >
                             <div>
                                 {project.cover && (
                                     <img
