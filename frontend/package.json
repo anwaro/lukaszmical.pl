@@ -33,7 +33,7 @@
         "next": "11.1.2",
         "next-i18next": "8.8.0",
         "node-minify": "3.6.0",
-        "node-sass": "5.0.0",
+        "node-sass": "7.0.0",
         "nodemon": "2.0.12",
         "prettier": "2.4.0",
         "react": "17.0.2",
