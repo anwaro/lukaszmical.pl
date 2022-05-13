@@ -1,8 +1,7 @@
-import classNames from 'classnames';
 import Link from 'next/link';
 import React from 'react';
 
-import s from './styles.module.scss';
+import {HoverWord, Item, Word} from './styles';
 
 export type MenuItemProps = {
     link: string;
@@ -14,10 +13,10 @@ export type MenuItemProps = {
 const MenuItem: React.FC<MenuItemProps> = ({link, text, textOnHover, hover}) => {
     return (
         <Link href={link}>
-            <a className={classNames(s.menuItem, hover && s.hover)}>
-                <div className={s.word}>{text}</div>
-                <div className={s.hoverWord}>{textOnHover}</div>
-            </a>
+            <Item hover={hover}>
+                <Word>{text}</Word>
+                <HoverWord>{textOnHover}</HoverWord>
+            </Item>
         </Link>
     );
 };

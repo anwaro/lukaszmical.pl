@@ -1,9 +1,8 @@
-import React from 'react';
+import styled from 'styled-components';
 
-import s from './styles.module.scss';
-
-const Row: React.FC = ({children}) => {
-    return <div className={s.row}>{children}</div>;
-};
+const Row = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
 
 export default Row;

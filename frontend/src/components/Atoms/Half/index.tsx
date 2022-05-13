@@ -1,9 +1,7 @@
-import React from 'react';
+import styled from 'styled-components';
 
-import s from './styles.module.scss';
-
-const Half: React.FC = ({children}) => {
-    return <div className={s.half}>{children}</div>;
-};
+const Half = styled.div`
+    width: 50%;
+`;
 
 export default Half;

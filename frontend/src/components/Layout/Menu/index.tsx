@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-import styles from './styles.module.scss';
+import {Nav, Item, Container} from './styles';
 
 export type LayoutProps = {
     title?: string;
@@ -14,18 +14,18 @@ export type MenuLinkProps = {
 
 const MenuLink: React.FC<MenuLinkProps> = ({href, title}) => (
     <Link href={href}>
-        <a className={styles.navItem}>{title}</a>
+        <Item>{title}</Item>
     </Link>
 );
 
 const Menu: React.FC<LayoutProps> = () => (
-    <nav className={styles.nav}>
-        <div className={styles.navContainer}>
+    <Nav>
+        <Container>
             <MenuLink href={'/'} title={'Home'} />
             <MenuLink href={'/about'} title={'about'} />
             <MenuLink href={'/projects'} title={'projects'} />
-        </div>
-    </nav>
+        </Container>
+    </Nav>
 );
 
 export default Menu;

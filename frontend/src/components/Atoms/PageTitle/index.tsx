@@ -1,9 +1,13 @@
-import React from 'react';
+import styled from 'styled-components';
 
-import s from './styles.module.scss';
-
-const PageTitle: React.FC = ({children}) => {
-    return <div className={s.title}>{children}</div>;
-};
+const PageTitle = styled.div`
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    font-size: 10vh;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+`;
 
 export default PageTitle;

@@ -1,9 +1,8 @@
-import React from 'react';
+import styled from 'styled-components';
 
-import s from './styles.module.scss';
-
-const Container: React.FC = ({children}) => {
-    return <div className={s.container}>{children}</div>;
-};
-
+export const Container = styled.div`
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 15px;
+`;
 export default Container;

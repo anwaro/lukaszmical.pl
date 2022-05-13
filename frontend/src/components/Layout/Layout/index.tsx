@@ -1,11 +1,11 @@
 import React from 'react';
 
 import Seo, {SeoProps} from '~components/Layout/Seo';
+import {ReactFC} from '~types/react';
 
-import Footer from '../Footer';
 import Menu from '../Menu';
 
-import styles from './styles.module.scss';
+import {Main} from './styles';
 
 export type LayoutProps = {
     seo: SeoProps;
@@ -13,12 +13,11 @@ export type LayoutProps = {
     showFooter?: boolean;
 };
 
-const Layout: React.FC<LayoutProps> = ({children, seo, showFooter, showMenu}) => (
+const Layout: ReactFC<LayoutProps> = ({children, seo, showMenu}) => (
     <>
         <Seo {...seo} />
         {showMenu && <Menu />}
-        <main className={styles.main}>{children}</main>
-        {showFooter && <Footer />}
+        <Main>{children}</Main>
     </>
 );
 

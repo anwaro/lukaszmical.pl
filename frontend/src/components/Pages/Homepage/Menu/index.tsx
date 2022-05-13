@@ -4,7 +4,7 @@ import React from 'react';
 import useHoverEffect from '~components/Pages/Homepage/Menu/useHoverEffect';
 
 import MenuItem from './MenuItem';
-import s from './styles.module.scss';
+import {Container} from './styles';
 
 export type HomepageMenuProps = {};
 
@@ -13,7 +13,7 @@ const HomepageMenu: React.FC<HomepageMenuProps> = () => {
     const {index, ...events} = useHoverEffect(3, 2, 3);
 
     return (
-        <div className={s.menu} {...events}>
+        <Container {...events}>
             <MenuItem
                 link="/about"
                 text={t('hello')}
@@ -32,7 +32,7 @@ const HomepageMenu: React.FC<HomepageMenuProps> = () => {
                 textOnHover={t('contact')}
                 hover={2 === index}
             />
-        </div>
+        </Container>
     );
 };
 

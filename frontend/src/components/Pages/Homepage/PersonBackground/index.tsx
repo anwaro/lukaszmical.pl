@@ -1,11 +1,17 @@
-import React from 'react';
+import styled from 'styled-components';
 
-import s from './styles.module.scss';
+const PersonBackground = styled.div`
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
 
-export type PersonBackgroundProps = {};
-
-const PersonBackground: React.FC<PersonBackgroundProps> = () => {
-    return <div className={s.bg} />;
-};
+    background: url('/assets/image/bg/bg.jpg') no-repeat center top;
+    background-size: contain;
+    @media (min-width: 1200px) {
+        background-position: left center;
+    }
+`;
 
 export default PersonBackground;

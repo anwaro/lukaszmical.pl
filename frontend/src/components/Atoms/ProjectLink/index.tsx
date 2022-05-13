@@ -3,13 +3,14 @@ import React from 'react';
 
 import {ENUM_PROJECTS_TYPE} from '~types/globalTypes';
 import {trim} from '~utils/string';
+import {ReactFC} from '~types/react';
 
 type ProjectLinkProps = {
     href: string;
     type: ENUM_PROJECTS_TYPE | null;
 };
 
-const ProjectLink: React.FC<ProjectLinkProps> = ({children, href, type}) => {
+const ProjectLink: ReactFC<ProjectLinkProps> = ({children, href, type}) => {
     if (href) {
         switch (type) {
             case ENUM_PROJECTS_TYPE.project:

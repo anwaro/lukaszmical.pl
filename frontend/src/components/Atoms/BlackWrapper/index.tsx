@@ -1,9 +1,10 @@
-import React from 'react';
+import styled from 'styled-components';
 
-import s from './styles.module.scss';
-
-const BlackWrapper: React.FC = ({children}) => (
-    <div className={s.container}>{children}</div>
-);
+const BlackWrapper = styled.div`
+    display: flex;
+    flex: 1;
+    background: black;
+    height: 100%;
+`;
 
 export default BlackWrapper;
