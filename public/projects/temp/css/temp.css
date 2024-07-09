@@ -1,0 +1,76 @@
+﻿/*@font-face {
+	font-family: "temp";
+	font-weight: normal;
+	font-style: normal;
+	src: url("Dosis-ExtraBold.ttf");
+}*/
+
+body {
+    margin: 0;
+    background: rgb(216, 215, 215);
+}
+
+
+h6 {
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+}
+
+#control {
+    float: left;
+    width: 250px;
+    background: silver;
+    height: 100%;
+
+}
+
+#control hr, #control table, #control input {
+    margin: 0;
+    padding: 0;
+    line-height: 1.3em;
+}
+
+#climatModel {
+    float: left;
+    background: rgb(115, 145, 240);
+    border: 0 solid #201616;
+    border-left-width: 1px;
+}
+
+#all {
+    overflow: hidden;
+    position: relative;
+    margin: 4em auto auto;
+    background: rgb(115, 145, 240);
+    border: 2px solid;
+    height: 600px;
+    width: 1255px;
+}
+
+#result {
+    position: absolute;
+    z-index: 999;
+    margin-left: 250px;
+    width: 1000px;
+    height: 600px;
+}
+
+.part {
+    float: left;
+    width: 250px;
+    height: 600px;
+
+
+}
+
+#tmperature {
+    /*font-family: temp;*/
+    font-size: 70px;
+    margin-top: 300px;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 1);
+}
+
+#info {
+    height: 200px;
+    Margin: 10px;
+}

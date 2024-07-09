@@ -1,0 +1,187 @@
+<script>
+    /* global $$ */
+
+    function hiddenMatrix(m) {
+        $$('#mask' + m + 'x' + m).fadeOut(200);
+    }
+
+    function showPhoto() {
+        var k = $$('#imgDiv');
+        if (k.isHidden()) {
+            k.css('display', 'inline');
+        } else {
+            k.hide();
+        }
+    }
+</script>
+
+<div>
+    <input accept="image/*" id="photo" name="photo" title="" type="file">
+
+    <input checked onclick="showPhoto()" type="checkbox">
+    <span> Pokaz orginał </span>
+</div>
+<div class="options">
+    <div class="opt">
+        <input checked class="option" id="negatyw" name="filter" type="radio" value="negatyw">
+        <label for="negatyw">Negatyw</label>
+    </div>
+    <div class="opt">
+        <input class="option" id="szarosc" name="filter" type="radio" value="szarosc">
+        <label for="szarosc">Szary</label>
+    </div>
+    <div class="opt">
+        <input class="option" id="sepia" name="filter" type="radio" value="sepia">
+        <label for="sepia">Sepia</label>
+    </div>
+    <div class="opt">
+        <input class="option" id="kontur" name="filter" type="radio" value="kontur">
+        <label for="kontur">Kontur</label>
+    </div>
+    <div class="opt">
+        <input class="option" id="kontur-2" name="filter" type="radio" value="kontur-2">
+        <label for="kontur-2">Kontur</label>
+    </div>
+    <div class="opt">
+        <input class="option" id="bit" name="filter" type="radio" value="bit">
+        <label for="bit">32 bit</label>
+    </div>
+    <div class="opt">
+        <input class="option" id="lab" name="filter" type="radio" value="lab">
+        <label for="lab">lab</label>
+    </div>
+    <div class="opt" id="progButton">
+        Progowanie
+        <div class="addOpt" id="prog">
+            <table>
+                <tr>
+                    <td><input name="prog" type="radio" value="1">czarny i odcieńe szarości</td>
+                </tr>
+                <tr>
+                    <td><input checked name="prog" type="radio" value="0">czarny i biały</td>
+                </tr>
+                <tr>
+                    <td><input name="prog" type="radio" value="-1">odcienie szarości i biały</td>
+                </tr>
+                <tr>
+                    <td><input id="rangeProg" max="255" min="1" type="range" value="126"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="option" id="progowanie" name="filter" type="radio" value="progowanie">
+                        <label for="progowanie" onclick="$$('#prog').fadeOut(200)">Przekształć </label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="opt" id="accent">
+        Akcent
+        <div class="addOpt" id="pickColor">
+            <table>
+                <tr>
+                    <td>
+                        <canvas id="colorPicker"></canvas>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input id="rangeAccent" max="359" min="1" type="range" value="20"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="option" id="akcent" name="filter" type="radio" value="akcent">
+                        <label for="akcent" onclick="$$('#pickColor').fadeOut(200)"> Przekształć </label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="opt" id="showMatrix3">
+        3x3
+        <div class="addOpt" id="mask3x3">
+            <table>
+                <tr>
+                    <td><input class="matrix" id="m1" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="m2" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="m3" maxlength="3" type="text"></td>
+                </tr>
+                <tr>
+                    <td><input class="matrix" id="m4" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="m5" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="m6" maxlength="3" type="text"></td>
+                </tr>
+                <tr>
+                    <td><input class="matrix" id="m7" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="m8" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="m9" maxlength="3" type="text"></td>
+                </tr>
+                <tr>
+                    <td colspan=3>
+                        <input class="option" id="wlasna3x3" name="filter" type="radio" value="wlasna3x3">
+                        <label for="wlasna3x3" onclick="hiddenMatrix(3)">Przekształć </label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="opt" id="showMatrix5">
+        5x5
+        <div class="addOpt" id="mask5x5">
+            <table>
+                <tr>
+                    <td><input class="matrix" id="n1" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="n2" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="n3" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="n4" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="n5" maxlength="3" type="text"></td>
+                </tr>
+                <tr>
+                    <td><input class="matrix" id="n6" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="n7" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="n8" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="n9" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="n10" maxlength="3" type="text"></td>
+                </tr>
+                <tr>
+                    <td><input class="matrix" id="n11" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="n12" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="n13" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="n14" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="n15" maxlength="3" type="text"></td>
+                </tr>
+                <tr>
+                    <td><input class="matrix" id="n16" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="n17" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="n18" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="n19" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="n20" maxlength="3" type="text"></td>
+                </tr>
+                <tr>
+                    <td><input class="matrix" id="n21" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="n22" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="n23" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="n24" maxlength="3" type="text"></td>
+                    <td><input class="matrix" id="n25" maxlength="3" type="text"></td>
+                </tr>
+                <tr>
+                    <td colspan=5>
+                        <input class="option" id="wlasna5x5" name="filter" type="radio" value="wlasna5x5">
+                        <label for="wlasna5x5" onclick="hiddenMatrix(5)">Przekształć </label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="opt">
+        <input class="option" id="randmaska" name="filter" type="radio" value="randmaska">
+        <label for="randmaska">Losowa</label>
+    </div>
+</div>
+
+<div id="content">
+    <div id="imgDiv">
+        <img id="img">
+    </div>
+    <canvas id="photoHide" style="display:none;"></canvas>
+    <canvas id="photoCanvas"></canvas>
+</div>

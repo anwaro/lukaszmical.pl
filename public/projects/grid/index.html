@@ -1,0 +1,90 @@
+<canvas class=" action" data-action="closeSettings" id="grid"></canvas>
+
+<div class="photo-loader end action" data-action="closeSettings">
+    <span class="loader-pr" id="pr-1"></span>
+    <div class="photo-progress" id="progress">
+        <div class="bar">
+            <span class="loader-pr" id="pr-2"></span>
+        </div>
+    </div>
+    <label class="photo-label" for="image">
+        <input accept="image/*" class="file-input" id="image" type="file">
+    </label>
+</div>
+<div class="settings action" data-action="openSettings"></div>
+
+<div class="setting-box">
+    <a class="close action" data-action="closeSettings" href="#"></a>
+
+    <br>----------- OGÓLNE --------------
+    <div class="input-box">
+
+        <label>Zasięg działania</label>
+        <input class="slider input-action" data-action="setValue" data-var="maxRange" max="4000" min="0" step="1" title="as"
+               type="range">
+        <span class="val" id="maxRange"></span>
+    </div>
+
+    <div class="input-box">
+        <label>Siła odziałania</label>
+        <input class="slider input-action" data-action="setValue" data-var="maxForce" max="600" min="0" step="1" title="as"
+               type="range">
+        <span class="val" id="maxForce"></span>
+    </div>
+
+    <br>----------- INTRO --------------
+
+    <div class="input-box">
+        <label>Ilość x</label>
+        <input class="slider input-action" data-action="setValue" data-var="countX" max="100" min="5" step="1" title="as"
+               type="range">
+        <span class="val" id="countX"></span>
+    </div>
+
+    <div class="input-box">
+        <label>Ilość y</label>
+        <input class="slider input-action" data-action="setValue" data-var="countY" max="100" min="5" step="1" title="as"
+               type="range">
+        <span class="val" id="countY"></span>
+    </div>
+
+    <div class="input-box">
+        <div class="btn action" data-action="generatePoint">ZASTOSUJ</div>
+    </div>
+
+    <br>------------ ZDJĘCIE -------------
+
+    <div class="input-box">
+        <label>Ilość pixeli</label>
+        <input class="slider input-action" data-action="setValue" data-var="pixelCount" max="60000" min="5" step="1" title="as"
+               type="range">
+        <span class="val" id="pixelCount"></span>
+    </div>
+
+
+    <div class="input-box">
+        <label>Maksymalna ilość pixeli</label>
+        <input class="slider input-action" data-action="setValue" data-var="maxPixelCount" max="80000" min="5" step="1" title="as"
+               type="range">
+        <span class="val" id="maxPixelCount"></span>
+    </div>
+
+    <div class="input-box">
+        <div class="btn action" data-action="loadPhoto">PRZEŁADUJ</div>
+        <div class="btn action" data-action="generatePoint">USUŃ</div>
+    </div>
+
+    <br>------------ INNE -------------
+
+    <div class="input-box">
+        <div class="btn action" data-action="toggle" data-var="exp">EXP TOGGLE</div>
+        <div class="btn action" data-action="toggle" data-var="smooth">SMOOTH TOGGLE</div>
+    </div>
+
+
+</div>
+<div class="stats">
+    <div id="fps"></div>
+    <div id="particle"></div>
+</div>
+

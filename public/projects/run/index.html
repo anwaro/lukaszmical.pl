@@ -1,0 +1,119 @@
+<div class="run-bg">
+    <div class="container">
+        <div class="row run-box">
+            <div class="col-sm-6 col-lg-3 col">
+                <div class="input-area" data-type="period">
+                    <div class="input-label">CZAS BIEGU</div>
+                    <div class="input-box">
+                        <input data-max="24" id="run-period-h" maxlength="2" title="Hours" type="text" value="0"> h :
+                    </div>
+                    <div class="input-box">
+                        <input data-max="59" id="run-period-m" maxlength="2" title="Minutes" type="text" value="0"> m :
+                    </div>
+                    <div class="input-box">
+                        <input data-max="59" id="run-period-s" maxlength="2" title="Seconds" type="text" value="0"> s
+                    </div>
+                    <div class="radio-box">
+                        <input class="input-example" data-h="0" data-min="45" data-sec="0" data-type="period"
+                               title="0:45:00" type="button" value="0:45:00">
+                        <input class="input-example" data-h="1" data-min="0" data-sec="0" data-type="period"
+                               title="1:00:00" type="button" value="1:00:00">
+                        <input class="input-example" data-h="1" data-min="30" data-sec="0" data-type="period"
+                               title="1:30:00" type="button" value="1:30:00">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 col">
+                <div class="input-area" data-type="distance">
+                    <div class="input-label">DYSTANS</div>
+                    <div class="input-box">
+                        <input class="w3" data-max="999" id="run-distance-km" maxlength="3" title="Kilometers"
+                               type="text" value="0"> km :
+                    </div>
+                    <div class="input-box">
+                        <input class="w3" data-max="999" id="run-distance-m" maxlength="3" title="Meters" type="text"
+                               value="0"> m
+                    </div>
+                    <div class="radio-box">
+                        <input class="input-example" data-km="1" data-m="0" data-type="distance" title="1 km"
+                               type="button" value="1 km">
+                        <input class="input-example" data-km="5" data-m="0" data-type="distance" title="5 km"
+                               type="button" value="5 km">
+                        <input class="input-example" data-km="10" data-m="0" data-type="distance" title="10 km"
+                               type="button" value="10 km">
+                        <input class="input-example" data-km="21" data-m="97" data-type="distance" title="Half Marathon 21km 97m"
+                               type="button" value="h-mar">
+                        <input class="input-example" data-km="42" data-m="195" data-type="distance" title="Marathon 42km 195m"
+                               type="button" value="mar">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 col">
+                <div class="input-area" data-type="pace">
+                    <div class="input-label">TEMPO BIEGU</div>
+                    <div class="input-box">
+                        <input data-max="59" data-type="s_km" id="run-pace-m" maxlength="2" title="Minutes" type="text"
+                               value="0"> m
+                    </div>
+                    <div class="input-box">
+                        <input data-max="59" data-type="s_km" id="run-pace-s" maxlength="2" title="Seconds" type="text"
+                               value="0"> s
+                    </div>
+                    <div class="radio-box">
+                        <input class="input-example" data-min="4" data-sec="0" data-type="pace" title="4'00''"
+                               type="button" value="4'00''">
+                        <input class="input-example" data-min="4" data-sec="15" data-type="pace" title="4'15''"
+                               type="button" value="4'15''">
+                        <input class="input-example" data-min="4" data-sec="30" data-type="pace" title="4'30''"
+                               type="button" value="4'30''">
+                        <input class="input-example" data-min="4" data-sec="45" data-type="pace" title="4'45''"
+                               type="button" value="4'45''">
+                        <input class="input-example" data-min="5" data-sec="0" data-type="pace" title="5'00''"
+                               type="button" value="5'00''">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 col">
+                <div class="input-area" data-type="speed">
+                    <div class="input-label">PRĘDKOŚĆ</div>
+                    <div class="input-box">
+                        <input class="w3" data-max="30" data-type="km_h" id="run-speed-km-h" maxlength="4"
+                               title="Speed km/h" type="text" value="0"> km/h
+                    </div>
+                    <div class="input-box">
+                        <input class="w3" data-max="30" data-type="m_s" id="run-speed-m-s" maxlength="4" title="Speed m/s"
+                               type="text" value="0"> m/s
+                    </div>
+                    <div class="radio-box">
+                        <input class="input-example" data-km_h="12" data-m_s="3.3" data-type="speed" title="12km/h"
+                               type="button" value="12km/h">
+                        <input class="input-example" data-km_h="13" data-m_s="3.6" data-type="speed" title="13km/h"
+                               type="button" value="13km/h">
+                        <input class="input-example" data-km_h="14" data-m_s="3.9" data-type="speed" title="14km/h"
+                               type="button" value="14km/h">
+                        <input class="input-example" data-km_h="15" data-m_s="4.2" data-type="speed" title="15km/h"
+                               type="button" value="15km/h">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row run-box">
+            <div class="col-md-12 col">
+                <div class="table-area">
+                    <div class="table-header">
+                        <div class="empty-box"></div>
+                        <div class="table-title" id="run-table-header-top"></div>
+                    </div>
+                    <div class="table-body">
+                        <div class="table-side"><span class="side-label" id="run-table-header-side"></span></div>
+                        <div class="table-main">
+                            <table id="run-table-body"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

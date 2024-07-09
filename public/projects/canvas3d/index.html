@@ -1,0 +1,15 @@
+<div class="row-box">
+    <h1>Audio Visualizer 3D</h1>
+    <canvas id="visualizer"></canvas>
+</div>
+<div class="row-box">
+    <button class="button" onclick="canvas3d.scene.config.render = !canvas3d.scene.config.render">Toggle Perspective
+    </button>
+    <br>
+    ODLEGŁOŚĆ OBSERWATORA(0-100)<input max="500" min="0" onchange="canvas3d.scene.config.viewer.z = parseInt(this.value)" style="width: 500px;" type="range"
+                                       value="100"><br>
+    ODLEGŁOŚĆ OBSERWATORA(100-500)<input max="500" min="100" onchange="canvas3d.scene.config.viewer.z = parseInt(this.value)" style="width: 500px;" type="range"
+                                         value="300"><br>
+    SKALUJ<input max="500" min="10" onchange="canvas3d.scene.config.scale = parseInt(this.value)" style="width: 500px;" type="range"
+                 value="100"><br>
+</div>

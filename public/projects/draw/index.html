@@ -1,0 +1,84 @@
+<script>
+    /* global $$ */
+
+
+    function setAtribute(e) {
+        e.parentNode.parentNode.style.backgroundImage = 'url(http://lukaszmical.pl/images/projects/draw/' + e.dataset.type + '.png)';
+        e.parentNode.parentNode.dataset.type = e.dataset.type;
+    }
+
+    function size(i) {
+        var k = parseInt($$('#lineW').innerHTML);
+        if (k + i < 60 && k + i > 0) {
+            $$('#lineW').innerHTML = k + i;
+        }
+    }
+
+    function textSize(i) {
+        var k = parseInt($$('#lineS').innerHTML);
+        if (k + i < 60 && k + i > 5) {
+            $$('#lineS').innerHTML = k + i;
+        }
+    }
+
+    function switcher(e) {
+        var d = $$(e);
+        if (d.hasClass('on')) {
+            d.removeClass('on');
+        } else {
+            d.addClass('on');
+        }
+    }
+
+</script>
+<div id="contener">
+    <div id="menu">
+        <div class="boxx" id="color">
+            <input id="in_color" onchange="this.parentNode.style.background = this.value;" type="color" value="#FFFFFF">
+            <div id="colorPicker"></div>
+        </div>
+        <div class="boxl" id="size">
+            <div id="lineW">3</div>
+            <div id="sizeControl">
+                <div id="sizeUp" onclick="size(1);"></div>
+                <div id="sizeDown" onclick="size(-1)"></div>
+            </div>
+        </div>
+        <div class="boxx" id="type">
+            <div id="typeOption">
+                <div class="boxx q1" data-type="q1" id="line" onclick="setAtribute(this);"></div>
+                <div class="boxx q2" data-type="q2" id="line" onclick="setAtribute(this);"></div>
+                <div class="boxx q3" data-type="q3" id="line" onclick="setAtribute(this);"></div>
+                <div class="boxx q4" data-type="q4" id="line" onclick="setAtribute(this);"></div>
+                <div class="boxx q5" data-type="q5" id="line" onclick="setAtribute(this);"></div>
+                <div class="boxx q6" data-type="q6" id="line" onclick="setAtribute(this);"></div>
+            </div>
+        </div>
+        <div class="boxx" id="undo"></div>
+        <div class="boxx" id="redo"></div>
+        <a download id="saveImg">
+            <div class="boxll" id="save">Zapisz</div>
+        </a>
+        <div class="boxll" id="clean">Nowy</div>
+        <div class="boxll" id="send">Wyślij</div>
+        <div class="boxx" id="fontColor">A
+            <input id="in_f_color" onchange="this.parentNode.style.color = this.value;" type="color" value="#FFFFFF">
+        </div>
+        <div class="boxx" id="bold" onclick="switcher(this)">B</div>
+        <div class="boxx" id="under" onclick="switcher(this)">U</div>
+        <div class="boxx" id="italic" onclick="switcher(this)">I</div>
+
+        <div class="boxl" id="textSize">
+            <div id="lineS">13</div>
+            <div id="sizeControl">
+                <div id="sizeUp" onclick="textSize(1);"></div>
+                <div id="sizeDown" onclick="textSize(-1)"></div>
+            </div>
+        </div>
+
+    </div>
+    <div id="drawDiv">
+        <canvas id="drawCanvas"></canvas>
+        <canvas id="drawCanvasCover"></canvas>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+<div id="photo">
+    <div id="photo-panel">
+        <input accept="image/*" id="photo-choser-input" type="file">
+        <label for="photo-choser-input" id="photo-choser-label">
+            <div id="photo-choser">Wybierz zdjęcie</div>
+        </label>
+        <div class="switch" id="photo-orginal">
+            ORGINAŁ
+            <button class="switcher true" id="orginal-show" value="true"></button>
+        </div>
+        <div class="switch" id="photo-touse">
+            NAKŁADAJ
+            <button class="switcher false" id="photo-use" value="false"></button>
+        </div>
+        <div class="switch" id="">
+            EFEKT
+            <input id="range" max="100" min="1" step="1" type="range" value="15" />
+        </div>
+    </div>
+
+    <div id="photo-option">
+        <div class="photoedit color">
+            KOLOR
+            <div class="photomenu">
+                <div class="edit photooption negatyw" data-edit="negatyw">NEGATYW</div>
+                <div class="edit photooption szary" data-edit="szary">SZAROŚĆ</div>
+                <div class="edit photooption sepia" data-edit="sepia">SEPIA</div>
+                <div class="edit photooption bit" data-edit="bit">KOLORY</div>
+            </div>
+        </div>
+        <div class="photoedit kontur1">
+            KONTUR
+            <div class="photomenu">
+                <div class="edit photooption kontur1" data-edit="kontur1">KONTUR 1</div>
+                <div class="edit photooption kontur2" data-edit="kontur2">KONTUR 2</div>
+            </div>
+        </div>
+        <div class="edit photoedit akcent hide-child" data-edit="akcent" id="akcent">
+            AKCENT
+        </div>
+        <div class="photoedit  progcz-bi">
+            PROGOWANIE
+            <div class="photomenu">
+                <div class="edit photooption progsz-bi" data-edit="progowanie-2">SZAROŚĆ I BIEL</div>
+                <div class="edit photooption progcz-bi" data-edit="progowanie-1">CZARNY I BIAŁY</div>
+                <div class="edit photooption progcz-szar" data-edit="progowanie-0">CZARNY I SZAROŚĆ</div>
+            </div>
+        </div>
+        <div class="photoedit pixel">
+            PIXEL
+            <div class="photomenu">
+                <div class="edit photooption circle" data-edit="circle">KÓŁKA</div>
+                <div class="edit photooption pixel" data-edit="pixel">PIXEL</div>
+                <div class="edit photooption dots" data-edit="dots">KROPKI</div>
+                <div class="edit photooption randpix" data-edit="randpix">RANDPIX</div>
+            </div>
+        </div>
+        <div class="photoedit m3x3">
+            MASKA
+            <div class="photomenu">
+                <div class="maskshow photooption m3x3" data-size='3'>3x3</div>
+                <div class="maskshow photooption m5x5" data-size='5'>5x5</div>
+                <div class="edit photooption losowa" data-edit="randMask">LOSOWA</div>
+            </div>
+        </div>
+        <div class="photoedit lab">
+            LAB
+            <div class="photomenu">
+                <div class="edit photooption lab" data-edit="lab">RAND</div>
+            </div>
+        </div>
+        <div class="hide" id="mask">
+            <div id="mask-matrix"></div>
+            <div class="edit" data-edit='ownMask-3' id="mask-action">GO</div>
+        </div>
+    </div>
+
+
+    <div id="photo-canvas">
+        <canvas id="canvas-orginal"></canvas>
+        <canvas id="canvas-input" style="display: none;"></canvas>
+        <canvas id="canvas-output"></canvas>
+    </div>
+</div>

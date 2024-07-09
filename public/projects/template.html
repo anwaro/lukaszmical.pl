@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta content="{{description}}" name="description" />
+    <meta content="" name="keywords" />
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <meta content="{{description}}" property="og:title" />
+    <meta content="{{image}}" property="og:image" />
+    <meta content="{{url}}" property="og:url" />
+    <meta content="" property="og:description" />
+    <meta content="article" property="og:type" />
+    {{css}}
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments);
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m);
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-57170208-1', 'auto');
+        ga('require', 'displayfeatures');
+        ga('send', 'pageview');
+    </script>
+</head>
+<body>
+{{content}}
+{{script}}
+</body>
+</html>
