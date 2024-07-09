@@ -1,4 +1,4 @@
-import {ProjectRow} from '@/services/supabase/SupabaseProject';
+import {ProjectRow} from '@/types/supabase/projects';
 
 export type AssetType = 'js' | 'css';
 

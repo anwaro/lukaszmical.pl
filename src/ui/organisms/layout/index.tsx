@@ -1,4 +1,5 @@
 import {clsx} from 'clsx';
+import Head from 'next/head';
 
 type Props = {
     locale: string;
@@ -8,9 +9,9 @@ type Props = {
 export default function Layout({children, locale, className}: PWC<Props>) {
     return (
         <html lang={locale}>
-            <head>
+            <Head>
                 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-            </head>
+            </Head>
             <body
                 className={clsx(
                     'flex flex-col flex-1 bg-black min-h-[100vh]',
