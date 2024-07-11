@@ -13,7 +13,7 @@ export class Project {
     ): Promise<ProjectWitAssets | undefined> => {
         const client = new SupabaseProject();
         const files = await fs.promises.readdir(this.getProjectsPath(slug));
-        const project = await client.getProject(slug);
+        const project = await client.getProjectBySlug(slug);
         if (!files.length || project === null) {
             return undefined;
         }

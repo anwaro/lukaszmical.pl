@@ -2,11 +2,16 @@ import {SupabaseClient} from '@/services/supabase/SupabaseClient';
 import {ProjectInsert, ProjectRow} from '@/types/supabase/projects';
 
 export class SupabaseProject extends SupabaseClient {
-    async getProject(slug: string): Promise<ProjectRow | null> {
+    async getProjectBySlug(slug: string): Promise<ProjectRow | null> {
         const {data} = await this.client
             .from('projects')
             .select('*')
             .eq('slug', slug);
+        return data?.length ? (data[0] as ProjectRow) : null;
+    }
+
+    async getProject(id: number | string): Promise<ProjectRow | null> {
+        const {data} = await this.client.from('projects').select('*').eq('id', id);
         return data?.length ? (data[0] as ProjectRow) : null;
     }
 

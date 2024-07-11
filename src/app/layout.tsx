@@ -1,9 +1,8 @@
 import type {Metadata} from 'next';
 import {Roboto} from 'next/font/google';
 import './globals.css';
-import Layout from '@/ui/organisms/layout';
-import Providers from '@/ui/organisms/providers';
-import {getMessages} from 'next-intl/server';
+import Head from 'next/head';
+import {clsx} from 'clsx';
 
 export const metadata: Metadata = {
     title: 'Create Next App',
@@ -15,24 +14,13 @@ const font = Roboto({
     subsets: ['latin', 'latin-ext'],
 });
 
-type Props = {
-    params: {
-        locale: string;
-    };
-};
-
-export default async function RootLayout({children, params}: PWC<Props>) {
-    const messages = await getMessages();
-
+export default async function RootLayout({children}: PWC) {
     return (
-        <Providers
-            locale={params.locale}
-            timeZone={'Europe/Warsaw'}
-            messages={messages}
-        >
-            <Layout className={font.className} locale={params.locale}>
-                {children}
-            </Layout>
-        </Providers>
+        <html className={clsx('style-basic', font.className)}>
+            <Head>
+                <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+            </Head>
+            <body>{children}</body>
+        </html>
     );
 }

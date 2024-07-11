@@ -8,7 +8,7 @@ export function PageHomepage() {
     const {ref, onMouseMove, setHover} = useBackgroundCanvas();
 
     return (
-        <div className={'relative size-full'} onMouseMove={onMouseMove}>
+        <div className={'relative w-full h-[100vh]'} onMouseMove={onMouseMove}>
             <canvas ref={ref} className={'absolute top-0 left-0 size-full'} />
             <HomepageMenu setHover={setHover} />
         </div>

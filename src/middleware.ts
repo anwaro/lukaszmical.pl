@@ -1,23 +1,23 @@
 import createMiddleware from 'next-intl/middleware';
-import {defaultLocale, locales} from './config';
+import {type NextRequest} from 'next/server';
 
-export default createMiddleware({
-    // A list of all locales that are supported
-    locales: locales,
+import {defaultLocale, localePrefix, locales} from './config';
+import {updateSession} from '@/utils/supabase/middleware';
 
-    // Used when no locale matches
-    defaultLocale: defaultLocale,
+const i18nMiddleware = createMiddleware({
+    locales,
+    localePrefix,
+    defaultLocale,
 });
 
-export const config = {
-    // Match only internationalized pathnames
+export async function middleware(request: NextRequest) {
+    if (request.nextUrl.pathname.startsWith('/admin')) {
+        return await updateSession(request);
+    } else {
+        return i18nMiddleware(request);
+    }
+}
 
-    matcher: [
-        // Match all pathnames except for
-        // - … if they start with `/api`, `/_next` or `/_vercel`
-        // - … the ones containing a dot (e.g. `favicon.ico`)
-        '/((?!api|_next|_vercel|.*\\..*).*)',
-        '/',
-        `/(en|pl)/:path*`,
-    ],
+export const config = {
+    matcher: ['/((?!api|_next|_vercel|.*\\..*).*)'],
 };

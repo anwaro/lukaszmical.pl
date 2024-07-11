@@ -9,17 +9,29 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@mdi/js": "^7.4.47",
+        "@supabase/ssr": "^0.4.0",
         "@supabase/supabase-js": "^2.44.3",
+        "@tailwindcss/forms": "^0.5.7",
+        "chart.js": "^4.4.3",
         "clsx": "2.1.1",
+        "formik": "^2.4.6",
+        "js-base64": "^3.7.7",
+        "js-cookie": "^3.0.5",
         "mime": "4.0.4",
         "next": "14.2.4",
         "next-intl": "^3.15.5",
+        "numeral": "^2.0.6",
         "react": "18.3.1",
-        "react-dom": "18.3.1"
+        "react-chartjs-2": "^5.2.0",
+        "react-dom": "18.3.1",
+        "swr": "^2.2.5"
     },
     "devDependencies": {
+        "@types/js-cookie": "^3.0.6",
         "@types/minify": "^9.1.4",
         "@types/node": "20.14.10",
+        "@types/numeral": "^2.0.5",
         "@types/react": "18.3.3",
         "@types/react-dom": "18.3.0",
         "eslint": "8.57.0",
