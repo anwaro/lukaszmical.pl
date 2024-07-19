@@ -3,9 +3,10 @@
 import {HomepageMenuItem} from './item';
 import {useTranslations} from 'next-intl';
 import {useMemo} from 'react';
+import {HoverElement} from '@/services/animation/type';
 
 type Props = {
-    setHover: (isHover: boolean) => void;
+    setHover: (isHover?: HoverElement) => void;
 };
 
 export function HomepageMenu({setHover}: Props) {

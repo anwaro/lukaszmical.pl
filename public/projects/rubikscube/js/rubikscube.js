@@ -14,7 +14,7 @@ let rotateEndAngle = 0;
 let rotateSpeed = 0;
 let angleStep = 0;
 let rotateCount = 0;
-let supportElipse = false;
+let supportEllipse = false;
 
 let canvas, ctx;
 let canvasWidth = 900;
@@ -172,7 +172,7 @@ function mouseUp(event) {
         mouse.inercion = true;
         canvasCursor('default');
     }
-    if (mouse.scrollPress && event.button === 1) {
+    if (mouse.scrollPress && (event.button === 1 || event.button === 2)) {
         mouse.inercion = true;
         canvasCursor('default');
     }
@@ -189,6 +189,7 @@ function mouseDown(event) {
     ) {
         return false;
     }
+    event.preventDefault();
     const rect = canvas.getBoundingClientRect();
     mouse.click.set(event.clientX - rect.left, event.clientY - rect.top);
     mouse.pos.set(event.clientX - rect.left, event.clientY - rect.top + 1e-9);
@@ -197,7 +198,7 @@ function mouseDown(event) {
     if (event.button === 0) {
         mouse.leftPress = true;
         canvasCursor('move');
-    } else if (event.button === 1) {
+    } else if (event.button === 1 || event.button === 2) {
         mouse.scrollPress = true;
         canvasCursor('move');
     }
@@ -214,10 +215,10 @@ function touchStart(event) {
     ) {
         return false;
     }
-    const touchobj = event.changedTouches[0]; // reference first touch point for this event
+    const touch = event.changedTouches[0]; // reference first touch point for this event
     const rect = canvas.getBoundingClientRect();
-    mouse.click.set(touchobj.clientX - rect.left, touchobj.clientY - rect.top);
-    mouse.pos.set(touchobj.clientX - rect.left, touchobj.clientY - rect.top + 1e-9);
+    mouse.click.set(touch.clientX - rect.left, touch.clientY - rect.top);
+    mouse.pos.set(touch.clientX - rect.left, touch.clientY - rect.top + 1e-9);
     mouse.resetLazy();
 
     const touchCube = cube.activeElement(mouse.click);
@@ -231,9 +232,9 @@ function touchStart(event) {
 
 function touchMove(event) {
     if (mouse.inercion) return 1;
-    const touchobj = event.changedTouches[0]; // reference first touch point for this event
+    const touch = event.changedTouches[0]; // reference first touch point for this event
     const rect = canvas.getBoundingClientRect();
-    mouse.pos.set(touchobj.clientX - rect.left, touchobj.clientY - rect.top);
+    mouse.pos.set(touch.clientX - rect.left, touch.clientY - rect.top);
     event.preventDefault();
 }
 
@@ -254,19 +255,19 @@ function draw() {
         cube.rotatePart();
     }
 
-    supportElipse && cube.printShadow();
+    supportEllipse && cube.printShadow();
     cube.fillFaces();
 
     mouse.shakeProcess || mouse.update();
 }
 
-function testLog() {
-    ctx.beginPath();
-    ctx.fillStyle = 'red';
-    ctx.moveTo(mouse.click.x, mouse.click.y);
-    ctx.lineTo(mouse.pos.x, mouse.pos.y);
-    ctx.stroke();
-}
+// function testLog() {
+//     ctx.beginPath();
+//     ctx.fillStyle = 'red';
+//     ctx.moveTo(mouse.click.x, mouse.click.y);
+//     ctx.lineTo(mouse.pos.x, mouse.pos.y);
+//     ctx.stroke();
+// }
 
 function Cube(walls) {
     this.walls = walls;
@@ -293,9 +294,9 @@ function Cube(walls) {
         return this.walls[id][0];
     };
 
-    this.getChild = function (id) {
-        return this.walls[id][1];
-    };
+    // this.getChild = function (id) {
+    //     return this.walls[id][1];
+    // };
 
     this.getNeigh = function (id) {
         return this.walls[id][2];
@@ -330,10 +331,11 @@ function Cube(walls) {
         }
     };
     this.fillFaces = function () {
+        let j, i;
         if (this.faceNormal === -1) {
             const maxZ = this.nearestVertex();
             this.showed = [];
-            for (var i = 0; i < this.walls.length; i++) {
+            for (i = 0; i < this.walls.length; i++) {
                 const face = this.walls[i][0];
                 if (
                     Math.max(face.v1.z, face.v2.z, face.v3.z, face.v4.z) + 0.1 >
@@ -341,15 +343,15 @@ function Cube(walls) {
                 ) {
                     this.showed.push(i);
                 }
-                for (var j = 0; j < this.walls[i][1].length; j++) {
+                for (j = 0; j < this.walls[i][1].length; j++) {
                     this.walls[i][1][j].fill();
                     this.walls[i][1][j].printEdge();
                 }
             }
         } else {
             let dist = 0;
-            for (var i = 0; i < this.walls.length; i++) {
-                for (var j = 0; j < this.walls[i][1].length; j++) {
+            for (i = 0; i < this.walls.length; i++) {
+                for (j = 0; j < this.walls[i][1].length; j++) {
                     if (this.distance(this.walls[i][1][j].average()) < 2) {
                         this.walls[i][1][j].fill();
                         this.walls[i][1][j].printEdge();
@@ -359,8 +361,8 @@ function Cube(walls) {
             }
             this.sort();
             this.fillBlack();
-            for (var i = 0; i < this.walls.length; i++) {
-                for (var j = 0; j < this.walls[i][1].length; j++) {
+            for (i = 0; i < this.walls.length; i++) {
+                for (j = 0; j < this.walls[i][1].length; j++) {
                     dist = this.distance(this.walls[i][1][j].average());
                     if (dist < 3.5 && dist > 2) {
                         this.walls[i][1][j].fill();
@@ -371,8 +373,8 @@ function Cube(walls) {
             }
             this.sort();
             this.fillBlack();
-            for (var i = 0; i < this.walls.length; i++) {
-                for (var j = 0; j < this.walls[i][1].length; j++) {
+            for (i = 0; i < this.walls.length; i++) {
+                for (j = 0; j < this.walls[i][1].length; j++) {
                     if (this.distance(this.walls[i][1][j].average()) > 4) {
                         this.walls[i][1][j].fill();
                         this.walls[i][1][j].printEdge();
@@ -730,27 +732,28 @@ function Cube(walls) {
     };
 
     this.transform = function () {
+        let i, top;
         let index = this.clickElementIndex;
         const face = this.clickFacesIndex;
         const move = this.moveTo;
 
         if ([3, 4].indexOf(move) !== -1 && face < 4) {
-            for (var i = 0; i < rotateCount; i++) {
+            for (i = 0; i < rotateCount; i++) {
                 this.moveZX(index, this.moveTo === 3);
             }
         } else if (
             [1, 2].indexOf(move) !== -1 &&
             [0, 2, 4, 5].indexOf(face) !== -1
         ) {
-            var top = move === 1;
+            top = move === 1;
             top = face === 2 ? !top : top;
             index = face === 2 ? 8 - index : index;
 
-            for (var i = 0; i < rotateCount; i++) {
+            for (i = 0; i < rotateCount; i++) {
                 this.moveZY(index, top);
             }
         } else {
-            var top = move === 1;
+            top = move === 1;
             if (face === 4) {
                 top = move === 3;
                 index = [6, 3, 0, 7, 4, 1, 8, 5, 2].indexOf(index);
@@ -761,7 +764,7 @@ function Cube(walls) {
                 top = move === 4;
                 index = [2, 5, 8, 1, 4, 7, 0, 3, 6].indexOf(index);
             }
-            for (var i = 0; i < rotateCount; i++) {
+            for (i = 0; i < rotateCount; i++) {
                 this.moveXY(index, top);
             }
         }
@@ -795,7 +798,7 @@ function Cube(walls) {
             );
             color = this.replaceGroup(3, [8 - col, 5 - col, 2 - col], color);
             color = this.replaceGroup(5, [3 * col + 2, 3 * col + 1, 3 * col], color);
-            color = this.replaceGroup(1, [col, col + 3, col + 6], color);
+            this.replaceGroup(1, [col, col + 3, col + 6], color);
         } else {
             color = this.replaceGroup(1, [col, col + 3, col + 6], color);
             color = this.replaceGroup(5, [3 * col + 2, 3 * col + 1, 3 * col], color);
@@ -805,7 +808,7 @@ function Cube(walls) {
                 [3 * (2 - col), 3 * (2 - col) + 1, 3 * (2 - col) + 2],
                 color,
             );
-            color = this.replaceGroup(1, [col, col + 3, col + 6], color);
+            this.replaceGroup(1, [col, col + 3, col + 6], color);
         }
     };
     this.moveZY = function (index, top) {
@@ -820,13 +823,13 @@ function Cube(walls) {
             color = this.replaceGroup(4, [col, col + 3, col + 6], color);
             color = this.replaceGroup(2, [8 - col, 5 - col, 2 - col], color);
             color = this.replaceGroup(5, [col, col + 3, col + 6], color);
-            color = this.replaceGroup(0, [col, col + 3, col + 6], color);
+            this.replaceGroup(0, [col, col + 3, col + 6], color);
         } else {
             color = this.replaceGroup(0, [col, col + 3, col + 6], color);
             color = this.replaceGroup(5, [col, col + 3, col + 6], color);
             color = this.replaceGroup(2, [8 - col, 5 - col, 2 - col], color);
             color = this.replaceGroup(4, [col, col + 3, col + 6], color);
-            color = this.replaceGroup(0, [col, col + 3, col + 6], color);
+            this.replaceGroup(0, [col, col + 3, col + 6], color);
         }
     };
 
@@ -919,7 +922,7 @@ function Face(v1, v2, v3, v4, color, id, pId) {
     };
     this.showToggle = function () {
         this.setNormal();
-        this.show = this.normal.z > 0 ? true : false;
+        this.show = this.normal.z > 0;
     };
     this.average = function () {
         return {
@@ -1132,9 +1135,9 @@ function Vector(x, y, z) {
     this.multiply = function (scalar) {
         return new Vector(scalar * this.x, scalar * this.y, scalar * this.z);
     };
-    this.str = function () {
-        return ' x: ' + this.x + ' y: ' + this.y + ' z: ' + this.z;
-    };
+    // this.str = function () {
+    //     return ' x: ' + this.x + ' y: ' + this.y + ' z: ' + this.z;
+    // };
 }
 
 /**
@@ -1202,28 +1205,29 @@ function Neighbor(t, b, l, r, p) {
 }
 
 function createWall(v1, v3, color, pId) {
+    let sv4, sv3, sv2, sv1, j, i;
     const dx = (v3.x - v1.x) / 3;
     const dy = (v3.y - v1.y) / 3;
     const dz = (v3.z - v1.z) / 3;
     const squares = [];
     if (dx === 0) {
-        for (var i = 0; i < 3; i++) {
-            for (var j = 0; j < 3; j++) {
-                var sv1 = new Vector(v1.x, v1.y + i * dy, v1.z + j * dz);
-                var sv2 = new Vector(v1.x, v1.y + i * dy, v1.z + (1 + j) * dz);
-                var sv3 = new Vector(v1.x, v1.y + (1 + i) * dy, v1.z + (1 + j) * dz);
-                var sv4 = new Vector(v1.x, v1.y + (1 + i) * dy, v1.z + j * dz);
+        for (i = 0; i < 3; i++) {
+            for (j = 0; j < 3; j++) {
+                sv1 = new Vector(v1.x, v1.y + i * dy, v1.z + j * dz);
+                sv2 = new Vector(v1.x, v1.y + i * dy, v1.z + (1 + j) * dz);
+                sv3 = new Vector(v1.x, v1.y + (1 + i) * dy, v1.z + (1 + j) * dz);
+                sv4 = new Vector(v1.x, v1.y + (1 + i) * dy, v1.z + j * dz);
                 squares.push(new Face(sv1, sv2, sv3, sv4, color, i * 3 + j, pId));
             }
         }
     }
     if (dy === 0) {
-        for (var i = 0; i < 3; i++) {
-            for (var j = 0; j < 3; j++) {
-                var sv1 = new Vector(v1.x + j * dx, v1.y, v1.z + i * dz);
-                var sv2 = new Vector(v1.x + (1 + j) * dx, v1.y, v1.z + i * dz);
-                var sv3 = new Vector(v1.x + (1 + j) * dx, v1.y, v1.z + (1 + i) * dz);
-                var sv4 = new Vector(v1.x + j * dx, v1.y, v1.z + (1 + i) * dz);
+        for (i = 0; i < 3; i++) {
+            for (j = 0; j < 3; j++) {
+                sv1 = new Vector(v1.x + j * dx, v1.y, v1.z + i * dz);
+                sv2 = new Vector(v1.x + (1 + j) * dx, v1.y, v1.z + i * dz);
+                sv3 = new Vector(v1.x + (1 + j) * dx, v1.y, v1.z + (1 + i) * dz);
+                sv4 = new Vector(v1.x + j * dx, v1.y, v1.z + (1 + i) * dz);
                 squares.push(
                     new Face(
                         sv1,
@@ -1239,12 +1243,12 @@ function createWall(v1, v3, color, pId) {
         }
     }
     if (dz === 0) {
-        for (var i = 0; i < 3; i++) {
-            for (var j = 0; j < 3; j++) {
-                var sv1 = new Vector(v1.x + j * dx, v1.y + i * dy, v1.z);
-                var sv2 = new Vector(v1.x + (1 + j) * dx, v1.y + i * dy, v1.z);
-                var sv3 = new Vector(v1.x + (1 + j) * dx, v1.y + (1 + i) * dy, v1.z);
-                var sv4 = new Vector(v1.x + j * dx, v1.y + (1 + i) * dy, v1.z);
+        for (i = 0; i < 3; i++) {
+            for (j = 0; j < 3; j++) {
+                sv1 = new Vector(v1.x + j * dx, v1.y + i * dy, v1.z);
+                sv2 = new Vector(v1.x + (1 + j) * dx, v1.y + i * dy, v1.z);
+                sv3 = new Vector(v1.x + (1 + j) * dx, v1.y + (1 + i) * dy, v1.z);
+                sv4 = new Vector(v1.x + j * dx, v1.y + (1 + i) * dy, v1.z);
                 squares.push(
                     new Face(
                         sv1,
@@ -1300,15 +1304,15 @@ function sin(angle) {
     return Math.sin(angle);
 }
 
-function hexToRgba(hex, a) {
-    hex = hex.replace('#', '');
-    const bigint = parseInt(hex, 16);
-    const r = (bigint >> 16) & 255;
-    const g = (bigint >> 8) & 255;
-    const b = bigint & 255;
-
-    return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + (a || 1) + ')';
-}
+// function hexToRgba(hex, a) {
+//     hex = hex.replace('#', '');
+//     const bigint = parseInt(hex, 16);
+//     const r = (bigint >> 16) & 255;
+//     const g = (bigint >> 8) & 255;
+//     const b = bigint & 255;
+//
+//     return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + (a || 1) + ')';
+// }
 
 function resize() {
     canvasHeight = window.innerHeight;
@@ -1339,25 +1343,27 @@ function init() {
     canvas = document.getElementById('cubic');
     ctx = canvas.getContext('2d');
     if (typeof ctx.ellipse === 'function') {
-        supportElipse = true;
+        supportEllipse = true;
     }
     resize();
-    setInfoELement();
+    setInfoElement();
     scaleMax = scale;
     scale = 2;
     setInterval(draw, 50);
     zoom();
 }
 
-function setInfoELement() {
+function setInfoElement() {
+    const element = document.querySelector('.info');
+
     if ('ontouchstart' in document.documentElement) {
-        document.getElementById('info').style.display = 'none';
+        element.style.display = 'none';
     } else {
         const w = 0.25 * canvasWidth + 'px';
         const h = (4 / 3.3) * 0.25 * canvasWidth + 'px';
-        document.getElementById('info').style.width = w;
-        document.getElementById('info').style.height = h;
-        document.getElementById('info').style.backgroundSize = w + ' ' + h;
+        element.style.width = w;
+        element.style.height = h;
+        element.style.backgroundSize = w + ' ' + h;
     }
 }
 
@@ -1407,7 +1413,7 @@ function randInt(start, stop) {
 }
 
 function start() {
-    document.getElementById('info').classList.add('hidden');
+    document.querySelector('.info').classList.add('hidden');
     document.addEventListener('mouseup', mouseUp);
     document.addEventListener('touchmove', touchMove);
 
@@ -1416,6 +1422,10 @@ function start() {
     canvas.addEventListener('mousemove', mouseMove);
 
     canvas.addEventListener('touchstart', touchStart);
+    canvas.addEventListener('contextmenu', (event) => {
+        event.preventDefault();
+        return false;
+    });
     canvas.addEventListener('touchend', touchEnd);
     canvas.addEventListener('touchmove', touchMove);
 }

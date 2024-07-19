@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import {trim} from '@/utils/string';
+import {string} from '@/utils/string';
 import {ProjectRow} from '@/types/supabase/projects';
 
 type ProjectLinkProps = {
@@ -14,7 +14,11 @@ const ProjectLink: FCC<ProjectLinkProps> = ({children, href, type}) => {
             case 'project':
                 return <a href={`/projects/${href}`}>{children}</a>;
             case 'page':
-                return <Link href={`/${trim(href, '/')}`}>{children}</Link>;
+                return (
+                    <Link href={`/${string.trim(href.trim(), '/')}`}>
+                        {children}
+                    </Link>
+                );
             case 'external':
             default:
                 return (

@@ -1,6 +1,6 @@
 import React from 'react';
-import {PageAbout} from '@/ui/pages/about';
+import {About} from '@/ui/pages/about/about';
 
 export default function Page() {
-    return <PageAbout />;
+    return <About />;
 }

@@ -34,6 +34,7 @@ export const ProjectsTable = ({projects}: Props) => {
                         alt={item.name}
                         className="h-10"
                         height={40}
+                        width={120}
                     />
                 ),
                 createdAt: (item) => (

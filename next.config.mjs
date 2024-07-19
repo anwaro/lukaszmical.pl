@@ -7,7 +7,7 @@ const nextConfig = {
     async rewrites() {
         return [
             {
-                source: '/projects/:name',
+                source: '/:locale/projects/:name',
                 destination: '/api/projects/show',
             },
         ];

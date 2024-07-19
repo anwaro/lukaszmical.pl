@@ -4,3 +4,10 @@ export type Point = {
 };
 
 export type PointColor = [number, number, number];
+
+export type HoverElement = {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+};

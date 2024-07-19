@@ -12,13 +12,20 @@ export class Project {
         minFile = true,
     ): Promise<ProjectWitAssets | undefined> => {
         const client = new SupabaseProject();
-        const files = await fs.promises.readdir(this.getProjectsPath(slug));
+        const projectPath = this.getProjectsPath(slug);
+
+        if (!fs.existsSync(projectPath)) {
+            return undefined;
+        }
+
+        const files = await fs.promises.readdir(projectPath);
         const project = await client.getProjectBySlug(slug);
+
         if (!files.length || project === null) {
             return undefined;
         }
-        const cssFiles = await this.getProjectCssFiles(slug, minFile);
-        const jsFiles = await this.getProjectJsFiles(slug, minFile);
+        const cssFiles = await this.getProjectTypeFile(slug, 'css', minFile);
+        const jsFiles = await this.getProjectTypeFile(slug, 'js', minFile);
 
         return {
             ...project,
@@ -27,16 +34,13 @@ export class Project {
         };
     };
 
-    getProjectJsFiles = async (slug: string, minType = false) => {
-        const dir = this.getProjectsPath(`${slug}/js`);
-        const jsFiles = await fs.promises.readdir(dir);
-        return this.filterAssetFile(jsFiles, minType, 'js');
-    };
-
-    getProjectCssFiles = async (slug: string, minType = false) => {
-        const dir = this.getProjectsPath(`${slug}/css`);
-        const cssFiles = await fs.promises.readdir(dir);
-        return this.filterAssetFile(cssFiles, minType, 'css');
+    getProjectTypeFile = async (slug: string, type: AssetType, minType = false) => {
+        const dir = this.getProjectsPath(`${slug}/${type}`);
+        if (fs.existsSync(dir)) {
+            const jsFiles = await fs.promises.readdir(dir);
+            return this.filterAssetFile(jsFiles, minType, type);
+        }
+        return [];
     };
 
     filterAssetFile = (files: string[], minType: boolean, assetType: AssetType) => {

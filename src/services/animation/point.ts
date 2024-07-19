@@ -1,4 +1,5 @@
-import {Point, PointColor} from '@/services/animation/Point';
+import {HoverElement, Point, PointColor} from '@/services/animation/type';
+import {randomInRange, randomSign} from '@/services/animation/utils';
 
 export class AnimationPoint {
     private color: PointColor = [160, 160, 160];
@@ -24,13 +25,13 @@ export class AnimationPoint {
             y: height,
         };
 
-        const v = () => (Math.random() + 0.5) * (Math.random() < 0.5 ? 1 : -1);
+        const v = () => randomInRange(0, 0.5) * randomSign();
 
         this.velocity = {x: v(), y: v()};
 
         this.position = {
-            x: Math.random() * width,
-            y: Math.random() * height,
+            x: randomInRange(0, width),
+            y: randomInRange(0, height),
         };
 
         this.displayPosition = {
@@ -38,30 +39,34 @@ export class AnimationPoint {
             y: this.position.y,
         };
 
-        const distance = Math.random() * 100;
-        const angle = Math.random() * Math.PI * 2;
-
         this.hoverPosition = {
-            x: distance * Math.sin(angle),
-            y: distance * Math.cos(angle),
+            x: this.position.x,
+            y: this.position.y,
         };
 
-        this.r = Math.random() * 2 + 1;
-        this.hoverR = Math.random() * 10 + 5;
+        this.r = randomInRange(1, 3);
+        this.hoverR = randomInRange(5, 15);
         this.displayR = this.r;
     }
 
-    public update(mouseX: number, mouseY: number, hover: boolean) {
+    public updateHover(hover: HoverElement) {
+        this.hoverPosition = {
+            x: randomInRange(hover.x - 10, hover.x + hover.width + 20),
+            y: randomInRange(hover.y, hover.y + hover.height),
+        };
+    }
+
+    public update(hover: boolean) {
         if (hover) {
             this.displayR = this.updateValue(this.displayR, this.hoverR);
             this.updateColorValue(this.hoverColor);
             this.displayPosition.x = this.updateValue(
                 this.displayPosition.x,
-                mouseX + this.hoverPosition.x + Math.random() * 100 - 50,
+                this.hoverPosition.x + randomInRange(-50, 50),
             );
             this.displayPosition.y = this.updateValue(
                 this.displayPosition.y,
-                mouseY + this.hoverPosition.y + Math.random() * 100 - 50,
+                this.hoverPosition.y + randomInRange(-50, 50),
             );
         } else {
             this.position.x += this.velocity.x;

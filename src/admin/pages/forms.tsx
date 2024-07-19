@@ -19,10 +19,6 @@ import {getPageTitle} from '../config';
 export const FormsPage = () => {
     return (
         <>
-            <Head>
-                <title>{getPageTitle('Forms')}</title>
-            </Head>
-
             <SectionMain>
                 <SectionTitleLineWithButton
                     icon={mdiBallotOutline}

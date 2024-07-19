@@ -1,5 +1,5 @@
 import {SupabaseProject} from '@/services/supabase/SupabaseProject';
-import {projects} from '@/app/api/projects/migrate/projects';
+import {projects} from './projects';
 
 export async function GET() {
     const client = new SupabaseProject();

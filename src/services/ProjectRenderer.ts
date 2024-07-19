@@ -9,9 +9,8 @@ export class ProjectRenderer {
         this.project = new Project();
     }
 
-    public render = async (name: string, url: URL) => {
-        const minFile = process.env.NODE_ENV === 'production';
-        const project = await this.project.getProjectInfo(name, minFile);
+    public render = async (slug: string, url: URL, minFile = false) => {
+        const project = await this.project.getProjectInfo(slug, minFile);
 
         if (!project) {
             return undefined;

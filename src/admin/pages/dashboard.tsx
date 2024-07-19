@@ -43,9 +43,6 @@ export const DashboardPage = () => {
 
     return (
         <>
-            <Head>
-                <title>{getPageTitle('Dashboard')}</title>
-            </Head>
             <SectionMain>
                 <SectionTitleLineWithButton
                     icon={mdiChartTimelineVariant}
