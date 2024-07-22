@@ -48,6 +48,7 @@ const FormField = ({icons = [], ...props}: Props) => {
                 {Children.map(props.children, (child: ReactElement, index) => (
                     <div className="relative">
                         {cloneElement(child, {
+                            /* @ts-ignore */
                             className: `${controlClassName} ${icons[index] ? 'pl-10' : ''}`,
                         })}
                         {icons[index] && (

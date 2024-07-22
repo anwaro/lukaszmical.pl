@@ -1,35 +1,23 @@
 import Link from 'next/link';
 import React from 'react';
-import {string} from '@/utils/string';
 import {ProjectRow} from '@/types/supabase/projects';
 
 type ProjectLinkProps = {
-    href: string;
-    type: ProjectRow['type'] | null;
+    project: ProjectRow;
 };
 
-const ProjectLink: FCC<ProjectLinkProps> = ({children, href, type}) => {
-    if (href) {
-        switch (type) {
-            case 'project':
-                return <a href={`/projects/${href}`}>{children}</a>;
-            case 'page':
-                return (
-                    <Link href={`/${string.trim(href.trim(), '/')}`}>
-                        {children}
-                    </Link>
-                );
-            case 'external':
-            default:
-                return (
-                    <a href={href} target={'_blank'}>
-                        {children}
-                    </a>
-                );
-        }
+export const ProjectLink: FCC<ProjectLinkProps> = ({children, project}) => {
+    switch (project.type) {
+        case 'project':
+            return <a href={`/projects/${project.slug}`}>{children}</a>;
+        case 'page':
+            return <Link href={`/showcase/${project.slug}`}>{children}</Link>;
+        case 'external':
+        default:
+            return (
+                <a href={project.slug} target={'_blank'}>
+                    {children}
+                </a>
+            );
     }
-
-    return <>{children}</>;
 };
-
-export default ProjectLink;

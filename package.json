@@ -9,9 +9,9 @@
         "lint": "next lint"
     },
     "dependencies": {
-        "@mdi/js": "^7.4.47",
-        "@supabase/ssr": "^0.4.0",
-        "@supabase/supabase-js": "^2.44.3",
+        "@mdi/js": "7.4.47",
+        "@supabase/ssr": "0.4.0",
+        "@supabase/supabase-js": "2.44.4",
         "@tailwindcss/forms": "^0.5.7",
         "chart.js": "^4.4.3",
         "clsx": "2.1.1",
@@ -20,12 +20,12 @@
         "js-cookie": "^3.0.5",
         "mime": "4.0.4",
         "minify": "^11.4.0",
-        "next": "14.2.5",
-        "next-intl": "3.16.0",
+        "next": "rc",
+        "next-intl": "3.17.2",
         "numeral": "^2.0.6",
-        "react": "18.3.1",
+        "react": "rc",
         "react-chartjs-2": "^5.2.0",
-        "react-dom": "18.3.1",
+        "react-dom": "rc",
         "socket.io": "4.7.5",
         "socket.io-client": "4.7.5",
         "swr": "^2.2.5"
@@ -33,21 +33,25 @@
     "devDependencies": {
         "@types/js-cookie": "^3.0.6",
         "@types/minify": "^9.1.4",
-        "@types/node": "20.14.10",
+        "@types/node": "20.14.11",
         "@types/numeral": "^2.0.5",
-        "@types/react": "18.3.3",
-        "@types/react-dom": "18.3.0",
+        "@types/react": "npm:types-react@rc",
+        "@types/react-dom": "npm:types-react-dom@rc",
         "@types/uglify-js": "^3.17.5",
-        "cssnano": "^7.0.4",
+        "cssnano": "7.0.4",
         "eslint": "8.57.0",
         "eslint-config-next": "14.2.5",
         "nodemon": "^3.1.4",
         "postcss": "8.4.39",
-        "prettier": "3.3.2",
+        "prettier": "3.3.3",
         "supabase": "^1.183.5",
-        "tailwindcss": "3.4.4",
+        "tailwindcss": "3.4.6",
         "typescript": "5.5.3",
         "uglify-js": "^3.19.0",
-        "vitest": "^2.0.3"
+        "vitest": "2.0.4"
+    },
+    "overrides": {
+        "@types/react": "npm:types-react@rc",
+        "@types/react-dom": "npm:types-react-dom@rc"
     }
 }

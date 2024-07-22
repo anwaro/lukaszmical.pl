@@ -5,7 +5,7 @@ import {mdiCodeJson} from '@mdi/js';
 import React from 'react';
 import CardBox from '@/admin/components/CardBox';
 import {SupabaseProject} from '@/services/supabase/SupabaseProject';
-import {ProjectsTable} from '@/admin/components/Table/ProjectsTable';
+import {ProjectsTable} from '@/admin/components/table/project-table/projects-table';
 
 export default async function PrivatePage() {
     await auth();

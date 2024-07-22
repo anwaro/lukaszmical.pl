@@ -1,6 +1,7 @@
 import {
     Dispatch,
     MutableRefObject,
+    RefObject,
     SetStateAction,
     useCallback,
     useEffect,
@@ -22,14 +23,17 @@ const useMounted = () => {
 export function useRefState<S>(
     initialState: S | (() => S),
     blockIfUnmounted: boolean = true,
-): [S, MutableRefObject<S>, Dispatch<SetStateAction<S>>] {
+): [S, RefObject<S>, Dispatch<SetStateAction<S>>] {
     const mounted = useMounted();
     const [reactState, setReactState] = useState(initialState);
     const stateRef = useRef(reactState);
-    const setState = useCallback((arg) => {
+
+    const setState = useCallback((arg: S | ((state: S) => void)) => {
         if (!mounted.current && blockIfUnmounted) return;
+        // @ts-ignore
         stateRef.current = typeof arg === 'function' ? arg(stateRef.current) : arg;
         setReactState(stateRef.current);
     }, []);
+
     return [reactState, stateRef, setState];
 }

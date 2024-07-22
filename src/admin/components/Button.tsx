@@ -3,6 +3,7 @@ import Link from 'next/link';
 import {getButtonColor} from '../colors';
 import Icon from './Icon';
 import type {ColorButtonKey} from '../interfaces';
+import {mdiLoading} from '@mdi/js';
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
     label?: string | number | null | undefined;
@@ -18,6 +19,7 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
     outline?: boolean;
     active?: boolean;
     disabled?: boolean;
+    loading?: boolean;
     roundedFull?: boolean;
     onClick?: (e: React.MouseEvent) => void;
 };
@@ -37,6 +39,7 @@ export default function Button({
     active = false,
     disabled = false,
     roundedFull = false,
+    loading = false,
     onClick,
     ...props
 }: Props) {
@@ -72,7 +75,13 @@ export default function Button({
 
     const componentChildren = (
         <>
-            {icon && <Icon path={icon} size={iconSize} />}
+            {icon && (
+                <Icon
+                    path={loading ? mdiLoading : icon}
+                    size={iconSize}
+                    className={loading ? 'animate-spin' : ''}
+                />
+            )}
             {label && (
                 <span className={small && icon ? 'px-1' : 'px-2'}>{label}</span>
             )}

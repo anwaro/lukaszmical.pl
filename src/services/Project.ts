@@ -53,13 +53,7 @@ export class Project {
                 if (minType) {
                     return f.includes('.min');
                 }
-                if (!f.includes('.min')) {
-                    return true;
-                }
-
-                return !files.includes(
-                    f.replace(`.min.${assetType}`, `.${assetType}`),
-                );
+                return !f.includes('.min');
             });
     };
 }

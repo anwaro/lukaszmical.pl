@@ -71,7 +71,7 @@ mp3player = new (function () {
             next: new Song(),
         },
         url: {
-            info: '/api/v1/projects/songs',
+            info: '/api/projects/songs',
             audio: '/projects/mp3player/sound/',
             cover: '/projects/mp3player/covers/',
         },
@@ -647,10 +647,10 @@ mp3player = new (function () {
         if (id >= player.data.length) id = 0;
         const info = player.data[id];
         el.id = id;
-        el.elem.src = player.url.audio + info['src'] + player.type;
-        el.artist = info['artist'];
-        el.title = info['title'];
-        el.image.src = player.url.cover + info['cover'];
+        el.elem.src = info.src;
+        el.artist = info.artist;
+        el.title = info.title;
+        el.image.src = info.cover;
     }
 
     function setSongData(data) {

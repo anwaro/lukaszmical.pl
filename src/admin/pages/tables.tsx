@@ -8,7 +8,7 @@ import CardBoxComponentEmpty from '../components/CardBox/Component/Empty';
 import NotificationBar from '../components/NotificationBar';
 import SectionMain from '../components/Section/Main';
 import SectionTitleLineWithButton from '../components/Section/TitleLineWithButton';
-import TableSampleClients from '../components/Table/SampleClients';
+import TableSampleClients from '@/admin/components/table/SampleClients';
 
 export const TablesPage = () => {
     return (

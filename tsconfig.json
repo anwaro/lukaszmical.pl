@@ -26,7 +26,8 @@
             "@/*": [
                 "./src/*"
             ]
-        }
+        },
+        "target": "esnext"
     },
     "include": [
         "next-env.d.ts",

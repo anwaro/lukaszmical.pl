@@ -139,7 +139,7 @@ function drawGraph() {
             set = true;
             settings[div.children[1].textContent] = isBool(div.children[2].value);
             mirrorData +=
-                '\n\t\t' +
+                '\n\t' +
                 div.children[1].textContent +
                 ' : "' +
                 div.children[2].value +
@@ -166,3 +166,7 @@ function isBool(val) {
 
     return val;
 }
+
+document.querySelector('.draw-graph').addEventListener('click', drawGraph);
+document.querySelector('.draw-graph-2').addEventListener('click', drawGraph);
+document.querySelector('.graph-add').addEventListener('click', addData);

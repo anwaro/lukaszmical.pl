@@ -13,6 +13,7 @@ const FormCheckRadioGroup = (props: Props) => {
             {/* @ts-ignore */}
             {Children.map(props.children, (child: ReactElement) =>
                 cloneElement(child, {
+                    /* @ts-ignore */
                     className: `mr-6 mb-3 last:mr-0 ${child.props.className}`,
                 }),
             )}

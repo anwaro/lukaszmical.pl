@@ -1,5 +1,6 @@
 import type {ReactNode} from 'react';
 import {Children, cloneElement, ReactElement} from 'react';
+import {clsx} from 'clsx';
 
 type Props = {
     type?: string;
@@ -10,7 +11,7 @@ type Props = {
     className?: string;
 };
 
-const Buttons = ({
+export const Buttons = ({
     type = 'justify-start',
     mb = '-mb-3',
     classAddon = 'mr-3 last:mr-0 mb-3',
@@ -20,14 +21,19 @@ const Buttons = ({
 }: Props) => {
     return (
         <div
-            className={`flex items-center ${type} ${className} ${mb} ${
-                noWrap ? 'flex-nowrap' : 'flex-wrap'
-            }`}
+            className={clsx(
+                'flex items-center',
+                type,
+                className,
+                mb,
+                noWrap ? 'flex-nowrap' : 'flex-wrap',
+            )}
         >
             {/* @ts-ignore */}
             {Children.map(children, (child: ReactElement) =>
                 child
                     ? cloneElement(child, {
+                          /* @ts-ignore */
                           className: `${classAddon} ${child.props.className}`,
                       })
                     : null,

@@ -1,5 +1,6 @@
 import {minify} from 'minify';
 import fs from 'fs';
+import UglifyIs from 'uglify-js';
 
 const absPath = (path) => {
     return `${process.env.PWD}/public/projects/${path}`
@@ -15,8 +16,9 @@ const getFiles = async (path) => {
 };
 
 const match = (files, type) => {
-    const regex = new RegExp(`.*[^min].${type}$`, 'i');
-    return files.filter((name) => regex.test(name));
+    return files.filter(
+        (name) => name.includes(`.${type}`) && !name.includes(`.min.${type}`),
+    );
 };
 
 const getProjectsFiles = async () => {
@@ -31,6 +33,7 @@ const minifyFiles = async (files, path) => {
     for (let file of files) {
         const filePath = `${path}/${file}`;
         const minContent = await minify(filePath).catch(console.error);
+
         if (minContent) {
             await fs.promises.writeFile(
                 filePath.replace('.css', '.min.css').replace('.js', '.min.js'),
@@ -42,10 +45,30 @@ const minifyFiles = async (files, path) => {
     }
 };
 
+const minifyJsFiles = async (files, path) => {
+    if (files.length === 0) {
+        return;
+    }
+    const code = {};
+
+    for (let file of files) {
+        const filePath = `${path}/${file}`;
+        code[file] = await fs.promises.readFile(filePath, 'utf8');
+    }
+
+    const result = UglifyIs.minify(code);
+
+    if (result.error) {
+        throw result.error;
+    } else {
+        result.warnings && console.log(result.warnings);
+        await fs.promises.writeFile(`${path}/index.min.js`, result.code);
+    }
+};
+
 const minifyProject = async (slug) => {
     // eslint-disable-next-line no-console
     console.info(`Start minify ${slug} project`);
-    const projectPath = absPath(slug);
 
     const cssDir = absPath(`${slug}/css`);
     const cssFiles = match(await getFiles(cssDir), 'css');
@@ -53,18 +76,43 @@ const minifyProject = async (slug) => {
 
     const jsDir = absPath(`${slug}/js`);
     const jsFiles = match(await getFiles(jsDir), 'js');
-    await minifyFiles(jsFiles, jsDir);
+    await minifyJsFiles(jsFiles, jsDir);
 };
 
-const run = async () => {
+const run = async (main, name) => {
     const {projects, files} = await getProjectsFiles();
-
-    await minifyFiles(match(files, false, 'css'), '');
-    await minifyFiles(match(files, false, 'js'), '');
+    if (main) {
+        await minifyFiles(match(files, 'css'), absPath(''));
+        await minifyJsFiles(match(files, 'js'), absPath(''));
+    }
 
     for (let project of projects) {
-        await minifyProject(project);
+        if (project === name || name === '*') {
+            await minifyProject(project);
+        }
     }
 };
 
-run();
+// run();
+
+const mode = process.argv[2] || '';
+if (mode.startsWith('--all')) {
+    run(true, '*');
+} else if (mode.startsWith('--main')) {
+    run(true);
+} else if (mode.startsWith('--projects')) {
+    run(false, '*');
+} else if (mode.startsWith('--project')) {
+    const [_, name] = mode.split('=');
+    run(false, name);
+} else {
+    console.log(
+        [
+            'Invalid usage, you must define scope by flag:',
+            '  --all          - minify all files, main project file and individual project files.',
+            '  --main         - minify  main project ',
+            '  --projects     - minify projects files.',
+            '  --project=name - minify project files with specific name.',
+        ].join('\n'),
+    );
+}

@@ -15,6 +15,10 @@ export class SupabaseProject extends SupabaseClient {
         return data?.length ? (data[0] as ProjectRow) : null;
     }
 
+    async update(id: number | string, data: Partial<ProjectRow>) {
+        await this.client.from('projects').update(data).eq('id', id);
+    }
+
     async getProjects(onlyPublished = true): Promise<ProjectRow[]> {
         const query = this.client.from('projects').select('*').order('order');
         if (onlyPublished) {

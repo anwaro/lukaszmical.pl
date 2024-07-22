@@ -10,7 +10,7 @@ type Props = {
 };
 
 export function HomepageMenuItem({link, onHoverChange, children}: PWC<Props>) {
-    const ref = useRef<HTMLAnchorElement | null>();
+    const ref = useRef<HTMLAnchorElement | null>(null);
 
     const hoverElement = (): HoverElement => {
         const rect = ref.current?.getBoundingClientRect();

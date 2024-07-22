@@ -50,7 +50,7 @@ function init() {
     const onError = function (xhr) {};
 
     var loader = new THREE.ImageLoader(manager);
-    loader.load('/images/projects/car3D/UV_Grid_Sm.jpg', function (image) {
+    loader.load('/projects/car3d/image/UV_Grid_Sm.jpg', function (image) {
         texture.image = image;
         texture.needsUpdate = true;
     });
@@ -59,7 +59,7 @@ function init() {
 
     var loader = new THREE.OBJLoader(manager);
     loader.load(
-        '/files/gtr_1.obj',
+        '/projects/car3d/image/gtr_1.obj',
         function (object) {
             object.traverse(function (child) {
                 if (child instanceof THREE.Mesh) {

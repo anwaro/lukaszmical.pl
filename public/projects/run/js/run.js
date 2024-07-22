@@ -119,21 +119,14 @@ function activeCell(e) {
             row > 1 &&
             col > 1
         ) {
-            table.style.innerHTML =
-                '.table-body .table-main table tr:nth-child(' +
-                row +
-                ') {' +
-                'background-color: rgba(255, 255, 255, 0.7);' +
-                'color: black;' +
-                'font-weight: bold;' +
-                '}' +
-                '.table-body .table-main table tr td:nth-child(' +
-                col +
-                ') {' +
-                'background-color: rgba(255, 255, 255, 0.7);' +
-                'color: black;' +
-                'font-weight: bold;' +
-                '}';
+            table.style.innerHTML = `.table-body .table-main table tr:nth-child(${row}) {
+                    background-color: rgba(255, 255, 255, 0.7);
+                    color: black;
+                 }
+                 .table-body .table-main table tr td:nth-child(${col}) { 
+                     background-color: rgba(255, 255, 255, 0.7); 
+                     color: black; 
+                 }`;
         }
     }
 }
