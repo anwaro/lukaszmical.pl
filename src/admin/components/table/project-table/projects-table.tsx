@@ -41,7 +41,7 @@ export const ProjectsTable = ({projects}: Props) => {
                 order: (item) => <EditOrder project={item} onUpdate={update} />,
                 cover: (item) => (
                     <Image
-                        src={`/projects/${item.slug}/image/cover.jpg`}
+                        src={`/projects/${item.url}/image/cover.jpg`}
                         alt={item.name}
                         height={40}
                         width={80}

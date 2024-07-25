@@ -22,11 +22,11 @@ export class ProjectRenderer {
         );
 
         const projectHtml = await fs.promises.readFile(
-            this.project.getProjectsPath(`${project.slug}/index.html`),
+            this.project.getProjectsPath(`${project.url}/index.html`),
             {encoding: 'utf8'},
         );
 
-        const imagePath = this.assetUrl(`${project.slug}/image/cover.jpg`);
+        const imagePath = this.assetUrl(`${project.url}/image/cover.jpg`);
 
         return this.renderHtml(template, {
             title: project.name,
@@ -55,7 +55,7 @@ export class ProjectRenderer {
         type === 'css' ? cssValue : jsValue;
 
     private createAsset = (
-        {slug, themeCss, myQuery, cssFiles, jsFiles}: ProjectWitAssets,
+        {url, themeCss, myQuery, cssFiles, jsFiles}: ProjectWitAssets,
         type: AssetType,
         minFile = false,
     ) => {
@@ -73,7 +73,7 @@ export class ProjectRenderer {
             );
         }
         this.pickTypeValue(type, cssFiles, jsFiles).forEach((file: string) => {
-            assets.push(this.assetUrl(`${slug}/${type}/${file}`));
+            assets.push(this.assetUrl(`${url}/${type}/${file}`));
         });
 
         return assets.map(mapper).join('\n');

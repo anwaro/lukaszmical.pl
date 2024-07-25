@@ -35,7 +35,7 @@ export function ProjectTile({project, mouse}: Props) {
             >
                 <div className="text-white min-h-16 bg-black rounded">
                     <Image
-                        src={`/projects/${project.slug}/image/cover.jpg`}
+                        src={`/projects/${project.url}/image/cover.jpg`}
                         alt={project.name}
                         width={400}
                         height={300}

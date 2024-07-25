@@ -33,7 +33,7 @@ CanvasRenderingContext2D.prototype.fillArea = function (points, option) {
     this.fill();
 };
 
-mp3player = new (function () {
+const mp3player = new (function () {
     let canvas, ctx;
     const width = 169,
         height = 262;
@@ -73,10 +73,10 @@ mp3player = new (function () {
         url: {
             info: '/api/projects/songs',
             audio: '/projects/mp3player/sound/',
-            cover: '/projects/mp3player/covers/',
         },
         vis: {
             support: false,
+            context: null,
             source: null,
             analyser: null,
         },
@@ -174,6 +174,7 @@ mp3player = new (function () {
             player.audio.current.elem.pause();
         } else {
             if (typeof player.audio.current.elem.play === 'function') {
+                player.vis.context.resume();
                 player.play = true;
                 player.audio.current.elem.play();
             } else {
@@ -224,20 +225,20 @@ mp3player = new (function () {
     }
 
     function setVisualizer() {
-        color.vis.grad = ctx.createLinearGradient(0, height - 100, 0, height - 50);
+        color.vis.grad = ctx.createLinearGradient(0, height - 200, 0, height - 50);
         color.vis.grad.addColorStop(0, color.vis.c1);
         color.vis.grad.addColorStop(0.3, color.vis.c2);
         color.vis.grad.addColorStop(0.6, color.vis.c3);
         color.vis.grad.addColorStop(1, color.vis.c4);
         player.vis.support = true;
         try {
-            const audioContext = new AudioContext();
-            player.vis.source = audioContext.createMediaElementSource(
+            player.vis.context = new AudioContext();
+            player.vis.source = player.vis.context.createMediaElementSource(
                 player.audio.current.elem,
             );
-            player.vis.analyser = audioContext.createAnalyser();
+            player.vis.analyser = player.vis.context.createAnalyser();
             player.vis.source.connect(player.vis.analyser);
-            player.vis.analyser.connect(audioContext.destination);
+            player.vis.analyser.connect(player.vis.context.destination);
             console.log('Your browser support audioContext object');
         } catch (err) {
             player.vis.support = false;
@@ -441,7 +442,7 @@ mp3player = new (function () {
                 ((i / 16) * (width - 2)) / 38,
                 height - 50,
                 (width - 6) / 38,
-                -magnitude * 0.2,
+                -magnitude * 0.5,
             );
         }
     }

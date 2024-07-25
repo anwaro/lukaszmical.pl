@@ -6,7 +6,7 @@ export async function GET() {
 
     const {data, error, count} = await client.createProjects(
         projects.map((project) => ({
-            slug: project.slug,
+            url: project.slug,
             name: project.name,
             description: project.description,
             createdAt: project.createdAt,

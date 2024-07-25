@@ -38,5 +38,5 @@ next-env.d.ts
 # JetBrains IDE
 .idea
 
-/public/projects/**/*.min.js
-/public/projects/**/*.min.css
+!/public/projects/**/*.min.js
+!/public/projects/**/*.min.css

@@ -45,7 +45,12 @@ const minifyFiles = async (files, path) => {
     }
 };
 
-const minifyJsFiles = async (files, path) => {
+const minifyJsFiles = async (
+    files,
+    path,
+    toplevel = true,
+    output = 'index.min.js',
+) => {
     if (files.length === 0) {
         return;
     }
@@ -56,13 +61,20 @@ const minifyJsFiles = async (files, path) => {
         code[file] = await fs.promises.readFile(filePath, 'utf8');
     }
 
-    const result = UglifyIs.minify(code);
+    const result = UglifyIs.minify(code, {
+        toplevel: true,
+        mangle: {
+            reserved: ['$$'],
+            toplevel: toplevel,
+            properties: toplevel,
+        },
+    });
 
     if (result.error) {
         throw result.error;
     } else {
         result.warnings && console.log(result.warnings);
-        await fs.promises.writeFile(`${path}/index.min.js`, result.code);
+        await fs.promises.writeFile(`${path}/${output}`, result.code);
     }
 };
 
@@ -83,7 +95,14 @@ const run = async (main, name) => {
     const {projects, files} = await getProjectsFiles();
     if (main) {
         await minifyFiles(match(files, 'css'), absPath(''));
-        await minifyJsFiles(match(files, 'js'), absPath(''));
+        for (const file of match(files, 'js')) {
+            await minifyJsFiles(
+                [file],
+                absPath(''),
+                false,
+                file.replace('.js', '.min.js'),
+            );
+        }
     }
 
     for (let project of projects) {

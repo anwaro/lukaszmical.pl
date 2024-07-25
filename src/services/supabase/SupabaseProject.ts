@@ -6,7 +6,7 @@ export class SupabaseProject extends SupabaseClient {
         const {data} = await this.client
             .from('projects')
             .select('*')
-            .eq('slug', slug);
+            .eq('url', slug);
         return data?.length ? (data[0] as ProjectRow) : null;
     }
 

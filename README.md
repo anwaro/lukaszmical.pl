@@ -43,5 +43,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ## Generate supabase schema
 
 ```bash
-supabase gen types --lang=typescript --project-id cxkutntgprumsvmojbos > src/types/database.ts
+yarn supabase gen types --lang=typescript --project-id cxkutntgprumsvmojbos > src/types/database.ts
 ```

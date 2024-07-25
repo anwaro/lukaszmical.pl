@@ -19,9 +19,9 @@ export type Database = {
                     name: string;
                     order: number;
                     published: boolean;
-                    slug: string;
                     themeCss: boolean;
                     type: Database['public']['Enums']['ProjectType'];
+                    url: string;
                 };
                 Insert: {
                     content?: string | null;
@@ -32,9 +32,9 @@ export type Database = {
                     name: string;
                     order: number;
                     published?: boolean;
-                    slug: string;
                     themeCss?: boolean;
                     type?: Database['public']['Enums']['ProjectType'];
+                    url: string;
                 };
                 Update: {
                     content?: string | null;
@@ -45,9 +45,9 @@ export type Database = {
                     name?: string;
                     order?: number;
                     published?: boolean;
-                    slug?: string;
                     themeCss?: boolean;
                     type?: Database['public']['Enums']['ProjectType'];
+                    url?: string;
                 };
                 Relationships: [];
             };

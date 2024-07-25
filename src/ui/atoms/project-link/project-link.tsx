@@ -9,13 +9,13 @@ type ProjectLinkProps = {
 export const ProjectLink: FCC<ProjectLinkProps> = ({children, project}) => {
     switch (project.type) {
         case 'project':
-            return <a href={`/projects/${project.slug}`}>{children}</a>;
+            return <a href={`/projects/${project.url}`}>{children}</a>;
         case 'page':
-            return <Link href={`/showcase/${project.slug}`}>{children}</Link>;
+            return <Link href={`/showcase/${project.url}`}>{children}</Link>;
         case 'external':
         default:
             return (
-                <a href={project.slug} target={'_blank'}>
+                <a href={project.url} target={'_blank'}>
                     {children}
                 </a>
             );
