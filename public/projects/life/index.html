@@ -1,12 +1,25 @@
 <div class="row">
-    Canvas size:
-    <input id="row" title="Row count" type="text" value="100"> x
-    <input id="col" title="Column count" type="text" value="100">
+    <div class="6u">
+        Column count
+        <input id="col" title="Column count" type="text" value="100">
+    </div>
+    <div class="6u">
+        Row count
+        <input id="row" title="Row count" type="text" value="100">
+    </div>
+    <div class="6u">
+        Cell size
+        <input id="size" title="Cell size" type="text" value="8">
+    </div>
+    <div class="6u">
+        Cell gap
+        <input id="margin" title="Cell gap" type="text" value="1">
+    </div>
 
-
-    <div class="6u">Cell size<input id="size" title="Cell size" type="text" value="8"></div>
-    <div class="6u">Margin<input id="margin" title="Cell margin" type="text" value="1"></div>
-    <input id="reset" type="button" value="GO" />
+    <div class="6u">
+        <div>&nbsp;</div>
+        <input id="reset" type="button" value="GO" />
+    </div>
 </div>
 
 <canvas id="life"></canvas>

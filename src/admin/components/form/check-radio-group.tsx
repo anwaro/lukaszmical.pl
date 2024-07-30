@@ -5,10 +5,10 @@ type Props = {
     children: ReactNode;
 };
 
-const FormCheckRadioGroup = (props: Props) => {
+export const FormCheckRadioGroup = (props: Props) => {
     return (
         <div
-            className={`flex justify-start flex-wrap -mb-3 ${props.isColumn ? 'flex-col' : ''}`}
+            className={`-mb-3 flex flex-wrap justify-start ${props.isColumn ? 'flex-col' : ''}`}
         >
             {/* @ts-ignore */}
             {Children.map(props.children, (child: ReactElement) =>

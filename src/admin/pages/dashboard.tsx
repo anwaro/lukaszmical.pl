@@ -1,5 +1,7 @@
 'use client';
 
+import React, {useState} from 'react';
+
 import {
     mdiAccountMultiple,
     mdiCartOutline,
@@ -9,8 +11,9 @@ import {
     mdiMonitorCellphone,
     mdiReload,
 } from '@mdi/js';
-import Head from 'next/head';
-import React, {useState} from 'react';
+
+import TableSampleClients from '@/admin/components/table/SampleClients';
+
 import Button from '../components/Button';
 import SectionMain from '../components/Section/Main';
 import SectionTitleLineWithButton from '../components/Section/TitleLineWithButton';
@@ -24,8 +27,6 @@ import CardBox from '../components/CardBox';
 import {sampleChartData} from '../components/ChartLineSample/config';
 import ChartLineSample from '../components/ChartLineSample';
 import NotificationBar from '../components/NotificationBar';
-import TableSampleClients from '@/admin/components/table/SampleClients';
-import {getPageTitle} from '../config';
 
 export const DashboardPage = () => {
     const {clients} = useSampleClients();
@@ -60,7 +61,7 @@ export const DashboardPage = () => {
                     />
                 </SectionTitleLineWithButton>
 
-                <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
+                <div className="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
                     <CardBoxWidget
                         trendLabel="12%"
                         trendType="up"
@@ -92,7 +93,7 @@ export const DashboardPage = () => {
                     />
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <div className="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
                     <div className="flex flex-col justify-between">
                         {transactions.map((transaction: Transaction) => (
                             <CardBoxTransaction

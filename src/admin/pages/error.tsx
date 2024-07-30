@@ -1,5 +1,7 @@
 import React from 'react';
+
 import Head from 'next/head';
+
 import Button from '../components/Button';
 import CardBox from '../components/CardBox';
 import SectionFullScreen from '../components/Section/FullScreen';
@@ -14,7 +16,7 @@ export const ErrorPage = () => {
 
             <SectionFullScreen bg="pinkRed">
                 <CardBox
-                    className="w-11/12 md:w-7/12 lg:w-6/12 xl:w-4/12 shadow-2xl"
+                    className="w-11/12 shadow-2xl md:w-7/12 lg:w-6/12 xl:w-4/12"
                     footer={<Button href="/admin" label="Done" color="danger" />}
                 >
                     <div className="space-y-3">

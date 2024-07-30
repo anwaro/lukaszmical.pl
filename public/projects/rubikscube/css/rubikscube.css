@@ -4,12 +4,15 @@ body {
     overflow: hidden;
 }
 
-#info {
+.info {
     position: absolute;
     top: 0;
     left: 0;
     z-index: 999;
-    background: url("../image/rubik.png");
+}
+
+.info img {
+    width: 100%;
 }
 
 .hidden {

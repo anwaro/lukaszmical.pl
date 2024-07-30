@@ -23,6 +23,7 @@ CANV.set = function () {
     CANV.all.style.height = CANV.cont.style.height = 600 + 'px';
     SET.x = CANV.canv.width = 1000;
     CANV.all.style.width = CANV.canv.width + 251 + 'px';
+    SET.initSet();
     /**
      *
      *    Dodanie jednej warstwy i jej obserwowanie przez js

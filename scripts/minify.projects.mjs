@@ -1,5 +1,6 @@
-import {minify} from 'minify';
 import fs from 'fs';
+
+import {minify} from 'minify';
 import UglifyIs from 'uglify-js';
 
 const absPath = (path) => {
@@ -66,7 +67,6 @@ const minifyJsFiles = async (
         mangle: {
             reserved: ['$$'],
             toplevel: toplevel,
-            properties: toplevel,
         },
     });
 

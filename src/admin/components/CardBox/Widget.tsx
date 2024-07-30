@@ -1,12 +1,15 @@
-import {mdiCog} from '@mdi/js';
 import React from 'react';
+
+import {mdiCog} from '@mdi/js';
+
 import {ColorKey, TrendType} from '../../interfaces';
 import {colorsText} from '../../colors';
 import Button from '../Button';
 import Icon from '../Icon';
-import CardBox from '.';
 import NumberDynamic from '../NumberDynamic';
 import PillTagTrend from '../PillTag/Trend';
+
+import CardBox from '.';
 
 type Props = {
     number: number;
@@ -24,7 +27,7 @@ const CardBoxWidget = (props: Props) => {
     return (
         <CardBox>
             {props.trendLabel && props.trendType && props.trendColor && (
-                <div className="flex items-center justify-between mb-3">
+                <div className="mb-3 flex items-center justify-between">
                     <PillTagTrend
                         label={props.trendLabel}
                         type={props.trendType}
@@ -39,7 +42,7 @@ const CardBoxWidget = (props: Props) => {
                     <h3 className="text-lg leading-tight text-gray-500 dark:text-slate-400">
                         {props.label}
                     </h3>
-                    <h1 className="text-3xl leading-tight font-semibold">
+                    <h1 className="text-3xl font-semibold leading-tight">
                         <NumberDynamic
                             value={props.number}
                             prefix={props.numberPrefix}

@@ -1,6 +1,8 @@
 import React from 'react';
+
 import {ColorKey} from '../../interfaces';
 import {colorsBgLight, colorsText} from '../../colors';
+
 import Icon from '.';
 
 type Props = {

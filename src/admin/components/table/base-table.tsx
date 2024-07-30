@@ -1,6 +1,7 @@
 'use client';
 
 import React, {ReactNode, useMemo, useState} from 'react';
+
 import Button from '../Button';
 import Buttons from '../Buttons';
 
@@ -67,8 +68,8 @@ export function BaseTable<
                     ))}
                 </tbody>
             </table>
-            <div className="p-3 lg:px-6 border-t border-gray-100 dark:border-slate-800">
-                <div className="flex flex-col md:flex-row items-center justify-between py-3 md:py-0">
+            <div className="border-t border-gray-100 p-3 dark:border-slate-800 lg:px-6">
+                <div className="flex flex-col items-center justify-between py-3 md:flex-row md:py-0">
                     <Buttons>
                         {pages.map((page) => (
                             <Button

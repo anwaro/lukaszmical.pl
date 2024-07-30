@@ -1,8 +1,10 @@
 'use client';
 
-import Link from 'next/link';
-import {HoverElement} from '@/services/animation/type';
 import {useRef} from 'react';
+
+import Link from 'next/link';
+
+import {HoverElement} from '@/services/animation/type';
 
 type Props = {
     link: string;
@@ -29,7 +31,7 @@ export function HomepageMenuItem({link, onHoverChange, children}: PWC<Props>) {
             href={link}
             onMouseEnter={() => onHoverChange(hoverElement())}
             onMouseLeave={() => onHoverChange()}
-            className={'inline-block text-white font-bold no-underline text-9xl'}
+            className={'inline-block text-9xl font-bold text-white no-underline'}
         >
             {children}
         </Link>

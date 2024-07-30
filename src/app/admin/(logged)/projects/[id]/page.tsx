@@ -1,10 +1,13 @@
+import React from 'react';
+
+import {mdiTableBorder} from '@mdi/js';
+import {notFound} from 'next/navigation';
+
 import {auth} from '@/utils/supabase/auth';
 import SectionTitleLineWithButton from '@/admin/components/Section/TitleLineWithButton';
-import {mdiTableBorder} from '@mdi/js';
-import React from 'react';
 import SectionMain from '@/admin/components/Section/Main';
 import {SupabaseProject} from '@/services/supabase/SupabaseProject';
-import {notFound} from 'next/navigation';
+import {EditProjectForm} from '@/admin/components/form/edit-project/edit-project-form';
 
 type Props = {
     params: {
@@ -15,7 +18,7 @@ type Props = {
 export default async function PrivatePage({params}: Props) {
     await auth();
     const client = new SupabaseProject();
-    const project = await client.getProject(params.id);
+    const project = await client.getProjectById(params.id);
 
     if (!project) {
         notFound();
@@ -25,9 +28,10 @@ export default async function PrivatePage({params}: Props) {
         <SectionMain>
             <SectionTitleLineWithButton
                 icon={mdiTableBorder}
-                title={project.name}
+                title={project.name.en}
                 main
             />
+            <EditProjectForm project={project} />
         </SectionMain>
     );
 }

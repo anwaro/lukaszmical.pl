@@ -1,13 +1,10 @@
-import {string} from '@/utils/string';
+import {ProjectLocale, ProjectLocalesList} from '@/types/supabase/projects';
 
 export const params = (url: URL) => {
     let minFile = process.env.NODE_ENV === 'production';
     let slug: string | undefined = url.searchParams.get('slug') || undefined;
     const minFileParam = url.searchParams.get('min');
-
-    if (!slug) {
-        slug = string.match(url.pathname, '/projects/:slug')?.slug;
-    }
+    const locale = (url.searchParams.get('locale') || 'en') as ProjectLocale;
 
     if (minFileParam) {
         minFile = ['1', 'true'].includes(minFileParam);
@@ -16,5 +13,6 @@ export const params = (url: URL) => {
     return {
         slug,
         minFile,
+        locale: ProjectLocalesList.includes(locale) ? locale : 'en',
     };
 };

@@ -881,3 +881,5 @@ function keyPress(evt) {
 }
 
 initCanvas();
+
+window.startTetris = startTetris;

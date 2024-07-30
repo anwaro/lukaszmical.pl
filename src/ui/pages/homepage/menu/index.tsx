@@ -1,9 +1,12 @@
 'use client';
 
-import {HomepageMenuItem} from './item';
-import {useTranslations} from 'next-intl';
 import {useMemo} from 'react';
+
+import {useTranslations} from 'next-intl';
+
 import {HoverElement} from '@/services/animation/type';
+
+import {HomepageMenuItem} from './item';
 
 type Props = {
     setHover: (isHover?: HoverElement) => void;
@@ -22,7 +25,7 @@ export function HomepageMenu({setHover}: Props) {
     );
 
     return (
-        <ul className={'flex flex-col justify-center h-full relative z-10 px-8'}>
+        <ul className={'relative z-10 flex h-full flex-col justify-center px-8'}>
             {items.map((item) => (
                 <li key={item.link}>
                     <HomepageMenuItem link={item.link} onHoverChange={setHover}>

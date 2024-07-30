@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
     mdiAlertCircleOutline,
     mdiAlertOutline,
@@ -7,7 +8,9 @@ import {
     mdiChevronUp,
     mdiInformationOutline,
 } from '@mdi/js';
+
 import {ColorKey, TrendType} from '../../interfaces';
+
 import PillTag from '.';
 
 type Props = {

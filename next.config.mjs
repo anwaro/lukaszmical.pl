@@ -4,14 +4,15 @@ const withNextIntl = createNextIntlPlugin();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    async rewrites() {
-        return [
-            {
-                source: '/:locale(en|pl)/projects/:name',
-                destination: '/api/projects/show',
-            },
-        ];
-    },
+    // async rewrites() {
+    //     return [
+    //         {
+    //             source: '/:locale(en|pl)/projects/:name',
+    //             destination: '/api/projects/show',
+    //         },
+    //     ];
+    // },
+    transpilePackages: ['next-mdx-remote'],
     async redirects() {
         return [
             {

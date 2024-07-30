@@ -2,6 +2,7 @@ import React, {PropsWithChildren} from 'react';
 
 declare global {
     type FCC<T = {}> = React.FC<PropsWithChildren<T>>;
+    type FC<T = {}> = React.FC<T>;
     type PWC<T = {}> = PropsWithChildren<T>;
 }
 

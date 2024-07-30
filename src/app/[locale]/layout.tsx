@@ -17,7 +17,7 @@ export default async function RootLayout({children, params}: PWC<Props>) {
             locale={params.locale}
             timeZone={'Europe/Warsaw'}
         >
-            <div className={clsx('flex flex-col flex-1 bg-black min-h-screen')}>
+            <div className={clsx('flex min-h-screen flex-1 flex-col bg-black')}>
                 {children}
             </div>
         </NextIntlClientProvider>

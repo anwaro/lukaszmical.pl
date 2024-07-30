@@ -1,7 +1,9 @@
 'use client';
 
-import {mdiEye, mdiTrashCan} from '@mdi/js';
 import React, {useState} from 'react';
+
+import {mdiEye, mdiTrashCan} from '@mdi/js';
+
 import {useSampleClients} from '../../hooks/sampleData';
 import {Client} from '../../interfaces';
 import Button from '../Button';
@@ -45,10 +47,10 @@ const TableSampleClients = () => {
                 <tbody>
                     {clientsPaginated.map((client: Client) => (
                         <tr key={client.id}>
-                            <td className="border-b-0 lg:w-6 before:hidden">
+                            <td className="border-b-0 before:hidden lg:w-6">
                                 <UserAvatar
                                     username={client.name}
-                                    className="w-24 h-24 mx-auto lg:w-6 lg:h-6"
+                                    className="mx-auto size-24 lg:size-6"
                                 />
                             </td>
                             <td data-label="Name">{client.name}</td>
@@ -65,13 +67,13 @@ const TableSampleClients = () => {
                             </td>
                             <td
                                 data-label="Created"
-                                className="lg:w-1 whitespace-nowrap"
+                                className="whitespace-nowrap lg:w-1"
                             >
                                 <small className="text-gray-500 dark:text-slate-400">
                                     {client.created}
                                 </small>
                             </td>
-                            <td className="before:hidden lg:w-1 whitespace-nowrap">
+                            <td className="whitespace-nowrap before:hidden lg:w-1">
                                 <Buttons type="justify-start lg:justify-end" noWrap>
                                     <Button color="info" icon={mdiEye} small />
                                     <Button
@@ -85,8 +87,8 @@ const TableSampleClients = () => {
                     ))}
                 </tbody>
             </table>
-            <div className="p-3 lg:px-6 border-t border-gray-100 dark:border-slate-800">
-                <div className="flex flex-col md:flex-row items-center justify-between py-3 md:py-0">
+            <div className="border-t border-gray-100 p-3 dark:border-slate-800 lg:px-6">
+                <div className="flex flex-col items-center justify-between py-3 md:flex-row md:py-0">
                     <Buttons>
                         {pagesList.map((page) => (
                             <Button

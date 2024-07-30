@@ -1,7 +1,8 @@
 'use client';
 
-import {createCookieStore} from '@/utils/cookie';
 import {useEffect, useState} from 'react';
+
+import {createCookieStore} from '@/utils/cookie';
 
 function createDarkModeService() {
     const store = createCookieStore<boolean>('dark-mode');

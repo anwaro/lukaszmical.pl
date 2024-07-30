@@ -1,11 +1,13 @@
 'use client';
 
-import {ProjectRow} from '@/types/supabase/projects';
 import React, {useActionState, useEffect, useState} from 'react';
+
+import {mdiCheck, mdiClose} from '@mdi/js';
+
+import {ProjectRow} from '@/types/supabase/projects';
 import Buttons from '@/admin/components/Buttons';
 import Button from '@/admin/components/Button';
-import {mdiCheck, mdiClose} from '@mdi/js';
-import {updateProject} from '@/admin/actions/update-project';
+import {updateProjectField} from '@/admin/actions/update-project-field';
 
 type Props = {
     project: ProjectRow;
@@ -15,7 +17,7 @@ type Props = {
 export const EditOrder = ({project, onUpdate}: Props) => {
     const [value, setValue] = useState(project.order);
     const [isEditing, setIsEditing] = useState(false);
-    const [state, formAction, isPending] = useActionState(updateProject, {
+    const [state, formAction, isPending] = useActionState(updateProjectField, {
         id: project.id,
         order: project.order,
     });
@@ -28,13 +30,13 @@ export const EditOrder = ({project, onUpdate}: Props) => {
     }, [isPending]);
 
     return (
-        <form className={'flex items-center w-[200px]'} action={formAction}>
+        <form className={'flex w-[200px] items-center'} action={formAction}>
             <input type={'hidden'} name={'id'} value={project.id} />
             <input type={'hidden'} name={'name'} value={'order'} />
             {isEditing ? (
                 <>
                     <input
-                        className="px-3 py-1 max-w-full border-gray-700 rounded w-full dark:placeholder-gray-400 focus:ring focus:ring-blue-600 focus:border-blue-600 focus:outline-none h-10 border bg-white dark:bg-slate-800 "
+                        className="h-10 w-full max-w-full rounded border border-gray-700 bg-white px-3 py-1 focus:border-blue-600 focus:outline-none focus:ring focus:ring-blue-600 dark:bg-slate-800 dark:placeholder:text-gray-400 "
                         onChange={(e) => setValue(parseInt(e.target.value))}
                         type={'number'}
                         name={'value'}
@@ -63,7 +65,7 @@ export const EditOrder = ({project, onUpdate}: Props) => {
                 </>
             ) : (
                 <div
-                    className={'flex items-center w-[200px]'}
+                    className={'flex w-[200px] items-center'}
                     onClick={() => setIsEditing(true)}
                 >
                     {project.order}

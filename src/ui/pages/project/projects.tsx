@@ -1,12 +1,14 @@
 'use client';
 
 import React from 'react';
-import {ProjectRow} from '@/types/supabase/projects';
-import {ProjectTile} from '@/ui/pages/projects/project-tile/project-tile';
-import {useMouse} from '@/ui/pages/projects/use-mouse';
+
+import {ProjectListItem} from '@/types/supabase/projects';
+import {ProjectTile} from '@/ui/components';
+
+import {useMouse} from './use-mouse';
 
 type Props = {
-    projects: ProjectRow[];
+    projects: ProjectListItem[];
 };
 
 export function PageProjects({projects}: Props) {
@@ -15,10 +17,10 @@ export function PageProjects({projects}: Props) {
     return (
         <div
             ref={ref}
-            className="container grid grid-cols-4 gap-4 mx-auto mt-12"
+            className="container mx-auto mt-12 grid grid-cols-1 gap-4 p-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
             {...actions}
         >
-            {projects.map((project: ProjectRow) => (
+            {projects.map((project) => (
                 <ProjectTile key={project.id} project={project} mouse={mouse} />
             ))}
         </div>

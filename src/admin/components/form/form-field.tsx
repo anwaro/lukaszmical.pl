@@ -1,18 +1,21 @@
-import {Children, cloneElement, ReactElement, ReactNode} from 'react';
+import {Children, cloneElement, ReactElement} from 'react';
+
+import {clsx} from 'clsx';
+
 import Icon from '../Icon';
 
-type Props = {
+type Props = PWC<{
     label?: string;
+    locale?: string;
     labelFor?: string;
     help?: string;
     icons?: string[] | null[];
     isBorderless?: boolean;
     isTransparent?: boolean;
     hasTextareaHeight?: boolean;
-    children: ReactNode;
-};
+}>;
 
-const FormField = ({icons = [], ...props}: Props) => {
+export const FormField = ({icons = [], locale, ...props}: Props) => {
     const childrenCount = Children.count(props.children);
 
     let elementWrapperClass = '';
@@ -38,37 +41,44 @@ const FormField = ({icons = [], ...props}: Props) => {
             {props.label && (
                 <label
                     htmlFor={props.labelFor}
-                    className={`block font-bold mb-2 ${props.labelFor ? 'cursor-pointer' : ''}`}
+                    className={`mb-2 block font-bold ${props.labelFor ? 'cursor-pointer' : ''}`}
                 >
                     {props.label}
                 </label>
             )}
-            <div className={`${elementWrapperClass}`}>
+            <div className={elementWrapperClass}>
                 {/* @ts-ignore */}
                 {Children.map(props.children, (child: ReactElement, index) => (
                     <div className="relative">
                         {cloneElement(child, {
                             /* @ts-ignore */
-                            className: `${controlClassName} ${icons[index] ? 'pl-10' : ''}`,
+                            className: clsx(
+                                controlClassName,
+                                icons[index] && 'pl-10',
+                                locale && !props.hasTextareaHeight && 'pr-10',
+                            ),
                         })}
                         {icons[index] && (
                             <Icon
                                 path={icons[index]}
                                 w="w-10"
                                 h={props.hasTextareaHeight ? 'h-full' : 'h-12'}
-                                className="absolute top-0 left-0 z-10 pointer-events-none text-gray-500 dark:text-slate-400"
+                                className="pointer-events-none absolute left-0 top-0 z-10 text-gray-500 dark:text-slate-400"
                             />
+                        )}
+                        {locale && (
+                            <div className="pointer-events-none absolute right-0 top-0 z-10 flex h-12 w-10 items-center justify-center text-gray-500 dark:text-slate-400">
+                                {locale.toLocaleUpperCase()}
+                            </div>
                         )}
                     </div>
                 ))}
             </div>
             {props.help && (
-                <div className="text-xs text-gray-500 dark:text-slate-400 mt-1">
+                <div className="mt-1 text-xs text-gray-500 dark:text-slate-400">
                     {props.help}
                 </div>
             )}
         </div>
     );
 };
-
-export default FormField;

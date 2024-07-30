@@ -23,7 +23,7 @@ const SectionTitle = ({
 
     return (
         <section
-            className={`py-24 px-6 lg:px-0 lg:max-w-2xl lg:mx-auto text-center ${classAddon}`}
+            className={`px-6 py-24 text-center lg:mx-auto lg:max-w-2xl lg:px-0 ${classAddon}`}
         >
             {custom && children}
             {!custom && (

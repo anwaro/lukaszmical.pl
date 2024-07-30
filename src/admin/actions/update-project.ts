@@ -1,25 +1,43 @@
 'use server';
 
 import {SupabaseProject} from '@/services/supabase/SupabaseProject';
-import {ProjectRow} from '@/types/supabase/projects';
-
-type Data = Partial<ProjectRow>;
-type State = {id: number} & Data;
+import {
+    ProjectEntity,
+    ProjectLocalesList,
+    ProjectStringTypeList,
+} from '@/types/supabase/projects';
+import {SupabaseProjectString} from '@/services/supabase/SupabaseProjectString';
 
 export const updateProject = async (
-    _prevState: State,
-    form: FormData,
-): Promise<State> => {
+    prevState: ProjectEntity,
+    entity: ProjectEntity,
+): Promise<ProjectEntity> => {
+    const {id, description, name, content, ...data} = entity;
     const project = new SupabaseProject();
-    const id = parseInt(form.get('id') as string);
-    const name = form.get('name') as string;
-    const value = form.get('value');
-    const data = {[name]: value} as Data;
+    const projectString = new SupabaseProjectString();
 
     await project.update(id, data);
 
-    return {
-        id,
-        ...data,
-    };
+    const strings = ProjectStringTypeList.flatMap((type) =>
+        ProjectLocalesList.map((locale) => ({type, locale})),
+    );
+
+    for (let str of strings) {
+        if (prevState[str.type][str.locale] !== entity[str.type][str.locale]) {
+            console.log(
+                str.type,
+                str.locale,
+                prevState[str.type][str.locale],
+                entity[str.type][str.locale],
+            );
+            await projectString.updateValue(
+                id,
+                str.type,
+                str.locale,
+                entity[str.type][str.locale],
+            );
+        }
+    }
+
+    return entity;
 };

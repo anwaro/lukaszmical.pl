@@ -2,19 +2,19 @@
 
 import {mdiAccount, mdiBallotOutline, mdiGithub, mdiMail, mdiUpload} from '@mdi/js';
 import {Field, Form, Formik} from 'formik';
-import Head from 'next/head';
+
+import {FormCheckRadio} from '@/admin/components/form/check-radio';
+import {FormCheckRadioGroup} from '@/admin/components/form/check-radio-group';
+import {FormField} from '@/admin/components/form/form-field';
+import FormFilePicker from '@/admin/components/form/FilePicker';
+
 import Button from '../components/Button';
 import Buttons from '../components/Buttons';
 import Divider from '../components/Divider';
 import CardBox from '../components/CardBox';
-import FormCheckRadio from '../components/Form/CheckRadio';
-import FormCheckRadioGroup from '../components/Form/CheckRadioGroup';
-import FormField from '../components/Form/Field';
-import FormFilePicker from '../components/Form/FilePicker';
 import SectionMain from '../components/Section/Main';
 import SectionTitle from '../components/Section/Title';
 import SectionTitleLineWithButton from '../components/Section/TitleLineWithButton';
-import {getPageTitle} from '../config';
 
 export const FormsPage = () => {
     return (

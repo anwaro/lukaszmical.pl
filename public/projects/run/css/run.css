@@ -12,22 +12,26 @@ html, body {
     width: 100%;
     min-height: 100%;
     background: url('../image/running.jpg') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
     background-size: cover;
+    padding: 30px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
 }
 
 .run-box {
-    margin: 30px auto 10px;
-    -webkit-box-shadow: 0 0 56px 5px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0 0 56px 5px rgba(0, 0, 0, 0.75);
+    width: 100%;
+    margin: 0 auto 0;
     box-shadow: 0 0 56px 5px rgba(0, 0, 0, 0.75);
     min-height: 50px;
     background-color: rgba(0, 60, 54, 0.8);
     border-radius: 5px;
     max-width: 1300px;
-    display: flex;
+}
+
+
+.run-box .row {
+    padding: 0 15px;
 }
 
 .run-box .col {

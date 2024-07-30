@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {ColorKey} from '../../interfaces';
 import {colorsBgLight, colorsOutline} from '../../colors';
 import PillTagPlain from './Plain';
@@ -25,7 +26,7 @@ const PillTag = ({
 
     return (
         <PillTagPlain
-            className={`border rounded-full ${layoutClassName} ${colorClassName} ${className}`}
+            className={`rounded-full border ${layoutClassName} ${colorClassName} ${className}`}
             icon={props.icon}
             label={props.label}
             small={small}

@@ -35,6 +35,7 @@ mathcode = function (inputElement, outputElement) {
 
         output.appendChild(createElement('', pos === 0 ? 'cursor' : 'empty'));
 
+        let char;
         for (var i = 0; i < len; i++) {
             char = val[i];
             if (i + 1 < len && /pi/i.test(char + val[i + 1])) {

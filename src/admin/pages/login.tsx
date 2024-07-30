@@ -1,17 +1,17 @@
-import type {ReactElement} from 'react';
 import React from 'react';
+
+import {FormField} from '@/admin/components/form/form-field';
+
 import Button from '../components/Button';
 import CardBox from '../components/CardBox';
 import SectionFullScreen from '../components/Section/FullScreen';
-import LayoutGuest from '../layouts/Guest';
-import FormField from '../components/Form/Field';
 import Divider from '../components/Divider';
 import Buttons from '../components/Buttons';
 
 export const LoginPage = () => {
     return (
         <SectionFullScreen bg="purplePink">
-            <CardBox className="w-11/12 md:w-7/12 lg:w-6/12 xl:w-4/12 shadow-2xl">
+            <CardBox className="w-11/12 shadow-2xl md:w-7/12 lg:w-6/12 xl:w-4/12">
                 <form>
                     <FormField label="Login" help="Please enter your login">
                         <input name="email" type="email" />

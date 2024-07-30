@@ -1,8 +1,10 @@
+import React from 'react';
+
+import {mdiCodeJson} from '@mdi/js';
+
 import {auth} from '@/utils/supabase/auth';
 import SectionMain from '@/admin/components/Section/Main';
 import SectionTitleLineWithButton from '@/admin/components/Section/TitleLineWithButton';
-import {mdiCodeJson} from '@mdi/js';
-import React from 'react';
 import CardBox from '@/admin/components/CardBox';
 import {SupabaseProject} from '@/services/supabase/SupabaseProject';
 import {ProjectsTable} from '@/admin/components/table/project-table/projects-table';

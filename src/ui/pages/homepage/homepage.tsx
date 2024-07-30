@@ -1,6 +1,9 @@
 'use client';
 
 import React from 'react';
+
+import Image from 'next/image';
+
 import {HomepageMenu} from './menu';
 import {useBackgroundCanvas} from './homepage.hook';
 
@@ -13,8 +16,15 @@ export function PageHomepage() {
     // }, []);
 
     return (
-        <div className={'relative w-full h-[100vh]'} /*onMouseMove={onMouseMove}*/>
-            <canvas ref={ref} className={'absolute top-0 left-0 size-full'} />
+        <div className={'relative h-screen w-full'} /*onMouseMove={onMouseMove}*/>
+            <Image
+                src={'/logo.svg'}
+                alt={'Logo'}
+                width={80}
+                height={100}
+                className="absolute left-2/4 top-6 z-10 -translate-x-2/4"
+            />
+            <canvas ref={ref} className={'absolute left-0 top-0 size-full'} />
             {/*<HomepageUserCursor mouse={mouse} />*/}
             <HomepageMenu setHover={setHover} />
         </div>

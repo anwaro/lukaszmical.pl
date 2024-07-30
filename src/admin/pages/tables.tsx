@@ -1,14 +1,17 @@
 'use client';
 
-import {mdiGithub, mdiMonitorCellphone, mdiTableBorder, mdiTableOff} from '@mdi/js';
 import React from 'react';
+
+import {mdiGithub, mdiMonitorCellphone, mdiTableBorder, mdiTableOff} from '@mdi/js';
+
+import TableSampleClients from '@/admin/components/table/SampleClients';
+
 import Button from '../components/Button';
 import CardBox from '../components/CardBox';
 import CardBoxComponentEmpty from '../components/CardBox/Component/Empty';
 import NotificationBar from '../components/NotificationBar';
 import SectionMain from '../components/Section/Main';
 import SectionTitleLineWithButton from '../components/Section/TitleLineWithButton';
-import TableSampleClients from '@/admin/components/table/SampleClients';
 
 export const TablesPage = () => {
     return (

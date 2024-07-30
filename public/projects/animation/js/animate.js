@@ -47,8 +47,8 @@ $$div = new (function () {
                 div.direction.x = l * divSize;
                 div.direction.y = t * divSize;
                 //div.current = div.old;
-                div.step.x = (div.direction.x - div.current.x) / 50;
-                div.step.y = (div.direction.y - div.current.y) / 50;
+                div.step.x = (div.direction.x - div.current.x) / 25;
+                div.step.y = (div.direction.y - div.current.y) / 25;
             }
             animation();
         }
@@ -61,8 +61,8 @@ $$div = new (function () {
                 var div = divs[i];
                 div.direction.x = div.old.x;
                 div.direction.y = div.old.y;
-                div.step.x = (div.direction.x - div.current.x) / 50;
-                div.step.y = (div.direction.y - div.current.y) / 50;
+                div.step.x = (div.direction.x - div.current.x) / 25;
+                div.step.y = (div.direction.y - div.current.y) / 25;
             }
             animation();
         }

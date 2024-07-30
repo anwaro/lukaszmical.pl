@@ -254,3 +254,5 @@ function JigsawElement(el, num) {
     this.passNum = num;
     this.currNum = 0;
 }
+
+window.newGame = newGame;

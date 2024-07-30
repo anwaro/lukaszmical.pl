@@ -79,22 +79,15 @@ $$StayAlive = new (function () {
     };
 
     function loadSound() {
-        music.ready = new buzz.sound('/projects/stayalive/sound/ready', {
-            formats: ['mp3', 'ogg'],
-        });
-        music.play = new buzz.sound('/projects/stayalive/sound/play', {
-            formats: ['mp3', 'ogg'],
-        });
+        const formats = {['formats']: ['mp3', 'ogg']};
+        music.ready = new buzz.sound('/projects/stayalive/sound/ready', formats);
+        music.play = new buzz.sound('/projects/stayalive/sound/play', formats);
         music.bonus = new buzz.sound('/projects/stayalive/sound/bonus', {
-            formats: ['mp3', 'ogg'],
+            ...formats,
             volume: 10,
         });
-        music.bang = new buzz.sound('/projects/stayalive/sound/bang', {
-            formats: ['mp3', 'ogg'],
-        });
-        music.crash = new buzz.sound('/projects/stayalive/sound/crash', {
-            formats: ['mp3', 'ogg'],
-        });
+        music.bang = new buzz.sound('/projects/stayalive/sound/bang', formats);
+        music.crash = new buzz.sound('/projects/stayalive/sound/crash', formats);
 
         music.ready.load().loop().bind('loadeddata', loaded);
         music.play.load().loop().bind('loadeddata', loaded);

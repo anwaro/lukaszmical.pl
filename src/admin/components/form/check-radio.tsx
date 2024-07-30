@@ -7,7 +7,7 @@ type Props = {
     className?: string;
 };
 
-const FormCheckRadio = (props: Props) => {
+export const FormCheckRadio = (props: Props) => {
     return (
         <label className={`${props.type} ${props.className}`}>
             {props.children}

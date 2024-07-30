@@ -1,8 +1,10 @@
 import type {Metadata} from 'next';
+
 import {Roboto} from 'next/font/google';
-import './globals.css';
 import Head from 'next/head';
 import {clsx} from 'clsx';
+
+import './globals.css';
 
 export const metadata: Metadata = {
     title: 'Create Next App',

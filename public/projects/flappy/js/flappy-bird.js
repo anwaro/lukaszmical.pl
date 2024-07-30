@@ -288,6 +288,8 @@ function drawFlappyBirdCanvas() {
     game.inicialize();
 }
 
+window['drawFlappyBirdCanvas'] = drawFlappyBirdCanvas;
+
 game.sound = function (i) {
     document.getElementById(i).play();
 };

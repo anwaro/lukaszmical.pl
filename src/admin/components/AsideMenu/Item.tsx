@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
+
 import {mdiMinus, mdiPlus} from '@mdi/js';
-import Icon from '../Icon';
 import Link from 'next/link';
+import {usePathname} from 'next/navigation';
+
+import Icon from '../Icon';
 import {getButtonColor} from '../../colors';
 import AsideMenuList from './List';
 import {MenuAsideItem} from '../../interfaces';
-import {usePathname} from 'next/navigation';
 
 type Props = {
     item: MenuAsideItem;
@@ -40,7 +42,7 @@ const AsideMenuItem = ({item, isDropdownList = false}: Props) => {
                 />
             )}
             <span
-                className={`grow text-ellipsis line-clamp-1 ${
+                className={`line-clamp-1 grow text-ellipsis ${
                     item.menu ? '' : 'pr-12'
                 } ${activeClassAddon}`}
             >

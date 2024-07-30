@@ -1,9 +1,12 @@
+import type {ColorButtonKey} from '../interfaces';
+
 import React, {ButtonHTMLAttributes} from 'react';
+
 import Link from 'next/link';
+import {mdiLoading} from '@mdi/js';
+
 import {getButtonColor} from '../colors';
 import Icon from './Icon';
-import type {ColorButtonKey} from '../interfaces';
-import {mdiLoading} from '@mdi/js';
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
     label?: string | number | null | undefined;

@@ -1,5 +1,7 @@
 import React from 'react';
+
 import {clsx} from 'clsx';
+
 import {User, useUserCursor} from './index.hook';
 
 type Props = {
@@ -16,7 +18,7 @@ export function HomepageUserCursor({mouse}: Props) {
     return (
         <div
             className={
-                'absolute top-0 left-0 w-full h-[100vh] text-white text-xs overflow-hidden pointer-events-none'
+                'pointer-events-none absolute left-0 top-0 h-screen w-full overflow-hidden text-xs text-white'
             }
         >
             <pre>ID {id}</pre>
@@ -26,7 +28,7 @@ export function HomepageUserCursor({mouse}: Props) {
                 <div
                     key={user.id}
                     className={clsx(
-                        'absolute top-0 left-0 p-1 rounded-b-full',
+                        'absolute left-0 top-0 rounded-b-full p-1',
                         'rounded-tr-full text-black transition duration-500',
                     )}
                     style={{
@@ -35,7 +37,7 @@ export function HomepageUserCursor({mouse}: Props) {
                     }}
                 >
                     <div
-                        className="p-1 bg-white rounded-full"
+                        className="rounded-full bg-white p-1"
                         style={{color: user.color}}
                     >
                         {user.name}

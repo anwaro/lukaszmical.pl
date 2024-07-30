@@ -1,0 +1,168 @@
+/*!
+  Theme: GitHub Dark
+  Description: Dark theme as seen on github.com
+  Author: github.com
+  Maintainer: @Hirse
+  Updated: 2021-05-15
+
+  Outdated base version: https://github.com/primer/github-syntax-dark
+  Current colors taken from GitHub's CSS
+*/
+
+pre:has(.hljs), .hljs {
+    color: #c9d1d9;
+    background: #0d1117;
+}
+
+.hljs-doctag,
+.hljs-keyword,
+.hljs-meta .hljs-keyword,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-type,
+.hljs-variable.language_ {
+    /* prettylights-syntax-keyword */
+    color: #ff7b72;
+}
+
+.hljs-title,
+.hljs-title.class_,
+.hljs-title.class_.inherited__,
+.hljs-title.function_ {
+    /* prettylights-syntax-entity */
+    color: #d2a8ff;
+}
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-literal,
+.hljs-meta,
+.hljs-number,
+.hljs-operator,
+.hljs-variable,
+.hljs-selector-attr,
+.hljs-selector-class,
+.hljs-selector-id {
+    /* prettylights-syntax-constant */
+    color: #79c0ff;
+}
+
+.hljs-regexp,
+.hljs-string,
+.hljs-meta .hljs-string {
+    /* prettylights-syntax-string */
+    color: #a5d6ff;
+}
+
+.hljs-built_in,
+.hljs-symbol {
+    /* prettylights-syntax-variable */
+    color: #ffa657;
+}
+
+.hljs-comment,
+.hljs-code,
+.hljs-formula {
+    /* prettylights-syntax-comment */
+    color: #8b949e;
+}
+
+.hljs-name,
+.hljs-quote,
+.hljs-selector-tag,
+.hljs-selector-pseudo {
+    /* prettylights-syntax-entity-tag */
+    color: #7ee787;
+}
+
+.hljs-subst {
+    /* prettylights-syntax-storage-modifier-import */
+    color: #c9d1d9;
+}
+
+.hljs-section {
+    /* prettylights-syntax-markup-heading */
+    color: #1f6feb;
+    font-weight: bold;
+}
+
+.hljs-bullet {
+    /* prettylights-syntax-markup-list */
+    color: #f2cc60;
+}
+
+.hljs-emphasis {
+    /* prettylights-syntax-markup-italic */
+    color: #c9d1d9;
+    font-style: italic;
+}
+
+.hljs-strong {
+    /* prettylights-syntax-markup-bold */
+    color: #c9d1d9;
+    font-weight: bold;
+}
+
+.hljs-addition, .code-line.inserted  {
+    /* prettylights-syntax-markup-inserted */
+    color: #aff5b4;
+    background-color: #033a16;
+}
+
+.hljs-deletion, .code-line.deleted {
+    /* prettylights-syntax-markup-deleted */
+    color: #ffdcd7;
+    background-color: #67060c;
+}
+
+.hljs-char.escape_,
+.hljs-link,
+.hljs-params,
+.hljs-property,
+.hljs-punctuation,
+.hljs-tag {
+    /* purposely ignored */
+}
+
+
+.code-line {
+    padding-left: 12px;
+    padding-right: 12px;
+    margin-left: -12px;
+    margin-right: -12px;
+    border-left: 4px solid transparent; /* prepare for highlighted code-lines */
+}
+
+div.code-line:empty {
+    /* it is necessary because there is no even eol character in div code-lines */
+    /*height: 15.5938px;*/
+    /* calculated height */
+}
+
+span.code-line {
+    min-width: 100%;
+    display: inline-block;
+}
+
+.code-line.inserted {
+    /*background-color: var(--color-inserted-line); !* inserted code-line (+) color *!*/
+}
+
+.code-line.deleted {
+    /*background-color: var(--color-deleted-line); !* deleted code-line (-) color *!*/
+}
+
+.highlighted-code-line {
+    /*background-color: var(--color-highlighted-line);*/
+    /*border-left: 4px solid var(--color-highlighted-line-indicator);*/
+}
+
+.numbered-code-line::before {
+    content: attr(data-line-number);
+    margin-left: -8px;
+    margin-right: 16px;
+    width: 1rem;
+    /*color: var(--color-text-weak);*/
+    text-align: right;
+    display: inline-block;
+}

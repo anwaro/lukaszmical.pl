@@ -1,6 +1,8 @@
-import {mdiMonitor, mdiViewList, mdiCodeJson} from '@mdi/js';
-import {MenuAsideItem} from './interfaces';
 import {useMemo} from 'react';
+
+import {mdiCodeJson, mdiMonitor, mdiViewList} from '@mdi/js';
+
+import {MenuAsideItem} from './interfaces';
 
 const examples = ['dashboard', 'error', 'forms', 'login', 'profile', 'tables', 'ui'];
 

@@ -1,4 +1,5 @@
 import {useEffect, useRef} from 'react';
+
 import {Canvas} from '@/services/animation/canvas';
 import {HoverElement} from '@/services/animation/type';
 

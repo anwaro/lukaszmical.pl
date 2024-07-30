@@ -1,4 +1,6 @@
 'use client';
+import {useState} from 'react';
+
 import {
     mdiAlert,
     mdiAlertCircle,
@@ -12,7 +14,11 @@ import {
 } from '@mdi/js';
 import {Field, Formik} from 'formik';
 import Head from 'next/head';
-import {useState} from 'react';
+
+import {useDarkMode} from '@/admin/stores/dark-mode';
+import FormCheckRadio from '@/admin/components/form/CheckRadio';
+import FormCheckRadioGroup from '@/admin/components/form/CheckRadioGroup';
+
 import Button from '../components/Button';
 import Buttons from '../components/Buttons';
 import Divider from '../components/Divider';
@@ -20,15 +26,12 @@ import CardBox from '../components/CardBox';
 import CardBoxComponentEmpty from '../components/CardBox/Component/Empty';
 import CardBoxComponentTitle from '../components/CardBox/Component/Title';
 import CardBoxModal from '../components/CardBox/Modal';
-import FormCheckRadio from '../components/Form/CheckRadio';
-import FormCheckRadioGroup from '../components/Form/CheckRadioGroup';
 import NotificationBar from '../components/NotificationBar';
 import PillTag from '../components/PillTag';
 import SectionMain from '../components/Section/Main';
 import SectionTitle from '../components/Section/Title';
 import SectionTitleLineWithButton from '../components/Section/TitleLineWithButton';
 import {getPageTitle} from '../config';
-import {useDarkMode} from '@/admin/stores/dark-mode';
 
 export const UiPage = () => {
     const {toggleDarkMode} = useDarkMode();
@@ -90,8 +93,8 @@ export const UiPage = () => {
             <SectionTitle first>Dark mode</SectionTitle>
 
             <SectionMain>
-                <CardBox className="md:w-7/12 lg:w-5/12 xl:w-4/12 shadow-2xl md:mx-auto">
-                    <div className="text-center py-24 lg:py-12 text-gray-500 dark:text-slate-400">
+                <CardBox className="shadow-2xl md:mx-auto md:w-7/12 lg:w-5/12 xl:w-4/12">
+                    <div className="py-24 text-center text-gray-500 dark:text-slate-400 lg:py-12">
                         <Button
                             label="Toggle"
                             color="contrast"
@@ -190,7 +193,7 @@ export const UiPage = () => {
                             <h1 className="text-2xl text-gray-500 dark:text-slate-400">
                                 Notifications
                             </h1>
-                            <div className="flex items-center justify-center mt-6">
+                            <div className="mt-6 flex items-center justify-center">
                                 <FormCheckRadio type="switch" label="Outline">
                                     <Field type="checkbox" name="outline" />
                                 </FormCheckRadio>
@@ -556,7 +559,7 @@ export const UiPage = () => {
             <SectionTitle>Cards</SectionTitle>
 
             <SectionMain>
-                <div className="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-2">
+                <div className="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
                     <CardBox footer={CardSamplesFooter}>
                         <CardBoxComponentTitle title="With title & icon">
                             <Button icon={mdiReload} color="whiteDark" roundedFull />

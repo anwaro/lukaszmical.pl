@@ -1,4 +1,6 @@
 'use client';
+import type {UserForm} from '../interfaces';
+
 import {
     mdiAccount,
     mdiAsterisk,
@@ -9,18 +11,19 @@ import {
 } from '@mdi/js';
 import {Field, Form, Formik} from 'formik';
 import Head from 'next/head';
+
+import {FormField} from '@/admin/components/form/form-field';
+import FormFilePicker from '@/admin/components/form/FilePicker';
+
 import Button from '../components/Button';
 import Buttons from '../components/Buttons';
 import Divider from '../components/Divider';
 import CardBox from '../components/CardBox';
 import CardBoxComponentBody from '../components/CardBox/Component/Body';
 import CardBoxComponentFooter from '../components/CardBox/Component/Footer';
-import FormField from '../components/Form/Field';
-import FormFilePicker from '../components/Form/FilePicker';
 import SectionMain from '../components/Section/Main';
 import SectionTitleLineWithButton from '../components/Section/TitleLineWithButton';
 import CardBoxUser from '../components/CardBox/User';
-import type {UserForm} from '../interfaces';
 import {getPageTitle} from '../config';
 
 export const ProfilePage = () => {
@@ -53,7 +56,7 @@ export const ProfilePage = () => {
 
                 <CardBoxUser className="mb-6" />
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                     <div className="flex flex-col">
                         <CardBox className="mb-6">
                             <FormField label="Avatar" help="Max 500kb">
@@ -72,7 +75,7 @@ export const ProfilePage = () => {
                                     alert(JSON.stringify(values, null, 2))
                                 }
                             >
-                                <Form className="flex flex-col flex-1">
+                                <Form className="flex flex-1 flex-col">
                                     <CardBoxComponentBody>
                                         <FormField
                                             label="Name"
@@ -129,7 +132,7 @@ export const ProfilePage = () => {
                                 alert(JSON.stringify(values, null, 2))
                             }
                         >
-                            <Form className="flex flex-col flex-1">
+                            <Form className="flex flex-1 flex-col">
                                 <CardBoxComponentBody>
                                     <FormField
                                         label="Current password"

@@ -1,4 +1,5 @@
 import {expect, test} from 'vitest';
+
 import {string} from './string';
 
 test('basic string.match', () => {

@@ -1,16 +1,19 @@
 'use client';
 
 import React, {ReactNode, useEffect, useState} from 'react';
+
 import {mdiBackburger, mdiForwardburger, mdiMenu} from '@mdi/js';
+import {useRouter} from 'next/navigation';
+import {clsx} from 'clsx';
+
+import {FormField} from '@/admin/components/form/form-field';
+
 import {useMenuAside} from '../useMenuAside';
 import {useMenuNavBare} from '../useMenuNavBar';
 import Icon from '../components/Icon';
 import NavBar from '../components/NavBar';
 import NavBarItemPlain from '../components/NavBar/Item/Plain';
 import AsideMenu from '../components/AsideMenu';
-import FormField from '../components/Form/Field';
-import {useRouter} from 'next/navigation';
-import {clsx} from 'clsx';
 
 type Props = {
     children: ReactNode;
@@ -46,7 +49,7 @@ export default function LayoutAuthenticated({children}: Props) {
                 className={clsx(
                     layoutAsidePadding,
                     isAsideMobileExpanded && 'ml-60 lg:ml-0',
-                    'pt-14 min-h-screen w-screen transition-position lg:w-auto',
+                    'min-h-screen w-screen pt-14 transition-position lg:w-auto',
                     'bg-gray-50 dark:bg-slate-800 dark:text-slate-100',
                 )}
             >

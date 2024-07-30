@@ -1,42 +1,15 @@
-import {AssetType, ProjectWitAssets} from '@/types/project';
-import {Project} from '@/services/Project';
-import fs from 'fs';
+import {AssetType, LocalProject} from '@/types/project';
+import {compressHtml} from '@/utils/html';
 
 export class ProjectRenderer {
-    private project: Project;
-
-    constructor() {
-        this.project = new Project();
-    }
-
-    public render = async (slug: string, url: URL, minFile = false) => {
-        const project = await this.project.getProjectInfo(slug, minFile);
-
-        if (!project) {
-            return undefined;
-        }
-
-        const template = await fs.promises.readFile(
-            this.project.getProjectsPath('template.html'),
-            {encoding: 'utf8'},
+    public render = async (project: LocalProject, minFile = false) => {
+        return compressHtml(
+            this.renderHtml(project.template, {
+                content: project.html,
+                css: this.createAsset(project, 'css', minFile),
+                script: this.createAsset(project, 'js', minFile),
+            }),
         );
-
-        const projectHtml = await fs.promises.readFile(
-            this.project.getProjectsPath(`${project.url}/index.html`),
-            {encoding: 'utf8'},
-        );
-
-        const imagePath = this.assetUrl(`${project.url}/image/cover.jpg`);
-
-        return this.renderHtml(template, {
-            title: project.name,
-            description: project.description,
-            content: projectHtml,
-            url: url.href,
-            image: `${url.origin}${imagePath}`,
-            css: this.createAsset(project, 'css', minFile),
-            script: this.createAsset(project, 'js', minFile),
-        });
     };
 
     private themeCss = (min: boolean) => `theme${min ? '.min' : ''}.css`;
@@ -55,7 +28,7 @@ export class ProjectRenderer {
         type === 'css' ? cssValue : jsValue;
 
     private createAsset = (
-        {url, themeCss, myQuery, cssFiles, jsFiles}: ProjectWitAssets,
+        {url, themeCss, myQuery, cssFiles, jsFiles}: LocalProject,
         type: AssetType,
         minFile = false,
     ) => {

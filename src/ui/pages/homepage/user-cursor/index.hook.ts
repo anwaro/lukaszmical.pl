@@ -1,6 +1,8 @@
-import {useEffect, useRef, useState} from 'react';
-import {useRefState} from '@/utils/ref-state';
+import {useEffect, useRef} from 'react';
+
 import {io} from 'socket.io-client';
+
+import {useRefState} from '@/utils/ref-state';
 
 const client = io('http://localhost:3000', {
     autoConnect: false,

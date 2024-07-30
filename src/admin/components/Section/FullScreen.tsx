@@ -1,9 +1,11 @@
 'use client';
 
 import React, {ReactNode} from 'react';
+
+import {useDarkMode} from '@/admin/stores/dark-mode';
+
 import {BgKey} from '../../interfaces';
 import {gradientBgDark, gradientBgPinkRed, gradientBgPurplePink} from '../../colors';
-import {useDarkMode} from '@/admin/stores/dark-mode';
 
 type Props = {
     bg: BgKey;

@@ -1,1 +1,1 @@
-body{background:#444;color:#fff;font-family:Helvetica,sans-serif}.row{display:flex;flex-direction:row;justify-content:center;align-items:center}input{width:50px;margin:0 5px;border-radius:4px;outline:0;box-shadow:none;padding:4px 8px;background:#2d2d2d;border:1px solid #7b7b7b;color:#fff}
+body{background:#444;color:#fff;font-family:Helvetica,sans-serif}.row{display:flex;flex-direction:row;justify-content:center;align-items:center;gap:4px}.row input{width:250px}

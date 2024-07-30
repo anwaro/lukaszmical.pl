@@ -1,6 +1,7 @@
 ﻿var SET = SET || {};
 
 SET = {
+    ...SET,
     boltz: 5.67e-8,
     sun: 1374 / 4,
     wAlbedo: 0.3,
@@ -83,11 +84,10 @@ for (var k = 0; k < 3e4; k++) {
 SET.checkAlbedo1 = function () {
     if (document.getElementById('albedo1').checked) {
         SET.wAlbedo = parseFloat(
-            document.querySelector('select#albedo_select option:selected').value,
+            document.querySelector('select#albedo_select option:checked').value,
         );
         SET.ground = parseInt(
-            document.querySelector('select#albedo_select option:selected').dataset
-                .gr,
+            document.querySelector('select#albedo_select option:checked').dataset.gr,
         );
     }
 };
@@ -131,9 +131,9 @@ SET.changeNemberOfStratum = function () {
 
 SET.changeSunConst = function () {
     SET.sun = parseInt(document.querySelector('input#sun_const').value) / 4;
-    document
-        .querySelector('#sun_const_val')
-        .text(parseInt(document.querySelector('input#sun_const').value));
+    document.querySelector('#sun_const_val').innerText = parseInt(
+        document.querySelector('input#sun_const').value,
+    );
 };
 
 /**

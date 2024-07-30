@@ -10,7 +10,7 @@ export const songs: Song[] = [
     {
         id: '1',
         artist: 'soundbay',
-        title: 'In Slow Motion (Inspiring Ambient Lounge)',
+        title: 'In Slow Motion',
         cover: 'https://cdn.pixabay.com/audio/2024/06/25/10-06-34-296_200x200.jpg',
         src: '/projects/mp3player/songs/audio_7bfb8d2ab0.mp3',
     },

@@ -531,36 +531,36 @@ $math = new (function () {
     }
 
     function preperFunction(fun) {
-        var fun_nam = {
-                abs: 'Math.abs',
-                acos: 'Math.acos',
-                asin: 'Math.asin',
-                atan: 'Math.atan',
-                atan2: 'Math.atan2',
-                cos: 'Math.cos',
-                exp: 'Math.exp',
-                floor: 'Math.floor',
-                log: 'Math.log',
-                pow: 'Math.pow',
-                rand: 'Math.random()',
-                round: 'Math.round',
-                sin: 'Math.sin',
-                sqrt: 'Math.sqrt',
-                tan: 'Math.tan',
-                PI: 'Math.PI',
-                pi: 'Math.PI',
-                Pi: 'Math.PI',
-                E: 'Math.E',
-                e: 'Math.E',
-            },
-            expr = [[/(\d+|x|e|\(.+\))(\^|\*\*)(\d+|x|e|\(.+\))/g, 'pow($1, $3)']];
+        let functions = [
+            ['abs', 'Math.abs'],
+            ['acos', 'Math.acos'],
+            ['asin', 'Math.asin'],
+            ['atan', 'Math.atan'],
+            ['atan2', 'Math.atan2'],
+            ['cos', 'Math.cos'],
+            ['exp', 'Math.exp'],
+            ['floor', 'Math.floor'],
+            ['log', 'Math.log'],
+            ['pow', 'Math.pow'],
+            ['rand', 'Math.random()'],
+            ['round', 'Math.round'],
+            ['sin', 'Math.sin'],
+            ['sqrt', 'Math.sqrt'],
+            ['tan', 'Math.tan'],
+            ['PI', 'Math.PI'],
+            ['pi', 'Math.PI'],
+            ['Pi', 'Math.PI'],
+            ['E', 'Math.E'],
+            ['e', 'Math.E'],
+        ];
+        let expr = [[/(\d+|x|e|\(.+\))(\^|\*\*)(\d+|x|e|\(.+\))/g, 'pow($1, $3)']];
         for (var i = 0; i < expr.length; i++) {
             fun = fun.replace(expr[i][0], expr[i][1]);
         }
 
-        for (var key in fun_nam) {
-            var re = new RegExp(key, 'g');
-            fun = fun.replace(re, fun_nam[key]);
+        for (let [pattern, func] of functions) {
+            var re = new RegExp(pattern, 'g');
+            fun = fun.replace(re, func);
         }
         document.querySelector('#out-fun');
         document.querySelector('#out-fun').innerHTML = fun;

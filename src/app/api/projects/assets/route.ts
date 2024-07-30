@@ -2,11 +2,13 @@ import fs from 'fs';
 import {basename} from 'path';
 
 import mine from 'mime';
-import {Project} from '@/services/Project';
+
+import {LocalProjectService} from '@/services/LocalProjectService';
+
 import {streamFile} from './stream';
 
 export async function GET(request: Request) {
-    const project = new Project();
+    const project = new LocalProjectService();
     const path = project.getProjectsPath(
         new URL(request.url).pathname.replace('..', '').replace('assets/', ''),
     );

@@ -21,7 +21,7 @@ export default function Icon({
 
     return (
         <span
-            className={`inline-flex justify-center items-center ${w} ${h} ${className}`}
+            className={`inline-flex items-center justify-center ${w} ${h} ${className}`}
         >
             <svg
                 viewBox="0 0 24 24"

@@ -17,7 +17,7 @@ $puzzles = new (function () {
         size = 5,
         frame = '/projects/puzzles/image/frame' + size + '.png',
         leyPuzzles = 0;
-    this.newGame = function (img, nr) {
+    this['newGame'] = function (img, nr) {
         $$.addEvent(window, 'mouseup', moveStop);
         $$.addEvent(window, 'mousemove', mousePoss);
         area = $$('#puzzleArea');

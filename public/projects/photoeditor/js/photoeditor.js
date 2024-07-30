@@ -655,7 +655,7 @@ for (var i = 0; i < maskshow.length; i++) {
     maskshow[i].addEventListener('click', function (event) {
         event.stopPropagation();
         var size = event.target.dataset.size;
-        _$('mask-action').dataset.edit = 'ownMask-' + size;
+        _$('mask-action').dataset['edit'] = 'ownMask-' + size;
         _$('mask-matrix').style.height = size * 50 + 'px';
         _$('mask-matrix').style.width = size * 50 + 'px';
         _$('mask').style.display = 'block';
@@ -681,13 +681,13 @@ for (var i = 0; i < switcher.length; i++) {
 document.addEventListener('click', function (event) {
     var toHide = document.getElementsByClassName('hide-child');
     for (var i = 0; i < toHide.length; i++) {
-        if (event.path.indexOf(toHide[i]) === -1) {
+        if (event.path?.indexOf(toHide[i]) === -1) {
             toHide[i].children[0].style.display = 'none';
         }
     }
     var toHide = document.getElementsByClassName('hide');
     for (var i = 0; i < toHide.length; i++) {
-        if (event.path.indexOf(toHide[i]) === -1) {
+        if (event.path?.indexOf(toHide[i]) === -1) {
             toHide[i].style.display = 'none';
         }
     }

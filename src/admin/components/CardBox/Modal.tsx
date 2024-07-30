@@ -1,11 +1,15 @@
-import {mdiClose} from '@mdi/js';
-import {ReactNode} from 'react';
 import type {ColorButtonKey} from '../../interfaces';
+
+import {ReactNode} from 'react';
+
+import {mdiClose} from '@mdi/js';
+
 import Button from '../Button';
 import Buttons from '../Buttons';
-import CardBox from '.';
 import CardBoxComponentTitle from './Component/Title';
 import OverlayLayer from '../OverlayLayer';
+
+import CardBox from '.';
 
 type Props = {
     title: string;
@@ -50,7 +54,7 @@ const CardBoxModal = ({
             className={onCancel ? 'cursor-pointer' : ''}
         >
             <CardBox
-                className={`transition-transform shadow-lg max-h-modal w-11/12 md:w-3/5 lg:w-2/5 xl:w-4/12 z-50`}
+                className={`z-50 max-h-modal w-11/12 shadow-lg transition-transform md:w-3/5 lg:w-2/5 xl:w-4/12`}
                 isModal
                 footer={footer}
             >

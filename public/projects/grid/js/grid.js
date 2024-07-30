@@ -1,49 +1,60 @@
-var ctx;
-var canvas;
-var mouse = {x: 0, y: 0};
-var points = [];
+let ctx;
+let canvas;
+const mouse = {x: 0, y: 0};
+let points = [];
 
-var winX, winY, gradient;
+let winX, winY, gradient;
 
-var maxRange = 2000;
-var maxForce = 100;
-var countX = 50;
-var countY = 50;
-var size = 1;
+const settings = {
+    ['maxRange']: 2000,
+    ['maxForce']: 100,
+    ['countX']: 50,
+    ['countY']: 50,
+    ['pixelCount']: 24000,
+    ['maxPixelCount']: 45000,
+    ['exp']: false,
+    ['smooth']: false,
+};
 
-var minX = 0.1;
-var minY = 0.1;
-var maxX = 0.9;
-var maxY = 0.9;
-var marginX = 100;
-var marginY = 100;
+const size = 1;
 
-var imageObject;
-var inputImage;
-var imageProgress;
-var pr1;
-var pr2;
-var progressSteps = 2500;
-var progressCurr = 0;
+const minX = 0.1;
+const minY = 0.1;
+const maxX = 0.9;
+const maxY = 0.9;
+const marginX = 100;
+const marginY = 100;
 
-var canvasVirtual = document.createElement('canvas');
-var ctxVirtual = canvasVirtual.getContext('2d');
-var photoData = [];
-var pixelSize = 10,
+let imageObject;
+let inputImage;
+let imageProgress;
+let pr1;
+let pr2;
+const progressSteps = 2500;
+let progressCurr = 0;
+
+const canvasVirtual = document.createElement('canvas');
+const ctxVirtual = canvasVirtual.getContext('2d');
+let photoData = [];
+let pixelSize = 10,
     pixelPhotoSize;
-var pixelCount = 24000;
-var maxPixelCount = 45000;
 
-var offsetX = 0;
-var offsetY = 0;
+let offsetX = 0;
+let offsetY = 0;
 
-var exp = false;
-var smooth = false;
+const fps = [];
+let elFps;
+let elParticle;
+let poss;
 
-var fps = [];
-var elFps;
-var elParticle;
-var poss;
+const actionsMap = {
+    ['closeSettings']: closeSettings,
+    ['openSettings']: openSettings,
+    ['setValue']: setValue,
+    ['loadPhoto']: loadPhoto,
+    ['generatePoint']: generatePoint,
+    ['toggle']: toggle,
+};
 
 function init() {
     initPhoto();
@@ -87,18 +98,18 @@ function initGradient() {
 
 function generatePoint() {
     points = [];
-    var _minX = minX * winX;
-    var _maxX = maxX * winX;
-    var _minY = minY * winY;
-    var _maxY = maxY * winY;
-    var dx = (_maxX - _minX) / countX;
-    var dy = (_maxY - _minY) / countY;
-    var cx = 0,
+    const _minX = minX * winX;
+    const _maxX = maxX * winX;
+    const _minY = minY * winY;
+    const _maxY = maxY * winY;
+    const dx = (_maxX - _minX) / settings.countX;
+    const dy = (_maxY - _minY) / settings.countY;
+    let cx = 0,
         cy = 0;
-    var _cX = 255 / countX;
-    var _cY = 255 / countY;
-    for (var i = _minX; i < _maxX; i += dx, cx += _cX) {
-        for (var j = _minY; j < _maxY; j += dy, cy += _cY) {
+    const _cX = 255 / settings.countX;
+    const _cY = 255 / settings.countY;
+    for (let i = _minX; i < _maxX; i += dx, cx += _cX) {
+        for (let j = _minY; j < _maxY; j += dy, cy += _cY) {
             points.push(getPoint(i, j, randColor(cx, cy)));
         }
         cy = 0;
@@ -107,13 +118,11 @@ function generatePoint() {
 
 function randColor(c1, c2, c3) {
     c3 = 105;
-    return (
-        'rgb(' + parseInt(c3) + ', ' + parseInt(255 - c2) + ', ' + parseInt(c1) + ')'
-    );
+    return 'rgb(' + int(c3) + ', ' + int(255 - c2) + ', ' + int(c1) + ')';
 }
 
 function stat() {
-    var dT = fps[0] - fps[fps.length - 1];
+    const dT = fps[0] - fps[fps.length - 1];
     elFps.innerHTML = 'Frame rate: ' + Math.floor((1000 * fps.length) / dT) + ' fps';
     elParticle.innerHTML = 'Particle: ' + points.length;
 }
@@ -129,7 +138,7 @@ function draw() {
     ctx.fillRect(0, 0, 200, 200);
     ctx.restore();
 
-    for (var i = 0; i < points.length; i++) {
+    for (let i = 0; i < points.length; i++) {
         // points[i][1] = getNewPoss(points[i]);
         poss = setNewPoss(i);
 
@@ -144,7 +153,7 @@ function draw() {
 }
 
 function mouseMove(a) {
-    var rect = canvas.getBoundingClientRect();
+    const rect = canvas.getBoundingClientRect();
     mouse.x = a.clientX - rect.left;
     mouse.y = a.clientY - rect.top;
 }
@@ -173,51 +182,58 @@ function dist(point) {
 }
 
 function setNewPoss(i) {
-    var dis = dist(points[i]);
+    let dis = dist(points[i]);
 
-    if (dis > maxRange && !smooth) {
+    if (dis > settings.maxRange && !settings.smooth) {
         return points[i][0];
     }
-    dis = -(maxForce / maxRange) * dis + maxForce;
-    var angle =
+    dis = -(settings.maxForce / settings.maxRange) * dis + settings.maxForce;
+    const angle =
         Math.atan2(mouse.x - points[i][0][0], points[i][0][1] - mouse.y) +
         2.5 * Math.PI;
 
-    points[i][1] = exp
+    points[i][1] = settings.exp
         ? [winX / 2 + Math.cos(angle) * dis, winY / 2 + Math.sin(angle) * dis]
         : [
               points[i][0][0] + Math.cos(angle) * dis,
               points[i][0][1] + Math.sin(angle) * dis,
           ];
 
-    if (smooth) {
+    if (settings.smooth) {
         points[i][2][0] += (points[i][1][0] - points[i][2][0]) * 0.3;
         points[i][2][1] += (points[i][1][1] - points[i][2][1]) * 0.3;
     }
-    return smooth ? points[i][2] : points[i][1];
+    return settings.smooth ? points[i][2] : points[i][1];
 }
 
 function calculatePhotoSize(photoX, photoY) {
-    var _winX = winX - marginX;
-    var _winY = winY - marginY;
+    const _winX = winX - marginX;
+    const _winY = winY - marginY;
 
-    var photoRatio = photoX / photoY;
-    var winRatio = _winX / _winY;
+    const photoRatio = photoX / photoY;
+    const winRatio = _winX / _winY;
 
     if (winRatio < photoRatio) {
         pixelSize = Math.floor(
-            Math.min(photoX, _winX) / Math.sqrt(pixelCount * photoRatio),
+            Math.min(photoX, _winX) / Math.sqrt(settings.pixelCount * photoRatio),
         );
-        pixelPhotoSize = Math.floor(photoX / Math.sqrt(pixelCount * photoRatio));
+        pixelPhotoSize = Math.floor(
+            photoX / Math.sqrt(settings.pixelCount * photoRatio),
+        );
     } else {
         pixelSize = Math.floor(
-            Math.min(photoY, _winY) / Math.sqrt(pixelCount / photoRatio),
+            Math.min(photoY, _winY) / Math.sqrt(settings.pixelCount / photoRatio),
         );
-        pixelPhotoSize = Math.floor(photoY / Math.sqrt(pixelCount / photoRatio));
+        pixelPhotoSize = Math.floor(
+            photoY / Math.sqrt(settings.pixelCount / photoRatio),
+        );
     }
 
-    if ((photoX / pixelPhotoSize) * (photoY / pixelPhotoSize) > maxPixelCount) {
-        pixelCount /= 1.2;
+    if (
+        (photoX / pixelPhotoSize) * (photoY / pixelPhotoSize) >
+        settings.maxPixelCount
+    ) {
+        settings.pixelCount /= 1.2;
         calculatePhotoSize(photoX, photoY);
     }
 }
@@ -232,7 +248,7 @@ function loadPhoto() {
 }
 
 function readImage() {
-    var FR = new FileReader();
+    const FR = new FileReader();
     imageObject = new Image();
 
     FR.onload = function (e) {
@@ -261,11 +277,11 @@ function prepareDataPixel() {
     offsetY = winY - (photoData.height / pixelPhotoSize) * pixelSize;
     points = [];
 
-    var prog = 2300 / (photoData.width / pixelPhotoSize);
-    var i = 0;
+    const prog = 2300 / (photoData.width / pixelPhotoSize);
+    let i = 0;
 
     (function loop() {
-        for (var j = 0; j < photoData.height; j += pixelPhotoSize) {
+        for (let j = 0; j < photoData.height; j += pixelPhotoSize) {
             points.push(
                 getPoint(
                     Math.round(offsetX / 2 + (i / pixelPhotoSize) * pixelSize),
@@ -286,18 +302,18 @@ function prepareDataPixel() {
 }
 
 function setAveragePixel(x, y) {
-    var _x, _y;
-    var r = 0,
-        g = 0,
-        b = 0,
-        a = 0,
-        maxX = Math.min(x + pixelPhotoSize, photoData.width),
-        maxY = Math.min(y + pixelPhotoSize, photoData.height),
-        s = 0;
+    let _x, _y;
+    let r = 0;
+    let g = 0;
+    let b = 0;
+    let a = 0;
+    let maxX = Math.min(x + pixelPhotoSize, photoData.width);
+    let maxY = Math.min(y + pixelPhotoSize, photoData.height);
+    let s = 0;
 
-    for (var i = y; i < maxY; i++) {
+    for (let i = y; i < maxY; i++) {
         _y = i * 4 * photoData.width;
-        for (var j = x; j < maxX; j++) {
+        for (let j = x; j < maxX; j++) {
             _x = _y + j * 4;
 
             r += photoData.data[_x];
@@ -307,11 +323,18 @@ function setAveragePixel(x, y) {
             s++;
         }
     }
-    r = parseInt(r / s);
-    g = parseInt(g / s);
-    b = parseInt(b / s);
-    a = parseInt(a / s);
+    r = int(r / s);
+    g = int(g / s);
+    b = int(b / s);
+    a = int(a / s);
     return 'rgba( ' + r + ', ' + g + ', ' + b + ', ' + a + ')';
+}
+
+function int(value) {
+    if (typeof value === 'string') {
+        value = parseInt(value);
+    }
+    return Math.round(value);
 }
 
 function loadEnded() {
@@ -327,43 +350,32 @@ function setProgress(pr, force) {
     } else {
         progressCurr += pr;
     }
-    pr = parseInt((progressCurr / progressSteps) * 100);
+    pr = int((progressCurr / progressSteps) * 100);
     imageProgress.style.height = pr + '%';
     pr1.innerHTML = pr + '%';
     pr2.innerHTML = pr + '%';
 }
 
-window.requestAnimationFrame = (function () {
-    return (
-        window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame ||
-        function (callback) {
-            window.setTimeout(callback, 1000 / 30);
-        }
-    );
-})();
-
 //SETTINGS
 function initSetting() {
-    var i,
-        action = document.getElementsByClassName('action');
-    var input = document.getElementsByClassName('input-action');
+    let i;
+    const action = document.getElementsByClassName('action');
+    const input = document.getElementsByClassName('input-action');
 
     for (i = 0; i < action.length; i++) {
         action[i].addEventListener('click', inputAction);
     }
     for (i = 0; i < input.length; i++) {
         input[i].addEventListener('input', inputAction);
-        var variable = input[i].dataset.var;
-        var value = window[variable];
-        input[i].value = parseInt(value);
+        const variable = input[i].dataset.var;
+        const value = settings[variable];
+        input[i].value = int(value);
         document.getElementById(variable).innerHTML = value;
     }
 }
 
 function inputAction() {
-    var fun = window[this.dataset.action];
+    const fun = actionsMap[this.dataset.action];
     if (typeof fun === 'function') {
         fun(this);
     }
@@ -380,14 +392,14 @@ function closeSettings() {
 }
 
 function toggle(el) {
-    var variable = el.dataset.var;
-    window[variable] = !window[variable];
+    const variable = el.dataset.var;
+    settings[variable] = !settings[variable];
 }
 
 function setValue(el) {
-    var variable = el.dataset.var;
-    var value = el.value;
-    window[variable] = parseInt(value);
+    const variable = el.dataset.var;
+    const value = el.value;
+    settings[variable] = int(value);
     document.getElementById(variable).innerHTML = value;
 }
 

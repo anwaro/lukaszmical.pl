@@ -473,7 +473,7 @@ function GameEnd() {
     ctx.font = Game.titleFontSize;
     ctx.fillStyle = 'white';
     ctx.fillText('GAME OVER', (Game.boardX - 140) / 2, 290);
-    $('#PlayGame').css('display', 'block');
+    // document.querySelector('#PlayGame').styles.display = 'block';
 }
 
 function WhatKey(evt) {

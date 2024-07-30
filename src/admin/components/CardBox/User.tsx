@@ -1,9 +1,12 @@
 import {mdiCheckDecagram} from '@mdi/js';
 import {Field, Form, Formik} from 'formik';
-import CardBox from '.';
-import FormCheckRadio from '../Form/CheckRadio';
+
+import FormCheckRadio from '@/admin/components/form/CheckRadio';
+
 import PillTag from '../PillTag';
 import UserAvatarCurrentUser from '../UserAvatar/CurrentUser';
+
+import CardBox from '.';
 
 type Props = {
     className?: string;
@@ -14,8 +17,8 @@ const CardBoxUser = ({className}: Props) => {
 
     return (
         <CardBox className={className}>
-            <div className="flex flex-col lg:flex-row items-center justify-around lg:justify-center">
-                <UserAvatarCurrentUser className="mb-6 lg:mb-0 lg:mx-12" />
+            <div className="flex flex-col items-center justify-around lg:flex-row lg:justify-center">
+                <UserAvatarCurrentUser className="mb-6 lg:mx-12 lg:mb-0" />
                 <div className="space-y-3 text-center md:text-left lg:mx-12">
                     <div className="flex justify-center md:block">
                         <Formik

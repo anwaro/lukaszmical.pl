@@ -1,14 +1,17 @@
 'use client';
 
-import {mdiPencil} from '@mdi/js';
 import React, {useCallback, useState} from 'react';
-import Button from '../../Button';
-import Buttons from '../../Buttons';
+
+import {mdiPencil} from '@mdi/js';
+import Image from 'next/image';
+
 import {BaseTable} from '@/admin/components/table/base-table';
 import {ProjectRow} from '@/types/supabase/projects';
-import Image from 'next/image';
-import {EditOrder} from './edit-order';
 import {EditVisibility} from '@/admin/components/table/project-table/edit-visibility';
+
+import Button from '../../Button';
+import Buttons from '../../Buttons';
+import {EditOrder} from './edit-order';
 
 type Props = {
     projects: ProjectRow[];

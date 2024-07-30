@@ -1,9 +1,12 @@
-import {mdiTrendingDown, mdiTrendingNeutral, mdiTrendingUp} from '@mdi/js';
 import React from 'react';
+
+import {mdiTrendingDown, mdiTrendingNeutral, mdiTrendingUp} from '@mdi/js';
+
 import {Client} from '../../interfaces';
-import CardBox from '.';
 import PillTag from '../PillTag';
 import UserAvatar from '../UserAvatar';
+
+import CardBox from '.';
 
 type Props = {
     client: Client;
@@ -29,14 +32,14 @@ const CardBoxClient = (props: Props) => {
 
     return (
         <CardBox className="mb-6 last:mb-0">
-            <div className="flex flex-col md:flex-row items-center justify-between">
-                <div className="flex flex-col md:flex-row items-center justify-start mb-6 md:mb-0">
+            <div className="flex flex-col items-center justify-between md:flex-row">
+                <div className="mb-6 flex flex-col items-center justify-start md:mb-0 md:flex-row">
                     <UserAvatar
-                        className="w-12 h-12 md:mr-6 mb-6 md:mb-0"
+                        className="mb-6 size-12 md:mb-0 md:mr-6"
                         username={props.client.name}
                     />
-                    <div className="text-center md:text-left overflow-hidden">
-                        <h4 className="text-xl text-ellipsis">
+                    <div className="overflow-hidden text-center md:text-left">
+                        <h4 className="text-ellipsis text-xl">
                             {props.client.name}
                         </h4>
                         <p className="text-gray-500 dark:text-slate-400">

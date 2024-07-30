@@ -1,37 +1,39 @@
-import {AssetType, ProjectWitAssets} from '@/types/project';
-import {SupabaseProject} from '@/services/supabase/SupabaseProject';
 import fs from 'fs';
 
-export class Project {
+import {AssetType, LocalProject} from '@/types/project';
+import {ProjectRow} from '@/types/supabase/projects';
+
+export class LocalProjectService {
     getProjectsPath = (path: string) => {
         return `${process.env.PWD}/public/projects/${path}`.replace(/\/\//, '/');
     };
 
-    getProjectInfo = async (
-        slug: string,
+    toLocalProject = async (
+        project: ProjectRow,
         minFile = true,
-    ): Promise<ProjectWitAssets | undefined> => {
-        const client = new SupabaseProject();
-        const projectPath = this.getProjectsPath(slug);
+    ): Promise<LocalProject | undefined> => {
+        const projectPath = this.getProjectsPath(project.url);
 
         if (!fs.existsSync(projectPath)) {
             return undefined;
         }
 
-        const files = await fs.promises.readdir(projectPath);
-        const project = await client.getProjectBySlug(slug);
-
-        if (!files.length || project === null) {
-            return undefined;
-        }
-        const cssFiles = await this.getProjectTypeFile(slug, 'css', minFile);
-        const jsFiles = await this.getProjectTypeFile(slug, 'js', minFile);
+        const template = await this.readFile('template.html');
+        const html = await this.readFile(`${project.url}/index.html`);
+        const cssFiles = await this.getProjectTypeFile(project.url, 'css', minFile);
+        const jsFiles = await this.getProjectTypeFile(project.url, 'js', minFile);
 
         return {
             ...project,
+            template,
+            html,
             cssFiles,
             jsFiles,
         };
+    };
+
+    readFile = async (file: string) => {
+        return fs.promises.readFile(this.getProjectsPath(file), {encoding: 'utf8'});
     };
 
     getProjectTypeFile = async (slug: string, type: AssetType, minType = false) => {

@@ -1,10 +1,12 @@
 'use client';
 
-import {ProjectRow} from '@/types/supabase/projects';
 import React, {useActionState, useEffect} from 'react';
-import Button from '@/admin/components/Button';
+
 import {mdiEye, mdiEyeOff} from '@mdi/js';
-import {updateProject} from '@/admin/actions/update-project';
+
+import {ProjectRow} from '@/types/supabase/projects';
+import Button from '@/admin/components/Button';
+import {updateProjectField} from '@/admin/actions/update-project-field';
 
 type Props = {
     project: ProjectRow;
@@ -28,7 +30,7 @@ const FormBoolean = {
 };
 
 export const EditVisibility = ({project, className, onUpdate}: Props) => {
-    const [state, formAction, isPending] = useActionState(updateProject, {
+    const [state, formAction, isPending] = useActionState(updateProjectField, {
         id: project.id,
         published: project.published,
     });
