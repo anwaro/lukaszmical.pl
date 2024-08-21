@@ -26,11 +26,7 @@ const SectionTitle = ({
             className={`px-6 py-24 text-center lg:mx-auto lg:max-w-2xl lg:px-0 ${classAddon}`}
         >
             {custom && children}
-            {!custom && (
-                <h1 className="text-2xl text-gray-500 dark:text-slate-400">
-                    {children}
-                </h1>
-            )}
+            {!custom && <h1 className="text-2xl text-slate-400">{children}</h1>}
         </section>
     );
 };

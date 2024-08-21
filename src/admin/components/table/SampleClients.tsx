@@ -6,9 +6,9 @@ import {mdiEye, mdiTrashCan} from '@mdi/js';
 
 import {useSampleClients} from '../../hooks/sampleData';
 import {Client} from '../../interfaces';
-import Button from '../Button';
-import Buttons from '../Buttons';
-import UserAvatar from '../UserAvatar';
+import {Button} from '../button/button';
+import ButtonsGroup from '../button/buttons-group';
+import {UserAvatar} from '../user-avatar/user-avatar';
 
 const TableSampleClients = () => {
     const {clients} = useSampleClients();
@@ -69,27 +69,30 @@ const TableSampleClients = () => {
                                 data-label="Created"
                                 className="whitespace-nowrap lg:w-1"
                             >
-                                <small className="text-gray-500 dark:text-slate-400">
+                                <small className="text-slate-400">
                                     {client.created}
                                 </small>
                             </td>
                             <td className="whitespace-nowrap before:hidden lg:w-1">
-                                <Buttons type="justify-start lg:justify-end" noWrap>
+                                <ButtonsGroup
+                                    type="justify-start lg:justify-end"
+                                    noWrap
+                                >
                                     <Button color="info" icon={mdiEye} small />
                                     <Button
                                         color="danger"
                                         icon={mdiTrashCan}
                                         small
                                     />
-                                </Buttons>
+                                </ButtonsGroup>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-            <div className="border-t border-gray-100 p-3 dark:border-slate-800 lg:px-6">
+            <div className="border-t border-slate-800 p-3 lg:px-6">
                 <div className="flex flex-col items-center justify-between py-3 md:flex-row md:py-0">
-                    <Buttons>
+                    <ButtonsGroup>
                         {pagesList.map((page) => (
                             <Button
                                 key={page}
@@ -102,7 +105,7 @@ const TableSampleClients = () => {
                                 onClick={() => setCurrentPage(page)}
                             />
                         ))}
-                    </Buttons>
+                    </ButtonsGroup>
                     <small className="mt-6 md:mt-0">
                         Page {currentPage + 1} of {numPages}
                     </small>

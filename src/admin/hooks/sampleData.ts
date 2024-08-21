@@ -1,25 +1,23 @@
-import useSWR from 'swr';
-
 import {Client} from '@/admin/interfaces';
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+import {useClients} from '@/admin/hooks/clients';
+import {useHistory} from '@/admin/hooks/history';
 
 export const useSampleClients = () => {
-    const {data, error} = useSWR('/data-sources/clients.json', fetcher);
+    const {data} = useClients();
 
     return {
-        clients: (data?.data ?? []) as Client[],
-        isLoading: !error && !data,
-        isError: error,
+        clients: (data ?? []) as Client[],
+        isLoading: !data,
+        isError: '',
     };
 };
 
 export const useSampleTransactions = () => {
-    const {data, error} = useSWR('/data-sources/history.json', fetcher);
+    const {data} = useHistory();
 
     return {
-        transactions: data?.data ?? [],
-        isLoading: !error && !data,
-        isError: error,
+        transactions: data ?? [],
+        isLoading: !data,
+        isError: '',
     };
 };

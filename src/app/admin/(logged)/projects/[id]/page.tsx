@@ -6,8 +6,8 @@ import {notFound} from 'next/navigation';
 import {auth} from '@/utils/supabase/auth';
 import SectionTitleLineWithButton from '@/admin/components/Section/TitleLineWithButton';
 import SectionMain from '@/admin/components/Section/Main';
-import {SupabaseProject} from '@/services/supabase/SupabaseProject';
-import {EditProjectForm} from '@/admin/components/form/edit-project/edit-project-form';
+import {SupabaseProject} from '@/services/supabase/supabase-project';
+import {EditProjectForm} from '@/admin/components/form/forms/project/edit-project-form/edit-project-form';
 
 type Props = {
     params: {

@@ -3,7 +3,7 @@ import React from 'react';
 import {mdiGithub} from '@mdi/js';
 
 import {gradientBgPinkRed} from '../../../colors';
-import Button from '../../Button';
+import {Button} from '../../button/button';
 
 import SectionBanner from '.';
 

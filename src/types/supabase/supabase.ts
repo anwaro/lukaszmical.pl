@@ -11,6 +11,7 @@ export type Database = {
     Tables: {
       projects: {
         Row: {
+          cover: string | null
           createdAt: string
           id: number
           myQuery: boolean
@@ -21,6 +22,7 @@ export type Database = {
           url: string
         }
         Insert: {
+          cover?: string | null
           createdAt?: string
           id?: number
           myQuery?: boolean
@@ -31,6 +33,7 @@ export type Database = {
           url: string
         }
         Update: {
+          cover?: string | null
           createdAt?: string
           id?: number
           myQuery?: boolean

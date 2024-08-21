@@ -2,7 +2,7 @@ import React from 'react';
 
 import {mdiLoading} from '@mdi/js';
 
-import Icon from '@/admin/components/Icon';
+import {Icon} from '../../icon/icon';
 
 export const MdxFieldLoader = () => {
     return (

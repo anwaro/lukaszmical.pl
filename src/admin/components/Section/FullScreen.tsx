@@ -2,28 +2,18 @@
 
 import React, {ReactNode} from 'react';
 
-import {useDarkMode} from '@/admin/stores/dark-mode';
-
-import {BgKey} from '../../interfaces';
-import {gradientBgDark, gradientBgPinkRed, gradientBgPurplePink} from '../../colors';
+import {gradientBgDark} from '../../colors';
 
 type Props = {
-    bg: BgKey;
     children: ReactNode;
 };
 
-export default function SectionFullScreen({bg, children}: Props) {
-    const {darkModeEnabled} = useDarkMode();
-
-    let componentClass = 'flex min-h-screen items-center justify-center ';
-
-    if (darkModeEnabled) {
-        componentClass += gradientBgDark;
-    } else if (bg === 'purplePink') {
-        componentClass += gradientBgPurplePink;
-    } else if (bg === 'pinkRed') {
-        componentClass += gradientBgPinkRed;
-    }
-
-    return <div className={componentClass}>{children}</div>;
+export default function SectionFullScreen({children}: Props) {
+    return (
+        <div
+            className={`flex min-h-screen items-center justify-center ${gradientBgDark}`}
+        >
+            {children}
+        </div>
+    );
 }

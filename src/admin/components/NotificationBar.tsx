@@ -4,8 +4,8 @@ import {mdiClose} from '@mdi/js';
 
 import {ColorKey} from '../interfaces';
 import {colorsBgLight, colorsOutline} from '../colors';
-import Button from './Button';
-import Icon from './Icon';
+import {Button} from './button/button';
+import {Icon} from './icon/icon';
 
 type Props = {
     color: ColorKey;

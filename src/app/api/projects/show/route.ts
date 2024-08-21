@@ -2,8 +2,8 @@ import {notFound} from 'next/navigation';
 
 import {ProjectRenderer} from '@/services/project-renderer';
 import {params} from '@/app/api/projects/show/params';
-import {LocalProjectService} from '@/services/LocalProjectService';
-import {SupabaseProject} from '@/services/supabase/SupabaseProject';
+import {LocalProjectService} from '@/services/local-project-service';
+import {SupabaseProject} from '@/services/supabase/supabase-project';
 
 export async function GET(request: Request) {
     const service = new LocalProjectService();
@@ -11,7 +11,7 @@ export async function GET(request: Request) {
     const client = new SupabaseProject();
     const url = new URL(request.url);
     const {slug, locale, minFile} = params(url);
-    console.log({slug, locale, minFile});
+
     if (!slug) {
         notFound();
     }

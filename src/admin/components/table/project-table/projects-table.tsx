@@ -2,15 +2,15 @@
 
 import React, {useCallback, useState} from 'react';
 
-import {mdiPencil} from '@mdi/js';
+import {mdiOpenInNew, mdiPencil} from '@mdi/js';
 import Image from 'next/image';
 
 import {BaseTable} from '@/admin/components/table/base-table';
 import {ProjectRow} from '@/types/supabase/projects';
 import {EditVisibility} from '@/admin/components/table/project-table/edit-visibility';
 
-import Button from '../../Button';
-import Buttons from '../../Buttons';
+import {Button} from '../../button/button';
+import ButtonsGroup from '../../button/buttons-group';
 import {EditOrder} from './edit-order';
 
 type Props = {
@@ -34,7 +34,7 @@ export const ProjectsTable = ({projects}: Props) => {
             limit={300}
             head={{
                 id: 'Id',
-                name: 'Name',
+                url: 'Url',
                 cover: 'Cover',
                 createdAt: 'Created at',
                 order: 'Order',
@@ -44,19 +44,32 @@ export const ProjectsTable = ({projects}: Props) => {
                 order: (item) => <EditOrder project={item} onUpdate={update} />,
                 cover: (item) => (
                     <Image
-                        src={`/projects/${item.url}/image/cover.jpg`}
-                        alt={item.name}
+                        src={
+                            item.cover
+                                ? item.cover
+                                : `/projects/${item.url}/image/cover.jpg`
+                        }
+                        alt={item.url}
                         height={40}
                         width={80}
                     />
                 ),
                 createdAt: (item) => (
-                    <small className="text-gray-500 dark:text-slate-400">
+                    <small className="text-slate-400">
                         {new Date(item.createdAt).toDateString()}
                     </small>
                 ),
                 actions: (item) => (
-                    <Buttons type="justify-start lg:justify-end" noWrap>
+                    <ButtonsGroup type="justify-start lg:justify-end" noWrap>
+                        <Button
+                            href={`/api/projects/show?slug=${item.url}`}
+                            color="info"
+                            icon={mdiOpenInNew}
+                            title={'Edit project'}
+                            target={'_blank'}
+                            asAnchor
+                            small
+                        />
                         <Button
                             href={`/admin/projects/${item.id}`}
                             color="info"
@@ -66,7 +79,7 @@ export const ProjectsTable = ({projects}: Props) => {
                             small
                         />
                         <EditVisibility project={item} onUpdate={update} />
-                    </Buttons>
+                    </ButtonsGroup>
                 ),
             }}
         />

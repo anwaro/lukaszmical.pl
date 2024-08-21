@@ -2,8 +2,9 @@ import React from 'react';
 
 import {mdiCashMinus, mdiCashPlus, mdiCreditCard, mdiReceipt} from '@mdi/js';
 
+import {IconRounded} from '@/admin/components/icon/icon-rounded';
+
 import {Transaction} from '../../interfaces';
-import IconRounded from '../Icon/Rounded';
 import PillTag from '../PillTag';
 
 import CardBox from '.';
@@ -44,7 +45,7 @@ const CardBoxTransaction = (props: Props) => {
                     />
                     <div className="space-y-1 text-center md:mr-6 md:text-left">
                         <h4 className="text-xl">${props.transaction.amount}</h4>
-                        <p className="text-gray-500 dark:text-slate-400">
+                        <p className="text-slate-400">
                             <b>{props.transaction.date}</b> via{' '}
                             {props.transaction.business}
                         </p>

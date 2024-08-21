@@ -7,24 +7,20 @@ import {
     mdiFormTextboxPassword,
     mdiGithub,
     mdiMail,
-    mdiUpload,
 } from '@mdi/js';
 import {Field, Form, Formik} from 'formik';
-import Head from 'next/head';
 
-import {FormField} from '@/admin/components/form/form-field';
-import FormFilePicker from '@/admin/components/form/FilePicker';
+import {FormField} from '@/admin/components/form/form-field/form-field';
 
-import Button from '../components/Button';
-import Buttons from '../components/Buttons';
-import Divider from '../components/Divider';
+import {Button} from '../components/button/button';
+import ButtonsGroup from '../components/button/buttons-group';
+import Divider from '../components/divider';
 import CardBox from '../components/CardBox';
 import CardBoxComponentBody from '../components/CardBox/Component/Body';
 import CardBoxComponentFooter from '../components/CardBox/Component/Footer';
 import SectionMain from '../components/Section/Main';
 import SectionTitleLineWithButton from '../components/Section/TitleLineWithButton';
 import CardBoxUser from '../components/CardBox/User';
-import {getPageTitle} from '../config';
 
 export const ProfilePage = () => {
     const userName = 'lukasz M';
@@ -37,10 +33,6 @@ export const ProfilePage = () => {
 
     return (
         <>
-            <Head>
-                <title>{getPageTitle('Profile')}</title>
-            </Head>
-
             <SectionMain>
                 <SectionTitleLineWithButton icon={mdiAccount} title="Profile" main>
                     <Button
@@ -60,11 +52,11 @@ export const ProfilePage = () => {
                     <div className="flex flex-col">
                         <CardBox className="mb-6">
                             <FormField label="Avatar" help="Max 500kb">
-                                <FormFilePicker
-                                    label="Upload"
-                                    color="info"
-                                    icon={mdiUpload}
-                                />
+                                {/*<ImageField*/}
+                                {/*    label="Upload"*/}
+                                {/*    color="info"*/}
+                                {/*    icon={mdiUpload}*/}
+                                {/*/>*/}
                             </FormField>
                         </CardBox>
 
@@ -103,7 +95,7 @@ export const ProfilePage = () => {
                                         </FormField>
                                     </CardBoxComponentBody>
                                     <CardBoxComponentFooter>
-                                        <Buttons>
+                                        <ButtonsGroup>
                                             <Button
                                                 color="info"
                                                 type="submit"
@@ -114,7 +106,7 @@ export const ProfilePage = () => {
                                                 label="Options"
                                                 outline
                                             />
-                                        </Buttons>
+                                        </ButtonsGroup>
                                     </CardBoxComponentFooter>
                                 </Form>
                             </Formik>
@@ -180,7 +172,7 @@ export const ProfilePage = () => {
                                 </CardBoxComponentBody>
 
                                 <CardBoxComponentFooter>
-                                    <Buttons>
+                                    <ButtonsGroup>
                                         <Button
                                             color="info"
                                             type="submit"
@@ -191,7 +183,7 @@ export const ProfilePage = () => {
                                             label="Options"
                                             outline
                                         />
-                                    </Buttons>
+                                    </ButtonsGroup>
                                 </CardBoxComponentFooter>
                             </Form>
                         </Formik>

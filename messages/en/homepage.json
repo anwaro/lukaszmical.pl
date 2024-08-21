@@ -1,9 +1,13 @@
 {
-  "title": "Łukasz Micał | Personal webpage",
-  "hello": "Hello.",
-  "iAm": "I am",
-  "name": "Lucas",
-  "work": "Work",
-  "about": "About",
-  "contact": "Contact"
+    "title": "Łukasz Micał | Personal webpage",
+    "hello": "Hello.",
+    "iAm": "I am",
+    "name": "Lucas",
+    "work": "Work",
+    "about": "About",
+    "contact": "Contact",
+    "alt": {
+        "logo": "lukaszmical.pl page logo",
+        "profile": "Łukasz Micał image"
+    }
 }

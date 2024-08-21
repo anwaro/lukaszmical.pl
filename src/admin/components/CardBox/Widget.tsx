@@ -4,8 +4,8 @@ import {mdiCog} from '@mdi/js';
 
 import {ColorKey, TrendType} from '../../interfaces';
 import {colorsText} from '../../colors';
-import Button from '../Button';
-import Icon from '../Icon';
+import {Button} from '../button/button';
+import {Icon} from '../icon/icon';
 import NumberDynamic from '../NumberDynamic';
 import PillTagTrend from '../PillTag/Trend';
 
@@ -39,7 +39,7 @@ const CardBoxWidget = (props: Props) => {
             )}
             <div className="flex items-center justify-between">
                 <div>
-                    <h3 className="text-lg leading-tight text-gray-500 dark:text-slate-400">
+                    <h3 className="text-lg leading-tight text-slate-400">
                         {props.label}
                     </h3>
                     <h1 className="text-3xl font-semibold leading-tight">

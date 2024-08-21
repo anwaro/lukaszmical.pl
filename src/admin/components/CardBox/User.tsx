@@ -1,10 +1,10 @@
 import {mdiCheckDecagram} from '@mdi/js';
 import {Field, Form, Formik} from 'formik';
 
-import FormCheckRadio from '@/admin/components/form/CheckRadio';
+import {CheckboxField} from '@/admin/components/form/checkbox-field/checkbox-field';
+import {UserAvatarCurrentUser} from '@/admin/components/user-avatar/current-user';
 
 import PillTag from '../PillTag';
-import UserAvatarCurrentUser from '../UserAvatar/CurrentUser';
 
 import CardBox from '.';
 
@@ -30,13 +30,13 @@ const CardBoxUser = ({className}: Props) => {
                             }
                         >
                             <Form>
-                                <FormCheckRadio type="switch" label="Notifications">
+                                <CheckboxField type="switch" label="Notifications">
                                     <Field
                                         type="checkbox"
                                         name="notifications"
                                         value={'1'}
                                     />
-                                </FormCheckRadio>
+                                </CheckboxField>
                             </Form>
                         </Formik>
                     </div>

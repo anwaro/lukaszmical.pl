@@ -6,7 +6,7 @@ import {mdiGithub, mdiMonitorCellphone, mdiTableBorder, mdiTableOff} from '@mdi/
 
 import TableSampleClients from '@/admin/components/table/SampleClients';
 
-import Button from '../components/Button';
+import {Button} from '../components/button/button';
 import CardBox from '../components/CardBox';
 import CardBoxComponentEmpty from '../components/CardBox/Component/Empty';
 import NotificationBar from '../components/NotificationBar';

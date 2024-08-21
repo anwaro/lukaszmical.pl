@@ -4,8 +4,8 @@ import {ReactNode} from 'react';
 
 import {mdiClose} from '@mdi/js';
 
-import Button from '../Button';
-import Buttons from '../Buttons';
+import {Button} from '../button/button';
+import ButtonsGroup from '../button/buttons-group';
 import CardBoxComponentTitle from './Component/Title';
 import OverlayLayer from '../OverlayLayer';
 
@@ -35,7 +35,7 @@ const CardBoxModal = ({
     }
 
     const footer = (
-        <Buttons>
+        <ButtonsGroup>
             <Button label={buttonLabel} color={buttonColor} onClick={onConfirm} />
             {!!onCancel && (
                 <Button
@@ -45,7 +45,7 @@ const CardBoxModal = ({
                     onClick={onCancel}
                 />
             )}
-        </Buttons>
+        </ButtonsGroup>
     );
 
     return (

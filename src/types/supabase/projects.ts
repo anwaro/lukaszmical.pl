@@ -18,7 +18,10 @@ export type ProjectStringsListItem = {
     name: string;
 };
 
-export type ProjectListItem = Pick<ProjectRow, 'id' | 'type' | 'url' | 'createdAt'> &
+export type ProjectListItem = Pick<
+    ProjectRow,
+    'id' | 'type' | 'url' | 'createdAt' | 'cover'
+> &
     ProjectStringsListItem;
 
 export type ProjectEntity = ProjectRow & ProjectStringsEntity;

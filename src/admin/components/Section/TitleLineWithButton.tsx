@@ -1,6 +1,8 @@
 import React, {Children, ReactNode} from 'react';
-import Icon from '../Icon';
-import IconRounded from '../Icon/Rounded';
+
+import {IconRounded} from '@/admin/components/icon/icon-rounded';
+
+import {Icon} from '../icon/icon';
 
 type Props = {
     icon: string;

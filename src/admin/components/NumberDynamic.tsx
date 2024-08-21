@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
 
-import numeral from 'numeral';
-
 type Props = {
     value: number;
     duration?: number;
@@ -11,9 +9,6 @@ type Props = {
 
 const NumberDynamic = ({prefix = '', suffix = '', value, duration = 500}: Props) => {
     const [newValue, setNewValue] = useState(0);
-
-    const newValueFormatted =
-        newValue < 1000 ? newValue : numeral(newValue).format('0,0');
 
     const stepDurationMs = 25;
 
@@ -49,7 +44,7 @@ const NumberDynamic = ({prefix = '', suffix = '', value, duration = 500}: Props)
     return (
         <div>
             {prefix}
-            {newValueFormatted}
+            {newValue}
             {suffix}
         </div>
     );

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {SupabaseProject} from '@/services/supabase/SupabaseProject';
+import {SupabaseProject} from '@/services/supabase/supabase-project';
 import {ProjectLocale} from '@/types/supabase/projects';
 import {PageProjects} from '@/ui/pages/project/projects';
 

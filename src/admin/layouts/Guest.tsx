@@ -5,9 +5,5 @@ type Props = {
 };
 
 export default function LayoutGuest({children}: Props) {
-    return (
-        <div className="bg-gray-50 dark:bg-slate-800 dark:text-slate-100">
-            {children}
-        </div>
-    );
+    return <div className="bg-slate-800 text-slate-100">{children}</div>;
 }

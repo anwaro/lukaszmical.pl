@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 
 import Image from 'next/image';
 import {clsx} from 'clsx';
@@ -11,9 +11,16 @@ type ProjectCoverProps = {
 };
 
 export const ProjectCover: FC<ProjectCoverProps> = ({project, className}) => {
+    const src = useMemo(() => {
+        if (project.cover) {
+            return project.cover;
+        }
+        return `/projects/${project.url}/image/cover.jpg`;
+    }, [project]);
+
     return (
         <Image
-            src={`/projects/${project.url}/image/cover.jpg`}
+            src={src}
             className={clsx('aspect-video object-cover', className)}
             alt={project.name}
             width={600}

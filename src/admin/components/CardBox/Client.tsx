@@ -4,7 +4,7 @@ import {mdiTrendingDown, mdiTrendingNeutral, mdiTrendingUp} from '@mdi/js';
 
 import {Client} from '../../interfaces';
 import PillTag from '../PillTag';
-import UserAvatar from '../UserAvatar';
+import {UserAvatar} from '../user-avatar/user-avatar';
 
 import CardBox from '.';
 
@@ -42,7 +42,7 @@ const CardBoxClient = (props: Props) => {
                         <h4 className="text-ellipsis text-xl">
                             {props.client.name}
                         </h4>
-                        <p className="text-gray-500 dark:text-slate-400">
+                        <p className="text-slate-400">
                             {props.client.created} @ {props.client.login}
                         </p>
                     </div>

@@ -1,4 +1,4 @@
-import {SupabaseProject} from '@/services/supabase/SupabaseProject';
+import {SupabaseProject} from '@/services/supabase/supabase-project';
 
 import {projects} from './projects';
 

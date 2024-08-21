@@ -4,8 +4,8 @@ import Link from 'next/link';
 import {mdiChevronDown, mdiChevronUp} from '@mdi/js';
 import {clsx} from 'clsx';
 
-import Divider from '../../Divider';
-import Icon from '../../Icon';
+import Divider from '../../divider';
+import {Icon} from '../../icon/icon';
 import {MenuNavBarItem} from '../../../interfaces';
 
 type Props = {
@@ -18,8 +18,8 @@ export default function NavBarItem({item}: Props) {
     const componentClass = clsx(
         'relative block cursor-pointer items-center lg:flex',
         isDropdownActive
-            ? `navbar-item-label-active dark:text-slate-400`
-            : `navbar-item-label dark:text-white dark:hover:text-slate-400`,
+            ? `navbar-item-label-active text-slate-400`
+            : `navbar-item-label text-white hover:text-slate-400`,
         item.menu ? 'lg:px-3 lg:py-2' : 'px-3 py-2',
         item.isDesktopNoLabel && 'lg:w-16 lg:justify-center',
     );
@@ -39,8 +39,7 @@ export default function NavBarItem({item}: Props) {
             <div
                 className={clsx(
                     'flex items-center',
-                    item.menu &&
-                        'bg-gray-100 p-3 dark:bg-slate-800 lg:bg-transparent lg:p-0 lg:dark:bg-transparent',
+                    item.menu && 'bg-slate-800 p-3 lg:bg-transparent lg:p-0',
                 )}
                 onClick={handleMenuClick}
             >
@@ -68,7 +67,7 @@ export default function NavBarItem({item}: Props) {
                 <div
                     className={clsx(
                         !isDropdownActive && 'lg:hidden',
-                        'border-b border-gray-100 text-sm dark:border-slate-700 lg:absolute lg:left-0 lg:top-full lg:z-20 lg:min-w-full lg:rounded-lg lg:border lg:bg-white lg:shadow-lg lg:dark:bg-slate-800',
+                        'border-b border-slate-700 text-sm lg:absolute lg:left-0 lg:top-full lg:z-20 lg:min-w-full lg:rounded-lg lg:border lg:bg-slate-800 lg:shadow-lg',
                     )}
                 >
                     {item.menu.map((item, index) => (

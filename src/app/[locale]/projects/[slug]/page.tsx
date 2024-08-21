@@ -1,13 +1,15 @@
 import React from 'react';
 
 import {notFound, redirect} from 'next/navigation';
+import {serialize} from 'next-mdx-remote/serialize';
 
 import {ProjectRenderer} from '@/services/project-renderer';
 import {ProjectIframe} from '@/ui/pages/project/iframe/project-iframe';
-import {LocalProjectService} from '@/services/LocalProjectService';
-import {SupabaseProject} from '@/services/supabase/SupabaseProject';
-import {ProjectPage} from '@/ui/pages/project/page/project-page';
+import {LocalProjectService} from '@/services/local-project-service';
+import {SupabaseProject} from '@/services/supabase/supabase-project';
+import ProjectPage from '@/ui/pages/project/page/project-page';
 import {ProjectLocale} from '@/types/supabase/projects';
+import {mdxSerializeOptions} from '@/ui/components/project/projet-mdx/project-mdx-options';
 
 type Props = {
     params: {
@@ -28,8 +30,10 @@ export default async function Page({params}: Props) {
     }
 
     if (project.type === 'page') {
-        return <ProjectPage project={project} />;
+        const source = await serialize(project.content, mdxSerializeOptions);
+        return <ProjectPage project={project} source={source} />;
     }
+
     if (project.type === 'project') {
         const service = new LocalProjectService();
         const renderer = new ProjectRenderer();
@@ -43,7 +47,6 @@ export default async function Page({params}: Props) {
 
         return <ProjectIframe html={html} />;
     }
-    if (project.type === 'external') {
-        redirect(project.url);
-    }
+
+    redirect(project.url);
 }

@@ -12,15 +12,33 @@ const nextConfig = {
     //         },
     //     ];
     // },
-    transpilePackages: ['next-mdx-remote'],
+    // transpilePackages: ['next-mdx-remote'],
     async redirects() {
         return [
             {
                 source: '/project/:name',
                 destination: '/projects/:name',
-                permanent: false,
+                permanent: true,
             },
         ];
+    },
+    experimental: {
+        serverActions: {
+            bodySizeLimit: '5mb',
+        },
+    },
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: `${process.env.R2_BUCKET_PUBLIC_URL}`.replace(
+                    'https://',
+                    '',
+                ),
+                port: '',
+                pathname: '**',
+            },
+        ],
     },
 };
 

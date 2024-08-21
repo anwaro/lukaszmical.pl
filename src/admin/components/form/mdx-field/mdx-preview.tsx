@@ -1,16 +1,12 @@
 import {useEffect, useState, useTransition} from 'react';
 
-import {serialize} from 'next-mdx-remote/serialize';
 import {MDXRemote, MDXRemoteSerializeResult} from 'next-mdx-remote';
-import rehypeHighlight from 'rehype-highlight';
-import rehypeHighlightCodeLines from 'rehype-highlight-code-lines';
+import {serialize} from 'next-mdx-remote/serialize';
 
 import '@/admin/css/github-dark.css';
 import {MdxFieldLoader} from '@/admin/components/form/mdx-field/mdx-field-loader';
-
-// import Test from '../components/test'
-
-const components = {};
+import {mdxSerializeOptions} from '@/ui/components/project/projet-mdx/project-mdx-options';
+import {projectMdxComponents} from '@/ui/components/project/projet-mdx/project-mdx-components';
 
 type Props = {
     mdx: string;
@@ -22,27 +18,17 @@ export function MdxPreview({mdx}: Props) {
 
     useEffect(() => {
         startTransition(async () => {
-            const source = await serialize(mdx, {
-                mdxOptions: {
-                    rehypePlugins: [
-                        rehypeHighlight,
-                        [
-                            rehypeHighlightCodeLines,
-                            {showLineNumbers: true, lineContainerTagName: 'div'},
-                        ],
-                    ],
-                },
-            });
+            const source = await serialize(mdx, mdxSerializeOptions);
             setSource(source);
         });
     }, [mdx]);
 
     return (
-        <div className="wrapper">
-            {isPending || !source ? (
+        <div className="wrapper prose prose-invert prose-a:text-blue-600">
+            {!source ? (
                 <MdxFieldLoader />
             ) : (
-                <MDXRemote {...source} components={components} />
+                <MDXRemote {...source} components={projectMdxComponents} />
             )}
         </div>
     );

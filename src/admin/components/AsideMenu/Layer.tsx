@@ -2,9 +2,7 @@ import React from 'react';
 
 import {mdiClose, mdiLogout} from '@mdi/js';
 
-import {useDarkMode} from '@/admin/stores/dark-mode';
-
-import Icon from '../Icon';
+import {Icon} from '../icon/icon';
 import AsideMenuItem from './Item';
 import AsideMenuList from './List';
 import {MenuAsideItem} from '../../interfaces';
@@ -16,8 +14,6 @@ type Props = {
 };
 
 export default function AsideMenuLayer({menu, className = '', ...props}: Props) {
-    const {darkModeEnabled} = useDarkMode();
-
     const logoutItem: MenuAsideItem = {
         label: 'Logout',
         icon: mdiLogout,
@@ -35,10 +31,10 @@ export default function AsideMenuLayer({menu, className = '', ...props}: Props) 
             className={`${className} zzz fixed top-0 z-40 flex h-screen w-60 overflow-hidden transition-position lg:py-2 lg:pl-2`}
         >
             <div
-                className={`aside flex flex-1 flex-col overflow-hidden dark:bg-slate-900 lg:rounded-2xl`}
+                className={`aside flex flex-1 flex-col overflow-hidden bg-slate-900 lg:rounded-2xl`}
             >
                 <div
-                    className={`aside-brand flex h-14 flex-row items-center justify-between dark:bg-slate-900`}
+                    className={`aside-brand flex h-14 flex-row items-center justify-between bg-slate-900`}
                 >
                     <div className="flex-1 text-center lg:pl-6 lg:text-left xl:pl-0 xl:text-center">
                         <b className="font-black">One</b>
@@ -50,13 +46,7 @@ export default function AsideMenuLayer({menu, className = '', ...props}: Props) 
                         <Icon path={mdiClose} />
                     </button>
                 </div>
-                <div
-                    className={`flex-1 overflow-y-auto overflow-x-hidden ${
-                        darkModeEnabled
-                            ? 'aside-scrollbars-[slate]'
-                            : 'aside-scrollbars'
-                    }`}
-                >
+                <div className={`flex-1 overflow-y-auto overflow-x-hidden`}>
                     <AsideMenuList menu={menu} />
                 </div>
                 <ul>

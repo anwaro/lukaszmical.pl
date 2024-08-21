@@ -1,5 +1,5 @@
-// import {SupabaseProject} from '@/services/supabase/SupabaseProject';
-// import {SupabaseProjectString} from '@/services/supabase/SupabaseProjectString';
+// import {SupabaseProject} from '@/services/supabase/supabase-project';
+// import {SupabaseProjectString} from '@/services/supabase/supabase-project-string';
 
 export async function migrateProjectsStrings() {
     // const projectClient = new SupabaseProject();

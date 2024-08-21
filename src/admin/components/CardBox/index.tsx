@@ -1,5 +1,7 @@
 import React, {ReactNode} from 'react';
 
+import {clsx} from 'clsx';
+
 import CardBoxComponentBody from './Component/Body';
 import CardBoxComponentFooter from './Component/Footer';
 
@@ -29,11 +31,11 @@ export default function CardBox({
     onClick,
 }: Props) {
     const componentClass = [
-        'bg-white flex',
+        'flex',
         className,
         rounded,
         flex,
-        isModal ? 'dark:bg-slate-900' : 'dark:bg-slate-900/70',
+        isModal ? 'bg-slate-900' : 'bg-slate-900/70',
     ];
 
     if (isHoverable) {
@@ -42,7 +44,7 @@ export default function CardBox({
 
     return React.createElement(
         'div',
-        {className: componentClass.join(' '), onClick},
+        {className: clsx(componentClass), onClick},
         hasComponentLayout ? (
             children
         ) : (

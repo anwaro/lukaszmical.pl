@@ -1,20 +1,12 @@
 import React, {useMemo} from 'react';
 
-import {
-    mdiAccount,
-    mdiCogOutline,
-    mdiEmail,
-    mdiLogout,
-    mdiThemeLightDark,
-} from '@mdi/js';
+import {mdiAccount, mdiCogOutline, mdiEmail, mdiLogout} from '@mdi/js';
 
-import UserAvatarCurrentUser from '@/admin/components/UserAvatar/CurrentUser';
-import {useDarkMode} from '@/admin/stores/dark-mode';
+import {UserAvatarCurrentUser} from '@/admin/components/user-avatar/current-user';
 
 import {MenuNavBarItem} from './interfaces';
 
 export function useMenuNavBare() {
-    const {toggleDarkMode} = useDarkMode();
     return useMemo(
         (): MenuNavBarItem[] => [
             {
@@ -45,18 +37,12 @@ export function useMenuNavBare() {
                 ],
             },
             {
-                icon: mdiThemeLightDark,
-                label: 'Light/Dark',
-                isDesktopNoLabel: true,
-                onClick: toggleDarkMode,
-            },
-            {
                 icon: mdiLogout,
                 label: 'Log out',
                 isDesktopNoLabel: true,
                 href: '/admin/auth/logout',
             },
         ],
-        [toggleDarkMode],
+        [],
     );
 }

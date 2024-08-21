@@ -5,8 +5,8 @@ import React, {useActionState, useEffect, useState} from 'react';
 import {mdiCheck, mdiClose} from '@mdi/js';
 
 import {ProjectRow} from '@/types/supabase/projects';
-import Buttons from '@/admin/components/Buttons';
-import Button from '@/admin/components/Button';
+import ButtonsGroup from '@/admin/components/button/buttons-group';
+import {Button} from '@/admin/components/button/button';
 import {updateProjectField} from '@/admin/actions/update-project-field';
 
 type Props = {
@@ -36,14 +36,14 @@ export const EditOrder = ({project, onUpdate}: Props) => {
             {isEditing ? (
                 <>
                     <input
-                        className="h-10 w-full max-w-full rounded border border-gray-700 bg-white px-3 py-1 focus:border-blue-600 focus:outline-none focus:ring focus:ring-blue-600 dark:bg-slate-800 dark:placeholder:text-gray-400 "
+                        className="h-10 w-full max-w-full rounded border border-gray-700 bg-slate-800 px-3 py-1 placeholder:text-gray-400 focus:border-blue-600 focus:outline-none focus:ring focus:ring-blue-600 "
                         onChange={(e) => setValue(parseInt(e.target.value))}
                         type={'number'}
                         name={'value'}
                         value={value}
                     />
 
-                    <Buttons className={'ml-2'} noWrap>
+                    <ButtonsGroup className={'ml-2'} noWrap>
                         <Button
                             color="info"
                             icon={mdiCheck}
@@ -61,7 +61,7 @@ export const EditOrder = ({project, onUpdate}: Props) => {
                             icon={mdiClose}
                             small
                         />
-                    </Buttons>
+                    </ButtonsGroup>
                 </>
             ) : (
                 <div

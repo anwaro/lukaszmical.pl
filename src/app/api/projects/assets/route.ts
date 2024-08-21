@@ -3,7 +3,7 @@ import {basename} from 'path';
 
 import mine from 'mime';
 
-import {LocalProjectService} from '@/services/LocalProjectService';
+import {LocalProjectService} from '@/services/local-project-service';
 
 import {streamFile} from './stream';
 

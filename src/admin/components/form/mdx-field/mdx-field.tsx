@@ -1,15 +1,18 @@
-import React, {useMemo, useState} from 'react';
+import type {editor} from 'monaco-editor';
+
+import React, {useCallback, useMemo, useRef, useState} from 'react';
 
 import {Field} from 'formik';
 import {FieldProps} from 'formik/dist/Field';
-import Editor, {Monaco} from '@monaco-editor/react';
+import Editor, {Monaco, OnMount} from '@monaco-editor/react';
 import {Freeze} from 'react-freeze';
 import {mdiEye, mdiFileCode} from '@mdi/js';
 import {clsx} from 'clsx';
 
-import Buttons from '@/admin/components/Buttons';
-import Button from '@/admin/components/Button';
+import ButtonsGroup from '@/admin/components/button/buttons-group';
+import {Button} from '@/admin/components/button/button';
 import {MdxPreview} from '@/admin/components/form/mdx-field/mdx-preview';
+import {ButtonImageInput} from '@/admin/components/button/button-image-input';
 
 type Props = {
     name: string;
@@ -18,27 +21,38 @@ type Props = {
 
 export const MdxField = ({name, className}: Props) => {
     const [showPreview, setShowPreview] = useState(true);
+    const editorRef = useRef<editor.IStandaloneCodeEditor>(null);
 
-    function handleEditorDidMount(editor: any, monaco: Monaco) {
-        monaco.editor.defineTheme('default', {
-            base: 'vs-dark',
-            inherit: true,
-            rules: [],
-            colors: {
-                'editor.background': '#1e293b',
-            },
+    const onEditorMount = useCallback<OnMount>(
+        (editor: editor.IStandaloneCodeEditor, monaco: Monaco) => {
+            editorRef.current = editor;
+            monaco.editor.defineTheme('default', {
+                base: 'vs-dark',
+                inherit: true,
+                rules: [],
+                colors: {
+                    'editor.background': '#1e293b',
+                },
+            });
+            monaco.editor.setTheme('default');
+        },
+        [],
+    );
+
+    const insertImage = useCallback((url: string) => {
+        editorRef.current?.trigger('keyboard', 'type', {
+            text: `![Image description](${url})`,
         });
-        monaco.editor.setTheme('default');
-    }
+    }, []);
 
     const cls = useMemo(() => {
-        return (className || '').replace(/h-\d+/g, '').replace(/px-\d+/g, '');
+        return (className || '').replace(/(h|px)-\d+/g, '');
     }, [className]);
 
     return (
         <div className={cls} style={{minHeight: 600}}>
             <div className="mb-3 flex border-b border-b-gray-700 px-3 pb-3">
-                <Buttons noWrap>
+                <ButtonsGroup noWrap>
                     <Button
                         color="whiteDark"
                         className={clsx(!showPreview && 'opacity-55')}
@@ -57,7 +71,8 @@ export const MdxField = ({name, className}: Props) => {
                         type={'button'}
                         small
                     />
-                </Buttons>
+                    {!showPreview && <ButtonImageInput onChange={insertImage} />}
+                </ButtonsGroup>
             </div>
             <Field
                 name={name}
@@ -74,7 +89,7 @@ export const MdxField = ({name, className}: Props) => {
                                         enabled: false,
                                     },
                                 }}
-                                onMount={handleEditorDidMount}
+                                onMount={onEditorMount}
                                 onChange={(value) =>
                                     form.setFieldValue(field.name, value)
                                 }

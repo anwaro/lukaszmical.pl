@@ -2,8 +2,8 @@
 
 import React, {ReactNode, useMemo, useState} from 'react';
 
-import Button from '../Button';
-import Buttons from '../Buttons';
+import {Button} from '../button/button';
+import ButtonsGroup from '../button/buttons-group';
 
 type Props<Item, Key extends keyof Partial<Item> | string> = {
     data: Item[];
@@ -68,9 +68,9 @@ export function BaseTable<
                     ))}
                 </tbody>
             </table>
-            <div className="border-t border-gray-100 p-3 dark:border-slate-800 lg:px-6">
+            <div className="border-t border-slate-800 p-3 lg:px-6">
                 <div className="flex flex-col items-center justify-between py-3 md:flex-row md:py-0">
-                    <Buttons>
+                    <ButtonsGroup>
                         {pages.map((page) => (
                             <Button
                                 key={page}
@@ -83,7 +83,7 @@ export function BaseTable<
                                 onClick={() => setCurrentPage(page)}
                             />
                         ))}
-                    </Buttons>
+                    </ButtonsGroup>
                     <small className="mt-6 md:mt-0">
                         Page {currentPage + 1} of {pages.length}
                     </small>

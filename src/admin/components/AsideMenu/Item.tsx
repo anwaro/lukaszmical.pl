@@ -4,7 +4,7 @@ import {mdiMinus, mdiPlus} from '@mdi/js';
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 
-import Icon from '../Icon';
+import {Icon} from '../icon/icon';
 import {getButtonColor} from '../../colors';
 import AsideMenuList from './List';
 import {MenuAsideItem} from '../../interfaces';
@@ -63,7 +63,7 @@ const AsideMenuItem = ({item, isDropdownList = false}: Props) => {
         isDropdownList ? 'py-3 px-6 text-sm' : 'py-3',
         item.color
             ? getButtonColor(item.color, false, true)
-            : `aside-menu-item dark:text-slate-300 dark:hover:text-white`,
+            : `aside-menu-item text-slate-300 hover:text-white`,
     ].join(' ');
 
     return (
@@ -89,7 +89,7 @@ const AsideMenuItem = ({item, isDropdownList = false}: Props) => {
                 <AsideMenuList
                     menu={item.menu}
                     className={`aside-menu-dropdown ${
-                        isDropdownActive ? 'block dark:bg-slate-800/50' : 'hidden'
+                        isDropdownActive ? 'block bg-slate-800/50' : 'hidden'
                     }`}
                     isDropdownList
                 />

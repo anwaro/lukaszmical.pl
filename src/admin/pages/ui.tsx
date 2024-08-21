@@ -13,15 +13,13 @@ import {
     mdiTrendingUp,
 } from '@mdi/js';
 import {Field, Formik} from 'formik';
-import Head from 'next/head';
 
-import {useDarkMode} from '@/admin/stores/dark-mode';
-import FormCheckRadio from '@/admin/components/form/CheckRadio';
-import FormCheckRadioGroup from '@/admin/components/form/CheckRadioGroup';
+import {CheckboxField} from '@/admin/components/form/checkbox-field/checkbox-field';
+import {CheckboxFieldGroup} from '@/admin/components/form/checkbox-field/checkbox-field-group';
 
-import Button from '../components/Button';
-import Buttons from '../components/Buttons';
-import Divider from '../components/Divider';
+import {Button} from '../components/button/button';
+import ButtonsGroup from '../components/button/buttons-group';
+import Divider from '../components/divider';
 import CardBox from '../components/CardBox';
 import CardBoxComponentEmpty from '../components/CardBox/Component/Empty';
 import CardBoxComponentTitle from '../components/CardBox/Component/Title';
@@ -34,13 +32,11 @@ import SectionTitleLineWithButton from '../components/Section/TitleLineWithButto
 import {getPageTitle} from '../config';
 
 export const UiPage = () => {
-    const {toggleDarkMode} = useDarkMode();
-
     const CardSamplesFooter = (
-        <Buttons>
+        <ButtonsGroup>
             <Button label="Confirm" color="info" />
             <Button label="Cancel" color="info" outline />
-        </Buttons>
+        </ButtonsGroup>
     );
 
     const modalSampleCardClassName =
@@ -56,22 +52,22 @@ export const UiPage = () => {
     );
 
     const modalFooterInfo = (
-        <Buttons>
+        <ButtonsGroup>
             <Button label="Confirm" color="info" />
             <Button label="Cancel" color="info" outline />
-        </Buttons>
+        </ButtonsGroup>
     );
 
     const modalFooterDanger = (
-        <Buttons>
+        <ButtonsGroup>
             <Button label="Done" color="danger" />
-        </Buttons>
+        </ButtonsGroup>
     );
 
     const modalFooterSuccess = (
-        <Buttons>
+        <ButtonsGroup>
             <Button label="Done" color="success" />
-        </Buttons>
+        </ButtonsGroup>
     );
 
     const handleModalAction = () => {
@@ -86,20 +82,12 @@ export const UiPage = () => {
 
     return (
         <>
-            <Head>
-                <title>{getPageTitle('UI')}</title>
-            </Head>
-
             <SectionTitle first>Dark mode</SectionTitle>
 
             <SectionMain>
                 <CardBox className="shadow-2xl md:mx-auto md:w-7/12 lg:w-5/12 xl:w-4/12">
-                    <div className="py-24 text-center text-gray-500 dark:text-slate-400 lg:py-12">
-                        <Button
-                            label="Toggle"
-                            color="contrast"
-                            onClick={() => toggleDarkMode()}
-                        />
+                    <div className="py-24 text-center text-slate-400 lg:py-12">
+                        <Button label="Toggle" color="contrast" onClick={() => {}} />
                     </div>
                 </CardBox>
             </SectionMain>
@@ -190,13 +178,13 @@ export const UiPage = () => {
                 {({values}) => (
                     <>
                         <SectionTitle custom>
-                            <h1 className="text-2xl text-gray-500 dark:text-slate-400">
+                            <h1 className="text-2xl text-slate-400">
                                 Notifications
                             </h1>
                             <div className="mt-6 flex items-center justify-center">
-                                <FormCheckRadio type="switch" label="Outline">
+                                <CheckboxField type="switch" label="Outline">
                                     <Field type="checkbox" name="outline" />
-                                </FormCheckRadio>
+                                </CheckboxField>
                             </div>
                         </SectionTitle>
 
@@ -296,24 +284,24 @@ export const UiPage = () => {
                     >
                         {({values}) => (
                             <>
-                                <FormCheckRadioGroup>
-                                    <FormCheckRadio type="switch" label="Outline">
+                                <CheckboxFieldGroup>
+                                    <CheckboxField type="switch" label="Outline">
                                         <Field type="checkbox" name="outline" />
-                                    </FormCheckRadio>
-                                    <FormCheckRadio type="switch" label="Small">
+                                    </CheckboxField>
+                                    <CheckboxField type="switch" label="Small">
                                         <Field type="checkbox" name="small" />
-                                    </FormCheckRadio>
-                                    <FormCheckRadio type="switch" label="Rounded">
+                                    </CheckboxField>
+                                    <CheckboxField type="switch" label="Rounded">
                                         <Field type="checkbox" name="rounded" />
-                                    </FormCheckRadio>
-                                    <FormCheckRadio type="switch" label="Disabled">
+                                    </CheckboxField>
+                                    <CheckboxField type="switch" label="Disabled">
                                         <Field type="checkbox" name="disabled" />
-                                    </FormCheckRadio>
-                                </FormCheckRadioGroup>
+                                    </CheckboxField>
+                                </CheckboxFieldGroup>
 
                                 <Divider />
 
-                                <Buttons>
+                                <ButtonsGroup>
                                     <Button
                                         color="lightDark"
                                         label="Button"
@@ -362,11 +350,11 @@ export const UiPage = () => {
                                         roundedFull={values.rounded}
                                         disabled={values.disabled}
                                     />
-                                </Buttons>
+                                </ButtonsGroup>
 
                                 <Divider />
 
-                                <Buttons>
+                                <ButtonsGroup>
                                     <Button
                                         color="lightDark"
                                         label="Button"
@@ -421,11 +409,11 @@ export const UiPage = () => {
                                         roundedFull={values.rounded}
                                         disabled={values.disabled}
                                     />
-                                </Buttons>
+                                </ButtonsGroup>
 
                                 <Divider />
 
-                                <Buttons>
+                                <ButtonsGroup>
                                     <Button
                                         color="lightDark"
                                         icon={mdiOpenInNew}
@@ -474,7 +462,7 @@ export const UiPage = () => {
                                         roundedFull={values.rounded}
                                         disabled={values.disabled}
                                     />
-                                </Buttons>
+                                </ButtonsGroup>
                             </>
                         )}
                     </Formik>
@@ -491,19 +479,19 @@ export const UiPage = () => {
                     >
                         {({values}) => (
                             <>
-                                <FormCheckRadioGroup>
-                                    <FormCheckRadio type="switch" label="Outline">
+                                <CheckboxFieldGroup>
+                                    <CheckboxField type="switch" label="Outline">
                                         <Field type="checkbox" name="outline" />
-                                    </FormCheckRadio>
-                                    <FormCheckRadio type="switch" label="Small">
+                                    </CheckboxField>
+                                    <CheckboxField type="switch" label="Small">
                                         <Field type="checkbox" name="small" />
-                                    </FormCheckRadio>
-                                    <FormCheckRadio type="switch" label="Icon">
+                                    </CheckboxField>
+                                    <CheckboxField type="switch" label="Icon">
                                         <Field type="checkbox" name="icon" />
-                                    </FormCheckRadio>
-                                </FormCheckRadioGroup>
+                                    </CheckboxField>
+                                </CheckboxFieldGroup>
                                 <Divider />
-                                <Buttons>
+                                <ButtonsGroup>
                                     <PillTag
                                         color="contrast"
                                         label="Contrast"
@@ -549,7 +537,7 @@ export const UiPage = () => {
                                         outline={values.outline}
                                         small={values.small}
                                     />
-                                </Buttons>
+                                </ButtonsGroup>
                             </>
                         )}
                     </Formik>

@@ -1,16 +1,15 @@
 'use client';
 
-import {mdiAccount, mdiBallotOutline, mdiGithub, mdiMail, mdiUpload} from '@mdi/js';
+import {mdiAccount, mdiBallotOutline, mdiGithub, mdiMail} from '@mdi/js';
 import {Field, Form, Formik} from 'formik';
 
-import {FormCheckRadio} from '@/admin/components/form/check-radio';
-import {FormCheckRadioGroup} from '@/admin/components/form/check-radio-group';
-import {FormField} from '@/admin/components/form/form-field';
-import FormFilePicker from '@/admin/components/form/FilePicker';
+import {CheckboxField} from '@/admin/components/form/checkbox-field/checkbox-field';
+import {CheckboxFieldGroup} from '@/admin/components/form/checkbox-field/checkbox-field-group';
+import {FormField} from '@/admin/components/form/form-field/form-field';
 
-import Button from '../components/Button';
-import Buttons from '../components/Buttons';
-import Divider from '../components/Divider';
+import {Button} from '../components/button/button';
+import ButtonsGroup from '../components/button/buttons-group';
+import Divider from '../components/divider';
 import CardBox from '../components/CardBox';
 import SectionMain from '../components/Section/Main';
 import SectionTitle from '../components/Section/Title';
@@ -88,7 +87,7 @@ export const FormsPage = () => {
 
                             <Divider />
 
-                            <Buttons>
+                            <ButtonsGroup>
                                 <Button type="submit" color="info" label="Submit" />
                                 <Button
                                     type="reset"
@@ -96,7 +95,7 @@ export const FormsPage = () => {
                                     outline
                                     label="Reset"
                                 />
-                            </Buttons>
+                            </ButtonsGroup>
                         </Form>
                     </Formik>
                 </CardBox>
@@ -116,82 +115,75 @@ export const FormsPage = () => {
                     >
                         <Form>
                             <FormField label="Checkbox">
-                                <FormCheckRadioGroup>
-                                    <FormCheckRadio type="checkbox" label="Lorem">
+                                <CheckboxFieldGroup>
+                                    <CheckboxField type="checkbox" label="Lorem">
                                         <Field
                                             type="checkbox"
                                             name="checkboxes"
                                             value="lorem"
                                         />
-                                    </FormCheckRadio>
-                                    <FormCheckRadio type="checkbox" label="Ipsum">
+                                    </CheckboxField>
+                                    <CheckboxField type="checkbox" label="Ipsum">
                                         <Field
                                             type="checkbox"
                                             name="checkboxes"
                                             value="ipsum"
                                         />
-                                    </FormCheckRadio>
-                                    <FormCheckRadio type="checkbox" label="Dolore">
+                                    </CheckboxField>
+                                    <CheckboxField type="checkbox" label="Dolore">
                                         <Field
                                             type="checkbox"
                                             name="checkboxes"
                                             value="dolore"
                                         />
-                                    </FormCheckRadio>
-                                </FormCheckRadioGroup>
+                                    </CheckboxField>
+                                </CheckboxFieldGroup>
                             </FormField>
 
                             <Divider />
 
                             <FormField label="Radio">
-                                <FormCheckRadioGroup>
-                                    <FormCheckRadio type="radio" label="Lorem">
+                                <CheckboxFieldGroup>
+                                    <CheckboxField type="radio" label="Lorem">
                                         <Field
                                             type="radio"
                                             name="radio"
                                             value="lorem"
                                         />
-                                    </FormCheckRadio>
-                                    <FormCheckRadio type="radio" label="Ipsum">
+                                    </CheckboxField>
+                                    <CheckboxField type="radio" label="Ipsum">
                                         <Field
                                             type="radio"
                                             name="radio"
                                             value="ipsum"
                                         />
-                                    </FormCheckRadio>
-                                </FormCheckRadioGroup>
+                                    </CheckboxField>
+                                </CheckboxFieldGroup>
                             </FormField>
 
                             <Divider />
 
                             <FormField label="Switch">
-                                <FormCheckRadioGroup>
-                                    <FormCheckRadio type="switch" label="Lorem">
+                                <CheckboxFieldGroup>
+                                    <CheckboxField type="switch" label="Lorem">
                                         <Field
                                             type="checkbox"
                                             name="switches"
                                             value="lorem"
                                         />
-                                    </FormCheckRadio>
-                                    <FormCheckRadio type="switch" label="Ipsum">
+                                    </CheckboxField>
+                                    <CheckboxField type="switch" label="Ipsum">
                                         <Field
                                             type="checkbox"
                                             name="switches"
                                             value="ipsum"
                                         />
-                                    </FormCheckRadio>
-                                </FormCheckRadioGroup>
+                                    </CheckboxField>
+                                </CheckboxFieldGroup>
                             </FormField>
                         </Form>
                     </Formik>
                     <Divider />
-                    <FormField>
-                        <FormFilePicker
-                            label="Upload"
-                            color="info"
-                            icon={mdiUpload}
-                        />
-                    </FormField>
                 </CardBox>
             </SectionMain>
         </>
