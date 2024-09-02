@@ -40,6 +40,7 @@ export default async function Page({params}: Props) {
         const localProject = await service.toLocalProject(project, true);
 
         if (!localProject) {
+            console.log('localProject not found');
             notFound();
         }
 

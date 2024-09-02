@@ -35,6 +35,7 @@ export const ImageField = ({name, accept, className, placeholder}: Props) => {
                 value={field.value}
                 className={className}
                 placeholder={placeholder}
+                readOnly
             />
             <input
                 type="file"

@@ -2,6 +2,8 @@
 
 import React, {useMemo, useRef} from 'react';
 
+import {useFormatter, useLocale} from 'next-intl';
+
 import {ProjectListItem} from '@/types/supabase/projects';
 import {Mouse} from '@/ui/pages/project/use-mouse';
 import {ProjectCover, ProjectLink} from '@/ui/components';
@@ -13,6 +15,9 @@ type Props = {
 
 export function ProjectTile({project, mouse}: Props) {
     const ref = useRef<HTMLDivElement>(null);
+    const locale = useLocale();
+
+    const format = useFormatter();
 
     const style = useMemo(() => {
         if (!mouse.active) {
@@ -49,7 +54,11 @@ export function ProjectTile({project, mouse}: Props) {
                             className="flex -translate-y-full justify-end bg-gradient-to-b from-black/75 p-1 pb-5 text-xs text-gray-300 transition-transform will-change-transform group-hover:translate-y-0"
                             dateTime={project.createdAt}
                         >
-                            {new Date(project.createdAt).toDateString()}
+                            {format.dateTime(new Date(project.createdAt), {
+                                day: 'numeric',
+                                month: 'short',
+                                year: 'numeric',
+                            })}
                         </time>
                     </div>
                 </div>

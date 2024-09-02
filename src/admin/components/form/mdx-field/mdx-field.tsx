@@ -50,8 +50,8 @@ export const MdxField = ({name, className}: Props) => {
     }, [className]);
 
     return (
-        <div className={cls} style={{minHeight: 600}}>
-            <div className="mb-3 flex border-b border-b-gray-700 px-3 pb-3">
+        <div className={cls} style={{minHeight: 1200}}>
+            <div className="sticky top-14 z-10 mb-3 flex border-b border-b-gray-700 bg-slate-800 px-3 pb-3">
                 <ButtonsGroup noWrap>
                     <Button
                         color="whiteDark"
@@ -80,7 +80,7 @@ export const MdxField = ({name, className}: Props) => {
                     <>
                         <Freeze freeze={showPreview}>
                             <Editor
-                                height="600px"
+                                height="1200px"
                                 defaultLanguage="mdx"
                                 theme="vs-dark"
                                 value={field.value || ''}
