@@ -35,13 +35,9 @@ export class ColorGroupDetector extends NumberDetector {
     async createGroup(url: string, color: HexColor) {
         const cells = this.cells.filter((cell) => cell.color == color);
 
-        const sum = await this.detectNumber(
-            url,
-            {
-                rectangle: ColorGroupHelper.sumRectangle(cells),
-            },
-            ColorGroupHelper.id(color),
-        );
+        const sum = await this.detectNumber(url, {
+            rectangle: ColorGroupHelper.sumRectangle(cells),
+        });
 
         return new GroupModel(
             ColorGroupHelper.id(color),
