@@ -2,9 +2,9 @@ import {Color, ImageDataHelper} from '../helper/helper-image-data';
 import {Bounds, CellsInfo, initialBounds} from '../model/model-store';
 
 export class GridDetector {
-    public gridBounds: Bounds = initialBounds;
-    public columnValuesBounds: Bounds = initialBounds;
-    public rowValuesBounds: Bounds = initialBounds;
+    public gridBounds: Bounds = initialBounds();
+    public columnValuesBounds: Bounds = initialBounds();
+    public rowValuesBounds: Bounds = initialBounds();
     public cellInfo: CellsInfo = {size: 0, count: 0};
     public bgColor: Color;
     public borderWidth = 1;

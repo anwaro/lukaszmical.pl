@@ -6,14 +6,9 @@ import {StoreModel} from '../model/model-store';
 export class RowGroupDetectTask extends TaskModel {
     public eventName = EventType.detectRowGroupsValues;
 
-    async run(
-        canvas: HTMLCanvasElement,
-        store: StoreModel,
-        emitEvent: (event: EventModel) => void,
-    ) {
+    async run(store: StoreModel, emitEvent: (event: EventModel) => void) {
         const detector = new RowGroupDetector(
-            canvas,
-            store.data.imageProcessed,
+            store.data.processedImage,
             store.data.rowValuesBounds,
             store.data.cells,
             store.data.cellInfo,

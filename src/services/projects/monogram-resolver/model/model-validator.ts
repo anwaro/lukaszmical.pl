@@ -12,6 +12,20 @@ export class ValidatorModel {
         }
     }
 
+    validateGroupValues(values: number[], size: number, groupId: string) {
+        const valuesSize = GroupHelper.valuesSize(values);
+
+        if (valuesSize > size || valuesSize === 0) {
+            throw [
+                'Group values verification fail:',
+                'Values size is grater than grid size',
+                `Values: [${values.join(', ')}]`,
+                `Grid size: ${size}`,
+                `Group id: ${groupId}`,
+            ].join(' ');
+        }
+    }
+
     validateGroup(group: GroupModel, groupCells: CellModel[]) {
         const sum = GroupHelper.sum(group.values);
         const included = CellHelper.includedCells(groupCells);
@@ -21,10 +35,12 @@ export class ValidatorModel {
             ['Group verification fail:', reason, `Group id: ${group.id}`].join(' ');
 
         if (included.length > sum) {
+            console.log(CellHelper.toPattern(groupCells));
             throw createError('Too many included cells');
         }
 
         if (excluded.length > groupCells.length - sum) {
+            console.log(CellHelper.toPattern(groupCells));
             throw createError('Too many excluded cells');
         }
 
@@ -34,11 +50,19 @@ export class ValidatorModel {
             (g) => g.status === CellStatus.included,
         );
 
+        const maxIncluded = Math.max(...includedGroups.map((g) => g.len));
+        const maxValue = Math.max(...group.values);
+
+        if (maxIncluded > maxValue) {
+            console.log(CellHelper.toPattern(groupCells));
+            throw createError('Max included is bigger than max value');
+        }
+
         for (const includedGroup of includedGroups) {
             const groups = includedGroups.filter((g) => g.len === includedGroup.len);
             const values = group.values.filter((v) => v >= includedGroup.len);
 
-            if (groups.length <= values.length) {
+            if (includedGroup.len === 1 || groups.length <= values.length) {
                 continue;
             }
 
@@ -46,6 +70,7 @@ export class ValidatorModel {
             const sum = groups.reduce((sum, v) => sum + v.len, 0);
 
             if (sum > maxValue) {
+                console.log(CellHelper.toPattern(groupCells));
                 throw createError(
                     `Too many included group with width ${includedGroup.len}`,
                 );

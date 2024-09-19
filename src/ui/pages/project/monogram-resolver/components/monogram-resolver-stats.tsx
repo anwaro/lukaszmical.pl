@@ -29,14 +29,12 @@ export function PageMonogramResolverStats({cells}: Props) {
     }, [cells]);
 
     return (
-        <div className="flex flex-col gap-2">
-            <div className={'mt-1 flex flex-col gap-1 border-t border-dashed pt-2'}>
-                {stats.map(([name, count]) => (
-                    <div className={`flex`} key={name}>
-                        {name.replace(/[A-Z]/g, (d) => ` ${d}`)} ({count})
-                    </div>
-                ))}
-            </div>
+        <div className={'flex flex-col gap-1'}>
+            {stats.map(([name, count], index) => (
+                <div className={`flex`} key={name}>
+                    {index + 1}. {name.replace(/[A-Z]/g, (d) => ` ${d}`)} ({count})
+                </div>
+            ))}
         </div>
     );
 }

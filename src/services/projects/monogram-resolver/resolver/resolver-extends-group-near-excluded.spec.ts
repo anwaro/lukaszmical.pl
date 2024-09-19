@@ -73,4 +73,17 @@ describe('ExtendsGroupNearExcludedResolver', () => {
         expect(result.getIncludedCellsId()).toEqual(['A7', 'A8', 'A15', 'A16']);
         expect(result.getExcludedCellsId()).toEqual([]);
     });
+
+    it('should extends first group to size 2, and second to 5', () => {
+        const cells = factory
+            .init()
+            .fromPattern('❔❔❔❔❌🟦❔❔❔❔❔❔❔🟦🟦🟦❌❔❔❔')
+
+            .getCells();
+        const group = factory.getGroup([2, 5, 2]);
+        const result = resolver.run(group, cells);
+
+        expect(result.getIncludedCellsId()).toEqual(['A7', 'A12', 'A13']);
+        expect(result.getExcludedCellsId()).toEqual([]);
+    });
 });

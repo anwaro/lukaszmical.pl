@@ -6,11 +6,7 @@ import {NumberDetector} from '../detector/detector-number';
 export class TerminateWorkersTask extends TaskModel {
     public eventName = EventType.finishJob;
 
-    async run(
-        canvas: HTMLCanvasElement,
-        store: StoreModel,
-        emitEvent: (event: EventModel) => void,
-    ) {
+    async run(store: StoreModel, emitEvent: (event: EventModel) => void) {
         const detector = new NumberDetector();
 
         await detector.terminate();

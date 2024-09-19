@@ -10,6 +10,7 @@ export enum EventType {
     resolverError = 'resolverError',
     resolverDone = 'resolverDone',
     finishJob = 'finishJob',
+    rerender = 'rerender',
 }
 
 let eventId = new Date().getTime();

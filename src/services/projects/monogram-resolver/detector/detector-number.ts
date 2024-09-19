@@ -1,4 +1,10 @@
-import {createScheduler, createWorker, ImageLike, Rectangle} from 'tesseract.js';
+import {
+    createScheduler,
+    createWorker,
+    ImageLike,
+    PSM,
+    Rectangle,
+} from 'tesseract.js';
 
 const scheduler = createScheduler();
 const workerNumber = 5;
@@ -14,21 +20,18 @@ export class NumberDetector {
         }
     }
 
-    async detectNumbers(image: ImageLike, rectangle: Rectangle, debug = false) {
+    async detectNumbers(image: ImageLike, rectangle: Rectangle, group: string) {
         this.validateRectangle(rectangle);
         const ret = await scheduler.addJob('recognize', image, {rectangle});
 
         if (ret.data.confidence < 90) {
+            console.log('\n', group);
             console.log(ret.data.text);
             console.log(ret.data);
             console.log(ret.data.symbols);
         }
 
         return ret.data.text.split(/\D+/g).filter(Boolean);
-    }
-
-    fixNumbers(numbers: string[]) {
-        return numbers.map((n) => Number(n));
     }
 
     async terminate() {

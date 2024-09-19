@@ -9,24 +9,35 @@ export type Bounds = {
     height: number;
 };
 
+export const initialBounds = (): Bounds => ({
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+});
+
 export type CellsInfo = {
     size: number;
     count: number;
 };
 
-export const initialBounds = {
-    x: 0,
-    y: 0,
-    width: 0,
-    height: 0,
-};
-
 type Listener = () => void;
+
+export type ImageFileData = {
+    data: ImageData;
+    name: string;
+    src: string;
+};
+export const initialImageFileData = (): ImageFileData => ({
+    data: new ImageData(1, 1),
+    name: '',
+    src: '',
+});
 
 export type StoreData = {
     file: File;
-    image: ImageData;
-    imageProcessed: ImageData;
+    image: ImageFileData;
+    processedImage: ImageFileData;
     gridBounds: Bounds;
     rowValuesBounds: Bounds;
     columnValuesBounds: Bounds;
@@ -39,11 +50,11 @@ export type StoreData = {
 
 const initialState = (): StoreData => ({
     file: new File([], ''),
-    image: new ImageData(1, 1),
-    imageProcessed: new ImageData(1, 1),
-    gridBounds: initialBounds,
-    rowValuesBounds: initialBounds,
-    columnValuesBounds: initialBounds,
+    image: initialImageFileData(),
+    processedImage: initialImageFileData(),
+    gridBounds: initialBounds(),
+    rowValuesBounds: initialBounds(),
+    columnValuesBounds: initialBounds(),
     cellInfo: {size: 0, count: 0},
     borderWidth: 1,
     cells: [],

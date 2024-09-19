@@ -28,16 +28,18 @@ export class SeparatedGroupNearBorderResolver extends ResolverModel {
 
     resolveGroup(values: number[], groupCells: CellModel[]): ResolveIndexResult {
         const result = createResolveIndexResult();
-        const separatedGroups = StatusHelper.toSeparatedGroups(groupCells, true);
+        const separatedGroups = StatusHelper.toSeparatedGroups(groupCells);
+
+        // if first separated group does not have included cells
+        if (
+            separatedGroups[0].groups.every(
+                (group) => group.status !== CellStatus.included,
+            )
+        ) {
+            return result;
+        }
+
         const firstValue = values[0];
-        if (separatedGroups.length < 2) {
-            return result;
-        }
-
-        if (separatedGroups.length > values.length) {
-            return result;
-        }
-
         const separatedGroup = separatedGroups[0];
         const separatedGroupWidth =
             separatedGroup.separatorEnd.start -
@@ -49,10 +51,14 @@ export class SeparatedGroupNearBorderResolver extends ResolverModel {
         }
 
         // check if separated groups count is not equal to values count and first two value can fill in first group
+        const separatedGroupsWithoutUnknown = StatusHelper.toSeparatedGroups(
+            groupCells,
+            true,
+        );
         const twoFirstValueSum =
             firstValue + (values.length > 1 ? values[1] + 1 : 0);
         if (
-            separatedGroups.length !== values.length &&
+            separatedGroupsWithoutUnknown.length !== values.length &&
             twoFirstValueSum <= separatedGroupWidth
         ) {
             return result;

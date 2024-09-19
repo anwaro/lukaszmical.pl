@@ -7,6 +7,7 @@ import {
 import {ResolverModel} from '../model/model-resolver';
 import {GroupModel} from '../model/model-group';
 import {StatusGroup, StatusHelper} from '../helper/helper-status';
+import {ArrayHelper} from '../helper/helper-array';
 
 export class FillHoleForDoubleValueResolver extends ResolverModel {
     run(group: GroupModel, groupCells: CellModel[]): ResolverResult {
@@ -15,6 +16,11 @@ export class FillHoleForDoubleValueResolver extends ResolverModel {
         result.addIndexResult(
             this.resolveGroup(group.values, groupCells),
             groupCells,
+        );
+
+        result.addIndexResult(
+            this.resolveGroup(group.values.toReversed(), groupCells.toReversed()),
+            groupCells.toReversed(),
         );
 
         return result;
@@ -27,6 +33,10 @@ export class FillHoleForDoubleValueResolver extends ResolverModel {
             statusGroups,
             CellStatus.included,
         );
+
+        if (values.length === 2 && includedGroups.length === 2) {
+            return this.doubleIncludedGroups(includedGroups, values);
+        }
 
         if (values.length !== 2 || includedGroups.length < 3) {
             return result;
@@ -79,6 +89,21 @@ export class FillHoleForDoubleValueResolver extends ResolverModel {
 
         for (let index = startIndex; index < endIndex; index++) {
             result.included.push(index);
+        }
+
+        return result;
+    }
+
+    doubleIncludedGroups(includedGroups: StatusGroup[], values: number[]) {
+        const result = createResolveIndexResult();
+
+        if (includedGroups[0].len > values[0]) {
+            result.included.push(
+                ...ArrayHelper.range(
+                    includedGroups[0].start,
+                    includedGroups[1].start,
+                ),
+            );
         }
 
         return result;

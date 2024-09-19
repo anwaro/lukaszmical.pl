@@ -13,7 +13,6 @@ import {StoreModel} from './model/model-store';
 
 export class MonogramResolverController {
     public store = new StoreModel();
-    public canvas = document.createElement('canvas');
 
     emitEvent(event: EventModel) {
         const prevEvent = this.store.data.events.find((e) => e.id === event.id);
@@ -59,7 +58,7 @@ export class MonogramResolverController {
             this.emitEvent(task.event);
             let error: Error | undefined = undefined;
             try {
-                await task.run(this.canvas, this.store, this.emitEvent.bind(this));
+                await task.run(this.store, this.emitEvent.bind(this));
             } catch (e) {
                 error = e as Error;
             }

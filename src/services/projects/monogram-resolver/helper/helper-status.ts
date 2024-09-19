@@ -43,6 +43,30 @@ export class StatusHelper {
         return groups.filter((group) => group.status === status);
     }
 
+    static toHoles(groupCells: CellModel[]) {
+        const statusGroup = StatusHelper.toStatusGroups(groupCells);
+        return statusGroup.filter((group, index) => {
+            if (group.status !== CellStatus.unknown) {
+                return false;
+            }
+
+            if (
+                index !== 0 &&
+                statusGroup[index - 1].status !== CellStatus.excluded
+            ) {
+                return false;
+            }
+
+            if (
+                index !== statusGroup.length - 1 &&
+                statusGroup[index + 1].status !== CellStatus.excluded
+            ) {
+                return false;
+            }
+            return true;
+        });
+    }
+
     static toSeparatedGroups(cells: CellModel[], skipUnknownGroups = false) {
         let statusGroups = StatusHelper.toStatusGroups(cells);
 
@@ -91,5 +115,103 @@ export class StatusHelper {
         }
 
         return separatedGroups;
+    }
+
+    static separatedGroupsSize(separatedGroup: SeparatedGroup) {
+        return (
+            separatedGroup.separatorEnd.start -
+            separatedGroup.separatorStart.start -
+            separatedGroup.separatorStart.len
+        );
+    }
+
+    static separatedGroupsIsResolved(separatedGroup: SeparatedGroup) {
+        return (
+            separatedGroup.groups.length === 1 &&
+            separatedGroup.groups[0].len ===
+                StatusHelper.separatedGroupsSize(separatedGroup)
+        );
+    }
+
+    static validateStatusGroups(statusGroups: StatusGroup[], values: number[]) {
+        const includedGroups = StatusHelper.filter(
+            statusGroups,
+            CellStatus.included,
+        );
+
+        function getGroupBlocker(
+            index: number,
+            includedGroups: StatusGroup[],
+            statusGroups: StatusGroup[],
+        ) {
+            const currentGroupStart = includedGroups[index].start;
+
+            const lastGroup = statusGroups[statusGroups.length - 1];
+            const nextGroupStart =
+                index === includedGroups.length - 1
+                    ? lastGroup.start + lastGroup.len
+                    : includedGroups[index + 1].start;
+
+            return statusGroups.find(
+                (g) =>
+                    g.status === CellStatus.excluded &&
+                    currentGroupStart < g.start &&
+                    g.start < nextGroupStart,
+            );
+        }
+
+        if (values.length !== includedGroups.length) {
+            return false;
+        }
+
+        for (let index = 0; index < includedGroups.length; index++) {
+            const isLast = index === includedGroups.length - 1;
+            const currentGroup = includedGroups[index];
+            const currentValue = values[index];
+
+            const nextGroup = !isLast ? includedGroups[index + 1] : undefined;
+            const nextValue = !isLast ? values[index + 1] : undefined;
+            if (isLast || !nextGroup || !nextValue) {
+                continue;
+            }
+            const endBlocker = getGroupBlocker(index, includedGroups, statusGroups);
+
+            if (endBlocker) {
+                continue;
+            }
+
+            const groupSize = nextGroup.start + nextGroup.len - currentGroup.start;
+            if (groupSize <= currentValue || groupSize <= nextValue) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    static validateSeparatedGroups(
+        separatedGroups: SeparatedGroup[],
+        values: number[],
+    ) {
+        return separatedGroups.every((group, i) => {
+            const size =
+                group.separatorEnd.start -
+                group.separatorStart.start -
+                group.separatorStart.len;
+
+            if (size < values[i]) {
+                return false;
+            }
+
+            if (i !== 0 && size >= values[i] + values[i - 1] + 1) {
+                return false;
+            }
+
+            if (i !== values.length - 1 && size >= values[i] + values[i + 1] + 1) {
+                return false;
+            }
+
+            return true;
+        });
     }
 }

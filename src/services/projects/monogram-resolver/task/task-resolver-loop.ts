@@ -9,16 +9,15 @@ import {TotalSizeResolver} from '../resolver/resolver-total-size';
 import {ValidatorModel} from '../model/model-validator';
 import {CellHelper} from '../helper/helper-cell';
 
+let resolveLoop = 1;
+
 export class LoopResolverTask extends TaskModel {
     public eventName = EventType.resolverJob;
     private validator = new ValidatorModel();
 
-    async run(
-        canvas: HTMLCanvasElement,
-        store: StoreModel,
-        emitEvent: (event: EventModel) => void,
-    ) {
+    async run(store: StoreModel, emitEvent: (event: EventModel) => void) {
         let loop = 0;
+        resolveLoop = 1;
         this.runResolver(new TotalSizeResolver(), store);
 
         const resolvers: ResolverModel[] = allResolvers.map(
@@ -96,8 +95,10 @@ export class LoopResolverTask extends TaskModel {
                 excluded,
                 resolver.constructor.name,
                 group.id,
+                resolveLoop,
             );
             if (included.length || excluded.length) {
+                resolveLoop++;
                 console.log(
                     '\t',
                     resolver.constructor.name,
@@ -107,8 +108,8 @@ export class LoopResolverTask extends TaskModel {
                     'Excluded:',
                     ...excluded,
                 );
+                this.validator.validate(store.data.groups, store.data.cells);
             }
-            this.validator.validate(store.data.groups, store.data.cells);
         }
         let unknownCellsCellsAfter = store.data.cells.filter(
             (c) => c.status === CellStatus.unknown,
@@ -123,6 +124,7 @@ export class LoopResolverTask extends TaskModel {
         excluded: CellId[],
         resolverName: string,
         resolveInGroup: string,
+        loop: number,
     ) {
         store.setItem(
             'cells',
@@ -151,6 +153,7 @@ export class LoopResolverTask extends TaskModel {
                         newStatus,
                         resolverName,
                         resolveInGroup,
+                        loop,
                     );
                 }
 

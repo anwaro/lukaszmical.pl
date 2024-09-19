@@ -80,4 +80,16 @@ describe('FillHoleForDoubleValueResolver', () => {
         expect(result.getIncludedCellsId()).toEqual(['A9', 'A10']);
         expect(result.getExcludedCellsId()).toEqual([]);
     });
+
+    it('should join two groups, first included group cannot belong to first value', () => {
+        const cells = factory
+            .init()
+            .fromPattern('❌❌❌❌❔❔❔❔❔🟦🟦❔🟦❔❔❔❔❔❔❔')
+            .getCells();
+        const group = factory.getGroup([1, 5]);
+        const result = resolver.run(group, cells);
+
+        expect(result.getIncludedCellsId()).toEqual(['A12']);
+        expect(result.getExcludedCellsId()).toEqual([]);
+    });
 });

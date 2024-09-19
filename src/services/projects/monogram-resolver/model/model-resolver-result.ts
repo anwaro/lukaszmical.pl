@@ -25,18 +25,19 @@ export class ResolverResult {
         return new ResolverResult(groupCells, included, excluded);
     }
 
-    addIncludedCells(...cells: CellModel[]) {
-        this.included.push(...cells.map((c) => c.id));
-    }
-
-    addExcludedCells(...cells: CellModel[]) {
-        this.excluded.push(...cells.map((c) => c.id));
-    }
-
     addIndexResult(result: ResolveIndexResult, cells: CellModel[]) {
-        const cellId = (index: number) => cells[index].id;
-        this.included.push(...result.included.map(cellId));
-        this.excluded.push(...result.excluded.map(cellId));
+        const cellIds = (indexes: number[]) => {
+            const _cellsIds = indexes
+                .filter((i) => i >= 0 && i < cells.length)
+                .map((i) => cells[i].id);
+            if (_cellsIds.length !== indexes.length) {
+                console.warn('invalid cells ids in', ...indexes);
+            }
+
+            return _cellsIds;
+        };
+        this.included.push(...cellIds(result.included));
+        this.excluded.push(...cellIds(result.excluded));
     }
 
     uniqueResult(results: CellId[], groupCells: CellModel[]): CellId[] {

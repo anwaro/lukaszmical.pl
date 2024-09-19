@@ -1,3 +1,4 @@
+import {ArrayHelper} from '../helper/helper-array';
 import {CellStatus} from '../model/model-cell';
 import {
     createResolveIndexResult,
@@ -33,6 +34,14 @@ export class ResolverHelper {
             result.excluded.push(...unknownIndexes);
             return result;
         }
+
+        // fill holes
+        result.included.push(
+            ...ArrayHelper.range(
+                Math.min(...selectedIndexes),
+                Math.max(...selectedIndexes),
+            ),
+        );
 
         if (selectedIndexes.includes(groupStartIndex)) {
             for (let index = 0; index < size; index++) {

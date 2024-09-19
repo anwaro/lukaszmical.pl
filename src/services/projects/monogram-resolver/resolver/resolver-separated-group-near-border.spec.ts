@@ -82,4 +82,28 @@ describe('SeparatedGroupNearBorderResolver', () => {
         expect(result.getIncludedCellsId()).toEqual([]);
         expect(result.getExcludedCellsId()).toEqual([]);
     });
+
+    it('should return empty result - real case', () => {
+        const cells = factory
+            .init()
+            .fromPattern('🟦❔❔❔❔❔🟦🟦🟦🟦❌🟦❔🟦❔❌❔❔❔❔')
+            .getCells();
+        const group = factory.getGroup([3, 5, 4, 2]);
+        const result = resolver.run(group, cells);
+
+        expect(result.getIncludedCellsId()).toEqual([]);
+        expect(result.getExcludedCellsId()).toEqual([]);
+    });
+
+    it('should return empty result - real case', () => {
+        const cells = factory
+            .init()
+            .fromPattern('❔❔❌❌❌❔🟦❔🟦❔❔❔❔❔❔❔❔❔❔❔')
+            .getCells();
+        const group = factory.getGroup([4, 2]);
+        const result = resolver.run(group, cells);
+
+        expect(result.getIncludedCellsId()).toEqual([]);
+        expect(result.getExcludedCellsId()).toEqual([]);
+    });
 });

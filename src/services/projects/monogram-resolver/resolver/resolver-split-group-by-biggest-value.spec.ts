@@ -36,18 +36,14 @@ describe('SplitGroupByBiggestValueResolver', () => {
         const group = factory.getGroup([1, 4]);
         const result = resolver.run(group, cells);
 
-        expect(result.getIncludedCellsId()).toEqual([]);
+        expect(result.getIncludedCellsId()).toEqual(['A3', 'A9']);
         expect(result.getExcludedCellsId()).toEqual([]);
     });
 
-    it('should include before max value and exclude after', () => {
+    it('should return included third cell', () => {
         const cells = factory
             .init()
-            .addCells(CellStatus.excluded, 2)
-            .addCells(CellStatus.unknown)
-            .addCells(CellStatus.excluded, 2)
-            .addCells(CellStatus.included, 4)
-            .addCells(CellStatus.unknown, 6)
+            .fromPattern('❌❌❔❌❌🟦🟦🟦🟦❔❔❔❔❔❔')
             .getCells();
         const group = factory.getGroup([1, 4]);
         const result = resolver.run(group, cells);
@@ -73,5 +69,50 @@ describe('SplitGroupByBiggestValueResolver', () => {
 
         expect(result.getIncludedCellsId()).toEqual(['A5']);
         expect(result.getExcludedCellsId()).toEqual(['A16']);
+    });
+
+    it('should include before max value and exclude after - real case 2', () => {
+        const cells = factory
+            .init()
+            .fromPattern('🟦❌❌❌❔❌❌❌🟦❌🟦🟦❌❌❌❔❌🟦❌❌')
+            .getCells();
+        const group = factory.getGroup([1, 1, 1, 2, 1]);
+        const result = resolver.run(group, cells);
+
+        expect(result.getIncludedCellsId()).toEqual(['A5']);
+        expect(result.getExcludedCellsId()).toEqual(['A16']);
+    });
+
+    it('should return empty result - real case 3', () => {
+        const cells = factory
+            .init()
+            .fromPattern('❔❔❔🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦❔❔❔❔❔❔')
+            .getCells();
+        const group = factory.getGroup([14, 2]);
+        const result = resolver.run(group, cells);
+
+        expect(result.getIncludedCellsId()).toEqual([]);
+        expect(result.getExcludedCellsId()).toEqual([]);
+    });
+
+    it('should return include last cell - real case 4', () => {
+        const cells = factory.init().fromPattern('❔❔❔❔❔❌🟦🟦❌❔').getCells();
+        const group = factory.getGroup([1, 2, 1]);
+        const result = resolver.run(group, cells);
+
+        expect(result.getIncludedCellsId()).toEqual(['A10']);
+        expect(result.getExcludedCellsId()).toEqual([]);
+    });
+
+    it('should include A7 - real case 5', () => {
+        const cells = factory
+            .init()
+            .fromPattern('🟦❌🟦🟦❌🟦❔🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦❔❌')
+            .getCells();
+        const group = factory.getGroup([1, 2, 13]);
+        const result = resolver.run(group, cells);
+
+        expect(result.getIncludedCellsId()).toEqual(['A7']);
+        expect(result.getExcludedCellsId()).toEqual(['A19']);
     });
 });

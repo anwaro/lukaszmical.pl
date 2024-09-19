@@ -13,9 +13,7 @@ export function PageMonogramResolverLogs({events}: Props) {
         <div className="flex flex-col gap-2">
             {events.map((event, i) => (
                 <div key={event.id}>
-                    <div
-                        className={`flex items-center gap-2 ${!i ? 'mt-1 border-t border-dashed pt-2' : ''}`}
-                    >
+                    <div className={'flex items-center gap-2'}>
                         <pre>{event.getName()}</pre>
                         {event.inProgress ? (
                             <svg

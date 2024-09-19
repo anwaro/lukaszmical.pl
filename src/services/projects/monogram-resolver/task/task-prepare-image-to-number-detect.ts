@@ -2,16 +2,14 @@ import {TaskModel} from '../model/model-task';
 import {EventModel, EventType} from '../model/model-event';
 import {StoreModel} from '../model/model-store';
 import {PrepareImageToNumberDetect} from '../image/prepare-image-to-number-detect';
+import {ImageFileLoader} from '../image/image-file-loader';
 
 export class PrepareImageToNumberDetectTask extends TaskModel {
     public eventName = EventType.imageProcessedToNumberDetect;
 
-    async run(
-        canvas: HTMLCanvasElement,
-        store: StoreModel,
-        emitEvent: (event: EventModel) => void,
-    ) {
+    async run(store: StoreModel, emitEvent: (event: EventModel) => void) {
         const service = new PrepareImageToNumberDetect();
+        const loader = new ImageFileLoader();
 
         const data = await service.run(
             store.data.image,
@@ -20,14 +18,8 @@ export class PrepareImageToNumberDetectTask extends TaskModel {
             store.data.columnValuesBounds,
         );
 
-        const ctx = canvas.getContext('2d');
-        canvas.width = data.width;
-        canvas.height = data.height;
+        await loader.loadFromImageData(data);
 
-        if (ctx) {
-            ctx.putImageData(data, 0, 0);
-        }
-
-        store.setItem('imageProcessed', data);
+        store.setItem('processedImage', loader.getImage());
     }
 }

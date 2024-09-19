@@ -3,16 +3,17 @@ import {Rectangle} from 'tesseract.js';
 import {GroupModel, GroupType} from '../model/model-group';
 import {RowHelper} from '../helper/helper-row';
 import {CellModel} from '../model/model-cell';
-import {Bounds, CellsInfo} from '../model/model-store';
+import {Bounds, CellsInfo, ImageFileData} from '../model/model-store';
 import {NumberDetector} from './detector-number';
 import {ImageDataHelper} from '../helper/helper-image-data';
+import {ValidatorModel} from '../model/model-validator';
 
 export class RowGroupDetector extends NumberDetector {
+    private validator = new ValidatorModel();
     public rows: GroupModel[] = [];
 
     constructor(
-        private readonly canvas: HTMLCanvasElement,
-        private readonly image: ImageData,
+        private readonly image: ImageFileData,
         private readonly rowSumsBounds: Bounds,
         private readonly cells: CellModel[],
         private readonly cellInfo: CellsInfo,
@@ -22,35 +23,36 @@ export class RowGroupDetector extends NumberDetector {
 
     async run() {
         await this.initializeDetector();
-        const url = this.canvas.toDataURL();
 
         this.rows = await Promise.all(
             new Array(this.cellInfo.count)
                 .fill(0)
-                .map((_, i) => this.createGroup(url, i)),
+                .map((_, i) => this.createGroup(this.image.src, i)),
         );
     }
 
     async createGroup(url: string, index: number) {
-        const rectengle = RowHelper.valuesRectangle(
+        const id = RowHelper.id(index);
+        const rectangle = RowHelper.valuesRectangle(
             index,
             this.rowSumsBounds,
             this.cellInfo,
         );
-        const numbers = await this.detectNumbers(url, rectengle);
+        const stringNumbers = await this.detectNumbers(url, rectangle, id);
+        const numbers = this.fixNumbers(stringNumbers, rectangle);
+        this.validator.validateGroupValues(numbers, this.cellInfo.count, id);
 
         return new GroupModel(
-            RowHelper.id(index),
+            id,
             GroupType.row,
             this.cells
                 .filter((cell) => cell.rowIndex == index)
                 .map((cell) => cell.id),
-
-            this.fixNumers(numbers, rectengle),
+            numbers,
         );
     }
 
-    fixNumers(numbers: string[], rectengle: Rectangle) {
+    fixNumbers(numbers: string[], rectengle: Rectangle) {
         const toNumbers = (nums: string[]) =>
             nums
                 .join('')
@@ -94,7 +96,7 @@ export class RowGroupDetector extends NumberDetector {
             for (let y = rectengle.top; y < rectengle.top + rectengle.height; y++) {
                 if (
                     !ImageDataHelper.isSameColorInPixel(
-                        this.image,
+                        this.image.data,
                         x,
                         y,
                         [255, 255, 255, 255],

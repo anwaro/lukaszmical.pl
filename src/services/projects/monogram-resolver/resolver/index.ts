@@ -16,6 +16,13 @@ import {BorderFillSecondGroupResolver} from './resolver-border-fill-second-group
 import {ExtendsGroupNearExcludedResolver} from './resolver-extends-group-near-excluded';
 import {FillHoleForDoubleValueResolver} from './resolver-fill-hole-for-double-value';
 import {SplitGroupByBiggestValueResolver} from './resolver-split-group-by-biggest-value';
+import {IncludedGroupsEqualToValuesCountsResolver} from './resolver-included-groups-equal-to-values-counts';
+import {ValueCanFillOnlyInOneHoleResolver} from './resolver-value-can-fill-only-in-one-hole';
+import {OnlyFirstValueCanFitInFirstGroupResolver} from './resolver-only-first-value-can-fit-in-first-group';
+import {IncludedGroupsWithSingleUnknownSeparatorResolver} from './resolver-included-groups-with-single-unknown-separator';
+import {ExcludeHoleBeforeBiggestValueResolver} from './resolver-exclude-hole-before-biggest-value';
+import {SeparatedGroupMustIncludeSpecificValueResolver} from './resolver-separated-group-must-include-specific-value';
+import {ExcludeHoleForNonResolvedValuesResolver} from './resolver-exclude-hole-for-non-resolved-values';
 
 export const allResolvers = [
     BorderFillResolver,
@@ -36,6 +43,13 @@ export const allResolvers = [
     ExtendsGroupNearExcludedResolver,
     FillHoleForDoubleValueResolver,
     SplitGroupByBiggestValueResolver,
+    IncludedGroupsEqualToValuesCountsResolver,
+    ValueCanFillOnlyInOneHoleResolver,
+    OnlyFirstValueCanFitInFirstGroupResolver,
+    IncludedGroupsWithSingleUnknownSeparatorResolver,
+    ExcludeHoleBeforeBiggestValueResolver,
+    SeparatedGroupMustIncludeSpecificValueResolver,
+    ExcludeHoleForNonResolvedValuesResolver,
 ];
 
 export const splitGroupResolvers = [
@@ -48,4 +62,7 @@ export const splitGroupResolvers = [
     ExtendsGroupNearExcludedResolver,
     FillHoleForDoubleValueResolver,
     ExcludeForDoubleResolver,
+    ValueCanFillOnlyInOneHoleResolver,
+    IncludedGroupsEqualToValuesCountsResolver,
+    SeparatedGroupsEqualToValuesResolver,
 ];

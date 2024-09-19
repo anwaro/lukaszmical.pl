@@ -1,6 +1,5 @@
 import {RefObject} from 'react';
 
-import {CellStatus} from '../model/model-cell';
 import {EventModel, EventType} from '../model/model-event';
 import {StoreData} from '../model/model-store';
 import {GroupType} from '../model/model-group';
@@ -11,7 +10,7 @@ export class MonogramResolverCanvas {
     private ctxBg: CanvasRenderingContext2D | null = null;
     private ctx: CanvasRenderingContext2D | null = null;
     private scale = 1;
-    private width = 400;
+    private width = 1000;
 
     constructor(
         private readonly canvasBg: RefObject<HTMLCanvasElement>,
@@ -33,32 +32,16 @@ export class MonogramResolverCanvas {
     }
 
     update(store: StoreData, currentEvent: EventModel) {
-        const DEBUG = true;
-        // const DEBUG = false;
-        if (DEBUG) {
-            this.updateDev(store, currentEvent);
-        } else {
-            this.updateProd(store, currentEvent);
-        }
-    }
-
-    updateProd(store: StoreData, currentEvent: EventModel) {
         switch (currentEvent.type) {
-            case EventType.imageProcessed:
-                return this.imageProcessedEvent(store);
-            case EventType.resolverDone:
-            case EventType.resolverError:
-            case EventType.resolverJob:
-            case EventType.resolverLoop:
-                return this.printCells(store);
-        }
-    }
-
-    updateDev(store: StoreData, currentEvent: EventModel) {
-        switch (currentEvent.type) {
+            case EventType.rerender:
+                this.imageProcessedToNumberDetect(store);
+                this.displayImageElement(store);
+                this.detectGrid(store);
+                this.detectRowGroupsValues(store);
+                return this.detectColumnGroupValues(store);
             case EventType.imageProcessedToNumberDetect:
                 this.imageProcessedToNumberDetect(store);
-                // this.displayImageElement(store);
+                this.displayImageElement(store);
                 return this.detectGrid(store);
             case EventType.detectGrid:
                 return this.detectGrid(store);
@@ -92,21 +75,10 @@ export class MonogramResolverCanvas {
         this.canvas.current.height = height;
     }
 
-    imageProcessedEvent(store: StoreData) {
-        this.setupSizes(store.image);
-        this.getCtxBg()?.drawImage(
-            this.renderer(store.image),
-            0,
-            0,
-            this.canvas.current.width,
-            this.canvas.current.height,
-        );
-    }
-
     imageProcessedToNumberDetect(store: StoreData) {
-        this.setupSizes(store.imageProcessed);
+        this.setupSizes(store.processedImage.data);
         this.getCtxBg()?.drawImage(
-            this.renderer(store.imageProcessed),
+            this.renderer(store.processedImage.data),
             0,
             0,
             this.canvasBg.current.width,
@@ -115,27 +87,18 @@ export class MonogramResolverCanvas {
     }
 
     displayImageElement(store: StoreData) {
-        const id = 'processed-img';
-        const img =
-            (document.getElementById(id) as HTMLImageElement) ||
-            (() => {
-                const i = document.createElement('img');
-                i.id = id;
-                i.style.maxWidth = '99vw';
-                document.body.appendChild(i);
-                return i;
-            })();
-        var canvas = document.createElement('canvas');
-        var ctx = canvas.getContext('2d');
-        if (!ctx) {
-            return;
-        }
-
-        canvas.width = store.imageProcessed.width;
-        canvas.height = store.imageProcessed.height;
-        ctx.putImageData(store.imageProcessed, 0, 0);
-
-        img.src = canvas.toDataURL();
+        // const img = document.getElementById('image-preview') as HTMLImageElement;
+        // const canvas = document.createElement('canvas');
+        // const ctx = canvas.getContext('2d');
+        // if (!ctx) {
+        //     return;
+        // }
+        //
+        // canvas.width = store.imageProcessed.width;
+        // canvas.height = store.imageProcessed.height;
+        // ctx.putImageData(store.imageProcessed, 0, 0);
+        //
+        // img.src = canvas.toDataURL();
     }
 
     detectGrid(store: StoreData) {
@@ -162,45 +125,6 @@ export class MonogramResolverCanvas {
             );
             ctx.stroke();
         });
-    }
-
-    printCells(store: StoreData) {
-        const ctx = this.getCtx();
-
-        if (!ctx) {
-            return;
-        }
-        ctx.clearRect(0, 0, this.canvas.current.width, this.canvas.current.height);
-
-        for (const cell of store.cells) {
-            if (cell.status === CellStatus.unknown) {
-                continue;
-            }
-            ctx.beginPath();
-
-            if (cell.status === CellStatus.excluded) {
-                // ctx.fillStyle = cell.color;
-                ctx.arc(
-                    this.ctxPoint(cell.x + cell.width / 2),
-                    this.ctxPoint(cell.y + cell.height / 2),
-                    this.ctxPoint(cell.width / 4),
-                    0,
-                    2 * Math.PI,
-                );
-                ctx.fill();
-            } else {
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = 'black';
-                ctx.arc(
-                    this.ctxPoint(cell.x + cell.width / 2),
-                    this.ctxPoint(cell.y + cell.height / 2),
-                    this.ctxPoint(cell.width / 2.5),
-                    0,
-                    2 * Math.PI,
-                );
-                ctx.stroke();
-            }
-        }
     }
 
     detectRowGroupsValues(store: StoreData) {

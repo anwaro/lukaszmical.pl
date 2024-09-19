@@ -16,7 +16,6 @@ export abstract class TaskModel {
     }
 
     abstract run(
-        canvas: HTMLCanvasElement,
         store: StoreModel,
         emitEvent: (event: EventModel) => void,
     ): Promise<void>;

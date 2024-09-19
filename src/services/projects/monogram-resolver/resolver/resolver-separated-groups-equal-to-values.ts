@@ -1,4 +1,4 @@
-import {SeparatedGroup, StatusHelper} from '../helper/helper-status';
+import {StatusHelper} from '../helper/helper-status';
 import {GroupModel} from '../model/model-group';
 import {CellModel} from '../model/model-cell';
 import {
@@ -31,14 +31,13 @@ export class SeparatedGroupsEqualToValuesResolver extends ResolverModel {
         );
 
         const separatedGroupsToResolve = [];
-
-        if (
+        if (separatedGroupsWithoutUnknown.length === values.length) {
+            separatedGroupsToResolve.push(...separatedGroupsWithoutUnknown);
+        } else if (
             separatedGroups.length === values.length &&
-            this.validateGroups(separatedGroups, values)
+            StatusHelper.validateSeparatedGroups(separatedGroups, values)
         ) {
             separatedGroupsToResolve.push(...separatedGroups);
-        } else if (separatedGroupsWithoutUnknown.length === values.length) {
-            separatedGroupsToResolve.push(...separatedGroupsWithoutUnknown);
         }
 
         for (let index = 0; index < separatedGroupsToResolve.length; index++) {
@@ -51,28 +50,5 @@ export class SeparatedGroupsEqualToValuesResolver extends ResolverModel {
         }
 
         return result;
-    }
-
-    validateGroups(separatedGroups: SeparatedGroup[], values: number[]) {
-        return separatedGroups.every((group, i) => {
-            const size =
-                group.separatorEnd.start -
-                group.separatorStart.start -
-                group.separatorStart.len;
-
-            if (size < values[i]) {
-                return false;
-            }
-
-            if (i !== 0 && size >= values[i] + values[i - 1] + 1) {
-                return false;
-            }
-
-            if (i !== values.length - 1 && size >= values[i] + values[i + 1] + 1) {
-                return false;
-            }
-
-            return true;
-        });
     }
 }

@@ -1,9 +1,9 @@
-import {Bounds} from '../model/model-store';
+import {Bounds, ImageFileData} from '../model/model-store';
 import {Color, ImageDataHelper} from '../helper/helper-image-data';
 
 export class PrepareImageToNumberDetect {
     private white: Color = [255, 255, 255, 255];
-    private threshold = 255 * 3 * (180 / 255);
+    private threshold = 255 * 3 * (210 / 255);
     private groupsBgColors: Color[] = [
         [235, 239, 248, 255], // silver
         [213, 222, 233, 255], // border
@@ -22,13 +22,13 @@ export class PrepareImageToNumberDetect {
             return this.white;
         }
 
-        const c = Math.floor(sum / 3);
+        let grayscale = 0.2126 * color[0] + 0.7152 * color[1] + 0.0722 * color[2];
 
-        return [c, c, c, 255];
+        return [grayscale, grayscale, grayscale, 255];
     }
 
     async run(
-        imageData: ImageData,
+        {data: imageData}: ImageFileData,
         gridBounds: Bounds,
         rowSumBounds: Bounds,
         columnSumBounds: Bounds,

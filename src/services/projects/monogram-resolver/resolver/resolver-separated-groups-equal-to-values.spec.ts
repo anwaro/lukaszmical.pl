@@ -121,4 +121,16 @@ describe('SeparatedGroupsEqualToValuesResolver', () => {
         expect(result.getIncludedCellsId()).toEqual(['A3', 'A14', 'A15']);
         expect(result.getExcludedCellsId()).toEqual([]);
     });
+
+    it('should include A7 real case 4', () => {
+        const cells = factory
+            .init()
+            .fromPattern('🟦❌🟦🟦❌🟦❔🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦❔❌')
+            .getCells();
+        const group = factory.getGroup([1, 2, 13]);
+        const result = resolver.run(group, cells);
+
+        expect(result.getIncludedCellsId()).toEqual(['A7']);
+        expect(result.getExcludedCellsId()).toEqual(['A19']);
+    });
 });

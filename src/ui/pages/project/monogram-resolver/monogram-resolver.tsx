@@ -1,73 +1,47 @@
 'use client';
 
-import React, {useState} from 'react';
+import React from 'react';
 
-import {PageMonogramResolverLogs} from '@/ui/pages/project/monogram-resolver/monogram-resolver-logs';
-import {CellStatus} from '@/services/projects/monogram-resolver/model/model-cell';
-import {PageMonogramResolverStats} from '@/ui/pages/project/monogram-resolver/monogram-resolver-stats';
+import {PageMonogramResolverLogs} from '@/ui/pages/project/monogram-resolver/components/monogram-resolver-logs';
+import {PageMonogramResolverStats} from '@/ui/pages/project/monogram-resolver/components/monogram-resolver-stats';
+import {PageMonogramResolverBox} from '@/ui/pages/project/monogram-resolver/components/monogram-resolver-box';
+import {PageMonogramResolverImage} from '@/ui/pages/project/monogram-resolver/components/monogram-resolver-image';
 
-import {PageMonogramResolverGroups} from './monogram-resolver-groups';
+import {PageMonogramResolverGrid} from './components/grid/monogram-resolver-grid';
 import {usePageMonogramResolver} from './monogram-resolver.hook';
 
 export function PageMonogramResolver() {
-    const {events, canvas, canvasBg, onFileChange, groups, cells} =
+    const {events, onFileChange, groups, cells, image, processedImage} =
         usePageMonogramResolver();
-    const resolved = cells.filter((c) => c.status !== CellStatus.unknown).length;
-
-    const [visiblePreview, setVisiblePreview] = useState(false);
-    const [visible, setVisible] = useState(false);
 
     return (
-        <div className="container mx-auto mt-12 grid grid-cols-1 gap-4 p-6 md:grid-cols-2">
-            <div className="flex flex-col gap-6">
-                <label className="flex rounded border border-white p-4">
-                    <input
-                        type={'file'}
-                        accept={'image/*'}
-                        onChange={onFileChange}
-                    />
-                </label>
-                <div className="rounded border border-white p-4">
-                    <input
-                        type="checkbox"
-                        value={visiblePreview ? 'true' : ''}
-                        onChange={(e) => setVisiblePreview(e.target.checked)}
-                    />
-                    <div className={`relative ${visiblePreview ? '' : 'opacity-0'}`}>
-                        <canvas
-                            ref={canvasBg}
-                            className="relative left-1/2 top-0 -translate-x-1/2"
+        <div className="container mx-auto mt-12 flex flex-col gap-4">
+            <div className="grid grid-cols-1 gap-4 xl:grid-cols-12">
+                <div className="flex flex-col gap-6 xl:col-span-4">
+                    <PageMonogramResolverBox title={`FILE ${image.name}`}>
+                        <input
+                            type={'file'}
+                            accept={'image/*'}
+                            onChange={onFileChange}
                         />
-                        <canvas
-                            ref={canvas}
-                            className="absolute left-1/2 top-0 -translate-x-1/2"
-                        />
-                    </div>
+                    </PageMonogramResolverBox>
+                    <PageMonogramResolverBox title={'LOGS'}>
+                        <PageMonogramResolverLogs events={events} />
+                    </PageMonogramResolverBox>
+
+                    <PageMonogramResolverBox title={'RESOLVERS STATS'}>
+                        <PageMonogramResolverStats cells={cells} />
+                    </PageMonogramResolverBox>
+                </div>
+                <div className="flex flex-col gap-6 xl:col-span-8">
+                    <PageMonogramResolverGrid groups={groups} cells={cells} />
                 </div>
             </div>
-            <div className="flex flex-col gap-6">
-                <div className={'rounded border border-white p-4'}>
-                    <input
-                        type="checkbox"
-                        value={visible ? 'true' : ''}
-                        onChange={(e) => setVisible(e.target.checked)}
-                    />
-                    <pre>
-                        GROUPS ({resolved}/{cells.length})
-                    </pre>
-                    <div className={visible ? '' : 'opacity-10'}>
-                        <PageMonogramResolverGroups groups={groups} cells={cells} />
-                    </div>
-                </div>
-                <div className="rounded border border-white p-4">
-                    <pre>LOGS</pre>
-                    <PageMonogramResolverLogs events={events} />
-                </div>
-                <div className="rounded border border-white p-4">
-                    <pre>RESOLVERS STATS</pre>
-                    <PageMonogramResolverStats cells={cells} />
-                </div>
-            </div>
+            <PageMonogramResolverImage
+                image={image}
+                processedImage={processedImage}
+                groups={groups}
+            />
         </div>
     );
 }

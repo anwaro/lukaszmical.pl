@@ -1,4 +1,4 @@
-import {CellModel, CellStatus} from '../model/model-cell';
+import {CellModel} from '../model/model-cell';
 import {
     createResolveIndexResult,
     ResolveIndexResult,
@@ -6,11 +6,7 @@ import {
 } from '../model/model-resolver-result';
 import {ResolverModel} from '../model/model-resolver';
 import {GroupModel} from '../model/model-group';
-
-type Hole = {
-    start: number;
-    len: number;
-};
+import {StatusHelper} from '../helper/helper-status';
 
 export class ExcludeHoleSmallerThanValuesResolver extends ResolverModel {
     run(group: GroupModel, groupCells: CellModel[]): ResolverResult {
@@ -27,7 +23,7 @@ export class ExcludeHoleSmallerThanValuesResolver extends ResolverModel {
     resolveGroup(values: number[], groupCells: CellModel[]): ResolveIndexResult {
         const result = createResolveIndexResult();
         const minValue = Math.min(...values);
-        let holes = this.createHoles(groupCells);
+        let holes = StatusHelper.toHoles(groupCells);
 
         const holesToExcluded = holes.filter((h) => h.len < minValue);
 
@@ -35,24 +31,15 @@ export class ExcludeHoleSmallerThanValuesResolver extends ResolverModel {
         if (holes.length) {
             const firstValue = values[0];
             const firstHole = holes[0];
-            const alreadyIncludedFirst = holesToExcluded.some(
-                (h) => h.start === firstHole.start,
-            );
-            if (
-                !alreadyIncludedFirst &&
-                firstHole.start < firstValue &&
-                firstHole.len < firstValue
-            ) {
+
+            if (firstHole.start < firstValue && firstHole.len < firstValue) {
                 holesToExcluded.unshift(firstHole);
             }
 
             const lastValue = values[values.length - 1];
             const lastHole = holes[holes.length - 1];
-            const alreadyIncludedLast = holesToExcluded.some(
-                (h) => h.start === lastHole.start,
-            );
+
             if (
-                !alreadyIncludedLast &&
                 groupCells.length - lastHole.start <= lastValue &&
                 lastHole.len < lastValue
             ) {
@@ -67,52 +54,5 @@ export class ExcludeHoleSmallerThanValuesResolver extends ResolverModel {
         });
 
         return result;
-    }
-
-    createHoles(groupCells: CellModel[]) {
-        let currentStatus = CellStatus.excluded;
-        let currentHole: Hole = {start: -1, len: 0};
-        let holes: Hole[] = [];
-
-        for (let index = 0; index < groupCells.length; index++) {
-            const cell = groupCells[index];
-            if (
-                cell.status === CellStatus.unknown &&
-                currentStatus === CellStatus.excluded
-            ) {
-                currentHole = {start: index, len: 1};
-            }
-
-            if (
-                cell.status === CellStatus.unknown &&
-                currentStatus === CellStatus.unknown
-            ) {
-                if (currentHole.start !== -1) {
-                    currentHole.len++;
-                }
-            }
-
-            if (
-                cell.status === CellStatus.excluded &&
-                currentStatus === CellStatus.unknown
-            ) {
-                if (currentHole.len) {
-                    holes.push(currentHole);
-                }
-                currentHole = {start: -1, len: 0};
-            }
-
-            if (cell.status === CellStatus.included) {
-                currentHole = {start: -1, len: 0};
-            }
-
-            currentStatus = cell.status;
-        }
-
-        if (currentHole.len) {
-            holes.push(currentHole);
-        }
-
-        return holes;
     }
 }

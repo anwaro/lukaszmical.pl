@@ -19,8 +19,8 @@ export class ColumnHelper {
     ): Rectangle {
         const size = columnValuesBounds.width / cellInfo.count;
 
-        const marginX = size / 8;
-        const marginY = columnValuesBounds.height / 20;
+        const marginX = size / 20;
+        const marginY = columnValuesBounds.height / 50;
         return {
             left: Math.floor(columnValuesBounds.x + index * size + marginX),
             top: Math.floor(columnValuesBounds.y + marginY),

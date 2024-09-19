@@ -1,3 +1,4 @@
+import {ArrayHelper} from '../helper/helper-array';
 import {StatusGroup, StatusHelper} from '../helper/helper-status';
 import {CellModel, CellStatus} from '../model/model-cell';
 import {ResolverModel} from '../model/model-resolver';
@@ -26,14 +27,16 @@ export class ExtendsGroupNearExcludedResolver extends ResolverModel {
 
     resolveGroup(values: number[], groupCells: CellModel[]): ResolveIndexResult {
         const result = createResolveIndexResult();
-        const minValue = Math.min(...values);
-        const groupsToProcess = this.groupsToProcess(groupCells, minValue);
+        const groupsToProcess = this.groupsToProcess(groupCells, values);
+
+        const extendedValue = (len: number) =>
+            Math.min(...values.filter((v) => v >= len));
 
         for (const group of groupsToProcess) {
-            const diff = minValue - group.len;
+            const diff = extendedValue(group.len) - group.len;
 
             result.included.push(
-                ...new Array(diff).fill(null).map((_, i) => {
+                ...ArrayHelper.create(diff).map((i) => {
                     return group.blockedSide === 'left'
                         ? group.start + group.len + i
                         : group.start - 1 - i;
@@ -46,7 +49,7 @@ export class ExtendsGroupNearExcludedResolver extends ResolverModel {
 
     groupsToProcess(
         groupCells: CellModel[],
-        minValue: number,
+        values: number[],
     ): StatusGroupToProcess[] {
         const statusGroups = StatusHelper.toStatusGroups(groupCells);
         const isExcluded = (index: number) => {
@@ -61,7 +64,7 @@ export class ExtendsGroupNearExcludedResolver extends ResolverModel {
                 if (g.status !== CellStatus.included) {
                     return undefined;
                 }
-                if (g.len >= minValue) {
+                if (values.includes(g.len)) {
                     return undefined;
                 }
                 if (!isExcluded(index - 1) && !isExcluded(index + 1)) {

@@ -20,7 +20,7 @@ export class RowHelper {
         const size = rowValuesBounds.height / cellInfo.count;
 
         const marginY = size / 6;
-        const marginX = rowValuesBounds.width / 15;
+        const marginX = rowValuesBounds.width / 50;
 
         return {
             left: Math.floor(rowValuesBounds.x + marginX),
