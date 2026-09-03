@@ -1,23 +1,25 @@
 import {getRequestConfig} from 'next-intl/server';
-import {notFound} from 'next/navigation';
+import {hasLocale} from 'next-intl';
 
-import {locales} from './config';
+import {routing} from './routing';
 
 async function importDictionary(
     locale: string,
     name: string,
 ): Promise<Record<string, string>> {
     return {
-        [name]: (await import(`../messages/${locale}/${name}.json`)).default,
+        [name]: (await import(`../../messages/${locale}/${name}.json`)).default,
     };
 }
 
-export default getRequestConfig(async ({locale}) => {
-    // Provide a static locale, fetch a user setting,
-    // read from `cookies()`, `headers()`, etc.
-    if (!locales.includes(locale as any)) notFound();
+export default getRequestConfig(async ({requestLocale}) => {
+    const requested = await requestLocale;
+    const locale = hasLocale(routing.locales, requested)
+        ? requested
+        : routing.defaultLocale;
 
     return {
+        locale,
         timeZone: 'Europe/Warsaw',
         messages: {
             ...(await importDictionary(locale, 'about')),

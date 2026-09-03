@@ -20,15 +20,16 @@ const pages = {
 };
 
 type Props = {
-    params: {
+    params: Promise<{
         page: keyof typeof pages;
-    };
+    }>;
 };
 
 export default async function PrivatePage({params}: Props) {
     await auth();
 
-    const Component = pages[params.page];
+    const {page} = await params;
+    const Component = pages[page];
 
     if (!Component) {
         notFound();

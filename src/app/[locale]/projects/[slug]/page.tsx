@@ -12,18 +12,16 @@ import {ProjectLocale} from '@/types/supabase/projects';
 import {mdxSerializeOptions} from '@/ui/components/project/projet-mdx/project-mdx-options';
 
 type Props = {
-    params: {
+    params: Promise<{
         locale: ProjectLocale;
         slug: string;
-    };
+    }>;
 };
 
 export default async function Page({params}: Props) {
+    const {slug, locale} = await params;
     const client = new SupabaseProject();
-    const project = await client.getLocalizedProjectBySlug(
-        params.slug,
-        params.locale,
-    );
+    const project = await client.getLocalizedProjectBySlug(slug, locale);
 
     if (!project) {
         notFound();

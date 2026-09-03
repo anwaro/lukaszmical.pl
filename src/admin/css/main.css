@@ -1,4 +1,6 @@
-@import '_table.css';
-@import '_checkbox.css';
-@import '_progress.css';
-@import '_scrollbars.css';
+@reference '../../app/globals.css';
+
+@import './_table.css';
+@import './_checkbox.css';
+@import './_progress.css';
+@import './_scrollbars.css';

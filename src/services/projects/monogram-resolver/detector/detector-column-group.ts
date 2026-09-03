@@ -6,6 +6,7 @@ import {GroupModel, GroupType} from '../model/model-group';
 import {ColumnHelper} from '../helper/helper-column';
 import {CellModel} from '../model/model-cell';
 import {Bounds, CellsInfo, ImageFileData} from '../model/model-store';
+import {SymbolHelper} from '../helper/helper-symbol';
 import {NumberDetector} from './detector-number';
 
 export class ColumnGroupDetector extends NumberDetector {
@@ -53,18 +54,19 @@ export class ColumnGroupDetector extends NumberDetector {
                 .filter((cell) => cell.columnIndex == index)
                 .map((cell) => cell.id),
             numbers,
-            page.symbols,
+            SymbolHelper.fromPage(page),
         );
     }
 
     async pageToNumbers(groupId: string, page: Page): Promise<number[]> {
         const stringNumbers = page.text.split('\n').filter((c) => c !== '');
+        const symbols = SymbolHelper.fromPage(page);
         const numbers = [];
         let index = 0;
 
         for (const stringNumber of stringNumbers) {
             if (stringNumber === '1') {
-                numbers.push(this.checkIsEleven(page.symbols[index]));
+                numbers.push(this.checkIsEleven(symbols[index]));
             } else if (/\d+/.test(stringNumber)) {
                 numbers.push(Number(stringNumber));
             } else {
@@ -73,7 +75,7 @@ export class ColumnGroupDetector extends NumberDetector {
                     groupId,
                     page.text,
                     stringNumber,
-                    page.symbols[index],
+                    symbols[index],
                 );
                 numbers.push(fixedValue);
             }

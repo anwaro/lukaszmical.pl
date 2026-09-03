@@ -27,7 +27,7 @@ export class SupabaseProject extends SupabaseClient {
     ): Promise<ProjectEntity | null> {
         const {data: project} = await this.query()
             .select('*')
-            .eq(column, value)
+            .eq(column as never, value as never)
             .single();
 
         if (project) {
@@ -70,7 +70,9 @@ export class SupabaseProject extends SupabaseClient {
     }
 
     async update(id: number | string, data: Partial<ProjectRow>) {
-        return this.query().update(data).eq('id', id);
+        return this.query()
+            .update(data)
+            .eq('id', Number(id));
     }
 
     async getProjects(): Promise<ProjectRow[]> {

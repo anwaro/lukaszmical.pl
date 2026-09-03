@@ -6,11 +6,6 @@ import {GroupModel} from '../../../model/model-group';
 import {StatusGroupHelper} from '../../../helper/helper-status-group';
 import {SeparatedGroupHelper} from '../../../helper/helper-separated-group';
 
-type ResolveIndexes = {
-    included: number[];
-    excluded: number[];
-};
-
 export class BorderFillSecondGroupResolver extends ResolverModel {
     run(group: GroupModel, groupCells: CellModel[]): ResolverResult {
         const result = ResolverResult.create(groupCells);
@@ -30,8 +25,8 @@ export class BorderFillSecondGroupResolver extends ResolverModel {
         return result;
     }
 
-    resolveGroup(values: number[], cells: CellModel[]): ResolveIndexes {
-        const result: ResolveIndexes = {included: [], excluded: []};
+    resolveGroup(values: number[], cells: CellModel[]): ResolverIndexResult {
+        const result = ResolverIndexResult.create();
         const statusGroups = StatusGroupHelper.fromCells(cells);
         const includedGroups = StatusGroupHelper.filter(
             statusGroups,

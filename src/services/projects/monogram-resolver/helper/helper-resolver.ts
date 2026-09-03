@@ -1,6 +1,6 @@
 import {ArrayHelper} from '../helper/helper-array';
 import {CellStatus} from '../model/model-cell';
-import {SeparatedGroup} from './helper-status-group';
+import {SeparatedGroup} from '../model/model-separated-group';
 import {ResolverIndexResult} from '../model/model-resolver-index-result';
 
 export class ResolverHelper {

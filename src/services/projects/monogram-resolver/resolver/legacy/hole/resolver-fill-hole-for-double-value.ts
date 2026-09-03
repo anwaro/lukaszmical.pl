@@ -3,7 +3,8 @@ import {ResolverResult} from '../../../model/model-resolver-result';
 import {ResolverIndexResult} from '../../../model/model-resolver-index-result';
 import {ResolverModel} from '../../../model/model-resolver';
 import {GroupModel} from '../../../model/model-group';
-import {StatusGroup, StatusGroupHelper} from '../../../helper/helper-status-group';
+import {StatusGroupHelper} from '../../../helper/helper-status-group';
+import {StatusGroup} from '../../../model/model-status-group';
 import {ArrayHelper} from '../../../helper/helper-array';
 
 export class FillHoleForDoubleValueResolver extends ResolverModel {

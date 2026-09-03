@@ -6,6 +6,7 @@ import {RowHelper} from '../helper/helper-row';
 import {CellModel} from '../model/model-cell';
 import {Bounds, CellsInfo, ImageFileData} from '../model/model-store';
 import {NumberDetector} from './detector-number';
+import {SymbolHelper} from '../helper/helper-symbol';
 import {ImageDataHelper} from '../helper/helper-image-data';
 import {ValidatorModel} from '../model/model-validator';
 
@@ -41,7 +42,7 @@ export class RowGroupDetector extends NumberDetector {
         );
         const page = await this.detectNumbers(url, rectangle);
         const {symbols, numbers: stringNumbers} = await this.fixSymbols(
-            page.symbols,
+            SymbolHelper.fromPage(page),
         );
         const numbers = this.fixNumbers(stringNumbers, rectangle);
         this.validator.validateGroupValues(numbers, this.cellInfo.count, id);
@@ -89,7 +90,7 @@ export class RowGroupDetector extends NumberDetector {
 
             const page = await this.detectNumbers(this.image.src, rectangle);
 
-            fixedSymbols.push(...page.symbols);
+            fixedSymbols.push(...SymbolHelper.fromPage(page));
             numbers.push(page.text.replace(/\D/g, ''));
             index++;
 

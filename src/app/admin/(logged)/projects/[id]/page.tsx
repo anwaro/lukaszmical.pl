@@ -10,15 +10,16 @@ import {SupabaseProject} from '@/services/supabase/supabase-project';
 import {EditProjectForm} from '@/admin/components/form/forms/project/edit-project-form/edit-project-form';
 
 type Props = {
-    params: {
+    params: Promise<{
         id: string;
-    };
+    }>;
 };
 
 export default async function PrivatePage({params}: Props) {
     await auth();
+    const {id} = await params;
     const client = new SupabaseProject();
-    const project = await client.getProjectById(params.id);
+    const project = await client.getProjectById(id);
 
     if (!project) {
         notFound();

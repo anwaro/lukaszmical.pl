@@ -1,5 +1,6 @@
 import {CellHelper} from '../../../helper/helper-cell';
-import {StatusGroup, StatusGroupHelper} from '../../../helper/helper-status-group';
+import {StatusGroupHelper} from '../../../helper/helper-status-group';
+import {StatusGroup} from '../../../model/model-status-group';
 import {CellModel, CellStatus} from '../../../model/model-cell';
 import {ResolverResult} from '../../../model/model-resolver-result';
 import {ResolverIndexResult} from '../../../model/model-resolver-index-result';

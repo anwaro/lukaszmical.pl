@@ -43,7 +43,7 @@ export class SupabaseProjectString extends SupabaseClient {
     }
 
     async update(id: number | string, data: Partial<ProjectStringRow>) {
-        await this.query().update(data).eq('id', id);
+        await this.query().update(data).eq('id', Number(id));
     }
 
     async updateValue(
@@ -54,7 +54,7 @@ export class SupabaseProjectString extends SupabaseClient {
     ) {
         await this.query()
             .update({value})
-            .eq('projectId', projectId)
+            .eq('projectId', Number(projectId))
             .eq('type', type)
             .eq('locale', locale);
     }
