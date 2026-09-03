@@ -27,6 +27,13 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env.prod
+!.env.local.example
+!.env.prod.example
+
+# db seed data derived from backups (contains dumped data — not source)
+/scripts/seed/seed-data.json
+.env*.prod
 
 # vercel
 .vercel
