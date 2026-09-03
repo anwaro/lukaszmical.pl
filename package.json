@@ -6,7 +6,7 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
-        "lint": "next lint"
+        "lint": "eslint ."
     },
     "dependencies": {
         "@aws-sdk/client-s3": "3.1125.0",
@@ -46,14 +46,14 @@
         "@types/react-dom": "19.2.4",
         "@types/uglify-js": "3.17.5",
         "cssnano": "9.0.2",
-        "eslint": "10.9.1",
+        "eslint": "9.39.5",
         "eslint-config-next": "16.3.4",
         "eslint-plugin-tailwindcss": "4.4.0",
         "postcss": "8.5.27",
         "prettier": "3.9.6",
         "supabase": "2.116.0",
         "tailwindcss": "4.3.3",
-        "typescript": "~7.0.2",
+        "typescript": "~6.0.3",
         "uglify-js": "3.19.3",
         "vite": "^8.2.2",
         "vitest": "4.1.11"
