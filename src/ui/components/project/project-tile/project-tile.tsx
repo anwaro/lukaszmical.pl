@@ -24,6 +24,10 @@ export function ProjectTile({project, mouse}: Props) {
             return {};
         }
 
+        // Intentional layout read for the cursor-follow gradient: `mouse` is
+        // parent state that already drives this re-render, and the read is
+        // null-safe and purely cosmetic.
+        // eslint-disable-next-line react-hooks/refs
         const bounds = ref.current?.getBoundingClientRect() || {left: 0, top: 0};
         const x = mouse.x - bounds.left;
         const y = mouse.y - bounds.top;

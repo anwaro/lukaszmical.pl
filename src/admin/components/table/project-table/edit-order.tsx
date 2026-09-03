@@ -25,6 +25,9 @@ export const EditOrder = ({project, onUpdate}: Props) => {
     useEffect(() => {
         if (!isPending) {
             onUpdate(project.id, {order: value});
+            // Close the editor once the server action settles (isPending
+            // false); reacting to async completion is the effect's purpose.
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setIsEditing(false);
         }
     }, [isPending]);

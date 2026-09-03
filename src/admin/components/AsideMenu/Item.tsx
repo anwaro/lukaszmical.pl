@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import {mdiMinus, mdiPlus} from '@mdi/js';
 import Link from 'next/link';
@@ -15,21 +15,16 @@ type Props = {
 };
 
 const AsideMenuItem = ({item, isDropdownList = false}: Props) => {
-    const [isLinkActive, setIsLinkActive] = useState(false);
     const [isDropdownActive, setIsDropdownActive] = useState(false);
-
-    const activeClassAddon =
-        !item.color && isLinkActive ? 'aside-menu-item-active font-bold' : '';
 
     const pathname = usePathname();
 
-    useEffect(() => {
-        if (item.href) {
-            const linkPathName = new URL(item.href, location.href).pathname;
+    const isLinkActive = item.href
+        ? new URL(item.href, 'http://n').pathname === pathname
+        : false;
 
-            setIsLinkActive(linkPathName === pathname);
-        }
-    }, [item.href, pathname]);
+    const activeClassAddon =
+        !item.color && isLinkActive ? 'aside-menu-item-active font-bold' : '';
 
     const asideMenuItemInnerContents = (
         <>

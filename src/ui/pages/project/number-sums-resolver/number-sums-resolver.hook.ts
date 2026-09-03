@@ -5,6 +5,7 @@ import {
     useCallback,
     useEffect,
     useRef,
+    useState,
     useSyncExternalStore,
 } from 'react';
 
@@ -14,30 +15,30 @@ import {NumberSumsResolverCanvas} from '@/services/projects/number-sums-resolver
 export function usePageNumberSumsResolver() {
     const canvas = useRef<HTMLCanvasElement>(null!);
     const canvasBg = useRef<HTMLCanvasElement>(null!);
-    const app = useRef(new NumberSumsResolverController());
+    const [app] = useState(() => new NumberSumsResolverController());
     const renderer = useRef(new NumberSumsResolverCanvas(canvasBg, canvas));
 
     const store = useSyncExternalStore(
-        app.current.store.subscribe,
-        app.current.store.getSnapshot,
+        app.store.subscribe,
+        app.store.getSnapshot,
     );
 
     useEffect(() => {
         const lastEvent = store.events.findLast((e) => !e.inProgress);
         if (lastEvent) {
-            renderer.current.update(app.current.store.data, lastEvent);
+            renderer.current.update(app.store.data, lastEvent);
         }
-    }, [store.events]);
+    }, [store.events, app]);
 
     const onFileChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
         (event) => {
             const file = event.target.files?.[0];
             if (file) {
-                setTimeout(() => app.current.onFileSelect(file), 10);
+                setTimeout(() => app.onFileSelect(file), 10);
                 event.target.value = '';
             }
         },
-        [],
+        [app],
     );
 
     return {
@@ -45,8 +46,8 @@ export function usePageNumberSumsResolver() {
         canvas,
         // events: store.events,
         events: useSyncExternalStore(
-            app.current.store.subscribe,
-            () => app.current.store.getSnapshot().events,
+            app.store.subscribe,
+            () => app.store.getSnapshot().events,
         ),
         cells: store.cells,
         groups: store.groups,

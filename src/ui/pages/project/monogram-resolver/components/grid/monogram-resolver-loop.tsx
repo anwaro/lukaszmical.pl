@@ -25,6 +25,9 @@ export function PageMonogramResolverLoop({setLoop, cells, loop}: Props) {
 
     useEffect(() => {
         if (cells.length === 0) {
+            // Reset to auto-follow when the grid is cleared (external data
+            // change), then let effect 1 resync the loop value.
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setManual(false);
             setLoop(0);
         }
