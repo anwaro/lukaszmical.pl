@@ -1,5 +1,6 @@
-import {Rectangle} from 'tesseract.js';
+import {Rectangle, Symbol} from 'tesseract.js';
 
+import {ArrayHelper} from '../helper/helper-array';
 import {GroupModel, GroupType} from '../model/model-group';
 import {RowHelper} from '../helper/helper-row';
 import {CellModel} from '../model/model-cell';
@@ -9,8 +10,8 @@ import {ImageDataHelper} from '../helper/helper-image-data';
 import {ValidatorModel} from '../model/model-validator';
 
 export class RowGroupDetector extends NumberDetector {
-    private validator = new ValidatorModel();
     public rows: GroupModel[] = [];
+    private validator = new ValidatorModel();
 
     constructor(
         private readonly image: ImageFileData,
@@ -25,9 +26,9 @@ export class RowGroupDetector extends NumberDetector {
         await this.initializeDetector();
 
         this.rows = await Promise.all(
-            new Array(this.cellInfo.count)
-                .fill(0)
-                .map((_, i) => this.createGroup(this.image.src, i)),
+            ArrayHelper.create(this.cellInfo.count).map((i) =>
+                this.createGroup(this.image.src, i),
+            ),
         );
     }
 
@@ -38,7 +39,10 @@ export class RowGroupDetector extends NumberDetector {
             this.rowSumsBounds,
             this.cellInfo,
         );
-        const stringNumbers = await this.detectNumbers(url, rectangle, id);
+        const page = await this.detectNumbers(url, rectangle);
+        const {symbols, numbers: stringNumbers} = await this.fixSymbols(
+            page.symbols,
+        );
         const numbers = this.fixNumbers(stringNumbers, rectangle);
         this.validator.validateGroupValues(numbers, this.cellInfo.count, id);
 
@@ -49,17 +53,61 @@ export class RowGroupDetector extends NumberDetector {
                 .filter((cell) => cell.rowIndex == index)
                 .map((cell) => cell.id),
             numbers,
+            symbols,
         );
     }
 
-    fixNumbers(numbers: string[], rectengle: Rectangle) {
-        const toNumbers = (nums: string[]) =>
-            nums
-                .join('')
-                .split('')
-                .map((n) => Number(n));
+    async fixSymbols(symbols: Symbol[]) {
+        const fixedSymbols = [];
+        const numbers = [];
 
-        if (numbers.join('').length === 1) {
+        for (let index = 0; index < symbols.length; index++) {
+            const symbol = symbols[index];
+            if (index === symbols.length - 1) {
+                fixedSymbols.push(symbol);
+                numbers.push(symbol.text.replace(/\D/g, ''));
+                continue;
+            }
+
+            const nextSymbol = symbols[index + 1];
+            if (symbol.bbox.x1 < nextSymbol.bbox.x0) {
+                fixedSymbols.push(symbol);
+                numbers.push(symbol.text.replace(/\D/g, ''));
+                continue;
+            }
+
+            const width = nextSymbol.bbox.x1 - symbol.bbox.x0;
+            const height = nextSymbol.bbox.y1 - symbol.bbox.y0;
+            const margin = height * 0.2;
+
+            const rectangle: Rectangle = {
+                left: symbol.bbox.x0,
+                top: symbol.bbox.y0 - margin,
+                width,
+                height: height + 2 * margin,
+            };
+
+            const page = await this.detectNumbers(this.image.src, rectangle);
+
+            fixedSymbols.push(...page.symbols);
+            numbers.push(page.text.replace(/\D/g, ''));
+            index++;
+
+            console.warn(
+                `Incorrect bbox for numbers ${symbol.text}, ${nextSymbol.text}, rerun detecting: ${page.text.replace(/\D/g, '')}`,
+            );
+        }
+
+        return {
+            symbols: fixedSymbols,
+            numbers: numbers.join(''),
+        };
+    }
+
+    fixNumbers(numbers: string, rectangle: Rectangle) {
+        const toNumbers = (nums: string) => nums.split('').map((n) => Number(n));
+
+        if (numbers.length === 1) {
             return toNumbers(numbers);
         }
 
@@ -67,33 +115,33 @@ export class RowGroupDetector extends NumberDetector {
             return toNumbers(numbers);
         }
 
-        if (this.cellInfo.count < 20 && numbers.every((n) => !n.includes('1'))) {
+        if (
+            this.cellInfo.count < 20 &&
+            numbers.split('').every((n) => !n.includes('1'))
+        ) {
             return toNumbers(numbers);
         }
-        const spaces = this.spaces(rectengle);
+        const spaces = this.spaces(rectangle);
         let n = '';
         let fixedNumbers: string[] = [];
 
-        numbers
-            .join('')
-            .split('')
-            .forEach((num, index) => {
-                if (index + 1 >= spaces.length || spaces[index + 1]) {
-                    fixedNumbers.push(`${n}${num}`);
-                    n = '';
-                } else {
-                    n += num;
-                }
-            });
+        numbers.split('').forEach((num, index) => {
+            if (index + 1 >= spaces.length || spaces[index + 1]) {
+                fixedNumbers.push(`${n}${num}`);
+                n = '';
+            } else {
+                n += num;
+            }
+        });
 
         return fixedNumbers.map((n) => Number(n));
     }
 
-    spaces(rectengle: Rectangle) {
+    spaces(rectangle: Rectangle) {
         const minSpaceRatio = 0.2;
 
         const isBackground = (x: number) => {
-            for (let y = rectengle.top; y < rectengle.top + rectengle.height; y++) {
+            for (let y = rectangle.top; y < rectangle.top + rectangle.height; y++) {
                 if (
                     !ImageDataHelper.isSameColorInPixel(
                         this.image.data,
@@ -112,7 +160,7 @@ export class RowGroupDetector extends NumberDetector {
         let isSpace = true;
         let width = 0;
 
-        for (let x = rectengle.left; x < rectengle.left + rectengle.width; x++) {
+        for (let x = rectangle.left; x < rectangle.left + rectangle.width; x++) {
             const isBg = isBackground(x);
 
             if (isBg) {
@@ -128,7 +176,7 @@ export class RowGroupDetector extends NumberDetector {
         }
         spaces.push(1000);
         return spaces
-            .map((sp) => sp / rectengle.height)
+            .map((sp) => sp / rectangle.height)
             .map((w) => w > minSpaceRatio);
     }
 }

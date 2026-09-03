@@ -6,11 +6,15 @@ export class ArrayHelper {
         return new Array(to - from + 1).fill(0).map((_, i) => from + i);
     }
 
-    static create(count: number) {
+    static create<T>(count: number, fill: T): T[];
+    static create(count: number): number[];
+    static create(count: number, fill?: any) {
         if (count <= 0) {
             return [];
         }
-        return new Array(count).fill(0).map((_, i) => i);
+        return new Array(count)
+            .fill(0)
+            .map((_, i) => (fill !== undefined ? fill : i));
     }
 
     static unique(values: number[]) {
@@ -18,6 +22,10 @@ export class ArrayHelper {
     }
 
     static sort(values: number[]) {
-        return values.sort((a, b) => b - a);
+        return values.toSorted((a, b) => b - a);
+    }
+
+    static sum(values: number[]) {
+        return values.reduce((a, b) => b + a, 0);
     }
 }

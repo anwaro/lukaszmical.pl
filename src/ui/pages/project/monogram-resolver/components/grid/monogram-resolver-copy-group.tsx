@@ -17,7 +17,7 @@ export function PageMonogramResolverCopyGroup({group, cells, row}: Props) {
         (group: GroupModel) => {
             navigator.clipboard.writeText(CellHelper.toPattern(group.cells(cells)));
         },
-        [cells, cells],
+        [cells],
     );
 
     return (

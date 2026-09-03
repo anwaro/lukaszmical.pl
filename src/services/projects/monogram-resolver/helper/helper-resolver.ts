@@ -1,50 +1,47 @@
 import {ArrayHelper} from '../helper/helper-array';
 import {CellStatus} from '../model/model-cell';
-import {
-    createResolveIndexResult,
-    ResolveIndexResult,
-} from '../model/model-resolver-result';
-import {SeparatedGroup} from './helper-status';
+import {SeparatedGroup} from './helper-status-group';
+import {ResolverIndexResult} from '../model/model-resolver-index-result';
 
 export class ResolverHelper {
     static resolveSeparatedGroup(
         separatedGroup: SeparatedGroup,
         value: number,
-    ): ResolveIndexResult {
-        const result = createResolveIndexResult();
-        const createIndexes = (start: number, len: number) =>
-            new Array(len).fill(0).map((_, i) => start + i);
+        canIncludeMoreValues = false,
+    ): ResolverIndexResult {
+        const result = ResolverIndexResult.create();
         const groupStartIndex =
             separatedGroup.separatorStart.start + separatedGroup.separatorStart.len;
         const groupEndIndex = separatedGroup.separatorEnd.start - 1;
-        const size = groupEndIndex - groupStartIndex + 1;
-        const groupIndexes = createIndexes(groupStartIndex, size);
+        const groupIndexes = ArrayHelper.range(groupStartIndex, groupEndIndex);
         const selectedIndexes = separatedGroup.groups
             .filter((g) => g.status === CellStatus.included)
-            .flatMap((g) => createIndexes(g.start, g.len));
+            .flatMap((g) => ArrayHelper.range(g.start, g.start + g.len - 1));
         const unknownIndexes = groupIndexes.filter(
             (i) => !selectedIndexes.includes(i),
         );
 
-        if (value === size) {
+        if (value === separatedGroup.size) {
             result.included.push(...groupIndexes);
             return result;
         }
-        if (value === selectedIndexes.length) {
+        if (value === selectedIndexes.length && !canIncludeMoreValues) {
             result.excluded.push(...unknownIndexes);
             return result;
         }
 
-        // fill holes
-        result.included.push(
-            ...ArrayHelper.range(
-                Math.min(...selectedIndexes),
-                Math.max(...selectedIndexes),
-            ),
-        );
+        if (value === selectedIndexes.length && !canIncludeMoreValues) {
+            // fill holes
+            result.included.push(
+                ...ArrayHelper.range(
+                    Math.min(...selectedIndexes),
+                    Math.max(...selectedIndexes),
+                ),
+            );
+        }
 
-        if (selectedIndexes.includes(groupStartIndex)) {
-            for (let index = 0; index < size; index++) {
+        if (!canIncludeMoreValues && selectedIndexes.includes(groupStartIndex)) {
+            for (let index = 0; index < separatedGroup.size; index++) {
                 if (index < value) {
                     result.included.push(groupStartIndex + index);
                 } else {
@@ -55,8 +52,8 @@ export class ResolverHelper {
             return result;
         }
 
-        if (selectedIndexes.includes(groupEndIndex)) {
-            for (let index = 0; index < size; index++) {
+        if (!canIncludeMoreValues && selectedIndexes.includes(groupEndIndex)) {
+            for (let index = 0; index < separatedGroup.size; index++) {
                 if (index < value) {
                     result.included.push(groupEndIndex - index);
                 } else {

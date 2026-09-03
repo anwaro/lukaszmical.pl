@@ -1,3 +1,5 @@
+import {Symbol} from 'tesseract.js';
+
 import {CellId, CellModel, CellStatus} from './model-cell';
 
 export type GroupId = `ROW-${number}` | `COL-${string}`;
@@ -13,6 +15,7 @@ export class GroupModel {
         public readonly type: GroupType,
         public readonly cellsId: CellId[],
         public readonly values: number[],
+        public readonly symbols: Symbol[],
     ) {}
 
     cells(cells: CellModel[]): CellModel[] {

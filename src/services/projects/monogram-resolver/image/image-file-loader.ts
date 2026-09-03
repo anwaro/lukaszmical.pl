@@ -32,16 +32,6 @@ export class ImageFileLoader {
         });
     }
 
-    private imageToImageData(image: HTMLImageElement) {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d')!;
-        canvas.width = image.width;
-        canvas.height = image.height;
-        ctx.drawImage(image, 0, 0);
-
-        return ctx.getImageData(0, 0, canvas.width, canvas.height);
-    }
-
     async imageDataToUrl(image: ImageData) {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d')!;
@@ -59,5 +49,15 @@ export class ImageFileLoader {
         const blob = new Blob([new Uint8Array(array)], {type: mime});
 
         return URL.createObjectURL(blob);
+    }
+
+    private imageToImageData(image: HTMLImageElement) {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d')!;
+        canvas.width = image.width;
+        canvas.height = image.height;
+        ctx.drawImage(image, 0, 0);
+
+        return ctx.getImageData(0, 0, canvas.width, canvas.height);
     }
 }

@@ -24,12 +24,10 @@ export class CellModel {
 
     updateStatus(
         status: CellStatus,
-        resolverName: string,
         resolveInGroup: string,
         loop: number,
     ): CellModel {
         this.status = status;
-        this.resolver = resolverName;
         this.resolveInGroup = resolveInGroup;
         this.loop = loop;
         return this;
@@ -47,7 +45,6 @@ export class CellModel {
             status || this.status,
         );
 
-        cell.resolver = this.resolver;
         cell.resolveInGroup = this.resolveInGroup;
         cell.loop = this.loop;
 

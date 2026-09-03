@@ -21,8 +21,16 @@ type Props = {
 };
 
 export function PageMonogramResolverGrid({groups, cells}: Props) {
-    const {resolved, cellsWithStatus, columns, rows, loop, setLoop, groupStatus} =
-        usePageMonogramResolverGrid({groups, cells});
+    const {
+        resolved,
+        cellsWithStatus,
+        columns,
+        rows,
+        loop,
+        setLoop,
+        groupStatus,
+        copyGroupValues,
+    } = usePageMonogramResolverGrid({groups, cells});
     const cellClasses = {
         included: 'bg-indigo-800 border-indigo-800',
         excluded: 'text-white border border-stone-800',
@@ -34,12 +42,11 @@ export function PageMonogramResolverGrid({groups, cells}: Props) {
         unsolved: 'text-white-800',
     };
 
-    const addBorder = (index: number) => {
-        return index !== 0 && index != columns.length - 1 && (index + 1) % 5 === 0;
+    const addBorder = (index: number, className: string) => {
+        return index !== 0 && index != columns.length - 1 && (index + 1) % 5 === 0
+            ? className
+            : '';
     };
-
-    const leftBorderClass = 'border-r border-stone-600';
-    const bottomBorderClass = 'border-b border-stone-600';
 
     return (
         <PageMonogramResolverBox
@@ -61,6 +68,7 @@ export function PageMonogramResolverGrid({groups, cells}: Props) {
                         {columns.map((group) => (
                             <td key={group.id}>
                                 <div
+                                    onClick={() => copyGroupValues(group)}
                                     className={`flex flex-col justify-end ${groupStatuClasses[groupStatus(group)]}`}
                                 >
                                     <div className={'size-6'}></div>
@@ -83,6 +91,7 @@ export function PageMonogramResolverGrid({groups, cells}: Props) {
                     {rows.map((group, rowIndex) => (
                         <tr key={group.id}>
                             <td
+                                onClick={() => copyGroupValues(group)}
                                 className={`border-right flex w-40 items-center justify-end px-1 ${groupStatuClasses[groupStatus(group)]}`}
                             >
                                 {group.values.map((v, i) => (
@@ -102,8 +111,14 @@ export function PageMonogramResolverGrid({groups, cells}: Props) {
                                 <td
                                     key={cell.id}
                                     className={clsx(
-                                        addBorder(index) && leftBorderClass,
-                                        addBorder(rowIndex) && bottomBorderClass,
+                                        addBorder(
+                                            index,
+                                            'border-r border-stone-600',
+                                        ),
+                                        addBorder(
+                                            rowIndex,
+                                            'border-b border-stone-600',
+                                        ),
                                     )}
                                 >
                                     <div
@@ -135,7 +150,7 @@ export function PageMonogramResolverGrid({groups, cells}: Props) {
                             <td key={group.id}>
                                 <PageMonogramResolverCopyGroup
                                     group={group}
-                                    cells={cells}
+                                    cells={cellsWithStatus}
                                 />
                             </td>
                         ))}

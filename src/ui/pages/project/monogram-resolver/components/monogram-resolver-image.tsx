@@ -2,6 +2,8 @@
 
 import React, {Fragment, useCallback, useMemo, useState} from 'react';
 
+import {Bbox} from 'tesseract.js';
+
 import {GroupModel} from '@/services/projects/monogram-resolver/model/model-group';
 import {ImageFileData} from '@/services/projects/monogram-resolver/model/model-store';
 
@@ -15,7 +17,8 @@ type Props = {
 
 export function PageMonogramResolverImage({image, processedImage, groups}: Props) {
     const [imageMode, setImageMode] = useState<'original' | 'processed'>('original');
-    const [width, setWidth] = useState(500);
+    const [bboxVisible, setBboxVisible] = useState(true);
+    const [width, setWidth] = useState(1200);
 
     const bgStyles = useMemo(() => {
         return {
@@ -33,13 +36,29 @@ export function PageMonogramResolverImage({image, processedImage, groups}: Props
         [width, image],
     );
 
-    const groupStyle = useCallback(
-        (value: number) => {
-            const scale = width / image.data.width;
-            return `${value * scale}px`;
+    const bboxStyle = useCallback(
+        (bbox: Bbox) => {
+            return {
+                left: value(bbox.x0),
+                top: value(bbox.y0),
+                width: value(bbox.x1 - bbox.x0),
+                height: value(bbox.y1 - bbox.y0),
+            };
         },
-        [width, image],
+        [value],
     );
+
+    // const groupStyle = useCallback(
+    //     (group: GroupModel) => {
+    //         return {
+    //             left: value(bbox.x0),
+    //             top: value(bbox.y0),
+    //             width: value(bbox.x1 - bbox.x0),
+    //             height: value(bbox.y1 - bbox.y0),
+    //         };
+    //     },
+    //     [value],
+    // );
 
     return (
         <PageMonogramResolverBox
@@ -75,13 +94,35 @@ export function PageMonogramResolverImage({image, processedImage, groups}: Props
                             🔎+
                         </div>
                     </div>
+                    <div className="grid grid-cols-2">
+                        <div
+                            className="flex cursor-pointer justify-center rounded-l border px-2 py-1"
+                            onClick={() => setBboxVisible(true)}
+                        >
+                            ON
+                        </div>
+                        <div
+                            className="flex cursor-pointer justify-center rounded-r border px-2 py-1"
+                            onClick={() => setBboxVisible(false)}
+                        >
+                            OFF
+                        </div>
+                    </div>
                 </div>
             }
         >
-            <div className="mx-auto bg-cover" style={bgStyles}>
+            <div className="relative mx-auto bg-cover" style={bgStyles}>
                 {groups.map((group) => (
                     <Fragment key={group.id}>
-                        <div className={''} />
+                        {bboxVisible &&
+                            group.symbols.map((symbol, i) => (
+                                <div
+                                    key={`${group.id}-${i}`}
+                                    className={'absolute border border-amber-800'}
+                                    style={bboxStyle(symbol.bbox)}
+                                    title={symbol.text}
+                                />
+                            ))}
                     </Fragment>
                 ))}
             </div>

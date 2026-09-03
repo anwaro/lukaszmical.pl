@@ -1,11 +1,11 @@
-import {allResolvers} from '../resolver';
+import {CombinationResolver} from '@/services/projects/monogram-resolver/resolver/resolver-combination';
+
 import {CellId, CellStatus} from '../model/model-cell';
 import {ResolverModel} from '../model/model-resolver';
 import {LoopHelper} from '../helper/helper-loop';
 import {TaskModel} from '../model/model-task';
 import {EventModel, EventType} from '../model/model-event';
 import {StoreModel} from '../model/model-store';
-import {TotalSizeResolver} from '../resolver/resolver-total-size';
 import {ValidatorModel} from '../model/model-validator';
 import {CellHelper} from '../helper/helper-cell';
 
@@ -18,19 +18,13 @@ export class LoopResolverTask extends TaskModel {
     async run(store: StoreModel, emitEvent: (event: EventModel) => void) {
         let loop = 0;
         resolveLoop = 1;
-        this.runResolver(new TotalSizeResolver(), store);
 
-        const resolvers: ResolverModel[] = allResolvers.map(
-            (Resolver) => new Resolver(),
-        );
+        const resolver = new CombinationResolver();
 
         while (true) {
             loop++;
             const time = new Date().getTime();
-            let updatedCells = 0;
-            for (const resolver of resolvers) {
-                updatedCells += this.runResolver(resolver, store);
-            }
+            let updatedCells = this.runResolver(resolver, store);
             const cellsWithUnknownStatus = store.data.cells.filter(
                 (c) => c.status === CellStatus.unknown,
             ).length;
@@ -89,25 +83,9 @@ export class LoopResolverTask extends TaskModel {
             const result = resolver.run(group, group.cells(store.data.cells));
             const included = result.getIncludedCellsId();
             const excluded = result.getExcludedCellsId();
-            this.updateCells(
-                store,
-                included,
-                excluded,
-                resolver.constructor.name,
-                group.id,
-                resolveLoop,
-            );
+            this.updateCells(store, included, excluded, group.id, resolveLoop);
             if (included.length || excluded.length) {
                 resolveLoop++;
-                console.log(
-                    '\t',
-                    resolver.constructor.name,
-                    group.id,
-                    'Included:',
-                    ...included,
-                    'Excluded:',
-                    ...excluded,
-                );
                 this.validator.validate(store.data.groups, store.data.cells);
             }
         }
@@ -122,7 +100,6 @@ export class LoopResolverTask extends TaskModel {
         store: StoreModel,
         included: CellId[],
         excluded: CellId[],
-        resolverName: string,
         resolveInGroup: string,
         loop: number,
     ) {
@@ -145,16 +122,10 @@ export class LoopResolverTask extends TaskModel {
                             `Forbidden cell status update,`,
                             `Cell: ${cell.id},`,
                             `Update: ${cell.status} --> ${newStatus},`,
-                            `Resolver: ${resolverName},`,
                             `Group: ${resolveInGroup}`,
                         ].join(' ');
                     }
-                    return cell.updateStatus(
-                        newStatus,
-                        resolverName,
-                        resolveInGroup,
-                        loop,
-                    );
+                    return cell.updateStatus(newStatus, resolveInGroup, loop);
                 }
 
                 return cell;

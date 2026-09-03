@@ -11,7 +11,6 @@ export class CellHelper {
         return [
             `Cell ${cell.id}\n`,
             `Status: ${cell.status}\n`,
-            cell.resolver ? `Resolver: ${cell.resolver}\n` : '',
             cell.resolveInGroup ? `Resolve in group: ${cell.resolveInGroup}` : '',
             cell.loop ? `Loop: ${cell.loop}` : '',
         ]
@@ -37,9 +36,13 @@ export class CellHelper {
     }
 
     static toPattern(cells: CellModel[]) {
+        return CellHelper.toPatternStatuses(cells.map((c) => c.status));
+    }
+
+    static toPatternStatuses(cells: CellStatus[]) {
         return cells
-            .map((c) => {
-                switch (c.status) {
+            .map((status) => {
+                switch (status) {
                     case CellStatus.excluded:
                         return '❌';
                     case CellStatus.included:

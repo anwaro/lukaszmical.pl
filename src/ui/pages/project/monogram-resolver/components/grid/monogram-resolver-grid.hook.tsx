@@ -40,12 +40,17 @@ export function usePageMonogramResolverGrid({groups, cells}: Props) {
         return cells.map((cell) => cell.copy(status(cell)));
     }, [cells, status]);
 
+    const copyGroupValues = useCallback((group: GroupModel) => {
+        navigator.clipboard.writeText(group.values.join(', '));
+    }, []);
+
     return {
         resolved,
         columns,
         rows,
         cells,
         cellsWithStatus,
+        copyGroupValues,
         loop,
         setLoop,
         groupStatus,

@@ -1,7 +1,8 @@
 import {describe, expect, it} from 'vitest';
 
+import {ResolverFactory} from '@/services/projects/monogram-resolver/resolver/factory/resolver-factory';
+
 import {ValidatorModel} from './model-validator';
-import {ResolverFactory} from '../resolver/mocks/resolver-factory';
 import {CellStatus} from '../model/model-cell';
 
 describe('ValidatorModel', () => {
@@ -34,7 +35,7 @@ describe('ValidatorModel', () => {
         const group = factory.getGroup([3, 4, 1]);
 
         expect(() => validator.validateGroup(group, cells)).toThrowError(
-            /Too many included group with width 4/,
+            /The sum of groups with size 4/,
         );
     });
 
@@ -94,6 +95,16 @@ describe('ValidatorModel', () => {
             .addCells(CellStatus.excluded, 9)
             .getCells();
         const group = factory.getGroup([4]);
+
+        expect(() => validator.validateGroup(group, cells)).not.toThrowError();
+    });
+
+    it('should validate correctly, included group can belong to bigger value - second variant', () => {
+        const cells = factory
+            .init()
+            .fromPattern('❔❔❔🟦🟦❔🟦🟦❔❌🟦❔❔❔❔❔❌🟦🟦❌')
+            .getCells();
+        const group = factory.getGroup([5, 1, 1, 2]);
 
         expect(() => validator.validateGroup(group, cells)).not.toThrowError();
     });

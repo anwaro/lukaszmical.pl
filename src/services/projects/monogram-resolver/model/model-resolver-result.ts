@@ -1,14 +1,5 @@
 import {CellId, CellModel, CellStatus} from './model-cell';
-
-export type ResolveIndexResult = {
-    included: number[];
-    excluded: number[];
-};
-
-export const createResolveIndexResult = (): ResolveIndexResult => ({
-    included: [],
-    excluded: [],
-});
+import {ResolverIndexResult} from './model-resolver-index-result';
 
 export class ResolverResult {
     constructor(
@@ -25,13 +16,13 @@ export class ResolverResult {
         return new ResolverResult(groupCells, included, excluded);
     }
 
-    addIndexResult(result: ResolveIndexResult, cells: CellModel[]) {
+    addIndexResult(result: ResolverIndexResult, cells: CellModel[]) {
         const cellIds = (indexes: number[]) => {
             const _cellsIds = indexes
                 .filter((i) => i >= 0 && i < cells.length)
                 .map((i) => cells[i].id);
             if (_cellsIds.length !== indexes.length) {
-                console.warn('invalid cells ids in', ...indexes);
+                console.warn('Invalid cells ids in', ...indexes);
             }
 
             return _cellsIds;
