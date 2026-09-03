@@ -41,7 +41,7 @@ const CardBoxTransaction = (props: Props) => {
                     <IconRounded
                         icon={icon}
                         color={typeColor()}
-                        className="mb-6 md:mb-0 md:mr-6"
+                        className="mb-6 md:mr-6 md:mb-0"
                     />
                     <div className="space-y-1 text-center md:mr-6 md:text-left">
                         <h4 className="text-xl">${props.transaction.amount}</h4>

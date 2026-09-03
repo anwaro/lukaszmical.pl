@@ -39,7 +39,7 @@ export const ImageField = ({name, accept, className, placeholder}: Props) => {
             />
             <input
                 type="file"
-                className="absolute left-0 top-0 size-full cursor-pointer opacity-0 outline-none"
+                className="absolute top-0 left-0 size-full cursor-pointer opacity-0 outline-none"
                 onChange={handleFileChange}
                 accept={accept}
             />

@@ -67,7 +67,7 @@ export default function NavBarItem({item}: Props) {
                 <div
                     className={clsx(
                         !isDropdownActive && 'lg:hidden',
-                        'border-b border-slate-700 text-sm lg:absolute lg:left-0 lg:top-full lg:z-20 lg:min-w-full lg:rounded-lg lg:border lg:bg-slate-800 lg:shadow-lg',
+                        'border-b border-slate-700 text-sm lg:absolute lg:top-full lg:left-0 lg:z-20 lg:min-w-full lg:rounded-lg lg:border lg:bg-slate-800 lg:shadow-lg',
                     )}
                 >
                     {item.menu.map((item, index) => (

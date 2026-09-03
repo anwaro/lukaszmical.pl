@@ -41,8 +41,8 @@ export function ProjectTile({project, mouse}: Props) {
                         project={project}
                         className="transition-transform group-hover:scale-105"
                     />
-                    <div className="absolute left-0 top-0 flex size-full flex-col-reverse justify-between text-white group-hover:bg-black/50">
-                        <div className="flex flex-col bg-gradient-to-t from-black/75 pt-2">
+                    <div className="absolute top-0 left-0 flex size-full flex-col-reverse justify-between text-white group-hover:bg-black/50">
+                        <div className="flex flex-col bg-linear-to-t from-black/75 pt-2">
                             <div className="translate-y-4 px-2 py-1 text-2xl transition-transform will-change-transform group-hover:translate-y-0">
                                 {project.name}
                             </div>
@@ -51,7 +51,7 @@ export function ProjectTile({project, mouse}: Props) {
                             </div>
                         </div>
                         <time
-                            className="flex -translate-y-full justify-end bg-gradient-to-b from-black/75 p-1 pb-5 text-xs text-gray-300 transition-transform will-change-transform group-hover:translate-y-0"
+                            className="flex -translate-y-full justify-end bg-linear-to-b from-black/75 p-1 pb-5 text-xs text-gray-300 transition-transform will-change-transform group-hover:translate-y-0"
                             dateTime={project.createdAt}
                         >
                             {format.dateTime(new Date(project.createdAt), {

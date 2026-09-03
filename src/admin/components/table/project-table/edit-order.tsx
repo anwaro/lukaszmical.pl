@@ -30,13 +30,13 @@ export const EditOrder = ({project, onUpdate}: Props) => {
     }, [isPending]);
 
     return (
-        <form className={'flex w-[200px] items-center'} action={formAction}>
+        <form className={'flex w-50 items-center'} action={formAction}>
             <input type={'hidden'} name={'id'} value={project.id} />
             <input type={'hidden'} name={'name'} value={'order'} />
             {isEditing ? (
                 <>
                     <input
-                        className="h-10 w-full max-w-full rounded border border-gray-700 bg-slate-800 px-3 py-1 placeholder:text-gray-400 focus:border-blue-600 focus:outline-none focus:ring focus:ring-blue-600 "
+                        className="h-10 w-full max-w-full rounded border border-gray-700 bg-slate-800 px-3 py-1 placeholder:text-gray-400 focus:border-blue-600 focus:ring focus:ring-blue-600 focus:outline-none "
                         onChange={(e) => setValue(parseInt(e.target.value))}
                         type={'number'}
                         name={'value'}
@@ -65,7 +65,7 @@ export const EditOrder = ({project, onUpdate}: Props) => {
                 </>
             ) : (
                 <div
-                    className={'flex w-[200px] items-center'}
+                    className={'flex w-50 items-center'}
                     onClick={() => setIsEditing(true)}
                 >
                     {project.order}

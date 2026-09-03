@@ -18,7 +18,7 @@ export function HomepageUserCursor({mouse}: Props) {
     return (
         <div
             className={
-                'pointer-events-none absolute left-0 top-0 h-screen w-full overflow-hidden text-xs text-white'
+                'pointer-events-none absolute top-0 left-0 h-screen w-full overflow-hidden text-xs text-white'
             }
         >
             <pre>ID {id}</pre>
@@ -28,7 +28,7 @@ export function HomepageUserCursor({mouse}: Props) {
                 <div
                     key={user.id}
                     className={clsx(
-                        'absolute left-0 top-0 rounded-b-full p-1',
+                        'absolute top-0 left-0 rounded-b-full p-1',
                         'rounded-tr-full text-black transition duration-500',
                     )}
                     style={{

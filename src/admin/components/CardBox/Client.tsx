@@ -35,11 +35,11 @@ const CardBoxClient = (props: Props) => {
             <div className="flex flex-col items-center justify-between md:flex-row">
                 <div className="mb-6 flex flex-col items-center justify-start md:mb-0 md:flex-row">
                     <UserAvatar
-                        className="mb-6 size-12 md:mb-0 md:mr-6"
+                        className="mb-6 size-12 md:mr-6 md:mb-0"
                         username={props.client.name}
                     />
                     <div className="overflow-hidden text-center md:text-left">
-                        <h4 className="text-ellipsis text-xl">
+                        <h4 className="text-xl text-ellipsis">
                             {props.client.name}
                         </h4>
                         <p className="text-slate-400">

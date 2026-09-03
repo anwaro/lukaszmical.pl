@@ -1,6 +1,7 @@
 import {describe, expect, it} from 'vitest';
 
 import {ResolverFactory} from '@/services/projects/monogram-resolver/resolver/factory/resolver-factory';
+
 import {ExcludeSingleSeparatorResolver} from './resolver-exclude-single-separator';
 
 describe('IncludedGroupsWithSingleUnknownSeparatorResolver', () => {

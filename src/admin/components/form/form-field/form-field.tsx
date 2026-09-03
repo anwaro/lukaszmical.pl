@@ -66,11 +66,11 @@ export const FormField = ({icons = [], locale, ...props}: Props) => {
                                 path={icons[index]}
                                 w="w-10"
                                 h={props.hasTextareaHeight ? 'h-full' : 'h-12'}
-                                className="pointer-events-none absolute left-0 top-0 z-10 text-slate-400"
+                                className="pointer-events-none absolute top-0 left-0 z-10 text-slate-400"
                             />
                         )}
                         {locale && (
-                            <div className="pointer-events-none absolute right-0 top-0 z-10 flex h-12 w-10 items-center justify-center text-slate-400">
+                            <div className="pointer-events-none absolute top-0 right-0 z-10 flex h-12 w-10 items-center justify-center text-slate-400">
                                 {locale.toLocaleUpperCase()}
                             </div>
                         )}

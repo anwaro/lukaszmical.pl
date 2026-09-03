@@ -46,7 +46,7 @@ export default function AsideMenuLayer({menu, className = '', ...props}: Props) 
                         <Icon path={mdiClose} />
                     </button>
                 </div>
-                <div className={`flex-1 overflow-y-auto overflow-x-hidden`}>
+                <div className={`flex-1 overflow-x-hidden overflow-y-auto`}>
                     <AsideMenuList menu={menu} />
                 </div>
                 <ul>

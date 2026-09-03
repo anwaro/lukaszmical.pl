@@ -19,7 +19,7 @@ export function PageNumberSumsResolverLogs({events}: Props) {
                     <pre>{event.getName()}</pre>
                     {event.inProgress ? (
                         <svg
-                            className="-ml-1 mr-3 size-5 animate-spin text-white"
+                            className="mr-3 -ml-1 size-5 animate-spin text-white"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"

@@ -34,7 +34,7 @@ export function PageMonogramResolverLoop({setLoop, cells, loop}: Props) {
         <div className={'flex gap-2'}>
             <span>{loop}</span>
             <input
-                className={'w-[200px]'}
+                className={'w-50'}
                 type={'range'}
                 max={maxLoop}
                 value={loop}

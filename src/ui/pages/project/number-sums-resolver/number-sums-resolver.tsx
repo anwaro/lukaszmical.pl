@@ -25,11 +25,11 @@ export function PageNumberSumsResolver() {
                     <div className="opacity5 relative">
                         <canvas
                             ref={canvasBg}
-                            className="relative left-1/2 top-0 -translate-x-1/2"
+                            className="relative top-0 left-1/2 -translate-x-1/2"
                         />
                         <canvas
                             ref={canvas}
-                            className="absolute left-1/2 top-0 -translate-x-1/2"
+                            className="absolute top-0 left-1/2 -translate-x-1/2"
                         />
                     </div>
                 </div>

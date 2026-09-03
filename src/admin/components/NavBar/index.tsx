@@ -40,7 +40,7 @@ export default function NavBar({menu, className = '', children}: Props) {
                 <div
                     className={clsx(
                         isMenuNavBarActive ? 'block' : 'hidden',
-                        'absolute left-0 top-14 max-h-screen-menu w-screen overflow-y-auto bg-slate-800 shadow-lg lg:static lg:flex lg:w-auto lg:overflow-visible lg:shadow-none',
+                        'absolute top-14 left-0 max-h-screen-menu w-screen overflow-y-auto bg-slate-800 shadow-lg lg:static lg:flex lg:w-auto lg:overflow-visible lg:shadow-none',
                     )}
                 >
                     {menu.map((item, index) => (
