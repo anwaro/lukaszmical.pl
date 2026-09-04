@@ -4,7 +4,7 @@ import React, {useMemo, useRef} from 'react';
 
 import {useFormatter, useLocale} from 'next-intl';
 
-import {ProjectListItem} from '@/types/supabase/projects';
+import {ProjectListItem} from '@/types/project';
 import {Mouse} from '@/ui/pages/project/use-mouse';
 import {ProjectCover, ProjectLink} from '@/ui/components';
 

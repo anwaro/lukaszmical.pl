@@ -1,29 +1,25 @@
 'use server';
 
-import {revalidatePath} from 'next/cache';
+import {cookies} from 'next/headers';
 import {redirect} from 'next/navigation';
 
-import {createClient} from '@/utils/supabase/server';
+import {
+    createSessionToken,
+    SESSION_COOKIE,
+    sessionCookieOptions,
+} from '@/utils/auth/session';
+import {verifyPassword} from '@/utils/auth/password';
 
 export async function login(formData: FormData) {
-    const supabase = await createClient();
+    const password = formData.get('password') as string;
 
-    // type-casting here for convenience
-    // in practice, you should validate your inputs
-    const data = {
-        email: formData.get('email') as string,
-        password: formData.get('password') as string,
-    };
-
-    const {error} = await supabase.auth.signInWithPassword(data);
-
-    if (error) {
-        console.log(error);
-        // redirect('/admin/auth/error');
-
-        return;
+    if (!(await verifyPassword(password))) {
+        redirect('/admin/auth/login?error=1');
     }
 
-    revalidatePath('/admin', 'layout');
+    const token = await createSessionToken();
+    const store = await cookies();
+    store.set(SESSION_COOKIE, token, sessionCookieOptions);
+
     redirect('/admin');
 }

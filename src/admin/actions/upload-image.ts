@@ -1,7 +1,7 @@
 'use server';
 
 import {R2Client} from '@/services/r2/r2-client';
-import {auth} from '@/utils/supabase/auth';
+import {auth} from '@/utils/auth/auth';
 
 type State = {
     url: string;

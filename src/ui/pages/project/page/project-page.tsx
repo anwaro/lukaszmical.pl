@@ -3,7 +3,7 @@ import React from 'react';
 
 import {MDXRemote, MDXRemoteSerializeResult} from 'next-mdx-remote/rsc';
 
-import {LocalizedProjectEntity} from '@/types/supabase/projects';
+import {LocalizedProjectEntity} from '@/types/project';
 import {mdxSerializeOptions} from '@/ui/components/project/projet-mdx/project-mdx-options';
 
 type Props = {

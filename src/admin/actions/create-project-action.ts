@@ -1,14 +1,13 @@
 'use server';
 
-import {SupabaseProject} from '@/services/supabase/supabase-project';
+import {DrizzleProject} from '@/services/drizzle/drizzle-project';
 import {
     ProjectEntity,
     ProjectLocalesList,
     ProjectStringTypeList,
-} from '@/types/supabase/projects';
-import {SupabaseProjectString} from '@/services/supabase/supabase-project-string';
-import {auth} from '@/utils/supabase/auth';
-import {errorString} from '@/utils/supabase/error';
+} from '@/types/project';
+import {DrizzleProjectString} from '@/services/drizzle/drizzle-project-string';
+import {auth} from '@/utils/auth/auth';
 
 export type CreateProjectEntity = Omit<ProjectEntity, 'id'>;
 
@@ -23,31 +22,31 @@ export const createProjectAction = async (
 ): Promise<CreateProjectResult> => {
     await auth();
     const {description, name, content, ...data} = entity;
-    const client = new SupabaseProject();
-    const projectString = new SupabaseProjectString();
+    const client = new DrizzleProject();
+    const projectString = new DrizzleProjectString();
 
-    const project = await client.create(data);
+    try {
+        const project = await client.create(data);
 
-    if (!project.data) {
+        const strings = ProjectStringTypeList.flatMap((type) =>
+            ProjectLocalesList.map((locale) => ({
+                projectId: project.id,
+                type,
+                locale,
+                value: entity[type][locale],
+            })),
+        );
+
+        await projectString.createProjectStrings(strings);
+
+        return {
+            status: 'success',
+            id: project.id,
+        };
+    } catch (error) {
         return {
             status: 'error',
-            error: errorString(project.error),
+            error: error instanceof Error ? error.message : String(error),
         };
     }
-
-    const strings = ProjectStringTypeList.flatMap((type) =>
-        ProjectLocalesList.map((locale) => ({
-            projectId: project.data.id,
-            type,
-            locale,
-            value: entity[type][locale],
-        })),
-    );
-
-    await projectString.createProjectStrings(strings);
-
-    return {
-        status: 'success',
-        id: project.data.id,
-    };
 };

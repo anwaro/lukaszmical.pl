@@ -6,9 +6,9 @@ import {serialize} from 'next-mdx-remote/serialize';
 import {ProjectRenderer} from '@/services/project-renderer';
 import {ProjectIframe} from '@/ui/pages/project/iframe/project-iframe';
 import {LocalProjectService} from '@/services/local-project-service';
-import {SupabaseProject} from '@/services/supabase/supabase-project';
+import {DrizzleProject} from '@/services/drizzle/drizzle-project';
 import ProjectPage from '@/ui/pages/project/page/project-page';
-import {ProjectLocale} from '@/types/supabase/projects';
+import {ProjectLocale} from '@/types/project';
 import {mdxSerializeOptions} from '@/ui/components/project/projet-mdx/project-mdx-options';
 
 type Props = {
@@ -20,7 +20,7 @@ type Props = {
 
 export default async function Page({params}: Props) {
     const {slug, locale} = await params;
-    const client = new SupabaseProject();
+    const client = new DrizzleProject();
     const project = await client.getLocalizedProjectBySlug(slug, locale);
 
     if (!project) {

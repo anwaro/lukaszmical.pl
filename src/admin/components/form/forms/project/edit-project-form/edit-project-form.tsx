@@ -2,7 +2,7 @@
 
 import React, {useActionState} from 'react';
 
-import {ProjectEntity} from '@/types/supabase/projects';
+import {ProjectEntity} from '@/types/project';
 import {updateProjectAction} from '@/admin/actions/update-project-action';
 import {ProjectForm} from '@/admin/components/form/forms/project-form';
 

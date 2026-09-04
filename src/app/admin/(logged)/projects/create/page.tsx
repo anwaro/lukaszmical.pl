@@ -2,7 +2,7 @@ import React from 'react';
 
 import {mdiTableBorder} from '@mdi/js';
 
-import {auth} from '@/utils/supabase/auth';
+import {auth} from '@/utils/auth/auth';
 import SectionTitleLineWithButton from '@/admin/components/Section/TitleLineWithButton';
 import SectionMain from '@/admin/components/Section/Main';
 import {CreateProjectForm} from '@/admin/components/form/forms/project/create-project-form/create-project-form';

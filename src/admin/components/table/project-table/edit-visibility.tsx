@@ -4,7 +4,7 @@ import React, {useActionState, useEffect} from 'react';
 
 import {mdiEye, mdiEyeOff} from '@mdi/js';
 
-import {ProjectRow} from '@/types/supabase/projects';
+import {ProjectRow} from '@/types/project';
 import {Button} from '@/admin/components/button/button';
 import {updateProjectField} from '@/admin/actions/update-project-field';
 

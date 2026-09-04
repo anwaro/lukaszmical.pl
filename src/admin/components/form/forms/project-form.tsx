@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic';
 import {clsx} from 'clsx';
 import {mdiImage, mdiSend, mdiWeb} from '@mdi/js';
 
-import {ProjectLocale, ProjectTypeList} from '@/types/supabase/projects';
+import {ProjectLocale, ProjectTypeList} from '@/types/project';
 import CardBox from '@/admin/components/CardBox';
 import {FormField} from '@/admin/components/form/form-field/form-field';
 import Divider from '@/admin/components/divider';

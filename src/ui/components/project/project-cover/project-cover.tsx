@@ -3,7 +3,7 @@ import React, {useMemo} from 'react';
 import Image from 'next/image';
 import {clsx} from 'clsx';
 
-import {ProjectListItem} from '@/types/supabase/projects';
+import {ProjectListItem} from '@/types/project';
 
 type ProjectCoverProps = {
     project: ProjectListItem;

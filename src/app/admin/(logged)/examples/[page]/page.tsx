@@ -1,7 +1,7 @@
 import {notFound} from 'next/navigation';
 
 import {DashboardPage} from '@/admin/pages/dashboard';
-import {auth} from '@/utils/supabase/auth';
+import {auth} from '@/utils/auth/auth';
 import {ErrorPage} from '@/admin/pages/error';
 import {FormsPage} from '@/admin/pages/forms';
 import {LoginPage} from '@/admin/pages/login';

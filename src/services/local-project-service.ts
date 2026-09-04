@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 import {AssetType, LocalProject} from '@/types/project';
-import {ProjectRow} from '@/types/supabase/projects';
+import {ProjectRow} from '@/types/project';
 
 export class LocalProjectService {
     getProjectsPath = (path: string) => {

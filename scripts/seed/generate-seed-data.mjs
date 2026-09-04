@@ -1,4 +1,4 @@
-// Parses a Supabase `pg_dump` (plain SQL) backup and extracts the public
+// Parses a `pg_dump` (plain SQL) backup and extracts the public
 // application tables into a JSON seed used by `scripts/seed/seed.ts`.
 //
 // Usage:

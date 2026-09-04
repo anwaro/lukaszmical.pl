@@ -14,11 +14,12 @@ function createConnection(): postgres.Sql {
 
     if (!connectionString) {
         throw new Error(
-            'DATABASE_URL is not set — add the Supabase Postgres connection string to .env.local',
+            'DATABASE_URL is not set — add the Postgres connection string to .env.local',
         );
     }
 
-    // prepare:false is required for Supabase transaction-mode poolers (pgbouncer).
+    // prepare:false is required for transaction-mode poolers (pgbouncer),
+    // e.g. the pooled Vercel Postgres (Neon) connection.
     return postgres(connectionString, {prepare: false});
 }
 

@@ -1,8 +1,8 @@
 'use server';
 
-import {SupabaseProject} from '@/services/supabase/supabase-project';
-import {ProjectRow} from '@/types/supabase/projects';
-import {auth} from '@/utils/supabase/auth';
+import {DrizzleProject} from '@/services/drizzle/drizzle-project';
+import {ProjectRow} from '@/types/project';
+import {auth} from '@/utils/auth/auth';
 
 type Data = Partial<ProjectRow>;
 type State = {id: number} & Data;
@@ -12,7 +12,7 @@ export const updateProjectField = async (
     form: FormData,
 ): Promise<State> => {
     await auth();
-    const project = new SupabaseProject();
+    const project = new DrizzleProject();
     const id = parseInt(form.get('id') as string);
     const name = form.get('name') as string;
     const value = form.get('value');

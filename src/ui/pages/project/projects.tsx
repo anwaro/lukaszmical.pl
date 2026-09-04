@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import {ProjectListItem} from '@/types/supabase/projects';
+import {ProjectListItem} from '@/types/project';
 import {ProjectTile} from '@/ui/components';
 
 import {useMouse} from './use-mouse';

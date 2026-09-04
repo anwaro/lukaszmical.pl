@@ -47,9 +47,9 @@ src/admin/          admin panel UI (pages, components, layouts, hooks)
 src/services/       domain logic
   projects/monogram-resolver/   detector, resolver, helper, model, image, canvas, task
   projects/number-sums-resolver/
-  supabase/  r2/  animation/
+  drizzle/  r2/  animation/
 src/ui/             shared UI components + page compositions
-src/types/          types, incl. generated supabase database types
+src/types/          shared types
 server/             standalone Socket.IO server
 scripts/            build/util scripts
 messages/           next-intl translations (en, pl)
@@ -72,10 +72,22 @@ a pipeline of small, single-responsibility **resolvers**.
 - **Always add/adjust a `*.spec.ts`** for resolver changes — this module is test-driven
   and each rule is verified in isolation.
 
+## Database & auth
+
+- **Postgres** via **Drizzle ORM** (`src/services/drizzle/`). Runtime uses the pooled
+  `DATABASE_URL` with `postgres(url, {prepare:false})` in `drizzle-client.ts`. Schema
+  lives in `schema/`; data access goes through `DrizzleProject` / `DrizzleProjectString`.
+  Hosted on **Vercel Postgres (Neon)** in production, local Docker Postgres in dev
+  (`pnpm db:up`).
+- **Migrations/seed**: `pnpm db:push` (local), `pnpm db:push:prod` (targets `.env.prod`,
+  which must hold the DIRECT/unpooled URL), `pnpm db:seed`.
+- **Auth** — single admin user, no external service. `src/utils/auth/`: `argon2` password
+  hash (`ADMIN_PASSWORD_HASH`) verified in the login action, `jose` HS256 session cookie
+  (`AUTH_SECRET`) checked by middleware and `auth()`. Generate the hash with
+  `pnpm auth:hash '<password>'`.
+
 ## External services
 
-- **Supabase** — auth + Postgres. Regenerate types with:
-  `pnpm supabase gen types --lang=typescript --project-id cxkutntgprumsvmojbos > src/types/database.ts`
 - **Cloudflare R2** — asset storage via `@aws-sdk/client-s3`.
 - Secrets live in `.env.local` (git-ignored). Never commit keys or print their values.
 

@@ -14,18 +14,24 @@
         "db:push:prod": "ENV_FILE=.env.prod drizzle-kit push",
         "db:studio": "drizzle-kit studio",
         "db:seed": "tsx --env-file=.env.local scripts/seed/seed.ts",
-        "db:seed:from-backup": "node scripts/seed/generate-seed-data.mjs"
+        "db:seed:from-backup": "node scripts/seed/generate-seed-data.mjs",
+        "auth:hash": "tsx scripts/hash-password.ts"
+    },
+    "pnpm": {
+        "onlyBuiltDependencies": [
+            "argon2"
+        ]
     },
     "dependencies": {
         "@aws-sdk/client-s3": "3.1125.0",
         "@mdi/js": "7.4.47",
         "@monaco-editor/react": "^4.7.0",
-        "@supabase/ssr": "0.12.5",
-        "@supabase/supabase-js": "2.114.0",
+        "argon2": "^0.45.1",
         "clsx": "2.1.1",
         "cm6-theme-nord": "^0.2.0",
         "drizzle-orm": "^0.45.2",
         "formik": "2.4.9",
+        "jose": "^6.2.11",
         "js-base64": "3.9.3",
         "js-cookie": "3.0.8",
         "mime": "4.1.0",
@@ -62,7 +68,6 @@
         "eslint-plugin-tailwindcss": "4.4.0",
         "postcss": "8.5.27",
         "prettier": "3.9.6",
-        "supabase": "2.116.0",
         "tailwindcss": "4.3.3",
         "tsx": "^4.23.13",
         "typescript": "~6.0.3",

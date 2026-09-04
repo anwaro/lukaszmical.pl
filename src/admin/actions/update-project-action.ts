@@ -1,14 +1,13 @@
 'use server';
 
-import {SupabaseProject} from '@/services/supabase/supabase-project';
+import {DrizzleProject} from '@/services/drizzle/drizzle-project';
 import {
     ProjectEntity,
     ProjectLocalesList,
     ProjectStringTypeList,
-} from '@/types/supabase/projects';
-import {SupabaseProjectString} from '@/services/supabase/supabase-project-string';
-import {auth} from '@/utils/supabase/auth';
-import {errorString} from '@/utils/supabase/error';
+} from '@/types/project';
+import {DrizzleProjectString} from '@/services/drizzle/drizzle-project-string';
+import {auth} from '@/utils/auth/auth';
 
 type UpdateProjectResult =
     | {data: ProjectEntity; status: undefined}
@@ -21,16 +20,16 @@ export const updateProjectAction = async (
 ): Promise<UpdateProjectResult> => {
     await auth();
     const {id, description, name, content, ...data} = entity;
-    const project = new SupabaseProject();
-    const projectString = new SupabaseProjectString();
+    const project = new DrizzleProject();
+    const projectString = new DrizzleProjectString();
 
-    const action = await project.update(id, data);
-
-    if (action.error) {
+    try {
+        await project.update(id, data);
+    } catch (error) {
         return {
             data: prevState.data,
             status: 'error',
-            error: errorString(action.error),
+            error: error instanceof Error ? error.message : String(error),
         };
     }
 

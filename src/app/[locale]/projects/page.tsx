@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {SupabaseProject} from '@/services/supabase/supabase-project';
-import {ProjectLocale} from '@/types/supabase/projects';
+import {DrizzleProject} from '@/services/drizzle/drizzle-project';
+import {ProjectLocale} from '@/types/project';
 import {PageProjects} from '@/ui/pages/project/projects';
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
 
 export default async function Page({params}: Props) {
     const {locale} = await params;
-    const client = new SupabaseProject();
+    const client = new DrizzleProject();
 
     const projects = await client.getProjectList(locale);
 

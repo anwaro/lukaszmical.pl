@@ -2,12 +2,12 @@ import React from 'react';
 
 import {mdiTableBorder} from '@mdi/js';
 
-import {auth} from '@/utils/supabase/auth';
+import {auth} from '@/utils/auth/auth';
 import SectionMain from '@/admin/components/Section/Main';
 import SectionTitleLineWithButton from '@/admin/components/Section/TitleLineWithButton';
 
 export default async function PrivatePage() {
-    const user = await auth();
+    await auth();
 
     return (
         <>
@@ -19,7 +19,7 @@ export default async function PrivatePage() {
                 >
                     <a href={'/admin/auth/logout'}>Logout</a>
                 </SectionTitleLineWithButton>
-                <p>Hello {user.email}</p>
+                <p>Hello admin</p>
             </SectionMain>
         </>
     );

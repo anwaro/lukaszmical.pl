@@ -3,12 +3,12 @@ import {notFound} from 'next/navigation';
 import {ProjectRenderer} from '@/services/project-renderer';
 import {params} from '@/app/api/projects/show/params';
 import {LocalProjectService} from '@/services/local-project-service';
-import {SupabaseProject} from '@/services/supabase/supabase-project';
+import {DrizzleProject} from '@/services/drizzle/drizzle-project';
 
 export async function GET(request: Request) {
     const service = new LocalProjectService();
     const renderer = new ProjectRenderer();
-    const client = new SupabaseProject();
+    const client = new DrizzleProject();
     const url = new URL(request.url);
     const {slug, locale, minFile} = params(url);
 

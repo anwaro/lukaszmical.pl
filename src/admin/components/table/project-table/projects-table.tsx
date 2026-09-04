@@ -6,7 +6,7 @@ import {mdiOpenInNew, mdiPencil} from '@mdi/js';
 import Image from 'next/image';
 
 import {BaseTable} from '@/admin/components/table/base-table';
-import {ProjectRow} from '@/types/supabase/projects';
+import {ProjectRow} from '@/types/project';
 import {EditVisibility} from '@/admin/components/table/project-table/edit-visibility';
 
 import {Button} from '../../button/button';

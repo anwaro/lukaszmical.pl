@@ -1,4 +1,4 @@
-import {ProjectLocale, ProjectLocalesList} from '@/types/supabase/projects';
+import {ProjectLocale, ProjectLocalesList} from '@/types/project';
 
 export const params = (url: URL) => {
     let minFile = process.env.NODE_ENV === 'production';
