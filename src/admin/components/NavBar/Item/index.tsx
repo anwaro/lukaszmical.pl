@@ -82,6 +82,19 @@ export default function NavBarItem({item}: Props) {
         return <Divider navBar />;
     }
 
+    if (item.action) {
+        return (
+            <form action={item.action}>
+                <button
+                    type="submit"
+                    className={clsx(componentClass, 'w-full text-left')}
+                >
+                    {NavBarItemComponentContents}
+                </button>
+            </form>
+        );
+    }
+
     if (item.href) {
         return (
             <Link href={item.href} className={componentClass}>

@@ -1,9 +1,11 @@
+'use server';
+
 import {cookies} from 'next/headers';
 import {redirect} from 'next/navigation';
 
 import {SESSION_COOKIE} from '@/utils/auth/session';
 
-export async function GET() {
+export async function logout() {
     const store = await cookies();
     store.delete(SESSION_COOKIE);
 

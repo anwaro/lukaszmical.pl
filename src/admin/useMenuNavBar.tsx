@@ -3,6 +3,7 @@ import React, {useMemo} from 'react';
 import {mdiAccount, mdiCogOutline, mdiEmail, mdiLogout} from '@mdi/js';
 
 import {UserAvatarCurrentUser} from '@/admin/components/user-avatar/current-user';
+import {logout} from '@/app/admin/auth/logout/actions';
 
 import {MenuNavBarItem} from './interfaces';
 
@@ -32,7 +33,7 @@ export function useMenuNavBare() {
                     {
                         icon: mdiLogout,
                         label: 'Log Out',
-                        href: '/admin/auth/logout',
+                        action: logout,
                     },
                 ],
             },
@@ -40,7 +41,7 @@ export function useMenuNavBare() {
                 icon: mdiLogout,
                 label: 'Log out',
                 isDesktopNoLabel: true,
-                href: '/admin/auth/logout',
+                action: logout,
             },
         ],
         [],

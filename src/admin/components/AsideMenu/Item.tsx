@@ -63,6 +63,16 @@ const AsideMenuItem = ({item, isDropdownList = false}: Props) => {
 
     return (
         <li>
+            {item.action && (
+                <form action={item.action}>
+                    <button
+                        type="submit"
+                        className={`${componentClass} w-full text-left`}
+                    >
+                        {asideMenuItemInnerContents}
+                    </button>
+                </form>
+            )}
             {item.href && (
                 <Link
                     href={item.href}
@@ -72,7 +82,7 @@ const AsideMenuItem = ({item, isDropdownList = false}: Props) => {
                     {asideMenuItemInnerContents}
                 </Link>
             )}
-            {!item.href && (
+            {!item.href && !item.action && (
                 <div
                     className={componentClass}
                     onClick={() => setIsDropdownActive(!isDropdownActive)}

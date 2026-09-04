@@ -1,9 +1,12 @@
 import {ReactNode} from 'react';
 
+export type MenuItemAction = () => void | Promise<void>;
+
 export type MenuAsideItem = {
     label: string;
     icon?: string;
     href?: string;
+    action?: MenuItemAction;
     target?: string;
     color?: ColorButtonKey;
     menu?: MenuAsideItem[];
@@ -13,6 +16,7 @@ export type MenuNavBarItem = {
     label?: string;
     icon?: string | ReactNode;
     href?: string;
+    action?: MenuItemAction;
     isDivider?: boolean;
     isDesktopNoLabel?: boolean;
     onClick?: () => void;

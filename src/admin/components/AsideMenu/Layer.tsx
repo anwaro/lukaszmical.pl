@@ -2,6 +2,8 @@ import React from 'react';
 
 import {mdiClose, mdiLogout} from '@mdi/js';
 
+import {logout} from '@/app/admin/auth/logout/actions';
+
 import {Icon} from '../icon/icon';
 import AsideMenuItem from './Item';
 import AsideMenuList from './List';
@@ -18,7 +20,7 @@ export default function AsideMenuLayer({menu, className = '', ...props}: Props) 
         label: 'Logout',
         icon: mdiLogout,
         color: 'info',
-        href: '/admin/auth/logout',
+        action: logout,
     };
 
     const handleAsideLgCloseClick = (e: React.MouseEvent) => {
