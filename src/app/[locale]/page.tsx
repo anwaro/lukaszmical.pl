@@ -5,7 +5,8 @@ import React from 'react';
 
 import {ProjectLocale} from '@/types/project';
 import {PageHomepage} from '@/ui/pages/homepage/homepage';
-import {metadataForPage} from '@/utils/seo';
+import {JsonLd} from '@/ui/components/seo/json-ld';
+import {metadataForPage, personJsonLd} from '@/utils/seo';
 
 type Props = {
     params: Promise<{locale: ProjectLocale}>;
@@ -17,5 +18,10 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
 }
 
 export default function Page() {
-    return <PageHomepage />;
+    return (
+        <>
+            <JsonLd data={personJsonLd()} />
+            <PageHomepage />
+        </>
+    );
 }

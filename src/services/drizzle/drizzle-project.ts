@@ -79,6 +79,7 @@ export class DrizzleProject {
 
         return {
             ...project,
+            cover: normalizeCover(project.cover),
             ...(Object.fromEntries(
                 ProjectStringTypeList.map((field) => [
                     field,

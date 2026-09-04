@@ -1,10 +1,10 @@
-import type {Metadata} from 'next';
+import type {Metadata, Viewport} from 'next';
 
 import {Roboto} from 'next/font/google';
 import {getLocale} from 'next-intl/server';
 import {clsx} from 'clsx';
 
-import {siteName, siteUrl} from '@/utils/seo';
+import {ogImage, siteName, siteUrl} from '@/utils/seo';
 
 import './globals.css';
 
@@ -32,14 +32,20 @@ export const metadata: Metadata = {
         type: 'website',
         siteName,
         url: '/',
+        images: [ogImage],
     },
     twitter: {
         card: 'summary_large_image',
+        images: [ogImage],
     },
     robots: {
         index: true,
         follow: true,
     },
+};
+
+export const viewport: Viewport = {
+    themeColor: '#000000',
 };
 
 const font = Roboto({

@@ -13,7 +13,14 @@ import {DrizzleProject} from '@/services/drizzle/drizzle-project';
 import ProjectPage from '@/ui/pages/project/page/project-page';
 import {ProjectLocale} from '@/types/project';
 import {mdxSerializeOptions} from '@/ui/components/project/projet-mdx/project-mdx-options';
-import {buildAlternates, localePath, siteName} from '@/utils/seo';
+import {JsonLd} from '@/ui/components/seo/json-ld';
+import {
+    buildAlternates,
+    localePath,
+    ogImage,
+    projectJsonLd,
+    siteName,
+} from '@/utils/seo';
 
 type Props = {
     params: Promise<{
@@ -40,14 +47,16 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
     return {
         title,
         description,
+        robots: project.published ? undefined : {index: false, follow: false},
         alternates: buildAlternates(locale, path),
         openGraph: {
             type: 'article',
             title,
             description,
             url: localePath(locale, path),
-            images: project.cover ? [project.cover] : undefined,
+            images: [project.cover ?? ogImage],
         },
+        twitter: {images: [project.cover ?? ogImage]},
     };
 }
 
@@ -60,9 +69,16 @@ export default async function Page({params}: Props) {
         notFound();
     }
 
+    const jsonLd = projectJsonLd(project, locale, `/projects/${slug}`);
+
     if (project.type === 'page') {
         const source = await serialize(project.content, mdxSerializeOptions);
-        return <ProjectPage project={project} source={source} />;
+        return (
+            <>
+                <JsonLd data={jsonLd} />
+                <ProjectPage project={project} source={source} />
+            </>
+        );
     }
 
     if (project.type === 'project') {
@@ -77,7 +93,12 @@ export default async function Page({params}: Props) {
 
         const html = await renderer.render(localProject, true);
 
-        return <ProjectIframe html={html} />;
+        return (
+            <>
+                <JsonLd data={jsonLd} />
+                <ProjectIframe html={html} />
+            </>
+        );
     }
 
     redirect(project.url);
