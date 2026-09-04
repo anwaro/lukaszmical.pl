@@ -27,6 +27,14 @@ const nextConfig = {
             bodySizeLimit: '5mb',
         },
     },
+    // The routes that render bundled interactive projects read files from
+    // `public/projects` with `fs` at runtime. Vercel serves `public/` as static
+    // assets and does not include it in the serverless function bundle by
+    // default, so force-trace it into those routes.
+    outputFileTracingIncludes: {
+        '/*/projects/*': ['./public/projects/**/*'],
+        '/api/projects/*': ['./public/projects/**/*'],
+    },
     images: {
         remotePatterns: [
             {

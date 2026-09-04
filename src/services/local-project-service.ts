@@ -5,7 +5,11 @@ import {ProjectRow} from '@/types/project';
 
 export class LocalProjectService {
     getProjectsPath = (path: string) => {
-        return `${process.env.PWD}/public/projects/${path}`.replace(/\/\//, '/');
+        // `process.cwd()` is the function root at runtime (locally the repo
+        // root, on Vercel the traced-files root) — unlike `process.env.PWD`,
+        // which is undefined in the serverless runtime and made every project
+        // detail page 404 in production.
+        return `${process.cwd()}/public/projects/${path}`.replace(/\/\//, '/');
     };
 
     toLocalProject = async (
