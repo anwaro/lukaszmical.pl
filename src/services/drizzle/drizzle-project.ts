@@ -20,6 +20,30 @@ import {
     projectsStrings,
 } from './schema';
 
+// A stored cover may point at a host that is not allowed by `next/image`
+// (e.g. a decommissioned `*.r2.dev` bucket URL from before the R2 migration).
+// `next/image` throws synchronously at render for an unconfigured host, which
+// would crash the whole page. Keep only same-origin paths and URLs on the
+// configured public domain; drop everything else so the UI falls back to the
+// local placeholder instead.
+function normalizeCover(cover: string | null): string | null {
+    if (!cover) {
+        return null;
+    }
+    if (cover.startsWith('/')) {
+        return cover;
+    }
+    const publicUrl = process.env.R2_BUCKET_PUBLIC_URL;
+    try {
+        if (publicUrl && new URL(cover).host === new URL(publicUrl).host) {
+            return cover;
+        }
+    } catch {
+        // Not a valid absolute URL — treat as absent.
+    }
+    return null;
+}
+
 export class DrizzleProject {
     private async getProject(
         key: 'id' | 'url',
@@ -74,7 +98,10 @@ export class DrizzleProject {
             .from(projects)
             .orderBy(asc(projects.order));
 
-        return rows as ProjectRow[];
+        return rows.map((row) => ({
+            ...row,
+            cover: normalizeCover(row.cover),
+        })) as ProjectRow[];
     }
 
     async getProjectList(locale: ProjectLocale): Promise<ProjectListItem[]> {
@@ -126,6 +153,7 @@ export class DrizzleProject {
 
         return rows.map((row) => ({
             ...row,
+            cover: normalizeCover(row.cover),
             name: byId.get(row.id)?.name ?? '',
             description: byId.get(row.id)?.description ?? '',
         }));
