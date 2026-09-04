@@ -20,6 +20,11 @@ const nextConfig = {
                 destination: '/projects/:name',
                 permanent: true,
             },
+            {
+                source: '/projects/show/:name',
+                destination: '/projects/:name',
+                permanent: true,
+            },
         ];
     },
     experimental: {
