@@ -14,7 +14,6 @@
         "db:push:prod": "ENV_FILE=.env.prod drizzle-kit push",
         "db:studio": "drizzle-kit studio",
         "db:seed": "tsx --env-file=.env.local scripts/seed/seed.ts",
-        "db:seed:content": "tsx --env-file=.env.local scripts/seed/seed-content.ts",
         "db:seed:from-backup": "node scripts/seed/generate-seed-data.mjs",
         "auth:hash": "tsx scripts/hash-password.ts"
     },
