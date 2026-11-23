@@ -1,2 +1,21 @@
 @import 'tailwindcss';
 @config '../../tailwind.config.ts';
+
+/* Public site ("terminal") palette and type. */
+@theme {
+    --color-ink: #0a0f16;
+    --color-panel: #101823;
+    --color-cell: #172230;
+    --color-line: #1f2b3a;
+    --color-edge: #3a4a5e;
+    --color-fg: #e8ecef;
+    --color-soft: #c3cad1;
+    --color-muted: #9aa3ad;
+    --color-accent: #63a0e3;
+}
+
+/* `inline`: the next/font variables are set on the site wrapper, not :root. */
+@theme inline {
+    --font-site: var(--font-inter), system-ui, sans-serif;
+    --font-term: var(--font-jetbrains), ui-monospace, monospace;
+}

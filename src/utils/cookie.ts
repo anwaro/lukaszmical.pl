@@ -17,7 +17,7 @@ export const createCookieStore = <T = unknown>(key: string) => {
                     path: '/',
                     expires,
                 });
-            } catch (e) {
+            } catch {
                 //pass
             }
         },
@@ -28,7 +28,7 @@ export const createCookieStore = <T = unknown>(key: string) => {
                     return decode(data);
                 }
                 return undefined;
-            } catch (e) {
+            } catch {
                 return undefined;
             }
         },

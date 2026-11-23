@@ -29,7 +29,7 @@ export default async function PrivatePage({params}: Props) {
         <SectionMain>
             <SectionTitleLineWithButton
                 icon={mdiTableBorder}
-                title={project.name.en}
+                title={project.name.pl || project.name.en || project.url}
                 main
             />
             <EditProjectForm project={project} />

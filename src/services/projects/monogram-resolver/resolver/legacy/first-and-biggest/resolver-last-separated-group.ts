@@ -1,3 +1,4 @@
+/* oxlint-disable no-unused-vars -- unfinished resolver stub, not registered in allResolvers */
 import {CellModel} from '../../../model/model-cell';
 import {ResolverResult} from '../../../model/model-resolver-result';
 import {ResolverIndexResult} from '../../../model/model-resolver-index-result';

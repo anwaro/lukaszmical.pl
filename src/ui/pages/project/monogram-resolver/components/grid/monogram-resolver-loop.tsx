@@ -21,7 +21,7 @@ export function PageMonogramResolverLoop({setLoop, cells, loop}: Props) {
         if (!manual) {
             setLoop(maxLoop);
         }
-    }, [maxLoop, manual]);
+    }, [maxLoop, manual, setLoop]);
 
     useEffect(() => {
         if (cells.length === 0) {
@@ -31,7 +31,7 @@ export function PageMonogramResolverLoop({setLoop, cells, loop}: Props) {
             setManual(false);
             setLoop(0);
         }
-    }, [cells.length]);
+    }, [cells.length, setLoop]);
 
     return (
         <div className={'flex gap-2'}>

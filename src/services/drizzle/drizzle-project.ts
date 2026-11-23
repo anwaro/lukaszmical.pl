@@ -1,4 +1,4 @@
-import {and, asc, eq, inArray} from 'drizzle-orm';
+import {and, asc, eq, inArray, ne, not} from 'drizzle-orm';
 
 import {
     LocalizedProjectEntity,
@@ -8,6 +8,7 @@ import {
     ProjectListItem,
     ProjectLocale,
     ProjectRow,
+    ProjectStringsListItem,
     ProjectStringTypeList,
 } from '@/types/project';
 
@@ -43,6 +44,12 @@ function normalizeCover(cover: string | null): string | null {
     }
     return null;
 }
+
+export type ProjectListFilter = {
+    // Case studies and projects share a table but are listed separately.
+    caseStudies?: boolean;
+    featured?: boolean;
+};
 
 export class DrizzleProject {
     private async getProject(
@@ -93,11 +100,13 @@ export class DrizzleProject {
         return this.getProject('id', parseInt(`${id}`));
     }
 
-    async getProjects(): Promise<ProjectRow[]> {
+    async getProjects(caseStudies = false): Promise<ProjectRow[]> {
+        const caseStudy = eq(projects.type, 'case-study');
         const rows = await db
             .select()
             .from(projects)
-            .orderBy(asc(projects.order));
+            .where(caseStudies ? caseStudy : not(caseStudy))
+            .orderBy(asc(projects.order), asc(projects.id));
 
         return rows.map((row) => ({
             ...row,
@@ -105,7 +114,11 @@ export class DrizzleProject {
         })) as ProjectRow[];
     }
 
-    async getProjectList(locale: ProjectLocale): Promise<ProjectListItem[]> {
+    async getProjectList(
+        locale: ProjectLocale,
+        filter: ProjectListFilter = {},
+    ): Promise<ProjectListItem[]> {
+        const caseStudy = eq(projects.type, 'case-study');
         const rows = await db
             .select({
                 id: projects.id,
@@ -113,10 +126,21 @@ export class DrizzleProject {
                 type: projects.type,
                 createdAt: projects.createdAt,
                 cover: projects.cover,
+                stack: projects.stack,
+                period: projects.period,
+                siteUrl: projects.siteUrl,
+                repoUrl: projects.repoUrl,
+                featured: projects.featured,
             })
             .from(projects)
-            .where(eq(projects.published, true))
-            .orderBy(asc(projects.order));
+            .where(
+                and(
+                    eq(projects.published, true),
+                    filter.caseStudies ? caseStudy : not(caseStudy),
+                    filter.featured ? eq(projects.featured, true) : undefined,
+                ),
+            )
+            .orderBy(asc(projects.order), asc(projects.id));
 
         if (!rows.length) {
             return [];
@@ -136,27 +160,31 @@ export class DrizzleProject {
                         rows.map((row) => row.id),
                     ),
                     eq(projectsStrings.locale, locale),
-                    inArray(projectsStrings.type, ['name', 'description']),
+                    ne(projectsStrings.type, 'content'),
                 ),
             );
 
-        const byId = new Map<number, {description: string; name: string}>();
+        const emptyStrings = (): ProjectStringsListItem =>
+            Object.fromEntries(
+                ProjectStringTypeList.filter((type) => type !== 'content').map(
+                    (type) => [type, ''],
+                ),
+            ) as ProjectStringsListItem;
+
+        const byId = new Map<number, ProjectStringsListItem>();
         for (const record of strings) {
-            if (record.projectId == null) {
+            if (record.projectId == null || record.type === 'content') {
                 continue;
             }
-            const entry = byId.get(record.projectId) ?? {name: '', description: ''};
-            if (record.type === 'name' || record.type === 'description') {
-                entry[record.type] = record.value ?? '';
-            }
+            const entry = byId.get(record.projectId) ?? emptyStrings();
+            entry[record.type] = record.value ?? '';
             byId.set(record.projectId, entry);
         }
 
         return rows.map((row) => ({
             ...row,
             cover: normalizeCover(row.cover),
-            name: byId.get(row.id)?.name ?? '',
-            description: byId.get(row.id)?.description ?? '',
+            ...(byId.get(row.id) ?? emptyStrings()),
         }));
     }
 

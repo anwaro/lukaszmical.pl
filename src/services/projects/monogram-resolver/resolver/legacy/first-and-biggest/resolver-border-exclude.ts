@@ -2,7 +2,6 @@ import {CellModel, CellStatus} from '../../../model/model-cell';
 import {ResolverModel} from '../../../model/model-resolver';
 import {GroupModel} from '../../../model/model-group';
 import {StatusGroupHelper} from '../../../helper/helper-status-group';
-import {SeparatedGroupHelper} from '../../../helper/helper-separated-group';
 import {ResolverResult} from '../../../model/model-resolver-result';
 import {ResolverIndexResult} from '../../../model/model-resolver-index-result';
 

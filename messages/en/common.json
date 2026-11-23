@@ -1,2 +1,17 @@
 {
+    "brand": "lukasz-mical",
+    "logoAlt": "Łukasz Micał logo",
+    "nav": {
+        "label": "Main",
+        "caseStudies": "case-studies/",
+        "projects": "projects/",
+        "about": "about.md",
+        "contact": "contact"
+    },
+    "footer": {
+        "copyright": "© {year} Łukasz Micał",
+        "github": "github",
+        "linkedin": "linkedin",
+        "cv": "cv.pdf"
+    }
 }

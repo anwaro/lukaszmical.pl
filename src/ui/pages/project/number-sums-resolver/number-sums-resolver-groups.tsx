@@ -54,7 +54,7 @@ export function PageNumberSumsResolverGroups({groups, cells}: Props) {
                     </div>
                     <div
                         className={
-                            'border-right flex w-10 items-center justify-end border-dashed px-1'
+                            'flex w-10 items-center justify-end border-dashed px-1'
                         }
                     >
                         {group.sum}

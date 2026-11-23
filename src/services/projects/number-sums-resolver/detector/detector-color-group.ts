@@ -1,5 +1,3 @@
-import {Rectangle} from 'tesseract.js';
-
 import {HexColor} from '@/services/projects/number-sums-resolver/helper/helper-image-data';
 
 import {ColorGroupHelper} from '../helper/helper-color-group';

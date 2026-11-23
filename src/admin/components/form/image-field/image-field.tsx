@@ -1,4 +1,4 @@
-import {ChangeEvent, useEffect} from 'react';
+import {ChangeEvent, useEffect, useEffectEvent} from 'react';
 
 import {useField} from 'formik';
 import {mdiClose, mdiLoading} from '@mdi/js';
@@ -23,9 +23,13 @@ export const ImageField = ({name, accept, className, placeholder}: Props) => {
         }
     };
 
+    const onUploaded = useEffectEvent((uploadedUrl: string) => {
+        setValue(uploadedUrl);
+    });
+
     useEffect(() => {
         if (url) {
-            setValue(url);
+            onUploaded(url);
         }
     }, [url]);
 
@@ -45,14 +49,14 @@ export const ImageField = ({name, accept, className, placeholder}: Props) => {
             />
 
             {isPending && (
-                <div className="height-full absolute inset-y-0 right-0 flex w-12 items-center justify-center">
+                <div className="absolute inset-y-0 right-0 flex w-12 items-center justify-center">
                     <Icon path={mdiLoading} size={34} className="animate-spin" />
                 </div>
             )}
             {Boolean(field.value && !isPending) && (
                 <div
                     onClick={() => setValue('')}
-                    className="height-full absolute inset-y-0 right-0 flex w-12 cursor-pointer items-center justify-center"
+                    className="absolute inset-y-0 right-0 flex w-12 cursor-pointer items-center justify-center"
                 >
                     <Icon path={mdiClose} size={34} />
                 </div>

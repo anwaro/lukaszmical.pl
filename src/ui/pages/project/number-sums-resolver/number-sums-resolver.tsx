@@ -22,7 +22,7 @@ export function PageNumberSumsResolver() {
                     />
                 </label>
                 <div className="rounded border border-white p-4">
-                    <div className="opacity5 relative">
+                    <div className="relative">
                         <canvas
                             ref={canvasBg}
                             className="relative top-0 left-1/2 -translate-x-1/2"

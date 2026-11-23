@@ -1,12 +1,12 @@
 import {CellDetector} from '../detector/detector-cell';
 import {TaskModel} from '../model/model-task';
-import {EventModel, EventType} from '../model/model-event';
+import {EventType} from '../model/model-event';
 import {StoreModel} from '../model/model-store';
 
 export class CellDetectTask extends TaskModel {
     public eventName = EventType.detectCells;
 
-    async run(store: StoreModel, emitEvent: (event: EventModel) => void) {
+    async run(store: StoreModel) {
         const detector = new CellDetector(
             store.data.image.data,
             store.data.gridBounds,

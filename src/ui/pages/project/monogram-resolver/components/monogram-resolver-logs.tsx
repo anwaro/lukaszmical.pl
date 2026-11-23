@@ -1,6 +1,6 @@
 'use client';
 
-import React, {Fragment} from 'react';
+import React from 'react';
 
 import {EventModel} from '@/services/projects/monogram-resolver/model/model-event';
 
@@ -11,7 +11,7 @@ type Props = {
 export function PageMonogramResolverLogs({events}: Props) {
     return (
         <div className="flex flex-col gap-2">
-            {events.map((event, i) => (
+            {events.map((event) => (
                 <div key={event.id}>
                     <div className={'flex items-center gap-2'}>
                         <pre>{event.getName()}</pre>

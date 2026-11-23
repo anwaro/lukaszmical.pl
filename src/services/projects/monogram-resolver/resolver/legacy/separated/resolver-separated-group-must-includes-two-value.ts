@@ -1,6 +1,5 @@
 import {ArrayHelper} from '../../../helper/helper-array';
 import {ResolverHelper} from '../../../helper/helper-resolver';
-import {StatusGroupHelper} from '../../../helper/helper-status-group';
 import {SeparatedGroupHelper} from '../../../helper/helper-separated-group';
 import {GroupModel} from '../../../model/model-group';
 import {CellModel} from '../../../model/model-cell';
