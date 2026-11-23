@@ -4,6 +4,7 @@ import {getTranslations} from 'next-intl/server';
 
 import {getSettings, parseList} from '@/services/content/content-store';
 import {ProjectListItem} from '@/types/project';
+import {ObfuscatedEmail} from '@/ui/site/obfuscated-email';
 import {
     buttonClass,
     ProductIcon,
@@ -13,6 +14,7 @@ import {
 } from '@/ui/site/site-parts';
 import {SiteShell} from '@/ui/site/site-shell';
 import {SolverPanel} from '@/ui/site/solver-panel';
+import {encodeEmail} from '@/utils/email-obfuscate';
 
 import {Link} from '@/navigation';
 
@@ -161,12 +163,10 @@ export async function PageHomepage({caseStudies, projects}: Props) {
             >
                 <Prompt className="mb-4">{t('contact.command')}</Prompt>
                 {settings.email ? (
-                    <a
-                        href={`mailto:${settings.email}`}
+                    <ObfuscatedEmail
+                        encoded={encodeEmail(settings.email)}
                         className="inline-block font-term text-[clamp(26px,4.6vw,60px)] leading-[1.1] font-bold tracking-[-0.03em] wrap-anywhere hover:text-accent"
-                    >
-                        {settings.email}
-                    </a>
+                    />
                 ) : (
                     <span className="inline-block font-term text-[clamp(26px,4.6vw,60px)] leading-[1.1] font-bold tracking-[-0.03em] wrap-anywhere">
                         {t('contact.emailPlaceholder')}
