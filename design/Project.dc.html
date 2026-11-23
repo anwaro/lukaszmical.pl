@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>Projekt — monogram resolver</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+body{margin:0}
+a{color:#E8ECEF;text-decoration:none}a:hover{color:#63A0E3}
+</style>
+</helmet>
+<div style="background: #0A0F16; color: #E8ECEF; font-family: Inter, system-ui, sans-serif; font-size: 16px; line-height: 1.6">
+<div style="max-width: 1240px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 60px); box-sizing: border-box">
+
+<header style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 32px; padding: 24px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px">
+<a href="Terminal.dc.html" style="display: inline-flex; align-items: center; gap: 14px; font-weight: 700">
+<svg role="img" aria-label="Logo Łukasz Micał" width="32" height="40" viewBox="0 0 40 50" fill="none"><polygon fill="#032b57" points="0 25, 0 50, 10 37.5"></polygon><polygon fill="#064a96" points="0 0, 0 25, 20 50, 30 37.5"></polygon><polygon fill="#0a6bd7" points="40 0, 20 25, 30 37.5, 40 25"></polygon><polygon fill="#63a0e3" points="40 25, 30 37.5, 40 50"></polygon></svg>
+<span>lukasz-mical</span></a>
+<nav aria-label="Główna" style="display: flex; flex-wrap: wrap; gap: 4px 28px">
+<a href="CaseStudies.dc.html" style="padding: 12px 0">case-studies/</a>
+<a href="Projects.dc.html" style="padding: 12px 0; color: {{accent}}">projekty/</a>
+<a href="Terminal.dc.html" style="padding: 12px 0">o-mnie.md</a>
+<a href="Terminal.dc.html" style="padding: 12px 0">kontakt</a>
+<a href="#en" style="padding: 12px 0; color: #9AA3AD">pl | en</a>
+</nav>
+</header>
+
+<section style="display: flex; flex-wrap: wrap; align-items: center; gap: 48px 64px; padding: clamp(32px, 5vw, 64px) 0 clamp(48px, 7vw, 96px)">
+<div style="flex: 3 1 440px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+<a href="Projects.dc.html" style="align-self: flex-start; padding: 12px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #9AA3AD"><span style="color: {{accent}}">$</span> cd .. <span style="color: #C3CAD1">— wszystkie projekty</span></a>
+<h1 style="margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(32px, 4.6vw, 64px); line-height: 1.08; letter-spacing: -0.03em; overflow-wrap: anywhere">monogram-resolver</h1>
+<p style="margin: 0; max-width: 560px; font-size: clamp(18px, 1.7vw, 22px); line-height: 1.45; color: #C3CAD1">Solver nonogramów, który nie zgaduje. Plansza przechodzi przez pipeline małych reguł, a każdą z nich da się przeczytać i przetestować osobno.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 15px">
+<a href="#demo" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; box-sizing: border-box; background: {{accent}}; color: #0A0F16; font-weight: 700; border-radius: 6px">uruchom demo</a>
+<a href="#github" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; box-sizing: border-box; border: 1px solid #3A4A5E; font-weight: 500; border-radius: 6px">kod na githubie</a>
+</div>
+<p style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9AA3AD">TypeScript · Vitest · canvas · [ROK]</p>
+</div>
+
+<div style="flex: 2 1 360px; min-width: 0; background: #101823; border: 1px solid #1F2B3A; border-radius: 10px; overflow: hidden">
+<div style="display: flex; justify-content: space-between; gap: 16px; padding: 12px 16px; border-bottom: 1px solid #1F2B3A; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9AA3AD">
+<span>plansza 10 × 5</span>
+<span style="color: {{accent}}">rozwiązano</span>
+</div>
+<div role="img" aria-label="Rozwiązany nonogram układający się w znak nawiasów ostrych z ukośnikiem" style="display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); gap: 3px; padding: 20px">
+<sc-for list="{{ cells }}" as="c" hint-placeholder-count="66">
+<div style="aspect-ratio: 1; display: flex; align-items: flex-end; justify-content: center; border-radius: 2px; font-family: 'JetBrains Mono', monospace; font-size: 11px; line-height: 1.15; white-space: pre-line; text-align: center; color: #9AA3AD; background: {{ c.bg }}">{{ c.text }}</div>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section style="display: flex; flex-wrap: wrap; gap: 16px 64px; padding-bottom: clamp(48px, 7vw, 96px)">
+<h2 style="flex: 1 1 220px; margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 14px; color: #9AA3AD"><span style="color: {{accent}}">#</span> jak to działa</h2>
+<ol style="flex: 3 1 480px; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 0; padding: 0; list-style: none">
+<li style="display: flex; flex-direction: column; gap: 8px; padding: 20px; background: #101823; border: 1px solid #1F2B3A; border-radius: 10px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: {{accent}}">01 · detector/</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 18px">Analiza planszy</span>
+<span style="font-size: 15px; color: #C3CAD1">Detektor odczytuje wiersze, kolumny i ich grupy.</span>
+</li>
+<li style="display: flex; flex-direction: column; gap: 8px; padding: 20px; background: #101823; border: 1px solid #1F2B3A; border-radius: 10px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: {{accent}}">02 · model/</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 18px">Model</span>
+<span style="font-size: 15px; color: #C3CAD1">Komórki i grupy stają się obiektami, na których pracują reguły.</span>
+</li>
+<li style="display: flex; flex-direction: column; gap: 8px; padding: 20px; background: #101823; border: 1px solid #1F2B3A; border-radius: 10px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: {{accent}}">03 · resolver/</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 18px">Pipeline reguł</span>
+<span style="font-size: 15px; color: #C3CAD1">Każdy resolver zwraca pola do zamalowania i do wykluczenia.</span>
+</li>
+</ol>
+</section>
+
+<section style="display: flex; flex-wrap: wrap; gap: 16px 64px; padding-bottom: clamp(48px, 7vw, 96px)">
+<h2 style="flex: 1 1 220px; margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 14px; color: #9AA3AD"><span style="color: {{accent}}">#</span> jedna reguła, jeden plik</h2>
+<div style="flex: 3 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+<p style="margin: 0; max-width: 760px; font-size: clamp(18px, 1.6vw, 21px); line-height: 1.5">Zamiast jednego dużego algorytmu jest zestaw małych klas. Każda dziedziczy po wspólnym modelu i implementuje jedną metodę.</p>
+<div style="background: #101823; border: 1px solid #1F2B3A; border-radius: 10px; overflow: hidden">
+<div style="padding: 12px 16px; border-bottom: 1px solid #1F2B3A; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9AA3AD">resolver/legacy/basic/resolver-total-size.ts</div>
+<pre style="margin: 0; padding: 20px; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 1.7; color: #C3CAD1"><span style="color: {{accent}}">export class</span> TotalSizeResolver <span style="color: {{accent}}">extends</span> ResolverModel {
+    run(group: GroupModel, groupCells: CellModel[]): ResolverResult {
+        <span style="color: #9AA3AD">// [fragment prawdziwej reguły z repozytorium]</span>
+    }
+}</pre>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<p style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9AA3AD">strategie reguł</p>
+<ul style="display: flex; flex-wrap: wrap; gap: 10px; margin: 0; padding: 0; list-style: none; font-family: 'JetBrains Mono', monospace; font-size: 14px">
+<li style="padding: 8px 14px; border: 1px solid #3A4A5E; border-radius: 6px">basic</li>
+<li style="padding: 8px 14px; border: 1px solid #3A4A5E; border-radius: 6px">done</li>
+<li style="padding: 8px 14px; border: 1px solid #3A4A5E; border-radius: 6px">double</li>
+<li style="padding: 8px 14px; border: 1px solid #3A4A5E; border-radius: 6px">extend</li>
+<li style="padding: 8px 14px; border: 1px solid #3A4A5E; border-radius: 6px">hole</li>
+<li style="padding: 8px 14px; border: 1px solid #3A4A5E; border-radius: 6px">separated</li>
+<li style="padding: 8px 14px; border: 1px solid #3A4A5E; border-radius: 6px">first-and-biggest</li>
+</ul>
+</div>
+</div>
+</section>
+
+<section style="display: flex; flex-wrap: wrap; gap: 16px 64px; padding-bottom: clamp(48px, 7vw, 96px)">
+<h2 style="flex: 1 1 220px; margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 14px; color: #9AA3AD"><span style="color: {{accent}}">#</span> testy</h2>
+<div style="flex: 3 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 16px; max-width: 760px">
+<p style="margin: 0; font-size: clamp(18px, 1.6vw, 21px); line-height: 1.5">Obok każdej reguły leży jej plik <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: {{accent}}">*.spec.ts</span>. Reguła powstaje od testu: najpierw przykład wiersza, potem kod, który go rozwiązuje.</p>
+<p style="margin: 0; color: #C3CAD1">[Dopisz, czego nauczył Cię ten projekt albo co było najtrudniejsze.]</p>
+</div>
+</section>
+
+<section id="demo" style="display: flex; flex-direction: column; gap: 20px; padding-bottom: clamp(48px, 7vw, 96px)">
+<h2 style="margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 14px; color: #9AA3AD"><span style="color: {{accent}}">#</span> demo</h2>
+<div style="display: flex; align-items: center; justify-content: center; aspect-ratio: 16 / 8; background: #101823; border: 1px solid #1F2B3A; border-radius: 10px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9AA3AD; text-align: center; padding: 16px; box-sizing: border-box">[OSADZONA APLIKACJA: solver na żywo]</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 20px">
+<h2 style="margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 14px; color: #9AA3AD"><span style="color: {{accent}}">$</span> ls ../</h2>
+<div style="border-top: 1px solid #1F2B3A">
+<a href="#app-number-sums" style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 32px; padding: 22px 0; border-bottom: 1px solid #1F2B3A">
+<span style="flex: 1 1 260px; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(18px, 1.8vw, 24px)">number-sums-resolver</span>
+<span style="flex: 2 1 320px; color: #C3CAD1">Interaktywny solver łamigłówki liczbowej.</span>
+<span style="flex: 0 1 120px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9AA3AD">aplikacja</span>
+</a>
+<a href="#project-site" style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 32px; padding: 22px 0; border-bottom: 1px solid #1F2B3A">
+<span style="flex: 1 1 260px; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(18px, 1.8vw, 24px)">lukaszmical.pl</span>
+<span style="flex: 2 1 320px; color: #C3CAD1">Ta strona: dwujęzyczny serwis z własnym panelem admina.</span>
+<span style="flex: 0 1 120px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9AA3AD">opis</span>
+</a>
+</div>
+</section>
+
+<footer style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 32px; padding: 28px 0 36px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9AA3AD">
+<span>© 2026 Łukasz Micał</span>
+<span style="display: flex; flex-wrap: wrap; gap: 4px 28px">
+<a href="#github" style="padding: 12px 0">github</a>
+<a href="#linkedin" style="padding: 12px 0">linkedin</a>
+<a href="#cv" style="padding: 12px 0">cv.pdf</a>
+</span>
+</footer>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#63A0E3","options":["#63A0E3","#8FBCEE","#B8D4F2"]},"$preview":{"width":1440,"height":2700}}'>
+class Component extends DCLogic {
+renderVals() {
+const accent = this.props.accent ?? '#63A0E3';
+const rows = ['0010010100', '0100010010', '1000110001', '0100100010', '0010100100'];
+const clue = (bits) => {
+const runs = bits.join('').split('0').filter((r) => r.length).map((r) => r.length);
+return runs.length ? runs : [0];
+};
+const cells = [{ text: '', bg: 'transparent' }];
+for (let x = 0; x < 10; x++) {
+cells.push({ text: clue(rows.map((r) => r[x])).join('\n'), bg: 'transparent' });
+}
+rows.forEach((r) => {
+cells.push({ text: clue(r.split('')).join(' '), bg: 'transparent' });
+r.split('').forEach((b) => cells.push({ text: '', bg: b === '1' ? accent : '#172230' }));
+});
+return { accent, cells };
+}
+}
+</script>
+</body>
+</html>

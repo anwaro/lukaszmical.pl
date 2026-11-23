@@ -5,7 +5,6 @@ import {ResolverModel} from '../../../model/model-resolver';
 import {GroupModel} from '../../../model/model-group';
 import {ArrayHelper} from '../../../helper/helper-array';
 import {StatusGroupHelper} from '../../../helper/helper-status-group';
-import {SeparatedGroupHelper} from '../../../helper/helper-separated-group';
 
 export class FirstValueMustBelongToFirstIncludedGroupResolver extends ResolverModel {
     run(group: GroupModel, groupCells: CellModel[]): ResolverResult {

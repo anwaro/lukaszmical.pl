@@ -1,0 +1,21 @@
+{
+    "title": "Łukasz Micał | Case studies",
+    "description": "Case studies by Łukasz Micał: products described from the problem to the result.",
+    "command": "ls case-studies/",
+    "heading": "Case studies",
+    "lead": "Three products described from the problem to the result: what had to be done, which decisions I made and why.",
+    "listLabel": "Case studies list",
+    "more": "read case study ->",
+    "role": "role",
+    "period": "period",
+    "stack": "stack",
+    "address": "address",
+    "iconAlt": "{name} icon",
+    "back": "all case studies",
+    "next": "next case study",
+    "read": "read ->",
+    "cta": {
+        "text": "Smaller things — solvers, tools, experiments — live in projects.",
+        "button": "cd projects"
+    }
+}

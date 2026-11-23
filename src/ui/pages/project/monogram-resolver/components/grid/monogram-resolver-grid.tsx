@@ -92,7 +92,7 @@ export function PageMonogramResolverGrid({groups, cells}: Props) {
                         <tr key={group.id}>
                             <td
                                 onClick={() => copyGroupValues(group)}
-                                className={`border-right flex w-40 items-center justify-end px-1 ${groupStatuClasses[groupStatus(group)]}`}
+                                className={`flex w-40 items-center justify-end px-1 ${groupStatuClasses[groupStatus(group)]}`}
                             >
                                 {group.values.map((v, i) => (
                                     <div
@@ -146,7 +146,7 @@ export function PageMonogramResolverGrid({groups, cells}: Props) {
 
                     <tr className={'align-bottom'}>
                         <td />
-                        {columns.map((group, index) => (
+                        {columns.map((group) => (
                             <td key={group.id}>
                                 <PageMonogramResolverCopyGroup
                                     group={group}

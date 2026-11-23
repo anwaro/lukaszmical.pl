@@ -1,5 +1,5 @@
 import {TaskModel} from '../model/model-task';
-import {EventModel, EventType} from '../model/model-event';
+import {EventType} from '../model/model-event';
 import {StoreModel} from '../model/model-store';
 import {PrepareImageToNumberDetect} from '../image/prepare-image-to-number-detect';
 import {ImageFileLoader} from '../image/image-file-loader';
@@ -7,7 +7,7 @@ import {ImageFileLoader} from '../image/image-file-loader';
 export class PrepareImageToNumberDetectTask extends TaskModel {
     public eventName = EventType.imageProcessedToNumberDetect;
 
-    async run(store: StoreModel, emitEvent: (event: EventModel) => void) {
+    async run(store: StoreModel) {
         const service = new PrepareImageToNumberDetect();
         const loader = new ImageFileLoader();
 

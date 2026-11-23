@@ -26,7 +26,7 @@ export function PageMonogramResolverImage({image, processedImage, groups}: Props
             aspectRatio: image.data.width / image.data.height,
             backgroundImage: `url(${imageMode === 'original' ? image.src : processedImage.src})`,
         };
-    }, [imageMode, image, image.data.width, width]);
+    }, [imageMode, image, processedImage.src, width]);
 
     const value = useCallback(
         (value: number) => {

@@ -1,0 +1,21 @@
+{
+    "title": "Łukasz Micał | Case studies",
+    "description": "Case studies Łukasza Micała: produkty opisane od problemu do rezultatu.",
+    "command": "ls case-studies/",
+    "heading": "Case studies",
+    "lead": "Trzy produkty opisane od problemu do rezultatu: co było do zrobienia, jakie decyzje podjąłem i dlaczego.",
+    "listLabel": "Lista case studies",
+    "more": "czytaj case study ->",
+    "role": "rola",
+    "period": "okres",
+    "stack": "stack",
+    "address": "adres",
+    "iconAlt": "Ikona {name}",
+    "back": "wszystkie case studies",
+    "next": "następne case study",
+    "read": "czytaj ->",
+    "cta": {
+        "text": "Mniejsze rzeczy — solvery, narzędzia, eksperymenty — są w projektach.",
+        "button": "cd projekty"
+    }
+}

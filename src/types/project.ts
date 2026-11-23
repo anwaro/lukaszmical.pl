@@ -21,26 +21,44 @@ export type ProjectStringsEntity = Record<
 
 export type LocalizedProjectStringsEntity = Record<ProjectStringType, string>;
 
-export type ProjectStringsListItem = {
-    description: string;
-    name: string;
-};
+export type ProjectStringsListItem = Omit<LocalizedProjectStringsEntity, 'content'>;
 
 export type ProjectListItem = Pick<
     ProjectRow,
-    'id' | 'type' | 'url' | 'createdAt' | 'cover'
+    | 'id'
+    | 'type'
+    | 'url'
+    | 'createdAt'
+    | 'cover'
+    | 'stack'
+    | 'period'
+    | 'siteUrl'
+    | 'repoUrl'
+    | 'featured'
 > &
     ProjectStringsListItem;
 
 export type ProjectEntity = ProjectRow & ProjectStringsEntity;
 export type LocalizedProjectEntity = ProjectRow & LocalizedProjectStringsEntity;
 
-export const ProjectTypeList: ProjectType[] = ['external', 'page', 'project'];
+export const ProjectTypeList: ProjectType[] = [
+    'external',
+    'page',
+    'project',
+    'case-study',
+];
 export const ProjectLocalesList: ProjectLocale[] = ['en', 'pl'];
 export const ProjectStringTypeList: ProjectStringType[] = [
     'name',
     'description',
     'content',
+    'headline',
+    'lead',
+    'role',
+    'problem',
+    'approach',
+    'result',
+    'meta',
 ];
 
 export type AssetType = 'js' | 'css';
@@ -51,3 +69,18 @@ export type LocalProject = ProjectRow & {
     cssFiles: string[];
     jsFiles: string[];
 };
+
+// Splits an entity into the `projects` row and its localized strings.
+export function splitProjectEntity<T extends ProjectStringsEntity>(
+    entity: T,
+): {row: Omit<T, ProjectStringType>; strings: ProjectStringsEntity} {
+    const row: Record<string, unknown> = {...entity};
+    const strings = {} as ProjectStringsEntity;
+
+    for (const type of ProjectStringTypeList) {
+        strings[type] = entity[type];
+        delete row[type];
+    }
+
+    return {row: row as Omit<T, ProjectStringType>, strings};
+}

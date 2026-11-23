@@ -86,7 +86,7 @@ export class MonogramResolverCanvas {
         );
     }
 
-    displayImageElement(store: StoreData) {
+    displayImageElement(_store: StoreData) {
         // const img = document.getElementById('image-preview') as HTMLImageElement;
         // const canvas = document.createElement('canvas');
         // const ctx = canvas.getContext('2d');
@@ -136,7 +136,6 @@ export class MonogramResolverCanvas {
         const rows = store.groups.filter((g) => g.type === GroupType.row);
 
         for (let index = 0; index < rows.length; index++) {
-            const row = rows[index];
             const {left, top, height, width} = RowHelper.valuesRectangle(
                 index,
                 store.rowValuesBounds,
@@ -165,7 +164,6 @@ export class MonogramResolverCanvas {
         const columns = store.groups.filter((g) => g.type === GroupType.column);
 
         for (let index = 0; index < columns.length; index++) {
-            const column = columns[index];
             const {left, top, height, width} = ColumnHelper.valuesRectangle(
                 index,
                 store.columnValuesBounds,

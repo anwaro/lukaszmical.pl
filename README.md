@@ -52,7 +52,7 @@ pushed with `pnpm db:push:prod` (uses `.env.prod`, which holds the **direct/unpo
 pnpm dev      # start Next.js dev server
 pnpm build    # production build
 pnpm start    # run the production build
-pnpm lint     # eslint (next lint)
+pnpm lint     # oxlint (.oxlintrc.json)
 npx vitest    # run unit tests (no dedicated npm script)
 ```
 

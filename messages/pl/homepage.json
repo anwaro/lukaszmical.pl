@@ -1,14 +1,38 @@
 {
-    "title": "Łukasz Micał | Strona osobista",
-    "description": "Strona osobista i portfolio Łukasza Micała — programisty. Interaktywne projekty, w tym solvery nonogramów i number sums.",
-    "hello": "Cześć.",
-    "iAm": "I am",
-    "name": "Lucas",
-    "work": "Projekty",
-    "about": "O mnie",
-    "contact": "Kontakt",
-    "alt": {
-        "logo": "Logo strony lukaszmical.pl",
-        "profile": "Zdjęcie Łukasza Micała"
+    "title": "Łukasz Micał | Frontend developer",
+    "description": "Portfolio Łukasza Micała — frontend developera. Case studies produktów budowanych od interfejsu po API oraz interaktywne projekty.",
+    "hero": {
+        "command": "whoami",
+        "titleLine1": "Łukasz Micał,",
+        "titleLine2": "frontend developer",
+        "lead": "Buduję produkty od interfejsu po API — od serwisu biegowego po aplikację, która otwiera bramę. Pracuję głównie w React, Next.js i TypeScripcie.",
+        "ctaPrimary": "cd case-studies",
+        "ctaSecondary": "napisz do mnie"
+    },
+    "solver": {
+        "label": "monogram-resolver",
+        "status": "rozwiązano",
+        "caption": "Każda reguła solvera to osobny moduł z własnym testem.",
+        "alt": "Rozwiązany nonogram układający się w znak nawiasów ostrych z ukośnikiem"
+    },
+    "caseStudies": {
+        "command": "ls case-studies/",
+        "problem": "problem",
+        "approach": "podejście",
+        "result": "rezultat",
+        "more": "czytaj case study ->"
+    },
+    "projects": {
+        "command": "ls -l projekty/"
+    },
+    "about": {
+        "command": "cat o-mnie.md",
+        "text": "Cenię kod, który da się przeczytać po roku: małe moduły, jasne nazwy, testy obok źródeł. [Dwa zdania o doświadczeniu i o tym, czego szukasz.]",
+        "stackLabel": "stack"
+    },
+    "contact": {
+        "command": "mail --to",
+        "emailPlaceholder": "[TWÓJ E-MAIL]",
+        "text": "Szukasz frontendowca do projektu? Napisz — odpowiadam w ciągu [X] dni."
     }
 }

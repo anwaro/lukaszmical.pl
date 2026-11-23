@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useActionState, useEffect, useState} from 'react';
+import React, {useActionState, useEffect, useState, useEffectEvent} from 'react';
 
 import {mdiCheck, mdiClose} from '@mdi/js';
 
@@ -17,18 +17,22 @@ type Props = {
 export const EditOrder = ({project, onUpdate}: Props) => {
     const [value, setValue] = useState(project.order);
     const [isEditing, setIsEditing] = useState(false);
-    const [state, formAction, isPending] = useActionState(updateProjectField, {
+    const [, formAction, isPending] = useActionState(updateProjectField, {
         id: project.id,
         order: project.order,
     });
 
+    const onSettled = useEffectEvent(() => {
+        onUpdate(project.id, {order: value});
+        setIsEditing(false);
+    });
+
     useEffect(() => {
         if (!isPending) {
-            onUpdate(project.id, {order: value});
             // Close the editor once the server action settles (isPending
             // false); reacting to async completion is the effect's purpose.
             // eslint-disable-next-line react-hooks/set-state-in-effect
-            setIsEditing(false);
+            onSettled();
         }
     }, [isPending]);
 

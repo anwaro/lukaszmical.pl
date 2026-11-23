@@ -69,6 +69,36 @@ export async function metadataForPage(
     };
 }
 
+// Metadata for a CMS entry (project or case study) at `path`.
+export function projectMetadata(
+    project: {
+        name: string;
+        description: string;
+        cover: string | null;
+        published: boolean;
+    },
+    locale: ProjectLocale,
+    path: string,
+): Metadata {
+    const title = project.name ? `${project.name} | ${siteName}` : siteName;
+    const description = project.description || undefined;
+
+    return {
+        title,
+        description,
+        robots: project.published ? undefined : {index: false, follow: false},
+        alternates: buildAlternates(locale, path),
+        openGraph: {
+            type: 'article',
+            title,
+            description,
+            url: localePath(locale, path),
+            images: [project.cover ?? ogImage],
+        },
+        twitter: {images: [project.cover ?? ogImage]},
+    };
+}
+
 const author = {
     '@type': 'Person',
     name: siteName,
@@ -80,7 +110,7 @@ export function personJsonLd(): Record<string, unknown> {
     return {
         '@context': 'https://schema.org',
         ...author,
-        jobTitle: 'Web Developer',
+        jobTitle: 'Frontend Developer',
     };
 }
 

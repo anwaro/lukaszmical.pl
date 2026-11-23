@@ -1,5 +1,29 @@
 {
-    "title": "Łukasz Micał | My works",
-    "description": "Interactive projects and works by Łukasz Micał — including nonogram and number-sums solvers.",
-    "wip": "Work in progress"
+    "title": "Łukasz Micał | Projects",
+    "description": "Interactive projects by Łukasz Micał — solvers, tools and experiments, including nonogram and number-sums solvers.",
+    "command": "ls -l projects/",
+    "heading": "Projects",
+    "lead": "Solvers, tools and experiments. Some come with a write-up of how they work, some are simply an app you can run.",
+    "listLabel": "Projects list",
+    "badge": {
+        "page": "write-up",
+        "app": "app"
+    },
+    "legend": {
+        "page": "a page with a write-up and a demo",
+        "app": "opens right away"
+    },
+    "more": {
+        "page": "read write-up ->",
+        "app": "run ->"
+    },
+    "coverAlt": "Screenshot: {name}",
+    "back": "all projects",
+    "demo": "run demo",
+    "repo": "code on github",
+    "others": "ls ../",
+    "cta": {
+        "text": "Bigger products are described in case studies.",
+        "button": "cd case-studies"
+    }
 }

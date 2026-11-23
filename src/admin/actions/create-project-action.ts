@@ -5,6 +5,7 @@ import {
     ProjectEntity,
     ProjectLocalesList,
     ProjectStringTypeList,
+    splitProjectEntity,
 } from '@/types/project';
 import {DrizzleProjectString} from '@/services/drizzle/drizzle-project-string';
 import {auth} from '@/utils/auth/auth';
@@ -21,7 +22,9 @@ export const createProjectAction = async (
     entity: CreateProjectEntity,
 ): Promise<CreateProjectResult> => {
     await auth();
-    const {description, name, content, ...data} = entity;
+    const {row, strings: values} = splitProjectEntity(entity);
+    // An empty date means "now" — let the column default fill it in.
+    const data = {...row, createdAt: row.createdAt || undefined};
     const client = new DrizzleProject();
     const projectString = new DrizzleProjectString();
 
@@ -33,7 +36,7 @@ export const createProjectAction = async (
                 projectId: project.id,
                 type,
                 locale,
-                value: entity[type][locale],
+                value: values[type][locale] ?? '',
             })),
         );
 

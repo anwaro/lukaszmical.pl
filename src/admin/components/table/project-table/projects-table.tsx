@@ -35,6 +35,7 @@ export const ProjectsTable = ({projects}: Props) => {
             head={{
                 id: 'Id',
                 url: 'Url',
+                type: 'Type',
                 cover: 'Cover',
                 createdAt: 'Created at',
                 order: 'Order',
@@ -43,16 +44,18 @@ export const ProjectsTable = ({projects}: Props) => {
             renderData={{
                 order: (item) => <EditOrder project={item} onUpdate={update} />,
                 cover: (item) => (
-                    <Image
-                        src={
-                            item.cover
-                                ? item.cover
-                                : `/projects/${item.url}/image/cover.jpg`
-                        }
-                        alt={item.url}
-                        height={40}
-                        width={80}
-                    />
+                    item.cover || item.type === 'project' ? (
+                        <Image
+                            src={
+                                item.cover
+                                    ? item.cover
+                                    : `/projects/${item.url}/image/cover.jpg`
+                            }
+                            alt={item.url}
+                            height={40}
+                            width={80}
+                        />
+                    ) : null
                 ),
                 createdAt: (item) => (
                     <small className="text-slate-400">
@@ -62,10 +65,16 @@ export const ProjectsTable = ({projects}: Props) => {
                 actions: (item) => (
                     <ButtonsGroup type="justify-start lg:justify-end" noWrap>
                         <Button
-                            href={`/api/projects/show?slug=${item.url}`}
+                            href={
+                                item.type === 'case-study'
+                                    ? `/case-studies/${item.url}`
+                                    : item.type === 'page'
+                                      ? `/projects/${item.url}`
+                                      : `/api/projects/show?slug=${item.url}`
+                            }
                             color="info"
                             icon={mdiOpenInNew}
-                            title={'Edit project'}
+                            title={'Open on site'}
                             target={'_blank'}
                             asAnchor
                             small

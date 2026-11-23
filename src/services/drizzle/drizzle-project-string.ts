@@ -5,6 +5,7 @@ import {
     ProjectStringInsert,
     ProjectStringsEntity,
     ProjectStringType,
+    ProjectStringTypeList,
 } from '@/types/project';
 
 import {db} from './drizzle-client';
@@ -14,11 +15,9 @@ import {
 } from './schema';
 
 function emptyStrings(): ProjectStringsEntity {
-    return {
-        name: {pl: '', en: ''},
-        description: {pl: '', en: ''},
-        content: {pl: '', en: ''},
-    };
+    return Object.fromEntries(
+        ProjectStringTypeList.map((type) => [type, {pl: '', en: ''}]),
+    ) as ProjectStringsEntity;
 }
 
 export class DrizzleProjectString {
@@ -51,7 +50,7 @@ export class DrizzleProjectString {
         locale: ProjectLocale,
         value: string,
     ): Promise<void> {
-        await db
+        const updated = await db
             .update(projectsStrings)
             .set({value})
             .where(
@@ -60,6 +59,14 @@ export class DrizzleProjectString {
                     eq(projectsStrings.type, type),
                     eq(projectsStrings.locale, locale),
                 ),
-            );
+            )
+            .returning({id: projectsStrings.id});
+
+        // Projects created before a string type existed have no row for it.
+        if (!updated.length) {
+            await db
+                .insert(projectsStrings)
+                .values({projectId: Number(projectId), type, locale, value});
+        }
     }
 }

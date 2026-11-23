@@ -3,7 +3,6 @@ import React from 'react';
 import {Button} from '../components/button/button';
 import CardBox from '../components/CardBox';
 import SectionFullScreen from '../components/Section/FullScreen';
-import {getPageTitle} from '../config';
 
 export const ErrorPage = () => {
     return (

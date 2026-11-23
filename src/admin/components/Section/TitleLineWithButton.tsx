@@ -1,4 +1,4 @@
-import React, {Children, ReactNode} from 'react';
+import React, {ReactNode} from 'react';
 
 import {IconRounded} from '@/admin/components/icon/icon-rounded';
 
@@ -17,8 +17,6 @@ export default function SectionTitleLineWithButton({
     main = false,
     children,
 }: Props) {
-    const hasChildren = !!Children.count(children);
-
     return (
         <section
             className={`${main ? '' : 'pt-6'} mb-6 flex items-center justify-between`}
