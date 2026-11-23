@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useActionState} from 'react';
+import React, {startTransition, useActionState} from 'react';
 
 import {ProjectEntity} from '@/types/project';
 import {updateProjectAction} from '@/admin/actions/update-project-action';
@@ -19,7 +19,9 @@ export function EditProjectForm({project}: Props) {
     return (
         <ProjectForm
             initialState={project}
-            onSubmit={(form) => formAction({id: project.id, ...form})}
+            onSubmit={(form) =>
+                startTransition(() => formAction({id: project.id, ...form}))
+            }
             error={state.status === 'error' ? state.error : undefined}
             isPending={isPending}
         />

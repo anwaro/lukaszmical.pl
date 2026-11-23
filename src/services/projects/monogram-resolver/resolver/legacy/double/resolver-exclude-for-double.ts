@@ -4,7 +4,6 @@ import {ResolverIndexResult} from '../../../model/model-resolver-index-result';
 import {ResolverModel} from '../../../model/model-resolver';
 import {GroupModel} from '../../../model/model-group';
 import {StatusGroupHelper} from '../../../helper/helper-status-group';
-import {SeparatedGroupHelper} from '../../../helper/helper-separated-group';
 
 export class ExcludeForDoubleResolver extends ResolverModel {
     run(group: GroupModel, groupCells: CellModel[]): ResolverResult {

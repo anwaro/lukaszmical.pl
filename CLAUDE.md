@@ -15,7 +15,7 @@ pnpm install     # install deps (this repo uses pnpm — not npm/yarn)
 pnpm dev         # dev server at http://localhost:3000
 pnpm build       # production build
 pnpm start       # serve the production build
-pnpm lint        # eslint (next lint)
+pnpm lint        # oxlint (.oxlintrc.json)
 npx vitest       # run unit tests (there is NO test npm script)
 npx vitest run src/services/projects/monogram-resolver   # scope to a folder
 ```
@@ -34,7 +34,7 @@ from the Next.js app.
   `TotalSizeResolver`.
 - **Formatting** (Prettier): 4-space indent, single quotes, semicolons, trailing commas,
   `printWidth: 85`, no bracket spacing (`{foo}` not `{ foo }`), always-parens arrows.
-- **Imports**: eslint enforces `import/order` grouping with blank lines between groups.
+- **Imports**: oxlint enforces `import-js/order` grouping with blank lines between groups.
   Keep React first, then internal `@/*`, then relative. Run `pnpm lint` before finishing.
 - **i18n**: user-facing routes live under `src/app/[locale]`; strings go in `messages/en`
   and `messages/pl` via `next-intl`.
@@ -49,6 +49,7 @@ src/services/       domain logic
   projects/number-sums-resolver/
   drizzle/  r2/  animation/
 src/ui/             shared UI components + page compositions
+  site/             public site shell, shared parts, MDX content blocks
 src/types/          shared types
 server/             standalone Socket.IO server
 scripts/            build/util scripts
@@ -85,6 +86,24 @@ a pipeline of small, single-responsibility **resolvers**.
   hash (`ADMIN_PASSWORD_HASH`) verified in the login action, `jose` HS256 session cookie
   (`AUTH_SECRET`) checked by middleware and `auth()`. Generate the hash with
   `pnpm auth:hash '<password>'`.
+
+## Content (CMS)
+
+- **Case studies and projects** share the `projects` table (`type`: `case-study`,
+  `page`, `project`, `external`) with localized strings in `projects_strings`. Lists
+  are split by `getProjectList(locale, {caseStudies})`; routes are `/case-studies/*`
+  and `/projects/*`. Long content is MDX rendered with the blocks from
+  `src/ui/site/content-mdx-components.tsx` (`<Section>`, `<Flow>`, `<Decisions>`, ...).
+- **Translations** live in the `translations` table and override, key by key, the
+  defaults in `messages/<locale>/*.json` (`src/services/content/content-store.ts`).
+  A new UI string needs a default in both JSON files; editors change it in
+  `/admin/translations`. Non-localized values (e-mail, links, stack) are in `settings`.
+- **Homepage** is edited in `/admin/homepage` — its fields are declared in
+  `src/admin/content-groups.ts` and stored as `homepage.*` translations + settings.
+- Saving in the admin expires the `cms-content` cache tag; rows changed directly in
+  the database are not picked up until then.
+- `pnpm db:seed:content` inserts the design's case studies and projects (skips slugs
+  that already exist).
 
 ## External services
 

@@ -27,12 +27,16 @@ export function useRefState<S>(
     const [reactState, setReactState] = useState(initialState);
     const stateRef = useRef(reactState);
 
-    const setState = useCallback((arg: S | ((state: S) => void)) => {
-        if (!mounted.current && blockIfUnmounted) return;
-        // @ts-ignore
-        stateRef.current = typeof arg === 'function' ? arg(stateRef.current) : arg;
-        setReactState(stateRef.current);
-    }, []);
+    const setState = useCallback(
+        (arg: S | ((state: S) => void)) => {
+            if (!mounted.current && blockIfUnmounted) return;
+            // @ts-ignore
+            const next: S = typeof arg === 'function' ? arg(stateRef.current) : arg;
+            stateRef.current = next;
+            setReactState(next);
+        },
+        [mounted, blockIfUnmounted],
+    );
 
     return [reactState, stateRef, setState];
 }

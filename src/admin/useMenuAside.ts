@@ -1,6 +1,13 @@
 import {useMemo} from 'react';
 
-import {mdiCodeJson, mdiMonitor, mdiViewList} from '@mdi/js';
+import {
+    mdiBookOpenPageVariant,
+    mdiCodeJson,
+    mdiHome,
+    mdiMonitor,
+    mdiTranslate,
+    mdiViewList,
+} from '@mdi/js';
 
 import {MenuAsideItem} from './interfaces';
 
@@ -15,13 +22,24 @@ export function useMenuAside() {
                 label: 'Dashboard',
             },
             {
-                label: 'Projects',
-                icon: mdiCodeJson,
+                href: '/admin/homepage',
+                icon: mdiHome,
+                label: 'Homepage',
+            },
+            {
+                href: '/admin/case-studies',
+                icon: mdiBookOpenPageVariant,
+                label: 'Case studies',
+            },
+            {
                 href: '/admin/projects',
-                menu: examples.map((item) => ({
-                    label: item,
-                    href: `/admin/examples/${item}`,
-                })),
+                icon: mdiCodeJson,
+                label: 'Projects',
+            },
+            {
+                href: '/admin/translations',
+                icon: mdiTranslate,
+                label: 'Translations',
             },
             {
                 label: 'Example',

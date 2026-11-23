@@ -10,8 +10,9 @@ export const CheckboxFieldGroup = (props: Props) => {
         <div
             className={`-mb-3 flex flex-wrap justify-start ${props.isColumn ? 'flex-col' : ''}`}
         >
+            {/* toArray drops the empty nodes left by conditional children. */}
             {/* @ts-ignore */}
-            {Children.map(props.children, (child: ReactElement) =>
+            {Children.toArray(props.children).map((child: ReactElement) =>
                 cloneElement(child, {
                     /* @ts-ignore */
                     className: `mr-6 mb-3 last:mr-0 ${child.props.className}`,

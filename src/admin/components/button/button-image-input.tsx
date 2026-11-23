@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect} from 'react';
+import React, {ChangeEvent, useEffect, useEffectEvent} from 'react';
 
 import {mdiImage} from '@mdi/js';
 
@@ -20,9 +20,13 @@ export function ButtonImageInput({onChange, className}: Props) {
         }
     };
 
+    const onUploaded = useEffectEvent((uploadedUrl: string) => {
+        onChange(uploadedUrl);
+    });
+
     useEffect(() => {
         if (url) {
-            onChange(url);
+            onUploaded(url);
         }
     }, [url]);
 

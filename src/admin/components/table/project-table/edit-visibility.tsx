@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useActionState, useEffect} from 'react';
+import React, {useActionState, useEffect, useEffectEvent} from 'react';
 
 import {mdiEye, mdiEyeOff} from '@mdi/js';
 
@@ -35,10 +35,12 @@ export const EditVisibility = ({project, className, onUpdate}: Props) => {
         published: project.published,
     });
 
+    const onPublishedChange = useEffectEvent((published: boolean) => {
+        onUpdate(project.id, {published});
+    });
+
     useEffect(() => {
-        onUpdate(project.id, {
-            published: FormBoolean.toBoolean(state.published),
-        });
+        onPublishedChange(FormBoolean.toBoolean(state.published));
     }, [state.published]);
 
     return (

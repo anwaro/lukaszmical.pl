@@ -30,10 +30,10 @@ describe('CombinationResolver', () => {
         expect(result.length).toEqual(10);
     });
 
-    it('Should create 10 combination', () => {
+    it('Should create 455 combination', () => {
         const result = resolver.getAllVariants([2, 2, 2], 20);
 
-        expect(result.length).toEqual(10);
+        expect(result.length).toEqual(455);
     });
 
     it('Should create variants', () => {

@@ -6,10 +6,18 @@ export const projectStringType = pgEnum('ProjectStringType', [
     'name',
     'description',
     'content',
+    'headline',
+    'lead',
+    'role',
+    'problem',
+    'approach',
+    'result',
+    'meta',
 ]);
 
 export const projectType = pgEnum('ProjectType', [
     'external',
     'page',
     'project',
+    'case-study',
 ]);

@@ -1,5 +1,29 @@
 {
-    "title": "Łukasz Micał | Moje projekty",
-    "description": "Interaktywne projekty i prace Łukasza Micała — w tym solvery nonogramów i number sums.",
-    "wip": "Work in progress"
+    "title": "Łukasz Micał | Projekty",
+    "description": "Interaktywne projekty Łukasza Micała — solvery, narzędzia i eksperymenty, w tym solvery nonogramów i number sums.",
+    "command": "ls -l projekty/",
+    "heading": "Projekty",
+    "lead": "Solvery, narzędzia i eksperymenty. Część ma opis tego, jak działa, część to po prostu aplikacja, którą można uruchomić.",
+    "listLabel": "Lista projektów",
+    "badge": {
+        "page": "opis",
+        "app": "aplikacja"
+    },
+    "legend": {
+        "page": "strona z opisem i demo",
+        "app": "otwiera się od razu"
+    },
+    "more": {
+        "page": "czytaj opis ->",
+        "app": "uruchom ->"
+    },
+    "coverAlt": "Zrzut ekranu: {name}",
+    "back": "wszystkie projekty",
+    "demo": "uruchom demo",
+    "repo": "kod na githubie",
+    "others": "ls ../",
+    "cta": {
+        "text": "Większe produkty opisuję w case studies.",
+        "button": "cd case-studies"
+    }
 }

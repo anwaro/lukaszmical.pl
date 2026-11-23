@@ -73,7 +73,9 @@ export class R2Client {
             Bucket: this.bucket,
             Key: key,
         });
-        contentType && (command.input.ResponseContentType = contentType);
+        if (contentType) {
+            command.input.ResponseContentType = contentType;
+        }
 
         return await this.client.send(command);
     }

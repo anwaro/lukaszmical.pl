@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>Strona główna — wersja terminalowa</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+body{margin:0}
+a{color:#E8ECEF;text-decoration:none}a:hover{color:#63A0E3}
+</style>
+</helmet>
+<div style="background: #0A0F16; color: #E8ECEF; font-family: Inter, system-ui, sans-serif; font-size: 16px; line-height: 1.6">
+<div style="max-width: 1240px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 60px); box-sizing: border-box">
+
+<header style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 32px; padding: 24px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px">
+<a href="#top" style="display: inline-flex; align-items: center; gap: 14px; font-weight: 700">
+<svg role="img" aria-label="Logo Łukasz Micał" width="32" height="40" viewBox="0 0 40 50" fill="none"><polygon fill="#032b57" points="0 25, 0 50, 10 37.5"></polygon><polygon fill="#064a96" points="0 0, 0 25, 20 50, 30 37.5"></polygon><polygon fill="#0a6bd7" points="40 0, 20 25, 30 37.5, 40 25"></polygon><polygon fill="#63a0e3" points="40 25, 30 37.5, 40 50"></polygon></svg>
+<span>lukasz-mical</span></a>
+<nav aria-label="Główna" style="display: flex; flex-wrap: wrap; gap: 4px 28px">
+<a href="CaseStudies.dc.html" style="padding: 12px 0">case-studies/</a>
+<a href="Projects.dc.html" style="padding: 12px 0">projekty/</a>
+<a href="#o-mnie" style="padding: 12px 0">o-mnie.md</a>
+<a href="#kontakt" style="padding: 12px 0">kontakt</a>
+<a href="#en" style="padding: 12px 0; color: #9AA3AD">pl | en</a>
+</nav>
+</header>
+
+<section id="top" style="display: flex; flex-wrap: wrap; align-items: center; gap: 48px 64px; padding: clamp(40px, 7vw, 96px) 0 clamp(56px, 8vw, 112px)">
+<div style="flex: 3 1 440px; min-width: 0; display: flex; flex-direction: column; gap: 28px">
+<p style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #9AA3AD"><span style="color: {{accent}}">$</span> whoami</p>
+<h1 style="margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(34px, 5.2vw, 72px); line-height: 1.08; letter-spacing: -0.03em">Łukasz Micał,<br>frontend developer<span style="color: {{accent}}">_</span></h1>
+<p style="margin: 0; max-width: 540px; font-size: clamp(17px, 1.4vw, 19px); color: #C3CAD1">Buduję produkty od interfejsu po API — od serwisu biegowego po aplikację, która otwiera bramę. Pracuję głównie w React, Next.js i TypeScripcie.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 15px">
+<a href="#case-studies" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; box-sizing: border-box; background: {{accent}}; color: #0A0F16; font-weight: 700; border-radius: 6px">cd case-studies</a>
+<a href="#kontakt" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; box-sizing: border-box; border: 1px solid #3A4A5E; font-weight: 500; border-radius: 6px">napisz do mnie</a>
+</div>
+</div>
+
+<div style="flex: 2 1 360px; min-width: 0; background: #101823; border: 1px solid #1F2B3A; border-radius: 10px; overflow: hidden">
+<div style="display: flex; justify-content: space-between; gap: 16px; padding: 12px 16px; border-bottom: 1px solid #1F2B3A; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9AA3AD">
+<span>monogram-resolver</span>
+<span style="color: {{accent}}">rozwiązano</span>
+</div>
+<div role="img" aria-label="Rozwiązany nonogram układający się w znak nawiasów ostrych z ukośnikiem" style="display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); gap: 3px; padding: 20px">
+<sc-for list="{{ cells }}" as="c" hint-placeholder-count="66">
+<div style="aspect-ratio: 1; display: flex; align-items: flex-end; justify-content: center; border-radius: 2px; font-family: 'JetBrains Mono', monospace; font-size: 11px; line-height: 1.15; white-space: pre-line; text-align: center; color: #9AA3AD; background: {{ c.bg }}">{{ c.text }}</div>
+</sc-for>
+</div>
+<p style="margin: 0; padding: 12px 16px; border-top: 1px solid #1F2B3A; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9AA3AD">Każda reguła solvera to osobny moduł z własnym testem.</p>
+</div>
+</section>
+
+<section id="case-studies" style="padding-bottom: clamp(64px, 8vw, 112px)">
+<h2 style="margin: 0 0 32px; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 14px; color: #9AA3AD"><span style="color: {{accent}}">$</span> ls case-studies/</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px">
+
+<article style="display: flex; flex-direction: column; background: #101823; border: 1px solid #1F2B3A; border-radius: 10px; overflow: hidden">
+<div style="padding: 12px 20px; border-bottom: 1px solid #1F2B3A; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9AA3AD">01 · itmbw-pl.md</div>
+<div style="display: flex; flex-direction: column; gap: 20px; padding: 28px 20px 24px; flex: 1">
+<img src="/_blob/c563a3e461eb5257a7a80cc1a7365ae2" alt="Ikona itmbw.pl" style="width: 64px; height: 64px; border-radius: 14px; display: block">
+<h3 style="margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(24px, 2.4vw, 32px); line-height: 1.15; letter-spacing: -0.02em">itmbw.pl — serwis biegowy z aplikacją dla biegaczy</h3>
+<dl style="display: flex; flex-direction: column; gap: 14px; margin: 0; font-size: 15px">
+<div style="display: flex; flex-wrap: wrap; gap: 4px 16px"><dt style="flex: 0 0 96px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: {{accent}}">problem</dt><dd style="flex: 1 1 220px; margin: 0; color: #C3CAD1">Jeden serwis łączy treści redakcyjne o biegach z wynikami, rankingami i kontami biegaczy ITMBWieczorem.</dd></div>
+<div style="display: flex; flex-wrap: wrap; gap: 4px 16px"><dt style="flex: 0 0 96px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: {{accent}}">podejście</dt><dd style="flex: 1 1 220px; margin: 0; color: #C3CAD1">Motyw WordPressa na Tailwindzie, a w nim SPA w Preact i TypeScripcie: wyniki, kalendarz, konto, generator numerów startowych. Dane z osobnego API w Laravelu z własnym CMS-em i wspólnym czyszczeniem cache.</dd></div>
+<div style="display: flex; flex-wrap: wrap; gap: 4px 16px"><dt style="flex: 0 0 96px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: {{accent}}">rezultat</dt><dd style="flex: 1 1 220px; margin: 0; color: #C3CAD1">[Efekt — np. szybkość stron, liczba biegaczy i wyników w serwisie.]</dd></div>
+</dl>
+<a href="CaseStudy.dc.html" style="margin-top: auto; padding: 12px 0 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; color: {{accent}}">czytaj case study -&gt;</a>
+</div>
+</article>
+
+<article style="display: flex; flex-direction: column; background: #101823; border: 1px solid #1F2B3A; border-radius: 10px; overflow: hidden">
+<div style="padding: 12px 20px; border-bottom: 1px solid #1F2B3A; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9AA3AD">02 · gdzie-transmisja.md</div>
+<div style="display: flex; flex-direction: column; gap: 20px; padding: 28px 20px 24px; flex: 1">
+<img src="/_blob/950d42f16cd2c24329ded9103de14a1c" alt="Ikona Gdzie Transmisja" style="width: 64px; height: 64px; border-radius: 14px; display: block">
+<h3 style="margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(24px, 2.4vw, 32px); line-height: 1.15; letter-spacing: -0.02em">Gdzie Transmisja — wyszukiwarka transmisji sportowych</h3>
+<dl style="display: flex; flex-direction: column; gap: 14px; margin: 0; font-size: 15px">
+<div style="display: flex; flex-wrap: wrap; gap: 4px 16px"><dt style="flex: 0 0 96px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: {{accent}}">problem</dt><dd style="flex: 1 1 220px; margin: 0; color: #C3CAD1">Transmisje, miejscówki i ligi w jednym miejscu — z danych zbieranych z zewnętrznych źródeł.</dd></div>
+<div style="display: flex; flex-wrap: wrap; gap: 4px 16px"><dt style="flex: 0 0 96px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: {{accent}}">podejście</dt><dd style="flex: 1 1 220px; margin: 0; color: #C3CAD1">Monorepo na Turborepo: Next.js, API w NestJS z Drizzle i Postgresem, panel admina, scrapery oraz typy generowane z OpenAPI, wspólne dla wszystkich aplikacji.</dd></div>
+<div style="display: flex; flex-wrap: wrap; gap: 4px 16px"><dt style="flex: 0 0 96px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: {{accent}}">rezultat</dt><dd style="flex: 1 1 220px; margin: 0; color: #C3CAD1">[Efekt — np. liczba transmisji w bazie, ruch, czas dodania nowej ligi.]</dd></div>
+</dl>
+<a href="CaseStudyGdzieTransmisja.dc.html" style="margin-top: auto; padding: 12px 0 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; color: {{accent}}">czytaj case study -&gt;</a>
+</div>
+</article>
+
+<article style="display: flex; flex-direction: column; background: #101823; border: 1px solid #1F2B3A; border-radius: 10px; overflow: hidden">
+<div style="padding: 12px 20px; border-bottom: 1px solid #1F2B3A; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9AA3AD">03 · magnoliowa-twin.md</div>
+<div style="display: flex; flex-direction: column; gap: 20px; padding: 28px 20px 24px; flex: 1">
+<img src="/_blob/cebc67388d187a7f8ccb151b77ae6e21" alt="Ikona Magnoliowa Twin" style="width: 64px; height: 64px; border-radius: 14px; display: block">
+<h3 style="margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(24px, 2.4vw, 32px); line-height: 1.15; letter-spacing: -0.02em">Magnoliowa Twin — brama otwierana z telefonu</h3>
+<dl style="display: flex; flex-direction: column; gap: 14px; margin: 0; font-size: 15px">
+<div style="display: flex; flex-wrap: wrap; gap: 4px 16px"><dt style="flex: 0 0 96px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: {{accent}}">problem</dt><dd style="flex: 1 1 220px; margin: 0; color: #C3CAD1">Bramę dało się otworzyć wyłącznie jej fizycznym pilotem.</dd></div>
+<div style="display: flex; flex-wrap: wrap; gap: 4px 16px"><dt style="flex: 0 0 96px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: {{accent}}">podejście</dt><dd style="flex: 1 1 220px; margin: 0; color: #C3CAD1">Aplikacje iOS (SwiftUI) i Android (Compose), API w FastAPI na Raspberry Pi sterujące przekaźnikiem, opcjonalny przycisk BLE na ESP32 i panel admina w Next.js.</dd></div>
+<div style="display: flex; flex-wrap: wrap; gap: 4px 16px"><dt style="flex: 0 0 96px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: {{accent}}">rezultat</dt><dd style="flex: 1 1 220px; margin: 0; color: #C3CAD1">[Efekt — np. liczba użytkowników i otwarć dziennie.]</dd></div>
+</dl>
+<a href="CaseStudyMagnoliowa.dc.html" style="margin-top: auto; padding: 12px 0 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; color: {{accent}}">czytaj case study -&gt;</a>
+</div>
+</article>
+
+</div>
+</section>
+
+<section id="projekty" style="padding-bottom: clamp(64px, 8vw, 112px)">
+<h2 style="margin: 0 0 24px; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 14px; color: #9AA3AD"><span style="color: {{accent}}">$</span> ls -l projekty/</h2>
+<div style="border-top: 1px solid #1F2B3A">
+
+<a href="#p1" style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 32px; padding: 22px 0; border-bottom: 1px solid #1F2B3A">
+<span style="flex: 1 1 260px; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(18px, 1.8vw, 24px)">number-sums-resolver</span>
+<span style="flex: 2 1 320px; color: #C3CAD1">Interaktywny solver łamigłówki liczbowej.</span>
+<span style="flex: 0 1 200px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9AA3AD">TypeScript · canvas</span>
+</a>
+
+<a href="Project.dc.html"style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 32px; padding: 22px 0; border-bottom: 1px solid #1F2B3A">
+<span style="flex: 1 1 260px; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(18px, 1.8vw, 24px)">monogram-resolver</span>
+<span style="flex: 2 1 320px; color: #C3CAD1">Solver nonogramów na żywo — wgraj planszę i patrz na kolejne kroki.</span>
+<span style="flex: 0 1 200px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9AA3AD">TypeScript · Vitest</span>
+</a>
+
+<a href="#p3" style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 32px; padding: 22px 0; border-bottom: 1px solid #1F2B3A">
+<span style="flex: 1 1 260px; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(18px, 1.8vw, 24px)">lukaszmical.pl</span>
+<span style="flex: 2 1 320px; color: #C3CAD1">Ta strona: dwujęzyczny serwis z własnym panelem admina.</span>
+<span style="flex: 0 1 200px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9AA3AD">Next.js · Drizzle</span>
+</a>
+
+</div>
+</section>
+
+<section id="o-mnie" style="display: flex; flex-wrap: wrap; gap: 32px 64px; padding-bottom: clamp(64px, 8vw, 112px)">
+<div style="flex: 3 1 400px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<h2 style="margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 14px; color: #9AA3AD"><span style="color: {{accent}}">$</span> cat o-mnie.md</h2>
+<p style="margin: 0; font-size: clamp(19px, 2vw, 26px); line-height: 1.4; color: #E8ECEF">Cenię kod, który da się przeczytać po roku: małe moduły, jasne nazwy, testy obok źródeł. [Dwa zdania o doświadczeniu i o tym, czego szukasz.]</p>
+</div>
+<div style="flex: 2 1 300px; min-width: 0; background: #101823; border: 1px solid #1F2B3A; border-radius: 10px; padding: 24px; font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 1.9">
+<div><span style="color: #9AA3AD">stack</span> = [</div>
+<div style="padding-left: 24px"><span style="color: {{accent}}">"React"</span>, <span style="color: {{accent}}">"Next.js"</span>, <span style="color: {{accent}}">"TypeScript"</span>,</div>
+<div style="padding-left: 24px"><span style="color: {{accent}}">"Postgres"</span>, <span style="color: {{accent}}">"Drizzle"</span>,</div>
+<div style="padding-left: 24px"><span style="color: {{accent}}">"NestJS"</span>, <span style="color: {{accent}}">"Laravel"</span>, <span style="color: {{accent}}">"Vitest"</span>,</div>
+<div>]</div>
+</div>
+</section>
+
+<section id="kontakt" style="padding: clamp(40px, 6vw, 80px) clamp(20px, 4vw, 56px); background: #101823; border: 1px solid #1F2B3A; border-radius: 10px">
+<p style="margin: 0 0 16px; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #9AA3AD"><span style="color: {{accent}}">$</span> mail --to</p>
+<a href="mailto:" style="display: inline-block; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(26px, 4.6vw, 60px); line-height: 1.1; letter-spacing: -0.03em; overflow-wrap: anywhere">[TWÓJ E-MAIL]</a>
+<p style="margin: 20px 0 0; max-width: 520px; color: #C3CAD1">Szukasz frontendowca do projektu? Napisz — odpowiadam w ciągu [X] dni.</p>
+</section>
+
+<footer style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 32px; padding: 28px 0 36px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9AA3AD">
+<span>© 2026 Łukasz Micał</span>
+<span style="display: flex; flex-wrap: wrap; gap: 4px 28px">
+<a href="#github" style="padding: 12px 0">github</a>
+<a href="#linkedin" style="padding: 12px 0">linkedin</a>
+<a href="#cv" style="padding: 12px 0">cv.pdf</a>
+</span>
+</footer>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#63A0E3","options":["#63A0E3","#8FBCEE","#B8D4F2"]},"$preview":{"width":1440,"height":3100}}'>
+class Component extends DCLogic {
+renderVals() {
+const accent = this.props.accent ?? '#63A0E3';
+const rows = ['0010010100', '0100010010', '1000110001', '0100100010', '0010100100'];
+const clue = (bits) => {
+const runs = bits.join('').split('0').filter((r) => r.length).map((r) => r.length);
+return runs.length ? runs : [0];
+};
+const cells = [{ text: '', bg: 'transparent' }];
+for (let x = 0; x < 10; x++) {
+cells.push({ text: clue(rows.map((r) => r[x])).join('\n'), bg: 'transparent' });
+}
+rows.forEach((r) => {
+cells.push({ text: clue(r.split('')).join(' '), bg: 'transparent' });
+r.split('').forEach((b) => cells.push({ text: '', bg: b === '1' ? accent : '#172230' }));
+});
+return { accent, cells };
+}
+}
+</script>
+</body>
+</html>
