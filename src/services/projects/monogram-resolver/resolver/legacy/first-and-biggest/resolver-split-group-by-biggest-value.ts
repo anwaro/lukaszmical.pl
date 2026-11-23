@@ -33,7 +33,7 @@ export class SplitGroupByBiggestValueResolver extends ResolverModel {
     resolveGroup(
         values: number[],
         groupCells: CellModel[],
-        g: string = '',
+        _g: string = '',
     ): ResolverIndexResult {
         const result = ResolverIndexResult.create();
 

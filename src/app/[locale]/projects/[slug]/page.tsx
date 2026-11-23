@@ -4,23 +4,15 @@ import React from 'react';
 
 
 import {notFound, redirect} from 'next/navigation';
-import {serialize} from 'next-mdx-remote/serialize';
 
 import {ProjectRenderer} from '@/services/project-renderer';
 import {ProjectIframe} from '@/ui/pages/project/iframe/project-iframe';
 import {LocalProjectService} from '@/services/local-project-service';
 import {DrizzleProject} from '@/services/drizzle/drizzle-project';
-import ProjectPage from '@/ui/pages/project/page/project-page';
+import {ProjectPage} from '@/ui/pages/project/project-page';
 import {ProjectLocale} from '@/types/project';
-import {mdxSerializeOptions} from '@/ui/components/project/projet-mdx/project-mdx-options';
 import {JsonLd} from '@/ui/components/seo/json-ld';
-import {
-    buildAlternates,
-    localePath,
-    ogImage,
-    projectJsonLd,
-    siteName,
-} from '@/utils/seo';
+import {projectJsonLd, projectMetadata} from '@/utils/seo';
 
 type Props = {
     params: Promise<{
@@ -29,41 +21,28 @@ type Props = {
     }>;
 };
 
-export async function generateMetadata({params}: Props): Promise<Metadata> {
-    const {slug, locale} = await params;
+// Case studies share the table but live under /case-studies.
+async function getProject(slug: string, locale: ProjectLocale) {
     const project = await new DrizzleProject().getLocalizedProjectBySlug(
         slug,
         locale,
     );
+    return project && project.type !== 'case-study' ? project : null;
+}
 
-    if (!project) {
-        return {};
-    }
+// How many other projects the write-up page links to.
+const OTHERS_LIMIT = 3;
 
-    const path = `/projects/${slug}`;
-    const title = project.name ? `${project.name} | ${siteName}` : siteName;
-    const description = project.description || undefined;
+export async function generateMetadata({params}: Props): Promise<Metadata> {
+    const {slug, locale} = await params;
+    const project = await getProject(slug, locale);
 
-    return {
-        title,
-        description,
-        robots: project.published ? undefined : {index: false, follow: false},
-        alternates: buildAlternates(locale, path),
-        openGraph: {
-            type: 'article',
-            title,
-            description,
-            url: localePath(locale, path),
-            images: [project.cover ?? ogImage],
-        },
-        twitter: {images: [project.cover ?? ogImage]},
-    };
+    return project ? projectMetadata(project, locale, `/projects/${slug}`) : {};
 }
 
 export default async function Page({params}: Props) {
     const {slug, locale} = await params;
-    const client = new DrizzleProject();
-    const project = await client.getLocalizedProjectBySlug(slug, locale);
+    const project = await getProject(slug, locale);
 
     if (!project) {
         notFound();
@@ -72,11 +51,14 @@ export default async function Page({params}: Props) {
     const jsonLd = projectJsonLd(project, locale, `/projects/${slug}`);
 
     if (project.type === 'page') {
-        const source = await serialize(project.content, mdxSerializeOptions);
+        const others = (await new DrizzleProject().getProjectList(locale))
+            .filter((other) => other.id !== project.id)
+            .slice(0, OTHERS_LIMIT);
+
         return (
             <>
                 <JsonLd data={jsonLd} />
-                <ProjectPage project={project} source={source} />
+                <ProjectPage project={project} others={others} />
             </>
         );
     }

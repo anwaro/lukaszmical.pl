@@ -20,6 +20,27 @@ const nextConfig = {
                 destination: '/projects/:name',
                 permanent: true,
             },
+            // The about and contact pages became sections of the homepage.
+            {
+                source: '/about',
+                destination: '/#o-mnie',
+                permanent: true,
+            },
+            {
+                source: '/contact',
+                destination: '/#kontakt',
+                permanent: true,
+            },
+            {
+                source: '/en/about',
+                destination: '/en#o-mnie',
+                permanent: true,
+            },
+            {
+                source: '/en/contact',
+                destination: '/en#kontakt',
+                permanent: true,
+            },
             {
                 source: '/projects/show/:name',
                 destination: '/projects/:name',

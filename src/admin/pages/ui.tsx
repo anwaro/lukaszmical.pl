@@ -29,7 +29,6 @@ import PillTag from '../components/PillTag';
 import SectionMain from '../components/Section/Main';
 import SectionTitle from '../components/Section/Title';
 import SectionTitleLineWithButton from '../components/Section/TitleLineWithButton';
-import {getPageTitle} from '../config';
 
 export const UiPage = () => {
     const CardSamplesFooter = (

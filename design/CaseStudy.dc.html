@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>Case study — itmbw.pl</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+body{margin:0}
+a{color:#E8ECEF;text-decoration:none}a:hover{color:#63A0E3}
+</style>
+</helmet>
+<div style="background: #0A0F16; color: #E8ECEF; font-family: Inter, system-ui, sans-serif; font-size: 16px; line-height: 1.6">
+<div style="max-width: 1240px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 60px); box-sizing: border-box">
+
+<header style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 32px; padding: 24px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px">
+<a href="Terminal.dc.html" style="display: inline-flex; align-items: center; gap: 14px; font-weight: 700">
+<svg role="img" aria-label="Logo Łukasz Micał" width="32" height="40" viewBox="0 0 40 50" fill="none"><polygon fill="#032b57" points="0 25, 0 50, 10 37.5"></polygon><polygon fill="#064a96" points="0 0, 0 25, 20 50, 30 37.5"></polygon><polygon fill="#0a6bd7" points="40 0, 20 25, 30 37.5, 40 25"></polygon><polygon fill="#63a0e3" points="40 25, 30 37.5, 40 50"></polygon></svg>
+<span>lukasz-mical</span></a>
+<nav aria-label="Główna" style="display: flex; flex-wrap: wrap; gap: 4px 28px">
+<a href="CaseStudies.dc.html" style="padding: 12px 0; color: {{accent}}">case-studies/</a>
+<a href="Projects.dc.html" style="padding: 12px 0">projekty/</a>
+<a href="Terminal.dc.html" style="padding: 12px 0">o-mnie.md</a>
+<a href="Terminal.dc.html" style="padding: 12px 0">kontakt</a>
+<a href="#en" style="padding: 12px 0; color: #9AA3AD">pl | en</a>
+</nav>
+</header>
+
+<section style="display: flex; flex-direction: column; gap: 28px; padding: clamp(32px, 5vw, 64px) 0 clamp(32px, 5vw, 56px)">
+<a href="CaseStudies.dc.html" style="align-self: flex-start; padding: 12px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #9AA3AD"><span style="color: {{accent}}">$</span> cd .. <span style="color: #C3CAD1">— wszystkie case studies</span></a>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px 32px">
+<img src="/_blob/c563a3e461eb5257a7a80cc1a7365ae2" alt="Ikona itmbw.pl" style="width: 112px; height: 112px; border-radius: 24px; display: block">
+<div style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+<p style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9AA3AD">01 · case-studies/itmbw-pl.md</p>
+<h1 style="margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(36px, 5.6vw, 80px); line-height: 1.05; letter-spacing: -0.03em">itmbw.pl</h1>
+</div>
+</div>
+<p style="margin: 0; max-width: 760px; font-size: clamp(19px, 2vw, 26px); line-height: 1.4; color: #E8ECEF">Serwis biegowy, w którym treści redakcyjne o biegach spotykają się z wynikami, rankingami i kontami biegaczy ITMBWieczorem.</p>
+<dl style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px 32px; margin: 0; padding: 24px 0; border-top: 1px solid #1F2B3A; border-bottom: 1px solid #1F2B3A; font-size: 15px">
+<div><dt style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: {{accent}}">rola</dt><dd style="margin: 4px 0 0; color: #C3CAD1">[TWOJA ROLA]</dd></div>
+<div><dt style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: {{accent}}">okres</dt><dd style="margin: 4px 0 0; color: #C3CAD1">[LATA]</dd></div>
+<div><dt style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: {{accent}}">stack</dt><dd style="margin: 4px 0 0; color: #C3CAD1">Preact · TypeScript · Tailwind · WordPress · Laravel</dd></div>
+<div><dt style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: {{accent}}">adres</dt><dd style="margin: 4px 0 0"><a href="https://itmbw.pl" style="text-decoration: underline; text-underline-offset: 4px">itmbw.pl</a></dd></div>
+</dl>
+</section>
+
+<div style="display: flex; align-items: center; justify-content: center; aspect-ratio: 16 / 8; background: #101823; border: 1px solid #1F2B3A; border-radius: 10px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9AA3AD; text-align: center; padding: 16px; box-sizing: border-box">[ZRZUT EKRANU: strona główna itmbw.pl]</div>
+
+<section style="display: flex; flex-wrap: wrap; gap: 16px 64px; padding: clamp(48px, 7vw, 96px) 0 0">
+<h2 style="flex: 1 1 220px; margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 14px; color: #9AA3AD"><span style="color: {{accent}}">#</span> problem</h2>
+<div style="flex: 3 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 16px; max-width: 760px">
+<p style="margin: 0; font-size: clamp(19px, 1.8vw, 24px); line-height: 1.45">Stowarzyszenie prowadzi serwis redakcyjny i organizuje biegi. Biegacze chcą w tym samym miejscu sprawdzić wyniki, rankingi i własne konto.</p>
+<p style="margin: 0; color: #C3CAD1">Strony redakcyjne dobrze obsługuje WordPress, ale część dla biegaczy to aplikacja: listy z sortowaniem, wyszukiwarka, logowanie, generowanie plików. [Dopisz, co było punktem wyjścia i ograniczeniem.]</p>
+</div>
+</section>
+
+<section style="display: flex; flex-wrap: wrap; gap: 16px 64px; padding: clamp(48px, 7vw, 96px) 0 0">
+<h2 style="flex: 1 1 220px; margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 14px; color: #9AA3AD"><span style="color: {{accent}}">#</span> architektura</h2>
+<div style="flex: 3 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-wrap: wrap; align-items: stretch; gap: 12px">
+<div style="flex: 1 1 200px; padding: 20px; background: #101823; border: 1px solid #1F2B3A; border-radius: 10px">
+<p style="margin: 0 0 8px; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 16px">WordPress</p>
+<p style="margin: 0; font-size: 14px; color: #C3CAD1">Motyw PHP na Tailwindzie: strona główna, artykuły, partnerzy, strony biegów.</p>
+</div>
+<div aria-hidden="true" style="flex: 0 0 auto; align-self: center; font-family: 'JetBrains Mono', monospace; color: {{accent}}">-&gt;</div>
+<div style="flex: 1 1 200px; padding: 20px; background: #101823; border: 1px solid {{accent}}; border-radius: 10px">
+<p style="margin: 0 0 8px; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 16px">SPA w Preact</p>
+<p style="margin: 0; font-size: 14px; color: #C3CAD1">Wszystkie strony dla biegaczy, osadzone we wpisach shortcodem. Vite, TypeScript, własny router.</p>
+</div>
+<div aria-hidden="true" style="flex: 0 0 auto; align-self: center; font-family: 'JetBrains Mono', monospace; color: {{accent}}">-&gt;</div>
+<div style="flex: 1 1 200px; padding: 20px; background: #101823; border: 1px solid #1F2B3A; border-radius: 10px">
+<p style="margin: 0 0 8px; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 16px">API w Laravelu</p>
+<p style="margin: 0; font-size: 14px; color: #C3CAD1">app.itmbw.pl: publiczne JSON API i wewnętrzny CMS w React do zarządzania danymi.</p>
+</div>
+</div>
+<p style="margin: 0; max-width: 760px; color: #C3CAD1">Strona biegacza to zwykły wpis WordPressa. Router aplikacji wybiera widok po adresie, a logowanie działa przez sesję współdzieloną między domeną i subdomeną API.</p>
+</div>
+</section>
+
+<section style="display: flex; flex-wrap: wrap; gap: 16px 64px; padding: clamp(48px, 7vw, 96px) 0 0">
+<h2 style="flex: 1 1 220px; margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 14px; color: #9AA3AD"><span style="color: {{accent}}">#</span> kluczowe decyzje</h2>
+<ol style="flex: 3 1 480px; min-width: 0; display: flex; flex-direction: column; margin: 0; padding: 0; list-style: none; border-top: 1px solid #1F2B3A">
+<li style="display: flex; flex-wrap: wrap; gap: 8px 24px; padding: 24px 0; border-bottom: 1px solid #1F2B3A">
+<span style="flex: 0 0 40px; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: {{accent}}">01</span>
+<span style="flex: 1 1 320px; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 18px">Aplikacja wewnątrz WordPressa, nie obok</span><span style="color: #C3CAD1">Redakcja zostaje przy znanym edytorze, a biegacz nie opuszcza serwisu. Adresy aplikacji pokrywają się z adresami wpisów.</span></span>
+</li>
+<li style="display: flex; flex-wrap: wrap; gap: 8px 24px; padding: 24px 0; border-bottom: 1px solid #1F2B3A">
+<span style="flex: 0 0 40px; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: {{accent}}">02</span>
+<span style="flex: 1 1 320px; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 18px">API jako kontrakt</span><span style="color: #C3CAD1">Dokumentacja OpenAPI powstaje z kodu, a test pilnuje, żeby żadna trasa nie została bez opisu.</span></span>
+</li>
+<li style="display: flex; flex-wrap: wrap; gap: 8px 24px; padding: 24px 0; border-bottom: 1px solid #1F2B3A">
+<span style="flex: 0 0 40px; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: {{accent}}">03</span>
+<span style="flex: 1 1 320px; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 18px">Cache z natychmiastowym czyszczeniem</span><span style="color: #C3CAD1">Odpowiedzi API i gotowe strony są cache’owane, a każda edycja w CMS-ie od razu unieważnia oba poziomy.</span></span>
+</li>
+<li style="display: flex; flex-wrap: wrap; gap: 8px 24px; padding: 24px 0; border-bottom: 1px solid #1F2B3A">
+<span style="flex: 0 0 40px; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: {{accent}}">04</span>
+<span style="flex: 1 1 320px; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 18px">Dane wydarzeń w rękach redakcji</span><span style="color: #C3CAD1">Dane strukturalne biegów (SportsEvent) uzupełnia się w edytorze strony — nowa edycja nie wymaga wdrożenia.</span></span>
+</li>
+</ol>
+</section>
+
+<section style="display: flex; flex-wrap: wrap; gap: 16px 64px; padding: clamp(48px, 7vw, 96px) 0 0">
+<h2 style="flex: 1 1 220px; margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 14px; color: #9AA3AD"><span style="color: {{accent}}">#</span> co potrafi aplikacja</h2>
+<ul style="flex: 3 1 480px; min-width: 0; display: flex; flex-wrap: wrap; gap: 10px; margin: 0; padding: 0; list-style: none; font-family: 'JetBrains Mono', monospace; font-size: 14px">
+<li style="padding: 8px 14px; border: 1px solid #3A4A5E; border-radius: 6px">hall of fame</li>
+<li style="padding: 8px 14px; border: 1px solid #3A4A5E; border-radius: 6px">lista i profile biegaczy</li>
+<li style="padding: 8px 14px; border: 1px solid #3A4A5E; border-radius: 6px">wyniki biegów</li>
+<li style="padding: 8px 14px; border: 1px solid #3A4A5E; border-radius: 6px">kluby</li>
+<li style="padding: 8px 14px; border: 1px solid #3A4A5E; border-radius: 6px">kalendarz</li>
+<li style="padding: 8px 14px; border: 1px solid #3A4A5E; border-radius: 6px">rejestracja i logowanie</li>
+<li style="padding: 8px 14px; border: 1px solid #3A4A5E; border-radius: 6px">konto: profil, adres, awatar</li>
+<li style="padding: 8px 14px; border: 1px solid #3A4A5E; border-radius: 6px">generator numerów startowych (PDF)</li>
+</ul>
+</section>
+
+<section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; padding: clamp(48px, 7vw, 96px) 0 0">
+<div style="display: flex; align-items: center; justify-content: center; aspect-ratio: 4 / 3; background: #101823; border: 1px solid #1F2B3A; border-radius: 10px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9AA3AD; text-align: center; padding: 16px; box-sizing: border-box">[ZRZUT: wyniki biegu]</div>
+<div style="display: flex; align-items: center; justify-content: center; aspect-ratio: 4 / 3; background: #101823; border: 1px solid #1F2B3A; border-radius: 10px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9AA3AD; text-align: center; padding: 16px; box-sizing: border-box">[ZRZUT: profil biegacza na telefonie]</div>
+</section>
+
+<section style="display: flex; flex-wrap: wrap; gap: 16px 64px; padding: clamp(48px, 7vw, 96px) 0">
+<h2 style="flex: 1 1 220px; margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 14px; color: #9AA3AD"><span style="color: {{accent}}">#</span> rezultat</h2>
+<div style="flex: 3 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px">
+<div style="padding: 24px 20px; background: #101823; border: 1px solid #1F2B3A; border-radius: 10px"><p style="margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 36px; letter-spacing: -0.03em; color: {{accent}}">[X]</p><p style="margin: 4px 0 0; font-size: 14px; color: #C3CAD1">[biegaczy w bazie]</p></div>
+<div style="padding: 24px 20px; background: #101823; border: 1px solid #1F2B3A; border-radius: 10px"><p style="margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 36px; letter-spacing: -0.03em; color: {{accent}}">[X]</p><p style="margin: 4px 0 0; font-size: 14px; color: #C3CAD1">[wyników biegów]</p></div>
+<div style="padding: 24px 20px; background: #101823; border: 1px solid #1F2B3A; border-radius: 10px"><p style="margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 36px; letter-spacing: -0.03em; color: {{accent}}">[X]</p><p style="margin: 4px 0 0; font-size: 14px; color: #C3CAD1">[np. czas ładowania strony]</p></div>
+</div>
+<p style="margin: 0; max-width: 760px; color: #C3CAD1">[Dwa zdania o efekcie: co zmieniło się dla biegaczy i dla redakcji.]</p>
+</div>
+</section>
+
+<a href="CaseStudyGdzieTransmisja.dc.html" style="display: flex; flex-wrap: wrap; align-items: center; gap: 20px 28px; padding: clamp(24px, 4vw, 40px); background: #101823; border: 1px solid #1F2B3A; border-radius: 10px">
+<img src="/_blob/950d42f16cd2c24329ded9103de14a1c" alt="Ikona Gdzie Transmisja" style="width: 72px; height: 72px; border-radius: 16px; display: block">
+<span style="flex: 1 1 280px; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9AA3AD">następne case study</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(22px, 2.6vw, 34px); letter-spacing: -0.02em">Gdzie Transmisja</span>
+</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 700; color: {{accent}}">czytaj -&gt;</span>
+</a>
+
+<footer style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 32px; padding: 28px 0 36px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9AA3AD">
+<span>© 2026 Łukasz Micał</span>
+<span style="display: flex; flex-wrap: wrap; gap: 4px 28px">
+<a href="#github" style="padding: 12px 0">github</a>
+<a href="#linkedin" style="padding: 12px 0">linkedin</a>
+<a href="#cv" style="padding: 12px 0">cv.pdf</a>
+</span>
+</footer>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#63A0E3","options":["#63A0E3","#8FBCEE","#B8D4F2"]},"$preview":{"width":1440,"height":3800}}'>
+class Component extends DCLogic {
+renderVals() {
+return { accent: this.props.accent ?? '#63A0E3' };
+}
+}
+</script>
+</body>
+</html>

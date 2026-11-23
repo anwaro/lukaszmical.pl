@@ -1,16 +1,12 @@
 import {RowGroupDetector} from '../detector/detector-row-group';
 import {TaskModel} from '../model/model-task';
-import {EventModel, EventType} from '../model/model-event';
+import {EventType} from '../model/model-event';
 import {StoreModel} from '../model/model-store';
 
 export class RowGroupDetectTask extends TaskModel {
     public eventName = EventType.detectRowGroupsSums;
 
-    async run(
-        canvas: HTMLCanvasElement,
-        store: StoreModel,
-        emitEvent: (event: EventModel) => void,
-    ) {
+    async run(canvas: HTMLCanvasElement, store: StoreModel) {
         const detector = new RowGroupDetector(
             canvas,
             store.data.gridBounds,

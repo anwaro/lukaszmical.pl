@@ -16,7 +16,9 @@ type Props = PWC<{
 }>;
 
 export const FormField = ({icons = [], locale, ...props}: Props) => {
-    const childrenCount = Children.count(props.children);
+    // toArray drops the empty nodes left by conditional children.
+    const children = Children.toArray(props.children);
+    const childrenCount = children.length;
 
     let elementWrapperClass = '';
 
@@ -51,8 +53,8 @@ export const FormField = ({icons = [], locale, ...props}: Props) => {
             )}
             <div className={elementWrapperClass}>
                 {/* @ts-ignore */}
-                {Children.map(props.children, (child: ReactElement, index) => (
-                    <div className="relative">
+                {children.map((child: ReactElement, index) => (
+                    <div key={child.key} className="relative">
                         {cloneElement(child, {
                             /* @ts-ignore */
                             className: clsx(

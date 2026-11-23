@@ -1,9 +1,8 @@
 'use client';
 
-import React, {ReactNode, useEffect, useState} from 'react';
+import React, {ReactNode, useState} from 'react';
 
 import {mdiBackburger, mdiForwardburger, mdiMenu} from '@mdi/js';
-import {useRouter} from 'next/navigation';
 import {clsx} from 'clsx';
 
 import {FormField} from '@/admin/components/form/form-field/form-field';
@@ -24,23 +23,6 @@ export default function LayoutAuthenticated({children}: Props) {
     const [isAsideLgActive, setIsAsideLgActive] = useState(false);
     const menuAside = useMenuAside();
     const menuNavBar = useMenuNavBare();
-    const router = useRouter();
-
-    useEffect(() => {
-        const handleRouteChangeStart = () => {
-            setIsAsideMobileExpanded(false);
-            setIsAsideLgActive(false);
-        };
-
-        // router.events.on('routeChangeStart', handleRouteChangeStart);
-
-        // If the component is unmounted, unsubscribe
-        // from the event with the `off` method:
-        return () => {
-            // router.events.off('routeChangeStart', handleRouteChangeStart);
-        };
-    }, [router]);
-
     const layoutAsidePadding = 'xl:pl-60';
 
     return (

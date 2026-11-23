@@ -27,6 +27,11 @@ export const projects = pgTable(
         published: boolean('published').default(false).notNull(),
         order: smallint('order').notNull(),
         cover: text('cover'),
+        featured: boolean('featured').default(false).notNull(),
+        stack: text('stack').array().default([]).notNull(),
+        period: text('period'),
+        siteUrl: text('siteUrl'),
+        repoUrl: text('repoUrl'),
     },
     (table) => [unique('projects_slug_key').on(table.url)],
 );

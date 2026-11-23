@@ -2,10 +2,12 @@ import {useEffect, useState, useTransition} from 'react';
 
 import {MDXRemote, MDXRemoteSerializeResult} from 'next-mdx-remote';
 import {serialize} from 'next-mdx-remote/serialize';
+import {clsx} from 'clsx';
 
 import '@/admin/css/github-dark.css';
 import {MdxFieldLoader} from '@/admin/components/form/mdx-field/mdx-field-loader';
 import {mdxSerializeOptions} from '@/ui/components/project/projet-mdx/project-mdx-options';
+import {contentProseClass} from '@/ui/site/content-mdx-components';
 import {projectMdxComponents} from '@/ui/components/project/projet-mdx/project-mdx-components';
 
 type Props = {
@@ -14,7 +16,7 @@ type Props = {
 
 export function MdxPreview({mdx}: Props) {
     const [source, setSource] = useState<MDXRemoteSerializeResult>();
-    const [isPending, startTransition] = useTransition();
+    const [, startTransition] = useTransition();
 
     useEffect(() => {
         startTransition(async () => {
@@ -24,7 +26,7 @@ export function MdxPreview({mdx}: Props) {
     }, [mdx]);
 
     return (
-        <div className="wrapper prose prose-invert prose-a:text-blue-600">
+        <div className={clsx('rounded-lg bg-ink p-6 text-fg', contentProseClass)}>
             {!source ? (
                 <MdxFieldLoader />
             ) : (

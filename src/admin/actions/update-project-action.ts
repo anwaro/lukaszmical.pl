@@ -5,6 +5,7 @@ import {
     ProjectEntity,
     ProjectLocalesList,
     ProjectStringTypeList,
+    splitProjectEntity,
 } from '@/types/project';
 import {DrizzleProjectString} from '@/services/drizzle/drizzle-project-string';
 import {auth} from '@/utils/auth/auth';
@@ -19,7 +20,8 @@ export const updateProjectAction = async (
     entity: ProjectEntity,
 ): Promise<UpdateProjectResult> => {
     await auth();
-    const {id, description, name, content, ...data} = entity;
+    const {row} = splitProjectEntity(entity);
+    const {id, ...data} = row;
     const project = new DrizzleProject();
     const projectString = new DrizzleProjectString();
 
@@ -38,7 +40,9 @@ export const updateProjectAction = async (
     );
 
     for (let str of strings) {
-        if (prevState.data[str.type][str.locale] !== entity[str.type][str.locale]) {
+        if (
+            prevState.data[str.type]?.[str.locale] !== entity[str.type][str.locale]
+        ) {
             await projectString.updateValue(
                 id,
                 str.type,

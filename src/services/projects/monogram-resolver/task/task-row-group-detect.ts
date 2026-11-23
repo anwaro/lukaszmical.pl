@@ -1,12 +1,12 @@
 import {RowGroupDetector} from '../detector/detector-row-group';
 import {TaskModel} from '../model/model-task';
-import {EventModel, EventType} from '../model/model-event';
+import {EventType} from '../model/model-event';
 import {StoreModel} from '../model/model-store';
 
 export class RowGroupDetectTask extends TaskModel {
     public eventName = EventType.detectRowGroupsValues;
 
-    async run(store: StoreModel, emitEvent: (event: EventModel) => void) {
+    async run(store: StoreModel) {
         const detector = new RowGroupDetector(
             store.data.processedImage,
             store.data.rowValuesBounds,
