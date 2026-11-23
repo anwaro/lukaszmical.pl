@@ -102,8 +102,9 @@ a pipeline of small, single-responsibility **resolvers**.
   `src/admin/content-groups.ts` and stored as `homepage.*` translations + settings.
 - Saving in the admin expires the `cms-content` cache tag; rows changed directly in
   the database are not picked up until then.
-- `pnpm db:seed:content` inserts the design's case studies and projects (skips slugs
-  that already exist).
+- `content/` holds ready-to-paste entries (case studies, projects) as Markdown, one
+  file per entry and language; there is no content seed — entries are created in the
+  admin.
 
 ## External services
 
