@@ -35,7 +35,7 @@ itmbw.pl — a running portal with an app for runners
 
 ### Role
 
-[YOUR ROLE]
+Fullstack developer — architecture, frontend, API and deployment
 
 ### Problem (homepage card)
 
@@ -47,15 +47,13 @@ A WordPress theme on Tailwind with a Preact and TypeScript SPA inside it: result
 
 ### Result (homepage card)
 
-[Outcome — e.g. page speed, number of runners and results on the site.]
+Runners check results, rankings and their own account on the same site where they read about races, and editors publish changes without deployments.
 
 ## Content (MDX)
 
 Wklej do pola „Content” wszystko spomiędzy znaczników.
 
 <!-- content:start -->
-<Shot>[SCREENSHOT: itmbw.pl homepage]</Shot>
-
 <Section title="problem">
 <Big>
 
@@ -63,7 +61,7 @@ The association runs an editorial site and organises races. Runners want to chec
 
 </Big>
 
-WordPress handles editorial pages well, but the part for runners is an application: sortable lists, search, sign-in, file generation. [Add what the starting point and the constraints were.]
+WordPress handles editorial pages well, but the part for runners is an application: sortable lists, search, sign-in, file generation.
 
 </Section>
 
@@ -104,19 +102,14 @@ A runner page is a regular WordPress post. The app router picks the view by addr
 </Chips>
 </Section>
 
-<Shots>
-<Shot ratio="4 / 3">[SCREENSHOT: race results]</Shot>
-<Shot ratio="4 / 3">[SCREENSHOT: runner profile on a phone]</Shot>
-</Shots>
-
 <Section title="result">
-<Stats>
-<Stat value="[X]">[runners in the database]</Stat>
-<Stat value="[X]">[race results]</Stat>
-<Stat value="[X]">[e.g. page load time]</Stat>
-</Stats>
+<Big>
 
-[Two sentences about the outcome: what changed for runners and for the editors.]
+Runners check results, rankings and their own account on the same site where they read about races, and editors publish changes without deployments.
+
+</Big>
+
+Content and data have separate tools — WordPress for editors, a CMS for results — and shared cache purging makes every change visible right away.
 
 </Section>
 <!-- content:end -->
