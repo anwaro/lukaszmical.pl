@@ -35,7 +35,7 @@ Magnoliowa Twin — a gate opened from a phone
 
 ### Role
 
-[YOUR ROLE]
+Fullstack developer — architecture, frontend, API and deployment
 
 ### Problem (homepage card)
 
@@ -47,7 +47,7 @@ iOS (SwiftUI) and Android (Compose) apps, a FastAPI service on a Raspberry Pi dr
 
 ### Result (homepage card)
 
-[Outcome — e.g. number of users and openings per day.]
+One tap opens the gate — in the app, a widget or on the Bluetooth button — with no changes to the drive.
 
 ### Extra facts
 
@@ -58,8 +58,6 @@ platforms: iOS · Android · Raspberry Pi
 Wklej do pola „Content” wszystko spomiędzy znaczników.
 
 <!-- content:start -->
-<Shot>[PHOTO OR SCREENSHOT: the app on a phone at the gate]</Shot>
-
 <Section title="problem">
 <Big>
 
@@ -67,7 +65,7 @@ Only the gate’s own radio remote could open it. The goal was to open it from a
 
 </Big>
 
-This is a project where software ends at a physical relay: mobile apps, a server, firmware and a panel have to work together within a second. [Add who the system was built for and how many users it has.]
+This is a project where software ends at a physical relay: mobile apps, a server, firmware and a panel have to work together within a second.
 
 </Section>
 
@@ -112,19 +110,14 @@ An optional ESP32-C3 button sends a signal to the phone over Bluetooth. The app 
 </Chips>
 </Section>
 
-<Shots>
-<Shot ratio="4 / 3">[SCREENSHOT: app home screen]</Shot>
-<Shot ratio="4 / 3">[PHOTO: BLE button and Raspberry Pi]</Shot>
-</Shots>
-
 <Section title="result">
-<Stats>
-<Stat value="[X]">[users]</Stat>
-<Stat value="[X]">[openings per day]</Stat>
-<Stat value="[X]">[e.g. time from tap to opening]</Stat>
-</Stats>
+<Big>
 
-[Two sentences about the outcome: how the system holds up day to day.]
+One tap opens the gate — in the app, a widget or on the Bluetooth button — with no changes to the drive.
+
+</Big>
+
+The original remote keeps working as before, and the whole system can be removed without a trace.
 
 </Section>
 <!-- content:end -->

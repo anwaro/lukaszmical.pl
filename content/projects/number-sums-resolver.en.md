@@ -21,7 +21,3 @@ Treść do wklejenia w panelu: /admin/projects → pola w języku EN.
 ### Name
 
 number-sums-resolver
-
-### Description
-
-An interactive solver for a number puzzle.
