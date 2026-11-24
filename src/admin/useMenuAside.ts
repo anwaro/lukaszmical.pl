@@ -5,23 +5,14 @@ import {
     mdiCodeJson,
     mdiFileDocumentMultiple,
     mdiHome,
-    mdiMonitor,
     mdiTranslate,
-    mdiViewList,
 } from '@mdi/js';
 
 import {MenuAsideItem} from './interfaces';
 
-const examples = ['dashboard', 'error', 'forms', 'login', 'profile', 'tables', 'ui'];
-
 export function useMenuAside() {
     return useMemo(
         (): MenuAsideItem[] => [
-            {
-                href: '/admin',
-                icon: mdiMonitor,
-                label: 'Dashboard',
-            },
             {
                 href: '/admin/homepage',
                 icon: mdiHome,
@@ -46,14 +37,6 @@ export function useMenuAside() {
                 href: '/admin/translations',
                 icon: mdiTranslate,
                 label: 'Translations',
-            },
-            {
-                label: 'Example',
-                icon: mdiViewList,
-                menu: examples.map((item) => ({
-                    label: item,
-                    href: `/admin/examples/${item}`,
-                })),
             },
         ],
         [],
