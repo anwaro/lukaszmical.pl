@@ -89,7 +89,7 @@ a pipeline of small, single-responsibility **resolvers**.
   nothing on preview deployments.
 - **Auth** — single admin user, no external service. `src/utils/auth/`: `argon2` password
   hash (`ADMIN_PASSWORD_HASH`) verified in the login action, `jose` HS256 session cookie
-  (`AUTH_SECRET`) checked by middleware and `auth()`. Generate the hash with
+  (`AUTH_SECRET`) checked by the proxy (`src/proxy.ts`) and `auth()`. Generate the hash with
   `pnpm auth:hash '<password>'`.
 
 ## Content (CMS)
