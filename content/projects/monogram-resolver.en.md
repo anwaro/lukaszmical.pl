@@ -13,8 +13,9 @@ Treść do wklejenia w panelu: /admin/projects → pola w języku EN.
 | Published | `yes` |
 | Featured on homepage | `yes` |
 | Stack | `TypeScript, Vitest, canvas` |
-| Year | `[ROK]` |
+| Year | `2024` |
 | Demo url | `/projects/monogram-resolver/app` |
+| Repository url | `https://github.com/anwaro/lukaszmical.pl/tree/master/src/services/projects/monogram-resolver` |
 
 ## Pola tekstowe (EN)
 
@@ -50,12 +51,19 @@ Instead of one big algorithm there is a set of small classes. Each one extends a
 
 </Big>
 
-<CodePanel file="resolver/legacy/basic/resolver-total-size.ts">
+<CodePanel file="resolver/legacy/basic/resolver-value-overlap.ts">
 
 ```ts
-export class TotalSizeResolver extends ResolverModel {
+export class ValueOverlapResolver extends ResolverModel {
     run(group: GroupModel, groupCells: CellModel[]): ResolverResult {
-        // [a fragment of a real rule from the repository]
+        const result = ResolverResult.create(groupCells);
+
+        result.addIndexResult(
+            this.resolveGroup(group.values, groupCells),
+            groupCells,
+        );
+
+        return result;
     }
 }
 ```
@@ -81,8 +89,6 @@ export class TotalSizeResolver extends ResolverModel {
 Next to every rule sits its `*.spec.ts` file. A rule starts from a test: first an example row, then the code that solves it.
 
 </Big>
-
-[Add what this project taught you or what was the hardest part.]
 
 </Section>
 <!-- content:end -->

@@ -35,7 +35,7 @@ itmbw.pl — serwis biegowy z aplikacją dla biegaczy
 
 ### Role
 
-[TWOJA ROLA]
+Fullstack developer — architektura, frontend, API i wdrożenie
 
 ### Problem (homepage card)
 
@@ -47,15 +47,13 @@ Motyw WordPressa na Tailwindzie, a w nim SPA w Preact i TypeScripcie: wyniki, ka
 
 ### Result (homepage card)
 
-[Efekt — np. szybkość stron, liczba biegaczy i wyników w serwisie.]
+Biegacz sprawdza wyniki, rankingi i własne konto w tym samym serwisie, w którym czyta o biegach, a redakcja publikuje zmiany bez wdrożeń.
 
 ## Content (MDX)
 
 Wklej do pola „Content” wszystko spomiędzy znaczników.
 
 <!-- content:start -->
-<Shot>[ZRZUT EKRANU: strona główna itmbw.pl]</Shot>
-
 <Section title="problem">
 <Big>
 
@@ -63,7 +61,7 @@ Stowarzyszenie prowadzi serwis redakcyjny i organizuje biegi. Biegacze chcą w t
 
 </Big>
 
-Strony redakcyjne dobrze obsługuje WordPress, ale część dla biegaczy to aplikacja: listy z sortowaniem, wyszukiwarka, logowanie, generowanie plików. [Dopisz, co było punktem wyjścia i ograniczeniem.]
+Strony redakcyjne dobrze obsługuje WordPress, ale część dla biegaczy to aplikacja: listy z sortowaniem, wyszukiwarka, logowanie, generowanie plików.
 
 </Section>
 
@@ -104,19 +102,14 @@ Strona biegacza to zwykły wpis WordPressa. Router aplikacji wybiera widok po ad
 </Chips>
 </Section>
 
-<Shots>
-<Shot ratio="4 / 3">[ZRZUT: wyniki biegu]</Shot>
-<Shot ratio="4 / 3">[ZRZUT: profil biegacza na telefonie]</Shot>
-</Shots>
-
 <Section title="rezultat">
-<Stats>
-<Stat value="[X]">[biegaczy w bazie]</Stat>
-<Stat value="[X]">[wyników biegów]</Stat>
-<Stat value="[X]">[np. czas ładowania strony]</Stat>
-</Stats>
+<Big>
 
-[Dwa zdania o efekcie: co zmieniło się dla biegaczy i dla redakcji.]
+Biegacz sprawdza wyniki, rankingi i własne konto w tym samym serwisie, w którym czyta o biegach, a redakcja publikuje zmiany bez wdrożeń.
+
+</Big>
+
+Treści i dane mają osobne narzędzia — WordPress dla redakcji, CMS dla wyników — a wspólne czyszczenie cache sprawia, że każda zmiana jest widoczna od razu.
 
 </Section>
 <!-- content:end -->

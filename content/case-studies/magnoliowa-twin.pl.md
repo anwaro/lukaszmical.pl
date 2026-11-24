@@ -35,7 +35,7 @@ Magnoliowa Twin — brama otwierana z telefonu
 
 ### Role
 
-[TWOJA ROLA]
+Fullstack developer — architektura, frontend, API i wdrożenie
 
 ### Problem (homepage card)
 
@@ -47,7 +47,7 @@ Aplikacje iOS (SwiftUI) i Android (Compose), API w FastAPI na Raspberry Pi steru
 
 ### Result (homepage card)
 
-[Efekt — np. liczba użytkowników i otwarć dziennie.]
+Bramę otwiera jedno dotknięcie — w aplikacji, widżecie albo na przycisku Bluetooth — bez żadnych zmian w napędzie.
 
 ### Extra facts
 
@@ -58,8 +58,6 @@ platformy: iOS · Android · Raspberry Pi
 Wklej do pola „Content” wszystko spomiędzy znaczników.
 
 <!-- content:start -->
-<Shot>[ZDJĘCIE LUB ZRZUT: aplikacja na telefonie przy bramie]</Shot>
-
 <Section title="problem">
 <Big>
 
@@ -67,7 +65,7 @@ Bramę otwierał tylko jej własny pilot radiowy. Celem było otwieranie z telef
 
 </Big>
 
-To projekt, w którym oprogramowanie kończy się na fizycznym przekaźniku: aplikacje mobilne, serwer, firmware i panel muszą razem zadziałać w ciągu sekundy. [Dopisz, dla kogo powstał system i ilu ma użytkowników.]
+To projekt, w którym oprogramowanie kończy się na fizycznym przekaźniku: aplikacje mobilne, serwer, firmware i panel muszą razem zadziałać w ciągu sekundy.
 
 </Section>
 
@@ -112,19 +110,14 @@ Opcjonalny przycisk na ESP32-C3 wysyła sygnał przez Bluetooth do telefonu. Apl
 </Chips>
 </Section>
 
-<Shots>
-<Shot ratio="4 / 3">[ZRZUT: ekran główny aplikacji]</Shot>
-<Shot ratio="4 / 3">[ZDJĘCIE: przycisk BLE i Raspberry Pi]</Shot>
-</Shots>
-
 <Section title="rezultat">
-<Stats>
-<Stat value="[X]">[użytkowników]</Stat>
-<Stat value="[X]">[otwarć dziennie]</Stat>
-<Stat value="[X]">[np. czas od dotknięcia do otwarcia]</Stat>
-</Stats>
+<Big>
 
-[Dwa zdania o efekcie: jak system sprawdza się na co dzień.]
+Bramę otwiera jedno dotknięcie — w aplikacji, widżecie albo na przycisku Bluetooth — bez żadnych zmian w napędzie.
+
+</Big>
+
+Oryginalny pilot działa dalej jak wcześniej, a cały system można odłączyć bez śladu.
 
 </Section>
 <!-- content:end -->
