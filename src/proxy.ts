@@ -7,7 +7,7 @@ import {routing} from './i18n/routing';
 
 const i18nMiddleware = createMiddleware(routing);
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
     const {pathname} = request.nextUrl;
 
     if (pathname.startsWith('/admin')) {
