@@ -17,11 +17,36 @@ type Props = {
     locale: Locale;
 };
 
+const errorClass =
+    'rounded-lg border border-red-500/50 bg-slate-900 p-4 text-sm whitespace-pre-wrap text-red-300';
+
+// A block can still fail while the preview is rendered in the browser; that
+// must not take the whole form down with it.
+class PreviewBoundary extends React.Component<PWC, {error?: string}> {
+    state: {error?: string} = {};
+
+    static getDerivedStateFromError(error: unknown) {
+        return {error: error instanceof Error ? error.message : String(error)};
+    }
+
+    render() {
+        if (this.state.error !== undefined) {
+            return (
+                <pre className={errorClass}>
+                    Preview failed to render: {this.state.error}
+                </pre>
+            );
+        }
+        return this.props.children;
+    }
+}
+
 // Typing pauses this long before the preview is rendered again.
 const DEBOUNCE_MS = 400;
 
 export function MdxPreview({mdx, locale}: Props) {
     const [result, setResult] = useState<PreviewMdxResult>();
+    const [version, setVersion] = useState(0);
 
     useEffect(() => {
         let stale = false;
@@ -30,10 +55,13 @@ export function MdxPreview({mdx, locale}: Props) {
             try {
                 next = await previewMdxAction(mdx ?? '', locale);
             } catch (error) {
-                next = {error: error instanceof Error ? error.message : String(error)};
+                next = {
+                    error: error instanceof Error ? error.message : String(error),
+                };
             }
             if (!stale) {
                 setResult(next);
+                setVersion((current) => current + 1);
             }
         }, DEBOUNCE_MS);
 
@@ -48,23 +76,24 @@ export function MdxPreview({mdx, locale}: Props) {
     }
 
     if ('error' in result) {
-        return (
-            <pre className="rounded-lg border border-red-500/50 bg-slate-900 p-4 text-sm whitespace-pre-wrap text-red-300">
-                {result.error}
-            </pre>
-        );
+        return <pre className={errorClass}>{result.error}</pre>;
     }
 
     return (
         // Blocks link through next-intl, which needs a locale outside of the site.
-        <NextIntlClientProvider locale={locale} messages={{}} timeZone="Europe/Warsaw">
+        <NextIntlClientProvider
+            locale={locale}
+            messages={{}}
+            timeZone="Europe/Warsaw"
+        >
             <div
                 className={clsx(
                     'rounded-lg bg-ink px-6 pb-6 font-site leading-[1.6] text-fg',
                     contentProseClass,
                 )}
             >
-                {result.node}
+                {/* A new result gets a fresh boundary, so a fixed block shows again. */}
+                <PreviewBoundary key={version}>{result.node}</PreviewBoundary>
             </div>
         </NextIntlClientProvider>
     );
