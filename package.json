@@ -10,11 +10,10 @@
         "db:up": "docker compose up -d --wait",
         "db:down": "docker compose down",
         "db:generate": "drizzle-kit generate",
-        "db:push": "drizzle-kit push",
-        "db:push:prod": "ENV_FILE=.env.prod drizzle-kit push",
+        "db:migrate": "drizzle-kit migrate",
+        "db:sync-messages": "tsx --env-file-if-exists=.env.local scripts/db-deploy.ts --only=messages",
+        "db:deploy": "tsx --env-file-if-exists=.env.local scripts/db-deploy.ts",
         "db:studio": "drizzle-kit studio",
-        "db:seed": "tsx --env-file=.env.local scripts/seed/seed.ts",
-        "db:seed:from-backup": "node scripts/seed/generate-seed-data.mjs",
         "auth:hash": "tsx scripts/hash-password.ts"
     },
     "pnpm": {

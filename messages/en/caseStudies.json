@@ -17,5 +17,11 @@
     "cta": {
         "text": "Smaller things — solvers, tools, experiments — live in projects.",
         "button": "cd projects"
+    },
+    "card": {
+        "problem": "problem",
+        "approach": "approach",
+        "result": "result",
+        "more": "read case study ->"
     }
 }

@@ -1,4 +1,4 @@
-import {AssetType, LocalProject} from '@/types/project';
+import {AssetType, LocalProject} from '@/types/local-project';
 import {compressHtml} from '@/utils/html';
 
 export class ProjectRenderer {
@@ -28,7 +28,7 @@ export class ProjectRenderer {
         type === 'css' ? cssValue : jsValue;
 
     private createAsset = (
-        {url, themeCss, myQuery, cssFiles, jsFiles}: LocalProject,
+        {slug, themeCss, myQuery, cssFiles, jsFiles}: LocalProject,
         type: AssetType,
         minFile = false,
     ) => {
@@ -46,7 +46,7 @@ export class ProjectRenderer {
             );
         }
         this.pickTypeValue(type, cssFiles, jsFiles).forEach((file: string) => {
-            assets.push(this.assetUrl(`${url}/${type}/${file}`));
+            assets.push(this.assetUrl(`${slug}/${type}/${file}`));
         });
 
         return assets.map(mapper).join('\n');

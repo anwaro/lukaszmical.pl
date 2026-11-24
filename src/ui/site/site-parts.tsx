@@ -3,7 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import {clsx} from 'clsx';
 
-import {ProjectListItem} from '@/types/project';
+import {EntryListItem} from '@/types/entry';
 
 import {Link} from '@/navigation';
 
@@ -31,25 +31,31 @@ export const buttonClass = {
 export const stackLine = (stack: string[]) => stack.join(' · ');
 
 // Projects open as a page on this site unless they are an external link.
-export function projectHref(project: Pick<ProjectListItem, 'type' | 'url'>) {
-    return project.type === 'external' ? project.url : `/projects/${project.url}`;
+type ProjectTarget = Pick<EntryListItem, 'presentation' | 'slug' | 'linkUrl'>;
+
+export function projectHref(project: ProjectTarget) {
+    return project.presentation === 'link' && project.linkUrl
+        ? project.linkUrl
+        : `/projects/${project.slug}`;
 }
 
 export function ProjectAnchor({
     project,
     children,
     className,
-}: PWC<{project: Pick<ProjectListItem, 'type' | 'url'>; className?: string}>) {
+}: PWC<{project: ProjectTarget; className?: string}>) {
     // External projects open in a new tab, unless they point back at this site.
-    if (project.type === 'external' && !project.url.startsWith('/')) {
+    const href = projectHref(project);
+
+    if (project.presentation === 'link' && !href.startsWith('/')) {
         return (
-            <a href={project.url} target="_blank" rel="noreferrer" className={className}>
+            <a href={href} target="_blank" rel="noreferrer" className={className}>
                 {children}
             </a>
         );
     }
     return (
-        <Link href={projectHref(project)} className={className}>
+        <Link href={href} className={className}>
             {children}
         </Link>
     );
@@ -99,14 +105,14 @@ export function ProductIcon({
 }
 
 // `ls -l` style row: name, description, trailing note.
-export function ProjectRow({project, note}: {project: ProjectListItem; note: string}) {
+export function ProjectRow({project, note}: {project: EntryListItem; note: string}) {
     return (
         <ProjectAnchor
             project={project}
             className="group flex flex-wrap items-baseline gap-x-8 gap-y-1.5 border-b border-line py-[22px]"
         >
             <span className="flex-[1_1_260px] font-term text-[clamp(18px,1.8vw,24px)] font-bold group-hover:text-accent">
-                {project.name}
+                {project.title}
             </span>
             <span className="flex-[2_1_320px] text-soft">{project.description}</span>
             <span className="flex-[0_1_200px] font-term text-[13px] text-muted">

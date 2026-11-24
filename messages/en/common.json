@@ -12,6 +12,9 @@
         "copyright": "© {year} Łukasz Micał",
         "github": "github",
         "linkedin": "linkedin",
-        "cv": "cv.pdf"
+        "cv": "cv.pdf",
+        "githubUrl": "",
+        "linkedinUrl": "",
+        "cvUrl": ""
     }
 }

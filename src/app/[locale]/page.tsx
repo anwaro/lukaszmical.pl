@@ -1,41 +1,45 @@
 import type {Metadata} from 'next';
 
-import React from 'react';
+import React, {cache} from 'react';
 
-import {DrizzleProject} from '@/services/drizzle/drizzle-project';
-import {ProjectLocale} from '@/types/project';
-import {PageHomepage} from '@/ui/pages/homepage/homepage';
+import {notFound} from 'next/navigation';
+
+import {EntryRepository} from '@/services/content/repository-entry';
+import {HOMEPAGE_SLUG} from '@/types/entry';
+import {Locale} from '@/types/locale';
 import {JsonLd} from '@/ui/components/seo/json-ld';
-import {metadataForPage, personJsonLd} from '@/utils/seo';
+import {PageStatic} from '@/ui/pages/static/static-page';
+import {entryMetadata, personJsonLd} from '@/utils/seo';
 
 type Props = {
-    params: Promise<{locale: ProjectLocale}>;
+    params: Promise<{locale: Locale}>;
 };
 
-// How many projects the homepage lists when none is marked as featured.
-const PROJECTS_FALLBACK = 3;
+// The homepage is the `page` entry with a reserved slug — there is no built-in
+// version of it. Cached per request: the page and its metadata both need it.
+const getHomepage = cache((locale: Locale) =>
+    new EntryRepository().getLocalized('page', HOMEPAGE_SLUG, locale),
+);
 
 export async function generateMetadata({params}: Props): Promise<Metadata> {
     const {locale} = await params;
-    return metadataForPage(locale, 'homepage', '/');
+    const page = await getHomepage(locale);
+
+    return page ? entryMetadata(page, locale, '/') : {};
 }
 
 export default async function Page({params}: Props) {
     const {locale} = await params;
-    const client = new DrizzleProject();
+    const page = await getHomepage(locale);
 
-    const [caseStudies, featured] = await Promise.all([
-        client.getProjectList(locale, {caseStudies: true}),
-        client.getProjectList(locale, {featured: true}),
-    ]);
-    const projects = featured.length
-        ? featured
-        : (await client.getProjectList(locale)).slice(0, PROJECTS_FALLBACK);
+    if (!page) {
+        notFound();
+    }
 
     return (
         <>
             <JsonLd data={personJsonLd()} />
-            <PageHomepage caseStudies={caseStudies} projects={projects} />
+            <PageStatic source={page.content} locale={locale} />
         </>
     );
 }

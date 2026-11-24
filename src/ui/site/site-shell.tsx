@@ -3,8 +3,6 @@ import React from 'react';
 import {getTranslations} from 'next-intl/server';
 import {clsx} from 'clsx';
 
-import {getSettings} from '@/services/content/content-store';
-
 import {LocaleSwitch} from './locale-switch';
 
 import {Link} from '@/navigation';
@@ -35,7 +33,6 @@ function Logo({label}: {label: string}) {
 
 export async function SiteShell({children, active}: Props) {
     const t = await getTranslations('common');
-    const settings = await getSettings();
 
     const nav: {href: string; label: string; section?: Section}[] = [
         {href: '/case-studies', label: t('nav.caseStudies'), section: 'caseStudies'},
@@ -45,10 +42,10 @@ export async function SiteShell({children, active}: Props) {
     ];
 
     const links = [
-        {href: settings.githubUrl, label: t('footer.github')},
-        {href: settings.linkedinUrl, label: t('footer.linkedin')},
-        {href: settings.cvUrl, label: t('footer.cv')},
-    ].filter((link) => link.href);
+        {href: t.raw('footer.githubUrl'), label: t('footer.github')},
+        {href: t.raw('footer.linkedinUrl'), label: t('footer.linkedin')},
+        {href: t.raw('footer.cvUrl'), label: t('footer.cv')},
+    ].filter((link): link is {href: string; label: string} => Boolean(link.href));
 
     return (
         <div className="mx-auto w-full max-w-310 px-[clamp(20px,5vw,60px)] leading-[1.6]">

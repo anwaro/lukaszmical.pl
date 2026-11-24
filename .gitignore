@@ -31,8 +31,6 @@ yarn-error.log*
 !.env.local.example
 !.env.prod.example
 
-# db seed data derived from backups (contains dumped data — not source)
-/scripts/seed/seed-data.json
 .env*.prod
 
 # vercel
@@ -47,3 +45,6 @@ next-env.d.ts
 
 !/public/projects/**/*.min.js
 !/public/projects/**/*.min.css
+
+# local database dumps
+/backups/

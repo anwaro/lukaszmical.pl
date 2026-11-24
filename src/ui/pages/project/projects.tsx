@@ -4,7 +4,7 @@ import Image from 'next/image';
 import {getTranslations} from 'next-intl/server';
 import {clsx} from 'clsx';
 
-import {ProjectListItem} from '@/types/project';
+import {EntryListItem} from '@/types/entry';
 import {
     CtaBanner,
     ProjectAnchor,
@@ -14,7 +14,7 @@ import {
 import {SiteShell} from '@/ui/site/site-shell';
 
 type Props = {
-    projects: ProjectListItem[];
+    projects: EntryListItem[];
 };
 
 const badgeClass = {
@@ -23,8 +23,8 @@ const badgeClass = {
 };
 
 // A project either has a write-up page or opens straight as an app.
-export const projectKind = (project: Pick<ProjectListItem, 'type'>) =>
-    project.type === 'page' ? 'page' : 'app';
+export const projectKind = (project: Pick<EntryListItem, 'presentation'>) =>
+    project.presentation === 'article' ? 'page' : 'app';
 
 export async function PageProjects({projects}: Props) {
     const t = await getTranslations('projects');
@@ -67,13 +67,13 @@ export async function PageProjects({projects}: Props) {
                                 {project.cover ? (
                                     <Image
                                         src={project.cover}
-                                        alt={t('coverAlt', {name: project.name})}
+                                        alt={t('coverAlt', {name: project.title})}
                                         fill
                                         sizes="(min-width: 1024px) 400px, 100vw"
                                         className="object-cover"
                                     />
                                 ) : (
-                                    project.name
+                                    project.title
                                 )}
                             </span>
                             <span className="flex flex-1 flex-col gap-2.5 p-5">
@@ -86,7 +86,7 @@ export async function PageProjects({projects}: Props) {
                                     {t(`badge.${kind}`)}
                                 </span>
                                 <span className="font-term text-[22px] font-bold tracking-[-0.02em] group-hover:text-accent">
-                                    {project.name}
+                                    {project.title}
                                 </span>
                                 <span className="text-[15px] text-soft">
                                     {project.description}

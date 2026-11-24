@@ -2,7 +2,7 @@ import React from 'react';
 
 import {getTranslations} from 'next-intl/server';
 
-import {LocalizedProjectEntity, ProjectListItem} from '@/types/project';
+import {EntryListItem, LocalizedEntry} from '@/types/entry';
 import {ContentMdx} from '@/ui/site/content-mdx';
 import {ProductIcon, Prompt, stackLine} from '@/ui/site/site-parts';
 import {SiteShell} from '@/ui/site/site-shell';
@@ -10,15 +10,15 @@ import {SiteShell} from '@/ui/site/site-shell';
 import {Link} from '@/navigation';
 
 type Props = {
-    caseStudy: LocalizedProjectEntity;
+    caseStudy: LocalizedEntry;
     // 1-based position on the case studies list.
     position: number;
-    next: ProjectListItem | null;
+    next: EntryListItem | null;
 };
 
 // "label: value" lines from the CMS, appended to the fixed facts.
-function parseMeta(meta: string): [string, string][] {
-    return meta
+function parseFacts(facts: string): [string, string][] {
+    return facts
         .split('\n')
         .map((line) => line.split(/:(.*)/s).map((part) => part.trim()))
         .filter((parts) => parts[0] && parts[1])
@@ -50,7 +50,7 @@ export async function PageCaseStudy({caseStudy, position, next}: Props) {
                 </a>
             ),
         ],
-        ...parseMeta(caseStudy.meta),
+        ...parseFacts(caseStudy.facts),
     ];
 
     return (
@@ -64,17 +64,17 @@ export async function PageCaseStudy({caseStudy, position, next}: Props) {
                 <div className="flex flex-wrap items-center gap-x-8 gap-y-6">
                     <ProductIcon
                         src={caseStudy.cover}
-                        alt={t('iconAlt', {name: caseStudy.name})}
-                        name={caseStudy.name}
+                        alt={t('iconAlt', {name: caseStudy.title})}
+                        name={caseStudy.title}
                         size={112}
                     />
                     <div className="flex min-w-0 flex-[1_1_320px] flex-col gap-2">
                         <p className="m-0 font-term text-[13px] text-muted">
                             {String(position).padStart(2, '0')} · case-studies/
-                            {caseStudy.url}.md
+                            {caseStudy.slug}.md
                         </p>
                         <h1 className="m-0 font-term text-[clamp(36px,5.6vw,80px)] leading-[1.05] font-bold tracking-[-0.03em] wrap-anywhere">
-                            {caseStudy.name}
+                            {caseStudy.title}
                         </h1>
                     </div>
                 </div>
@@ -101,13 +101,13 @@ export async function PageCaseStudy({caseStudy, position, next}: Props) {
 
             {next && (
                 <Link
-                    href={`/case-studies/${next.url}`}
+                    href={`/case-studies/${next.slug}`}
                     className="group mt-[clamp(48px,7vw,96px)] flex flex-wrap items-center gap-x-7 gap-y-5 rounded-[10px] border border-line bg-panel p-[clamp(24px,4vw,40px)] hover:border-edge"
                 >
                     <ProductIcon
                         src={next.cover}
-                        alt={t('iconAlt', {name: next.name})}
-                        name={next.name}
+                        alt={t('iconAlt', {name: next.title})}
+                        name={next.title}
                         size={72}
                     />
                     <span className="flex min-w-0 flex-[1_1_280px] flex-col gap-1">
@@ -115,7 +115,7 @@ export async function PageCaseStudy({caseStudy, position, next}: Props) {
                             {t('next')}
                         </span>
                         <span className="font-term text-[clamp(22px,2.6vw,34px)] font-bold tracking-[-0.02em] group-hover:text-accent">
-                            {next.name}
+                            {next.title}
                         </span>
                     </span>
                     <span className="font-term text-[15px] font-bold text-accent">

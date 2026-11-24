@@ -3,14 +3,14 @@ import type {Metadata} from 'next';
 import React from 'react';
 
 
-import {DrizzleProject} from '@/services/drizzle/drizzle-project';
-import {ProjectLocale} from '@/types/project';
+import {EntryRepository} from '@/services/content/repository-entry';
+import {Locale} from '@/types/locale';
 import {PageProjects} from '@/ui/pages/project/projects';
 import {metadataForPage} from '@/utils/seo';
 
 type Props = {
     params: Promise<{
-        locale: ProjectLocale;
+        locale: Locale;
     }>;
 };
 
@@ -21,9 +21,7 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
 
 export default async function Page({params}: Props) {
     const {locale} = await params;
-    const client = new DrizzleProject();
-
-    const projects = await client.getProjectList(locale);
+    const projects = await new EntryRepository().list(locale, {kind: 'project'});
 
     return <PageProjects projects={projects} />;
 }

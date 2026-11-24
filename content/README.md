@@ -3,6 +3,7 @@
 Gotowe treści z designu do wklejenia w panelu admina. Jeden plik na wpis i język:
 `<slug>.pl.md` i `<slug>.en.md`.
 
+- `pages/` → `/admin/pages` → „Create new" (strona główna: `/admin/homepage`)
 - `case-studies/` → `/admin/case-studies` → „Create new"
 - `projects/` → `/admin/projects` → „Create new"
 
@@ -18,5 +19,7 @@ W każdym pliku:
 Wpisy nie mają jeszcze zrzutów ekranu. Zrzut wstawia się, dodając w treści adres
 obrazka: `<Shot src="https://..." alt="opis" />`.
 
-Teksty strony głównej i interfejsu nie są tutaj — ich wartości domyślne są w
-`messages/<język>/*.json`, a edytuje się je w `/admin/homepage` i `/admin/translations`.
+Strona główna i strony statyczne (`/admin/homepage`, `/admin/pages`) składają się w
+całości z bloków — biblioteka bloków jest w edytorze treści, w trybie edycji po prawej.
+Teksty interfejsu mają wartości domyślne w `messages/<język>/*.json` i edytuje się je w
+`/admin/translations`.

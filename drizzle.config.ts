@@ -2,19 +2,19 @@ import {existsSync} from 'node:fs';
 
 import {defineConfig} from 'drizzle-kit';
 
-// Local by default (.env.local → Docker Postgres). `db:push:prod` sets
-// ENV_FILE=.env.prod to target the production database instead.
+// Local by default (.env.local → Docker Postgres); ENV_FILE points at another
+// env file. Schema changes need a direct connection, so the unpooled URL wins.
 const envFile = process.env.ENV_FILE ?? '.env.local';
 if (existsSync(envFile)) {
     process.loadEnvFile(envFile);
 }
 
 export default defineConfig({
-    schema: './src/services/drizzle/schema/index.ts',
+    schema: './src/services/db/schema/index.ts',
     out: './drizzle',
     dialect: 'postgresql',
     schemaFilter: ['public'],
     dbCredentials: {
-        url: process.env.DATABASE_URL ?? '',
+        url: process.env.DATABASE_URL_UNPOOLED ?? process.env.DATABASE_URL ?? '',
     },
 });

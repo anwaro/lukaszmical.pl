@@ -2,16 +2,14 @@
 
 import {updateTag} from 'next/cache';
 
-import {CONTENT_TAG, settingDefaults} from '@/services/content/content-store';
+import {CONTENT_TAG} from '@/services/content/content-store';
 import {messageNamespaces} from '@/services/content/content-messages';
-import {DrizzleSetting} from '@/services/drizzle/drizzle-setting';
-import {DrizzleTranslation} from '@/services/drizzle/drizzle-translation';
-import {ProjectLocale, ProjectLocalesList} from '@/types/project';
+import {MessageRepository} from '@/services/content/repository-message';
+import {Locale, LocaleList} from '@/types/locale';
 import {auth} from '@/utils/auth/auth';
 
 export type ContentChanges = {
-    messages: {namespace: string; key: string; locale: ProjectLocale; value: string}[];
-    settings: {key: string; value: string}[];
+    messages: {namespace: string; key: string; locale: Locale; value: string}[];
 };
 
 export type SaveContentResult =
@@ -29,22 +27,18 @@ export const saveContentAction = async (
     const messages = changes.messages.filter(
         (row) =>
             namespaces.includes(row.namespace) &&
-            ProjectLocalesList.includes(row.locale) &&
+            LocaleList.includes(row.locale) &&
             row.key,
     );
-    const settings = changes.settings.filter((row) => row.key in settingDefaults);
 
     try {
-        await new DrizzleTranslation().upsertMany(
+        await new MessageRepository().upsertMany(
             messages.map(({namespace, key, locale, value}) => ({
                 namespace,
                 key,
                 locale,
                 value,
             })),
-        );
-        await new DrizzleSetting().upsertMany(
-            settings.map(({key, value}) => ({key, value})),
         );
     } catch (error) {
         return {
@@ -53,7 +47,7 @@ export const saveContentAction = async (
         };
     }
 
-    // The public site reads messages and settings through this cache tag.
+    // The public site reads messages through this cache tag.
     updateTag(CONTENT_TAG);
 
     return {status: 'success', savedAt: Date.now()};

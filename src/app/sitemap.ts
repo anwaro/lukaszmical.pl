@@ -1,6 +1,7 @@
 import type {MetadataRoute} from 'next';
 
-import {DrizzleProject} from '@/services/drizzle/drizzle-project';
+import {EntryRepository} from '@/services/content/repository-entry';
+import {HOMEPAGE_SLUG} from '@/types/entry';
 import {localeUrl} from '@/utils/seo';
 
 import {locales} from '@/config';
@@ -21,16 +22,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     let projectPaths: string[] = [];
     try {
-        const client = new DrizzleProject();
-        const [caseStudies, projects] = await Promise.all([
-            client.getProjectList('pl', {caseStudies: true}),
-            client.getProjectList('pl'),
+        const client = new EntryRepository();
+        const [caseStudies, projects, pages] = await Promise.all([
+            client.list('pl', {kind: 'case_study'}),
+            client.list('pl', {kind: 'project'}),
+            client.list('pl', {kind: 'page'}),
         ]);
         projectPaths = [
-            ...caseStudies.map((item) => `/case-studies/${item.url}`),
+            ...pages
+                .filter((page) => page.slug !== HOMEPAGE_SLUG)
+                .map((page) => `/${page.slug}`),
+            ...caseStudies.map((item) => `/case-studies/${item.slug}`),
             ...projects
-                .filter((project) => project.type !== 'external')
-                .map((project) => `/projects/${project.url}`),
+                .filter((project) => project.presentation !== 'link')
+                .map((project) => `/projects/${project.slug}`),
         ];
     } catch {
         // If the database is unreachable at build time, still emit the static
