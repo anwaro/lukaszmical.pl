@@ -45,6 +45,16 @@ function normalizeCover(cover: string | null): string | null {
     return null;
 }
 
+// Bundled interactive projects ship their cover in `public/`, so they need no
+// stored one.
+function listCover(row: Pick<ProjectRow, 'cover' | 'type' | 'url'>): string | null {
+    const cover = normalizeCover(row.cover);
+    if (cover || row.type !== 'project') {
+        return cover;
+    }
+    return `/projects/${row.url}/image/cover.jpg`;
+}
+
 export type ProjectListFilter = {
     // Case studies and projects share a table but are listed separately.
     caseStudies?: boolean;
@@ -183,7 +193,7 @@ export class DrizzleProject {
 
         return rows.map((row) => ({
             ...row,
-            cover: normalizeCover(row.cover),
+            cover: listCover(row),
             ...(byId.get(row.id) ?? emptyStrings()),
         }));
     }
