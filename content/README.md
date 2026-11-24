@@ -15,9 +15,8 @@ W każdym pliku:
 3. **Content (MDX)** — treść strony; wklej wszystko spomiędzy znaczników
    `content:start` i `content:end` do pola „Content".
 
-Fragmenty w nawiasach kwadratowych (`[TWOJA ROLA]`, `[X]`, `[ZRZUT: ...]`) to miejsca
-do uzupełnienia. Zrzut ekranu wstawia się, dodając adres obrazka:
-`<Shot src="https://..." alt="opis" />`.
+Wpisy nie mają jeszcze zrzutów ekranu. Zrzut wstawia się, dodając w treści adres
+obrazka: `<Shot src="https://..." alt="opis" />`.
 
 Teksty strony głównej i interfejsu nie są tutaj — ich wartości domyślne są w
 `messages/<język>/*.json`, a edytuje się je w `/admin/homepage` i `/admin/translations`.

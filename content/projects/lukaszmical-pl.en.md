@@ -13,8 +13,9 @@ Treść do wklejenia w panelu: /admin/projects → pola w języku EN.
 | Published | `yes` |
 | Featured on homepage | `yes` |
 | Stack | `Next.js, Drizzle, next-intl` |
-| Year | — |
+| Year | `2019 →` |
 | Demo url | — |
+| Repository url | `https://github.com/anwaro/lukaszmical.pl` |
 
 ## Pola tekstowe (EN)
 
@@ -25,7 +26,3 @@ lukaszmical.pl
 ### Description
 
 This site: a bilingual website with its own admin panel.
-
-### Lead
-
-This site: a bilingual website with its own admin panel and SEO built from the ground up.

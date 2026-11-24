@@ -12,7 +12,7 @@ Treść do wklejenia w panelu: /admin/case-studies → pola w języku PL.
 | Order | `2` |
 | Published | `yes` |
 | Stack | `Next.js, NestJS, Drizzle, PostgreSQL, Turborepo` |
-| Period | — |
+| Period | `2023 →` |
 | Site address | — |
 
 ## Pola tekstowe (PL)
@@ -35,7 +35,7 @@ Gdzie Transmisja — wyszukiwarka transmisji sportowych
 
 ### Role
 
-[TWOJA ROLA]
+Fullstack developer — architektura, frontend, API i wdrożenie
 
 ### Problem (homepage card)
 
@@ -47,15 +47,13 @@ Monorepo na Turborepo: Next.js, API w NestJS z Drizzle i Postgresem, panel admin
 
 ### Result (homepage card)
 
-[Efekt — np. liczba transmisji w bazie, ruch, czas dodania nowej ligi.]
+Jedna wyszukiwarka odpowiada na pytanie o kanał, godzinę i miejsce, a dane o transmisjach zasila automatyczny import.
 
 ## Content (MDX)
 
 Wklej do pola „Content” wszystko spomiędzy znaczników.
 
 <!-- content:start -->
-<Shot>[ZRZUT EKRANU: wyszukiwarka transmisji]</Shot>
-
 <Section title="problem">
 <Big>
 
@@ -63,7 +61,7 @@ Informacje o tym, gdzie obejrzeć mecz, są rozrzucone po wielu źródłach. Kib
 
 </Big>
 
-Po stronie kodu to kilka aplikacji naraz — strona dla kibiców, panel redakcji, API i import danych — które muszą posługiwać się tymi samymi typami. [Dopisz, skąd wziął się pomysł i kto za nim stoi.]
+Po stronie kodu to kilka aplikacji naraz — strona dla kibiców, panel redakcji, API i import danych — które muszą posługiwać się tymi samymi typami.
 
 </Section>
 
@@ -104,19 +102,14 @@ Całość spina pakiet `@gt/shared`: typy, enumy i narzędzia używane przez wsz
 </Chips>
 </Section>
 
-<Shots>
-<Shot ratio="4 / 3">[ZRZUT: strona transmisji]</Shot>
-<Shot ratio="4 / 3">[ZRZUT: panel admina]</Shot>
-</Shots>
-
 <Section title="rezultat">
-<Stats>
-<Stat value="[X]">[transmisji w bazie]</Stat>
-<Stat value="[X]">[lig i kanałów]</Stat>
-<Stat value="[X]">[np. użytkowników miesięcznie]</Stat>
-</Stats>
+<Big>
 
-[Dwa zdania o efekcie: na jakim etapie jest produkt i co działa najlepiej.]
+Jedna wyszukiwarka odpowiada na pytanie o kanał, godzinę i miejsce, a dane o transmisjach zasila automatyczny import.
+
+</Big>
+
+Dzięki wspólnym typom zmiana w schemacie bazy jest od razu widoczna w API, panelu redakcji i na stronie.
 
 </Section>
 <!-- content:end -->

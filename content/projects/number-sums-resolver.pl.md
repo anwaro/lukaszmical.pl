@@ -21,7 +21,3 @@ Treść do wklejenia w panelu: /admin/projects → pola w języku PL.
 ### Name
 
 number-sums-resolver
-
-### Description
-
-Interaktywny solver łamigłówki liczbowej.

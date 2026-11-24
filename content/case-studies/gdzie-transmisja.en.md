@@ -12,7 +12,7 @@ Treść do wklejenia w panelu: /admin/case-studies → pola w języku EN.
 | Order | `2` |
 | Published | `yes` |
 | Stack | `Next.js, NestJS, Drizzle, PostgreSQL, Turborepo` |
-| Period | — |
+| Period | `2023 →` |
 | Site address | — |
 
 ## Pola tekstowe (EN)
@@ -35,7 +35,7 @@ Gdzie Transmisja — a sports broadcast search engine
 
 ### Role
 
-[YOUR ROLE]
+Fullstack developer — architecture, frontend, API and deployment
 
 ### Problem (homepage card)
 
@@ -47,15 +47,13 @@ A Turborepo monorepo: Next.js, a NestJS API with Drizzle and Postgres, an admin 
 
 ### Result (homepage card)
 
-[Outcome — e.g. number of broadcasts in the database, traffic, time to add a new league.]
+One search answers the question of channel, time and place, and broadcast data is fed by an automatic import.
 
 ## Content (MDX)
 
 Wklej do pola „Content” wszystko spomiędzy znaczników.
 
 <!-- content:start -->
-<Shot>[SCREENSHOT: broadcast search]</Shot>
-
 <Section title="problem">
 <Big>
 
@@ -63,7 +61,7 @@ Information about where to watch a match is scattered across many sources. A fan
 
 </Big>
 
-On the code side it is several applications at once — a site for fans, an editorial panel, an API and data import — that have to speak the same types. [Add where the idea came from and who is behind it.]
+On the code side it is several applications at once — a site for fans, an editorial panel, an API and data import — that have to speak the same types.
 
 </Section>
 
@@ -104,19 +102,14 @@ Everything is tied together by the `@gt/shared` package: types, enums and tools 
 </Chips>
 </Section>
 
-<Shots>
-<Shot ratio="4 / 3">[SCREENSHOT: broadcast page]</Shot>
-<Shot ratio="4 / 3">[SCREENSHOT: admin panel]</Shot>
-</Shots>
-
 <Section title="result">
-<Stats>
-<Stat value="[X]">[broadcasts in the database]</Stat>
-<Stat value="[X]">[leagues and channels]</Stat>
-<Stat value="[X]">[e.g. monthly users]</Stat>
-</Stats>
+<Big>
 
-[Two sentences about the outcome: what stage the product is at and what works best.]
+One search answers the question of channel, time and place, and broadcast data is fed by an automatic import.
+
+</Big>
+
+Thanks to shared types, a change in the database schema shows up immediately in the API, the editorial panel and the site.
 
 </Section>
 <!-- content:end -->
