@@ -47,7 +47,7 @@ src/admin/          admin panel UI (pages, components, layouts, hooks)
 src/services/       domain logic
   projects/monogram-resolver/   detector, resolver, helper, model, image, canvas, task
   projects/number-sums-resolver/
-  drizzle/  r2/  animation/
+  db/  content/  r2/  animation/
 src/ui/             shared UI components + page compositions
   site/             public site shell, shared parts, MDX content blocks
 src/types/          shared types
@@ -75,13 +75,18 @@ a pipeline of small, single-responsibility **resolvers**.
 
 ## Database & auth
 
-- **Postgres** via **Drizzle ORM** (`src/services/drizzle/`). Runtime uses the pooled
-  `DATABASE_URL` with `postgres(url, {prepare:false})` in `drizzle-client.ts`. Schema
-  lives in `schema/`; data access goes through `DrizzleProject` / `DrizzleProjectString`.
+- **Postgres** via **Drizzle ORM**, confined to `src/services/db/` (`db-client.ts`,
+  `schema/`). Runtime uses the pooled `DATABASE_URL` with `postgres(url, {prepare:false})`.
+  Nothing outside `src/services/db/` and the repositories imports `drizzle-orm`: data
+  access goes through `EntryRepository` / `MessageRepository` in `src/services/content/`,
+  which return the domain types from `src/types/entry.ts`.
   Hosted on **Vercel Postgres (Neon)** in production, local Docker Postgres in dev
   (`pnpm db:up`).
-- **Migrations/seed**: `pnpm db:push` (local), `pnpm db:push:prod` (targets `.env.prod`,
-  which must hold the DIRECT/unpooled URL), `pnpm db:seed`.
+- **Schema changes**: edit `schema/`, run `pnpm db:generate` (writes a migration to
+  `drizzle/`) and `pnpm db:migrate` locally. Production is migrated by the Vercel build.
+- **Vercel build** (`vercel.json`): `pnpm db:deploy && pnpm build`. `scripts/db-deploy.ts`
+  applies pending migrations (over `DATABASE_URL_UNPOOLED`) and syncs messages; it does
+  nothing on preview deployments.
 - **Auth** — single admin user, no external service. `src/utils/auth/`: `argon2` password
   hash (`ADMIN_PASSWORD_HASH`) verified in the login action, `jose` HS256 session cookie
   (`AUTH_SECRET`) checked by middleware and `auth()`. Generate the hash with
@@ -89,20 +94,35 @@ a pipeline of small, single-responsibility **resolvers**.
 
 ## Content (CMS)
 
-- **Case studies and projects** share the `projects` table (`type`: `case-study`,
-  `page`, `project`, `external`) with localized strings in `projects_strings`. Lists
-  are split by `getProjectList(locale, {caseStudies})`; routes are `/case-studies/*`
-  and `/projects/*`. Long content is MDX rendered with the blocks from
-  `src/ui/site/content-mdx-components.tsx` (`<Section>`, `<Flow>`, `<Decisions>`, ...).
-- **Translations** live in the `translations` table and override, key by key, the
-  defaults in `messages/<locale>/*.json` (`src/services/content/content-store.ts`).
-  A new UI string needs a default in both JSON files; editors change it in
-  `/admin/translations`. Non-localized values (e-mail, links, stack) are in `settings`.
-- **Homepage** is edited in `/admin/homepage` — its fields are declared in
-  `src/admin/content-groups.ts` and stored as `homepage.*` translations + settings.
-- Saving in the admin expires the `cms-content` cache tag; rows changed directly in
-  the database are not picked up until then.
-- `content/` holds ready-to-paste entries (case studies, projects) as Markdown, one
+- **Entries** — static pages, case studies and projects are rows of `entries` (`kind`:
+  `page`, `case_study`, `project`; slug unique per kind), with texts per language in
+  `entry_translations` (`title`, `description`, `lead`, `content` + `extra` JSON for
+  the fields only some kinds use: `headline`, `role`, `problem`, `approach`, `result`,
+  `facts`). A project also has a `presentation`: `article` (write-up from blocks), `app`
+  (served from `public/projects/<slug>`, switches in `options`) or `link` (`link_url`).
+  Routes are `/<slug>`, `/case-studies/*` and `/projects/*`.
+- **Block library** — all long content is MDX built from blocks, rendered by
+  `ContentMdx` (`src/ui/site/content-mdx.tsx`). The catalogue (sections, descriptions,
+  editor snippets) is `src/ui/site/blocks/block-library.ts`; components are in
+  `content-mdx-components.tsx` (static) and `content-mdx-dynamic.tsx` (CMS data:
+  `<CaseStudyList>`, `<ProjectList>`). A new block needs an
+  entry in the library **and** a component — the types fail the build otherwise.
+- **Homepage** is the `page` entry with the slug `homepage`, edited in
+  `/admin/homepage` as block source. There is no fallback: without that entry `/`
+  is a 404. Its ready-to-paste source is in `content/pages/`.
+- **Translations**: `messages/<locale>/*.json` define which keys exist and their
+  default values; the `messages` table holds the values and wins at runtime
+  (`src/services/content/content-store.ts`). The message sync (`pnpm db:sync-messages`,
+  part of the build) adds keys missing in the table, removes keys gone from the files
+  and never changes a stored value — so editing a default in JSON does not reach a
+  database that already has the key. A new UI string needs a default in both JSON
+  files; editors change values in `/admin/translations` (both languages side by side).
+  There is no settings table: the e-mail and the stack are parameters of the
+  `<Contact>` and `<Stack>` blocks, footer links are the `common.footer.*Url`
+  translations (an empty one is hidden).
+- Saving translations expires the `cms-content` cache tag; rows changed
+  directly in the database are not picked up until then.
+- `content/` holds ready-to-paste entries (pages, case studies, projects) as Markdown, one
   file per entry and language; there is no content seed — entries are created in the
   admin.
 

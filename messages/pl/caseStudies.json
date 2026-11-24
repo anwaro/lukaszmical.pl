@@ -17,5 +17,11 @@
     "cta": {
         "text": "Mniejsze rzeczy — solvery, narzędzia, eksperymenty — są w projektach.",
         "button": "cd projekty"
+    },
+    "card": {
+        "problem": "problem",
+        "approach": "podejście",
+        "result": "rezultat",
+        "more": "czytaj case study ->"
     }
 }

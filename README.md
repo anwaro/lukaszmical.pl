@@ -43,8 +43,9 @@ Copy `.env.local.example` to `.env.local` and fill it in (do **not** commit secr
 - `ADMIN_PASSWORD_HASH` — argon2 hash of the admin password (`pnpm auth:hash '<password>'`)
 - `R2_BUCKET_PUBLIC_URL`, `R2_BUCKET_NAME`, `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY` — Cloudflare R2
 
-For production, set the same variables in the Vercel project settings. Schema changes are
-pushed with `pnpm db:push:prod` (uses `.env.prod`, which holds the **direct/unpooled** URL).
+For production, set the same variables in the Vercel project settings. The Vercel build
+(`vercel.json`) runs `pnpm db:deploy` first: it applies pending migrations over
+`DATABASE_URL_UNPOOLED` and syncs message keys. Preview deployments skip it.
 
 ## Scripts
 
@@ -69,7 +70,8 @@ src/
     projects/     # project logic
       monogram-resolver/    # nonogram/monogram solver (detector, resolver, helpers)
       number-sums-resolver/
-    drizzle/      # Drizzle client, schema, project data access
+    db/           # database client and schema (the only code that uses Drizzle)
+    content/      # CMS data access (repositories), messages, homepage
     r2/           # Cloudflare R2 helpers
     animation/
   ui/             # shared UI (components + page-level compositions)
@@ -85,10 +87,10 @@ public/           # static assets
 
 ```bash
 pnpm db:up          # start local Docker Postgres
-pnpm db:generate    # generate a migration from the Drizzle schema
-pnpm db:push        # push the schema to the local database
-pnpm db:push:prod   # push to production (uses .env.prod, direct/unpooled URL)
-pnpm db:seed        # seed from scripts/seed/seed-data.json
+pnpm db:generate       # write a migration for schema changes to drizzle/
+pnpm db:migrate        # apply migrations to the local database
+pnpm db:sync-messages  # add/remove message keys in the database to match messages/*.json
+pnpm db:deploy         # migrations + message sync (what the Vercel build runs)
 ```
 
 ## Deployment

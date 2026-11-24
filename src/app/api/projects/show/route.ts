@@ -3,21 +3,20 @@ import {notFound} from 'next/navigation';
 import {ProjectRenderer} from '@/services/project-renderer';
 import {params} from '@/app/api/projects/show/params';
 import {LocalProjectService} from '@/services/local-project-service';
-import {DrizzleProject} from '@/services/drizzle/drizzle-project';
+import {EntryRepository} from '@/services/content/repository-entry';
 
 export async function GET(request: Request) {
     const service = new LocalProjectService();
     const renderer = new ProjectRenderer();
-    const client = new DrizzleProject();
     const url = new URL(request.url);
     const {slug, locale, minFile} = params(url);
 
     if (!slug) {
         notFound();
     }
-    const project = await client.getLocalizedProjectBySlug(slug, locale);
+    const project = await new EntryRepository().getLocalized('project', slug, locale);
 
-    if (!project) {
+    if (!project || project.presentation !== 'app') {
         notFound();
     }
     const localProject = await service.toLocalProject(project, minFile);

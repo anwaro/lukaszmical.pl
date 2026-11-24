@@ -2,33 +2,26 @@ import type {Metadata} from 'next';
 
 import React from 'react';
 
-
 import {notFound, redirect} from 'next/navigation';
 
-import {ProjectRenderer} from '@/services/project-renderer';
-import {ProjectIframe} from '@/ui/pages/project/iframe/project-iframe';
+import {EntryRepository} from '@/services/content/repository-entry';
 import {LocalProjectService} from '@/services/local-project-service';
-import {DrizzleProject} from '@/services/drizzle/drizzle-project';
-import {ProjectPage} from '@/ui/pages/project/project-page';
-import {ProjectLocale} from '@/types/project';
+import {ProjectRenderer} from '@/services/project-renderer';
+import {Locale} from '@/types/locale';
 import {JsonLd} from '@/ui/components/seo/json-ld';
-import {projectJsonLd, projectMetadata} from '@/utils/seo';
+import {ProjectIframe} from '@/ui/pages/project/iframe/project-iframe';
+import {ProjectPage} from '@/ui/pages/project/project-page';
+import {entryJsonLd, entryMetadata} from '@/utils/seo';
 
 type Props = {
     params: Promise<{
-        locale: ProjectLocale;
+        locale: Locale;
         slug: string;
     }>;
 };
 
-// Case studies share the table but live under /case-studies.
-async function getProject(slug: string, locale: ProjectLocale) {
-    const project = await new DrizzleProject().getLocalizedProjectBySlug(
-        slug,
-        locale,
-    );
-    return project && project.type !== 'case-study' ? project : null;
-}
+const getProject = (slug: string, locale: Locale) =>
+    new EntryRepository().getLocalized('project', slug, locale);
 
 // How many other projects the write-up page links to.
 const OTHERS_LIMIT = 3;
@@ -37,7 +30,7 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
     const {slug, locale} = await params;
     const project = await getProject(slug, locale);
 
-    return project ? projectMetadata(project, locale, `/projects/${slug}`) : {};
+    return project ? entryMetadata(project, locale, `/projects/${slug}`) : {};
 }
 
 export default async function Page({params}: Props) {
@@ -48,10 +41,17 @@ export default async function Page({params}: Props) {
         notFound();
     }
 
-    const jsonLd = projectJsonLd(project, locale, `/projects/${slug}`);
+    if (project.presentation === 'link') {
+        if (!project.linkUrl) {
+            notFound();
+        }
+        redirect(project.linkUrl);
+    }
 
-    if (project.type === 'page') {
-        const others = (await new DrizzleProject().getProjectList(locale))
+    const jsonLd = entryJsonLd(project, locale, `/projects/${slug}`);
+
+    if (project.presentation === 'article') {
+        const others = (await new EntryRepository().list(locale, {kind: 'project'}))
             .filter((other) => other.id !== project.id)
             .slice(0, OTHERS_LIMIT);
 
@@ -63,25 +63,19 @@ export default async function Page({params}: Props) {
         );
     }
 
-    if (project.type === 'project') {
-        const service = new LocalProjectService();
-        const renderer = new ProjectRenderer();
-        const localProject = await service.toLocalProject(project, true);
+    const localProject = await new LocalProjectService().toLocalProject(project, true);
 
-        if (!localProject) {
-            console.log('localProject not found');
-            notFound();
-        }
-
-        const html = await renderer.render(localProject, true);
-
-        return (
-            <>
-                <JsonLd data={jsonLd} />
-                <ProjectIframe html={html} />
-            </>
-        );
+    if (!localProject) {
+        console.log('localProject not found');
+        notFound();
     }
 
-    redirect(project.url);
+    const html = await new ProjectRenderer().render(localProject, true);
+
+    return (
+        <>
+            <JsonLd data={jsonLd} />
+            <ProjectIframe html={html} />
+        </>
+    );
 }

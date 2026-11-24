@@ -1,18 +1,17 @@
-import {ProjectLocale} from '@/types/project';
+import {Locale} from '@/types/locale';
 
 export type MessageTree = {[key: string]: string | MessageTree};
 export type FlatMessages = Record<string, string>;
 
 export const messageNamespaces = [
     'common',
-    'homepage',
     'caseStudies',
     'projects',
 ] as const;
 
 // Default messages shipped with the code. The CMS (`translations` table)
 // overrides them key by key, so a new key works before anyone edits it.
-export async function loadFileMessages(locale: ProjectLocale): Promise<MessageTree> {
+export async function loadFileMessages(locale: Locale): Promise<MessageTree> {
     const entries = await Promise.all(
         messageNamespaces.map(async (name) => [
             name,

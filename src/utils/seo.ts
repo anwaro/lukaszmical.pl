@@ -2,7 +2,7 @@ import type {Metadata} from 'next';
 
 import {getTranslations} from 'next-intl/server';
 
-import {ProjectLocale} from '@/types/project';
+import {Locale} from '@/types/locale';
 
 import {defaultLocale, locales} from '@/config';
 
@@ -17,20 +17,20 @@ export const ogImage = '/opengraph-image';
 
 // Build a locale-prefixed path following the `as-needed` strategy: the default
 // locale has no prefix, the others are prefixed with `/<locale>`.
-export function localePath(locale: ProjectLocale, path = ''): string {
+export function localePath(locale: Locale, path = ''): string {
     const clean = path === '/' ? '' : path.replace(/\/$/, '');
     const prefix = locale === defaultLocale ? '' : `/${locale}`;
     return `${prefix}${clean}` || '/';
 }
 
-export function localeUrl(locale: ProjectLocale, path = ''): string {
+export function localeUrl(locale: Locale, path = ''): string {
     return `${siteUrl}${localePath(locale, path)}`;
 }
 
 // Canonical (for the current locale) plus hreflang alternates for every locale.
 // Paths are relative — Next resolves them against `metadataBase`.
 export function buildAlternates(
-    locale: ProjectLocale,
+    locale: Locale,
     path = '',
 ): Metadata['alternates'] {
     return {
@@ -47,7 +47,7 @@ export function buildAlternates(
 // Metadata for a static localized page whose namespace exposes `title` and
 // `description` message keys.
 export async function metadataForPage(
-    locale: ProjectLocale,
+    locale: Locale,
     namespace: string,
     path: string,
 ): Promise<Metadata> {
@@ -69,33 +69,35 @@ export async function metadataForPage(
     };
 }
 
-// Metadata for a CMS entry (project or case study) at `path`.
-export function projectMetadata(
-    project: {
-        name: string;
+// Metadata for a CMS entry at `path`. The homepage (`/`) uses its title as is,
+// other entries get the site name appended.
+export function entryMetadata(
+    entry: {
+        title: string;
         description: string;
         cover: string | null;
         published: boolean;
     },
-    locale: ProjectLocale,
+    locale: Locale,
     path: string,
 ): Metadata {
-    const title = project.name ? `${project.name} | ${siteName}` : siteName;
-    const description = project.description || undefined;
+    const title =
+        entry.title && path !== '/' ? `${entry.title} | ${siteName}` : entry.title || siteName;
+    const description = entry.description || undefined;
 
     return {
         title,
         description,
-        robots: project.published ? undefined : {index: false, follow: false},
+        robots: entry.published ? undefined : {index: false, follow: false},
         alternates: buildAlternates(locale, path),
         openGraph: {
-            type: 'article',
+            type: path === '/' ? 'website' : 'article',
             title,
             description,
             url: localePath(locale, path),
-            images: [project.cover ?? ogImage],
+            images: [entry.cover ?? ogImage],
         },
-        twitter: {images: [project.cover ?? ogImage]},
+        twitter: {images: [entry.cover ?? ogImage]},
     };
 }
 
@@ -114,20 +116,20 @@ export function personJsonLd(): Record<string, unknown> {
     };
 }
 
-// schema.org CreativeWork for a single project.
-export function projectJsonLd(
-    project: {name: string; description: string; cover: string | null},
-    locale: ProjectLocale,
+// schema.org CreativeWork for a single entry.
+export function entryJsonLd(
+    entry: {title: string; description: string; cover: string | null},
+    locale: Locale,
     path: string,
 ): Record<string, unknown> {
     return {
         '@context': 'https://schema.org',
         '@type': 'CreativeWork',
-        name: project.name,
-        description: project.description || undefined,
+        name: entry.title,
+        description: entry.description || undefined,
         url: localeUrl(locale, path),
         inLanguage: locale,
-        image: project.cover || undefined,
+        image: entry.cover || undefined,
         author,
     };
 }

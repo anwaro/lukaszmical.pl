@@ -1,7 +1,7 @@
 import fs from 'fs';
 
-import {AssetType, LocalProject} from '@/types/project';
-import {ProjectRow} from '@/types/project';
+import {EntryBase} from '@/types/entry';
+import {AssetType, LocalProject} from '@/types/local-project';
 
 export class LocalProjectService {
     getProjectsPath = (path: string) => {
@@ -13,22 +13,24 @@ export class LocalProjectService {
     };
 
     toLocalProject = async (
-        project: ProjectRow,
+        project: Pick<EntryBase, 'slug' | 'options'>,
         minFile = true,
     ): Promise<LocalProject | undefined> => {
-        const projectPath = this.getProjectsPath(project.url);
+        const projectPath = this.getProjectsPath(project.slug);
 
         if (!fs.existsSync(projectPath)) {
             return undefined;
         }
 
         const template = await this.readFile('template.html');
-        const html = await this.readFile(`${project.url}/index.html`);
-        const cssFiles = await this.getProjectTypeFile(project.url, 'css', minFile);
-        const jsFiles = await this.getProjectTypeFile(project.url, 'js', minFile);
+        const html = await this.readFile(`${project.slug}/index.html`);
+        const cssFiles = await this.getProjectTypeFile(project.slug, 'css', minFile);
+        const jsFiles = await this.getProjectTypeFile(project.slug, 'js', minFile);
 
         return {
-            ...project,
+            slug: project.slug,
+            themeCss: Boolean(project.options.themeCss),
+            myQuery: Boolean(project.options.myQuery),
             template,
             html,
             cssFiles,

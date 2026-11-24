@@ -2,14 +2,14 @@ import React from 'react';
 
 import {getTranslations} from 'next-intl/server';
 
-import {ProjectListItem} from '@/types/project';
+import {EntryListItem} from '@/types/entry';
 import {CtaBanner, ProductIcon, Prompt, stackLine} from '@/ui/site/site-parts';
 import {SiteShell} from '@/ui/site/site-shell';
 
 import {Link} from '@/navigation';
 
 type Props = {
-    caseStudies: ProjectListItem[];
+    caseStudies: EntryListItem[];
 };
 
 export async function PageCaseStudies({caseStudies}: Props) {
@@ -34,21 +34,21 @@ export async function PageCaseStudies({caseStudies}: Props) {
                 {caseStudies.map((item, index) => (
                     <Link
                         key={item.id}
-                        href={`/case-studies/${item.url}`}
+                        href={`/case-studies/${item.slug}`}
                         className="group flex flex-wrap items-start gap-x-10 gap-y-6 rounded-[10px] border border-line bg-panel p-[clamp(20px,3vw,36px)] hover:border-edge"
                     >
                         <ProductIcon
                             src={item.cover}
-                            alt={t('iconAlt', {name: item.name})}
-                            name={item.name}
+                            alt={t('iconAlt', {name: item.title})}
+                            name={item.title}
                             size={96}
                         />
                         <span className="flex min-w-0 flex-[3_1_380px] flex-col gap-3">
                             <span className="font-term text-xs text-muted">
-                                {String(index + 1).padStart(2, '0')} · {item.url}.md
+                                {String(index + 1).padStart(2, '0')} · {item.slug}.md
                             </span>
                             <span className="font-term text-[clamp(24px,2.8vw,38px)] leading-[1.12] font-bold tracking-[-0.02em] group-hover:text-accent">
-                                {item.name}
+                                {item.title}
                             </span>
                             <span className="max-w-140 text-soft">
                                 {item.description}

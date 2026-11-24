@@ -3,6 +3,7 @@ import {useMemo} from 'react';
 import {
     mdiBookOpenPageVariant,
     mdiCodeJson,
+    mdiFileDocumentMultiple,
     mdiHome,
     mdiMonitor,
     mdiTranslate,
@@ -25,6 +26,11 @@ export function useMenuAside() {
                 href: '/admin/homepage',
                 icon: mdiHome,
                 label: 'Homepage',
+            },
+            {
+                href: '/admin/pages',
+                icon: mdiFileDocumentMultiple,
+                label: 'Pages',
             },
             {
                 href: '/admin/case-studies',

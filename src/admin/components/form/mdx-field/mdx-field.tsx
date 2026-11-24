@@ -2,8 +2,7 @@ import type {editor} from 'monaco-editor';
 
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 
-import {Field} from 'formik';
-import {FieldProps} from 'formik/dist/Field';
+import {useField} from 'formik';
 import Editor, {Monaco, OnMount} from '@monaco-editor/react';
 import {Freeze} from 'react-freeze';
 import {mdiEye, mdiFileCode} from '@mdi/js';
@@ -13,13 +12,18 @@ import ButtonsGroup from '@/admin/components/button/buttons-group';
 import {Button} from '@/admin/components/button/button';
 import {MdxPreview} from '@/admin/components/form/mdx-field/mdx-preview';
 import {ButtonImageInput} from '@/admin/components/button/button-image-input';
+import {BlockPicker} from '@/admin/components/form/mdx-field/block-picker';
+import {Locale} from '@/types/locale';
 
 type Props = {
     name: string;
+    // Locale of the edited content — the preview renders its lists in it.
+    locale: Locale;
     className?: string;
 };
 
-export const MdxField = ({name, className}: Props) => {
+export const MdxField = ({name, locale, className}: Props) => {
+    const [field, , helpers] = useField<string>(name);
     const [showPreview, setShowPreview] = useState(true);
     const editorRef = useRef<editor.IStandaloneCodeEditor>(null);
 
@@ -39,11 +43,29 @@ export const MdxField = ({name, className}: Props) => {
         [],
     );
 
-    const insertImage = useCallback((url: string) => {
-        editorRef.current?.trigger('keyboard', 'type', {
-            text: `![Image description](${url})`,
-        });
+    const insertText = useCallback((text: string) => {
+        const editor = editorRef.current;
+        const selection = editor?.getSelection();
+        if (!editor || !selection) {
+            return;
+        }
+        // An edit, unlike simulated typing, is not touched by auto-indent.
+        editor.executeEdits('mdx-field', [
+            {range: selection, text, forceMoveMarkers: true},
+        ]);
+        editor.focus();
     }, []);
+
+    const insertImage = useCallback(
+        (url: string) => insertText(`![Image description](${url})`),
+        [insertText],
+    );
+
+    // A block starts on a line of its own, with a blank line around it.
+    const insertBlock = useCallback(
+        (snippet: string) => insertText(`\n${snippet}\n`),
+        [insertText],
+    );
 
     const cls = useMemo(() => {
         return (className || '').replace(/(h|px)-\d+/g, '');
@@ -74,35 +96,34 @@ export const MdxField = ({name, className}: Props) => {
                     {!showPreview && <ButtonImageInput onChange={insertImage} />}
                 </ButtonsGroup>
             </div>
-            <Field
-                name={name}
-                component={({field, form}: FieldProps<string>) => (
-                    <>
-                        <Freeze freeze={showPreview}>
-                            <Editor
-                                height="1200px"
-                                defaultLanguage="mdx"
-                                theme="vs-dark"
-                                value={field.value || ''}
-                                options={{
-                                    minimap: {
-                                        enabled: false,
-                                    },
-                                }}
-                                onMount={onEditorMount}
-                                onChange={(value) =>
-                                    form.setFieldValue(field.name, value)
-                                }
-                            />
-                        </Freeze>
-                        <Freeze freeze={!showPreview}>
-                            <div className={'px-3'}>
-                                <MdxPreview mdx={field.value} />
-                            </div>
-                        </Freeze>
-                    </>
-                )}
-            />
+            <Freeze freeze={showPreview}>
+                <div className="flex" style={{height: 1200}}>
+                    <div className="min-w-0 flex-1">
+                        <Editor
+                            height="1200px"
+                            defaultLanguage="mdx"
+                            theme="vs-dark"
+                            value={field.value || ''}
+                            options={{
+                                minimap: {
+                                    enabled: false,
+                                },
+                                wordWrap: 'on',
+                            }}
+                            onMount={onEditorMount}
+                            onChange={(value) =>
+                                helpers.setValue(value ?? '')
+                            }
+                        />
+                    </div>
+                    <BlockPicker onInsert={insertBlock} />
+                </div>
+            </Freeze>
+            <Freeze freeze={!showPreview}>
+                <div className={'px-3'}>
+                    <MdxPreview mdx={field.value} locale={locale} />
+                </div>
+            </Freeze>
         </div>
     );
 };
