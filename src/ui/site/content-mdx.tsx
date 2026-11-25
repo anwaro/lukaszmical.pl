@@ -16,19 +16,31 @@ type Props = {
     locale?: Locale;
 };
 
-// The whole block library, with the dynamic blocks bound to `locale`.
-export function contentComponents(locale: Locale) {
+function buildComponents(locale: Locale) {
     return {
         ...contentMdxComponents,
         ...contentMdxDynamicComponents(locale),
     } satisfies Record<BlockName, unknown>;
 }
 
+const componentsByLocale = new Map<Locale, ReturnType<typeof buildComponents>>();
+
+// The whole block library, with the dynamic blocks bound to `locale`. Cached
+// per locale: otherwise this is rebuilt (reallocating the dynamic blocks'
+// closures) on every call, and previewMdxAction can call it dozens of times
+// rendering a single admin page.
+export function contentComponents(locale: Locale) {
+    let components = componentsByLocale.get(locale);
+    if (!components) {
+        components = buildComponents(locale);
+        componentsByLocale.set(locale, components);
+    }
+    return components;
+}
+
 // Renders CMS content: MDX with the blocks of the block library.
 export async function ContentMdx({source, locale}: Props) {
-    const components = contentComponents(
-        locale ?? ((await getLocale()) as Locale),
-    );
+    const components = contentComponents(locale ?? ((await getLocale()) as Locale));
 
     return (
         <div className={contentProseClass}>

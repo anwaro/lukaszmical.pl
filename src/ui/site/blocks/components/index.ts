@@ -29,4 +29,4 @@ export {Prompt} from './prompt';
 export {Prose} from './prose';
 export {Cta} from './cta';
 
-export {panel, sectionGap} from './shared';
+export {sectionGap} from './shared';

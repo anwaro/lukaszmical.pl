@@ -22,6 +22,7 @@ import {
     Prompt,
     Prose,
     Section,
+    sectionGap,
     Shot,
     Shots,
     Solver,
@@ -37,7 +38,7 @@ import {
 // `content-mdx-dynamic.tsx`. Props are plain strings so they survive
 // next-mdx-remote's JS blocking.
 
-export {sectionGap} from './blocks/components/shared';
+export {sectionGap};
 
 export const contentMdxComponents = {
     Hero,

@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 
-import {NextIntlClientProvider} from 'next-intl';
 import {clsx} from 'clsx';
 
 import {
     previewMdxAction,
     PreviewMdxResult,
 } from '@/admin/actions/preview-mdx-action';
+import {PreviewResult} from '@/admin/components/form/mdx-field/preview-result';
 import {Locale} from '@/types/locale';
 import {contentProseClass} from '@/ui/site/content-mdx-components';
 
@@ -15,20 +15,23 @@ type Props = {
     locale: Locale;
 };
 
-// A block can fail to render on its own without taking the picker down with it.
-class PreviewErrorBoundary extends React.Component<PWC, {hasError: boolean}> {
-    state: {hasError: boolean} = {hasError: false};
+// Snippets are the static constants from block-library.ts, so a render for a
+// given (locale, snippet) pair never changes — cached for the life of the
+// page, shared by every mounted picker item, so switching the block picker's
+// section tabs back and forth doesn't recompile (and, for the Dynamic
+// section, re-query the database for) the same blocks over and over.
+const previewCache = new Map<string, Promise<PreviewMdxResult>>();
 
-    static getDerivedStateFromError() {
-        return {hasError: true};
+function getCachedPreview(snippet: string, locale: Locale) {
+    const key = `${locale}:${snippet}`;
+    let cached = previewCache.get(key);
+    if (!cached) {
+        cached = previewMdxAction(snippet, locale).catch((error) => ({
+            error: error instanceof Error ? error.message : String(error),
+        }));
+        previewCache.set(key, cached);
     }
-
-    render() {
-        if (this.state.hasError) {
-            return <span className="kv-caption">Brak podglądu</span>;
-        }
-        return this.props.children;
-    }
+    return cached;
 }
 
 // Small, non-interactive render of one block's snippet, shown inside its
@@ -38,7 +41,7 @@ export function BlockPreview({snippet, locale}: Props) {
 
     useEffect(() => {
         let stale = false;
-        previewMdxAction(snippet, locale).then((next) => {
+        getCachedPreview(snippet, locale).then((next) => {
             if (!stale) {
                 setResult(next);
             }
@@ -48,27 +51,21 @@ export function BlockPreview({snippet, locale}: Props) {
         };
     }, [snippet, locale]);
 
-    if (!result || 'error' in result) {
+    if (!result) {
         return null;
     }
 
     return (
-        <NextIntlClientProvider
-            locale={locale}
-            messages={{}}
-            timeZone="Europe/Warsaw"
+        // inert: a block can render real links/buttons, which must not steal
+        // clicks or tab stops from the picker button around this.
+        <div
+            inert
+            className={clsx(
+                'pointer-events-none mt-2 max-h-24 overflow-hidden rounded-md bg-ink p-2 text-[10px] text-fg',
+                contentProseClass,
+            )}
         >
-            {/* inert: a block can render real links/buttons, which must not
-                steal clicks or tab stops from the picker button around this. */}
-            <div
-                inert
-                className={clsx(
-                    'pointer-events-none mt-2 max-h-24 overflow-hidden rounded-md bg-ink p-2 text-[10px] text-fg',
-                    contentProseClass,
-                )}
-            >
-                <PreviewErrorBoundary>{result.node}</PreviewErrorBoundary>
-            </div>
-        </NextIntlClientProvider>
+            <PreviewResult result={result} locale={locale} />
+        </div>
     );
 }
