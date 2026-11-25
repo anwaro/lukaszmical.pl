@@ -1,18 +1,21 @@
 import {ReactNode} from 'react';
 
+import {clsx} from 'clsx';
+
 type Props = {
+    // The checkbox input.
     children: ReactNode;
-    type: 'checkbox' | 'radio' | 'switch';
     label?: string;
     className?: string;
 };
 
-export const CheckboxField = (props: Props) => {
+// A checkbox drawn as a switch.
+export const CheckboxField = ({children, label, className}: Props) => {
     return (
-        <label className={`${props.type} ${props.className}`}>
-            {props.children}
-            <span className="check" />
-            <span className="pl-2">{props.label}</span>
+        <label className={clsx('kv-switch', className)}>
+            {children}
+            <span className="kv-switch-track" aria-hidden />
+            <span>{label}</span>
         </label>
     );
 };

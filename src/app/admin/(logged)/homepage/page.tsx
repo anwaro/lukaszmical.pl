@@ -1,10 +1,10 @@
 import React from 'react';
 
-import {mdiHome, mdiOpenInNew} from '@mdi/js';
+import {ExternalLink} from 'lucide-react';
 
 import {auth} from '@/utils/auth/auth';
-import SectionMain from '@/admin/components/Section/Main';
-import SectionTitleLineWithButton from '@/admin/components/Section/TitleLineWithButton';
+import SectionMain from '@/admin/components/section/section-main';
+import {PageHeader} from '@/admin/components/section/page-header';
 import {Button} from '@/admin/components/button/button';
 import {CreateEntryForm} from '@/admin/components/form/forms/entry/create-entry-form/create-entry-form';
 import {EditEntryForm} from '@/admin/components/form/forms/entry/edit-entry-form/edit-entry-form';
@@ -19,17 +19,23 @@ export default async function PrivatePage() {
 
     return (
         <SectionMain>
-            <SectionTitleLineWithButton icon={mdiHome} title="Homepage" main>
+            <PageHeader
+                title="Strona główna"
+                description={
+                    homepage
+                        ? 'Treść strony pod adresem / zbudowana z bloków.'
+                        : 'Strona główna jeszcze nie istnieje — bez niej adres / zwraca 404.'
+                }
+            >
                 <Button
-                    icon={mdiOpenInNew}
+                    variant="secondary"
+                    icon={ExternalLink}
                     href={'/'}
                     target={'_blank'}
-                    label={'Open'}
-                    color={'info'}
-                    asAnchor
-                    small
-                />
-            </SectionTitleLineWithButton>
+                >
+                    Otwórz
+                </Button>
+            </PageHeader>
             {homepage ? (
                 <EditEntryForm entry={homepage} />
             ) : (

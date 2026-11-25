@@ -1,13 +1,14 @@
 import React from 'react';
 
-import {mdiTableBorder} from '@mdi/js';
 import {notFound} from 'next/navigation';
 
 import {auth} from '@/utils/auth/auth';
-import SectionTitleLineWithButton from '@/admin/components/Section/TitleLineWithButton';
-import SectionMain from '@/admin/components/Section/Main';
+import SectionMain from '@/admin/components/section/section-main';
+import {PageHeader} from '@/admin/components/section/page-header';
+import {Badge} from '@/admin/components/badge/badge';
 import {EditEntryForm} from '@/admin/components/form/forms/entry/edit-entry-form/edit-entry-form';
 import {EntryRepository} from '@/services/content/repository-entry';
+import {entryKindLabels} from '@/admin/entry-kind-labels';
 
 type Props = {
     params: Promise<{
@@ -28,10 +29,14 @@ export default async function PrivatePage({params}: Props) {
 
     return (
         <SectionMain>
-            <SectionTitleLineWithButton
-                icon={mdiTableBorder}
+            <PageHeader
                 title={entry.texts.pl.title || entry.texts.en.title || entry.slug}
-                main
+                description={
+                    <span className="flex flex-wrap items-center gap-2">
+                        <Badge size="sm">{entryKindLabels[entry.kind]}</Badge>
+                        <span className="kv-kbd">{entry.slug}</span>
+                    </span>
+                }
             />
             <EditEntryForm entry={entry} />
         </SectionMain>

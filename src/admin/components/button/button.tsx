@@ -1,114 +1,72 @@
-import type {ColorButtonKey} from '../../interfaces';
-
 import React, {ButtonHTMLAttributes} from 'react';
 
 import Link from 'next/link';
-import {mdiLoading} from '@mdi/js';
+import {clsx} from 'clsx';
+import {LoaderCircle, LucideIcon} from 'lucide-react';
 
-import {getButtonColor} from '../../colors';
-import {Icon} from '../icon/icon';
+export type ButtonVariant = 'primary' | 'secondary' | 'danger';
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-    label?: string | number | null | undefined;
-    icon?: string;
-    iconSize?: string | number;
+    // primary: the one main action of a view; secondary: cancel and the rest;
+    // danger: a destructive action, only as a confirmation.
+    variant?: ButtonVariant;
+    // sm: in toolbars, modals and dense rows.
+    size?: 'md' | 'sm';
+    icon?: LucideIcon;
+    loading?: boolean;
+    // Renders a link styled as a button.
     href?: string;
     target?: string;
-    type?: string;
-    color?: ColorButtonKey;
-    className?: string;
-    asAnchor?: boolean;
-    small?: boolean;
-    outline?: boolean;
-    active?: boolean;
-    disabled?: boolean;
-    loading?: boolean;
-    roundedFull?: boolean;
-    onClick?: (e: React.MouseEvent) => void;
 };
 
 export function Button({
-    label,
-    icon,
-    iconSize,
+    variant = 'primary',
+    size = 'md',
+    icon: IconComponent,
+    loading = false,
     href,
     target,
-    type,
-    color = 'white',
-    className = '',
-    asAnchor = false,
-    small = false,
-    outline = false,
-    active = false,
-    disabled = false,
-    roundedFull = false,
-    loading = false,
-    onClick,
+    className,
+    children,
+    type = 'button',
     ...props
 }: ButtonProps) {
-    const componentClass = [
-        'inline-flex',
-        'justify-center',
-        'items-center',
-        'whitespace-nowrap',
-        'focus:outline-none',
-        'transition-colors',
-        'focus:ring',
-        'duration-150',
-        'border',
-        disabled ? 'cursor-not-allowed' : 'cursor-pointer',
-        roundedFull ? 'rounded-full' : 'rounded',
-        getButtonColor(color, outline, !disabled, active),
+    const classes = clsx(
+        'kv-btn',
+        `kv-btn-${variant}`,
+        size === 'sm' && 'kv-btn-sm',
         className,
-    ];
-
-    if (!label && icon) {
-        componentClass.push('p-1');
-    } else if (small) {
-        componentClass.push('text-sm', roundedFull ? 'px-3 py-1' : 'p-1');
-    } else {
-        componentClass.push('py-2', roundedFull ? 'px-6' : 'px-3');
-    }
-
-    if (disabled) {
-        componentClass.push(outline ? 'opacity-50' : 'opacity-70');
-    }
-
-    const componentClassString = componentClass.join(' ');
-
-    const componentChildren = (
+    );
+    const Icon = loading ? LoaderCircle : IconComponent;
+    const content = (
         <>
-            {icon && (
+            {Icon && (
                 <Icon
-                    path={loading ? mdiLoading : icon}
-                    size={iconSize}
-                    className={loading ? 'animate-spin' : ''}
+                    className={clsx('kv-icon', loading && 'kv-spin')}
+                    strokeWidth={1.8}
+                    aria-hidden
                 />
             )}
-            {label && (
-                <span className={small && icon ? 'px-1' : 'px-2'}>{label}</span>
-            )}
+            {children}
         </>
     );
 
-    if (href && !disabled) {
+    if (href) {
         return (
-            <Link href={href} target={target} className={componentClassString}>
-                {componentChildren}
+            <Link
+                href={href}
+                target={target}
+                className={classes}
+                title={props.title}
+            >
+                {content}
             </Link>
         );
     }
 
-    return React.createElement(
-        asAnchor ? 'a' : 'button',
-        {
-            className: componentClassString,
-            type,
-            target,
-            disabled,
-            onClick,
-            ...props,
-        },
-        componentChildren,
+    return (
+        <button type={type} className={classes} {...props}>
+            {content}
+        </button>
     );
 }

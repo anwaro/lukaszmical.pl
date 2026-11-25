@@ -1,0 +1,687 @@
+/* Kivo design system — components of the admin panel. Every colour comes from a
+   token (kivo-tokens.css), so the dark theme needs no extra classes. */
+
+@layer components {
+    .kv-admin {
+        min-height: 100vh;
+        background: var(--bg);
+        font-family: var(--font-sans);
+        font-size: 14px;
+        line-height: 20px;
+        color: var(--ink);
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .kv-num {
+        font-variant-numeric: tabular-nums;
+    }
+
+    .kv-icon {
+        width: var(--size-icon);
+        height: var(--size-icon);
+        flex: none;
+    }
+
+    .kv-spin {
+        animation: kv-spin 0.8s linear infinite;
+    }
+
+    @keyframes kv-spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* Typography */
+    .kv-page-title {
+        margin: 0;
+        font: 600 24px/32px var(--font-sans);
+        color: var(--ink);
+    }
+
+    .kv-section-title {
+        margin: 0;
+        font: 600 18px/28px var(--font-sans);
+        color: var(--ink);
+    }
+
+    .kv-card-title {
+        margin: 0;
+        font: 600 16px/24px var(--font-sans);
+        color: var(--ink);
+    }
+
+    .kv-body {
+        font: 400 14px/24px var(--font-sans);
+        color: var(--ink-secondary);
+    }
+
+    .kv-caption {
+        font: 500 12px/16px var(--font-sans);
+        color: var(--ink-muted);
+    }
+
+    .kv-micro-label {
+        font: 500 11px/16px var(--font-sans);
+        letter-spacing: 0.025em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+    }
+
+    .kv-kbd {
+        font: 400 12px/16px var(--font-mono);
+    }
+
+    .kv-link {
+        color: var(--accent-ink);
+        text-decoration: none;
+    }
+
+    .kv-link:hover {
+        text-decoration: underline;
+    }
+
+    .kv-divider {
+        margin: var(--space-6) 0;
+        border: 0;
+        border-top: 1px solid var(--border-subtle);
+    }
+
+    /* Button */
+    .kv-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-2);
+        border-radius: var(--radius-lg);
+        padding: var(--space-2) var(--space-4);
+        font: 500 14px/20px var(--font-sans);
+        white-space: nowrap;
+        text-decoration: none;
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition:
+            background-color 0.15s,
+            color 0.15s;
+    }
+
+    .kv-btn:disabled,
+    .kv-btn[aria-disabled='true'] {
+        opacity: var(--opacity-disabled);
+        cursor: default;
+    }
+
+    .kv-btn .kv-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .kv-btn-sm {
+        padding: 6px var(--space-3);
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    .kv-btn-primary {
+        background: var(--accent);
+        color: var(--on-accent);
+    }
+
+    .kv-btn-primary:hover:not(:disabled) {
+        background: var(--accent-hover);
+    }
+
+    .kv-btn-secondary {
+        background: transparent;
+        border-color: var(--border-control);
+        color: var(--btn-secondary-ink);
+    }
+
+    .kv-btn-secondary:hover:not(:disabled) {
+        background: var(--surface-hover);
+    }
+
+    .kv-btn-danger {
+        background: var(--danger-solid);
+        color: var(--on-accent);
+    }
+
+    .kv-btn:focus-visible,
+    .kv-icon-btn:focus-visible,
+    .kv-seg-opt:has(input:focus-visible),
+    .kv-nav-item:focus-visible,
+    .kv-chip:focus-visible {
+        outline: 2px solid var(--accent-dot);
+        outline-offset: 2px;
+    }
+
+    /* IconButton */
+    .kv-icon-btn {
+        display: inline-flex;
+        flex: none;
+        align-items: center;
+        justify-content: center;
+        width: var(--size-icon-button);
+        height: var(--size-icon-button);
+        border-radius: var(--radius-lg);
+        border: 0;
+        background: transparent;
+        color: var(--ink-muted);
+        cursor: pointer;
+        transition:
+            background-color 0.15s,
+            color 0.15s;
+    }
+
+    .kv-icon-btn:hover:not(:disabled) {
+        background: var(--surface-sunken);
+        color: var(--icon-btn-hover-ink);
+    }
+
+    .kv-icon-btn:disabled {
+        opacity: var(--opacity-disabled);
+        cursor: default;
+    }
+
+    .kv-icon-btn-danger:hover:not(:disabled) {
+        background: var(--danger-bg);
+        color: var(--danger-ink);
+    }
+
+    /* TextField */
+    .kv-field {
+        display: block;
+    }
+
+    .kv-field-label {
+        display: block;
+        margin-bottom: var(--space-1\.5);
+        font: 500 12px/16px var(--font-sans);
+        color: var(--ink-muted);
+    }
+
+    .kv-field-help {
+        margin-top: var(--space-1\.5);
+        font: 400 12px/16px var(--font-sans);
+        color: var(--ink-muted);
+    }
+
+    .kv-input {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-control);
+        background-color: var(--input-bg);
+        padding: var(--space-2) var(--space-3);
+        font: 400 14px/20px var(--font-sans);
+        color: var(--ink);
+        box-shadow: none;
+    }
+
+    .kv-input::placeholder {
+        color: var(--ink-faint);
+    }
+
+    .kv-input:focus {
+        outline: none;
+        border-color: var(--accent-dot);
+        box-shadow: var(--shadow-focus);
+    }
+
+    .kv-input[readonly] {
+        cursor: pointer;
+    }
+
+    /* @tailwindcss/forms draws the chevron; keep room for it. */
+    select.kv-input {
+        padding-right: var(--space-10);
+    }
+
+    textarea.kv-input {
+        min-height: 96px;
+        resize: vertical;
+    }
+
+    .kv-input-changed {
+        border-color: var(--warning-dot);
+    }
+
+    .kv-input-addon {
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        display: flex;
+        height: 38px;
+        width: 40px;
+        align-items: center;
+        justify-content: center;
+        color: var(--ink-faint);
+    }
+
+    /* Switch */
+    .kv-switch {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        cursor: pointer;
+        font: 500 14px/20px var(--font-sans);
+        color: var(--ink-body);
+    }
+
+    .kv-switch input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .kv-switch-track {
+        display: flex;
+        flex: none;
+        align-items: center;
+        width: 36px;
+        height: 20px;
+        padding: 2px;
+        border-radius: var(--radius-full);
+        background: var(--surface-sunken);
+        box-shadow: inset 0 0 0 1px var(--border-control);
+        transition: background-color 0.15s;
+    }
+
+    .kv-switch-track::before {
+        content: '';
+        width: 16px;
+        height: 16px;
+        border-radius: var(--radius-full);
+        background: #ffffff;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.2);
+        transition: transform 0.15s;
+    }
+
+    .kv-switch input:checked + .kv-switch-track {
+        background: var(--accent);
+        box-shadow: none;
+    }
+
+    .kv-switch input:checked + .kv-switch-track::before {
+        transform: translateX(16px);
+    }
+
+    .kv-switch input:focus-visible + .kv-switch-track {
+        outline: 2px solid var(--accent-dot);
+        outline-offset: 2px;
+    }
+
+    /* SegmentedControl */
+    .kv-seg {
+        display: grid;
+        gap: var(--space-2);
+    }
+
+    .kv-seg-opt {
+        text-align: center;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-control);
+        background: transparent;
+        padding: var(--space-2) var(--space-3);
+        font: 500 14px/20px var(--font-sans);
+        color: var(--ink-muted);
+        cursor: pointer;
+        transition: background-color 0.15s;
+    }
+
+    .kv-seg-sm .kv-seg-opt {
+        padding: 6px var(--space-3);
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    .kv-seg-opt:hover {
+        background: var(--surface-hover);
+    }
+
+    .kv-seg-opt:has(input:checked) {
+        border-color: var(--accent-dot);
+        background: var(--accent-soft);
+        color: var(--accent-soft-ink);
+    }
+
+    /* Chip — the block library's section filter. */
+    .kv-chip {
+        border-radius: var(--radius-full);
+        border: 1px solid var(--border-control);
+        background: transparent;
+        padding: 2px var(--space-2\.5);
+        font: 500 12px/16px var(--font-sans);
+        color: var(--ink-muted);
+        cursor: pointer;
+    }
+
+    .kv-chip:hover {
+        background: var(--surface-hover);
+    }
+
+    .kv-chip[aria-pressed='true'] {
+        border-color: var(--accent-dot);
+        background: var(--accent-soft);
+        color: var(--accent-soft-ink);
+    }
+
+    /* Badge */
+    .kv-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-1\.5);
+        border-radius: var(--radius-full);
+        padding: 4px var(--space-2\.5);
+        font: 500 12px/16px var(--font-sans);
+        white-space: nowrap;
+    }
+
+    .kv-badge-sm {
+        padding: 2px var(--space-2);
+        font-size: 11px;
+    }
+
+    .kv-badge-dot {
+        width: var(--size-dot);
+        height: var(--size-dot);
+        border-radius: var(--radius-full);
+    }
+
+    .kv-badge-success {
+        background: var(--success-bg);
+        color: var(--success-ink);
+        box-shadow: inset 0 0 0 1px var(--success-ring);
+    }
+
+    .kv-badge-success .kv-badge-dot {
+        background: var(--success-dot);
+    }
+
+    .kv-badge-warning {
+        background: var(--warning-bg);
+        color: var(--warning-ink);
+        box-shadow: inset 0 0 0 1px var(--warning-ring);
+    }
+
+    .kv-badge-warning .kv-badge-dot {
+        background: var(--warning-dot);
+    }
+
+    .kv-badge-danger {
+        background: var(--danger-bg);
+        color: var(--danger-ink);
+        box-shadow: inset 0 0 0 1px var(--danger-ring);
+    }
+
+    .kv-badge-danger .kv-badge-dot {
+        background: var(--danger-dot);
+    }
+
+    .kv-badge-neutral {
+        background: var(--neutral-bg);
+        color: var(--neutral-ink);
+        box-shadow: inset 0 0 0 1px var(--neutral-ring);
+    }
+
+    .kv-badge-neutral .kv-badge-dot {
+        background: var(--neutral-dot);
+    }
+
+    /* Notice — a line of feedback under a form. */
+    .kv-notice {
+        border-radius: var(--radius-lg);
+        padding: var(--space-2\.5) var(--space-3);
+        font: 400 14px/20px var(--font-sans);
+        white-space: pre-wrap;
+    }
+
+    .kv-notice-danger {
+        background: var(--danger-bg);
+        color: var(--danger-ink);
+        box-shadow: inset 0 0 0 1px var(--danger-ring);
+    }
+
+    /* Card */
+    .kv-card {
+        box-sizing: border-box;
+        border-radius: var(--radius-xl);
+        border: 1px solid var(--border);
+        background: var(--surface);
+        padding: var(--space-4);
+        box-shadow: var(--shadow-none);
+    }
+
+    .kv-card-lg {
+        padding: var(--space-5);
+    }
+
+    .kv-card-flush {
+        padding: 0;
+        overflow: hidden;
+    }
+
+    /* StatCard */
+    .kv-stat {
+        padding: var(--space-3) var(--space-4);
+        min-width: 0;
+    }
+
+    .kv-stat-label {
+        margin: 0;
+        font: 500 12px/16px var(--font-sans);
+        letter-spacing: 0.025em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+    }
+
+    .kv-stat-value {
+        margin: var(--space-1) 0 0;
+        font: 600 18px/28px var(--font-sans);
+        font-variant-numeric: tabular-nums;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: var(--ink);
+    }
+
+    .kv-stat-meta {
+        margin: var(--space-1) 0 0;
+        font: 400 12px/16px var(--font-sans);
+        color: var(--ink-muted);
+    }
+
+    /* NavItem */
+    .kv-nav {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-1);
+    }
+
+    .kv-nav-item {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        border-radius: var(--radius-lg);
+        padding: var(--space-2\.5) var(--space-3);
+        font: 500 14px/20px var(--font-sans);
+        color: var(--ink-secondary);
+        text-decoration: none;
+        transition: background-color 0.15s;
+    }
+
+    .kv-nav-item:hover {
+        background: var(--surface-sunken);
+    }
+
+    .kv-nav-item[aria-current='page'] {
+        background: var(--accent-soft);
+        color: var(--accent-soft-ink);
+    }
+
+    /* Table */
+    .kv-table-wrap {
+        overflow-x: auto;
+    }
+
+    .kv-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        font: 400 14px/20px var(--font-sans);
+    }
+
+    .kv-table th {
+        padding: var(--space-2\.5) var(--space-4);
+        background: var(--table-head-bg);
+        font: 500 12px/16px var(--font-sans);
+        text-transform: uppercase;
+        letter-spacing: 0.025em;
+        white-space: nowrap;
+        color: var(--ink-faint);
+    }
+
+    .kv-table td {
+        padding: var(--space-3) var(--space-4);
+        border-top: 1px solid var(--border-subtle);
+        color: var(--ink-muted);
+        vertical-align: middle;
+    }
+
+    .kv-table td.kv-table-strong {
+        white-space: nowrap;
+        color: var(--ink);
+        font-weight: 500;
+    }
+
+    .kv-table-empty {
+        padding: var(--space-10) var(--space-4);
+        text-align: center;
+        color: var(--ink-muted);
+    }
+
+    /* Code */
+    .kv-code {
+        margin: 0;
+        overflow-x: auto;
+        border-radius: var(--radius-lg);
+        background: var(--code-bg);
+        padding: var(--space-3);
+        font: 400 12px/18px var(--font-mono);
+        color: var(--code-ink);
+        white-space: pre-wrap;
+    }
+
+    /* Logo — the monogram until a real mark exists. */
+    .kv-monogram {
+        display: inline-flex;
+        flex: none;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: var(--radius-lg);
+        background: var(--accent);
+        color: var(--on-accent);
+        font: 600 14px/20px var(--font-sans);
+    }
+
+    /* Shell: sidebar, sticky header, content. */
+    .kv-header {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        height: var(--size-header);
+        padding: 0 var(--space-4);
+        border-bottom: 1px solid var(--border);
+        background: var(--header-bg);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+
+    .kv-sidebar {
+        position: fixed;
+        inset: 0 auto 0 0;
+        z-index: 40;
+        display: flex;
+        flex-direction: column;
+        width: var(--size-sidebar);
+        border-right: 1px solid var(--border);
+        background: var(--surface);
+        transform: translateX(-100%);
+        transition: transform 0.2s;
+    }
+
+    .kv-sidebar[data-open='true'] {
+        transform: none;
+    }
+
+    .kv-sidebar-brand {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2\.5);
+        height: var(--size-header);
+        padding: 0 var(--space-4);
+        border-bottom: 1px solid var(--border);
+        font: 600 14px/20px var(--font-sans);
+        color: var(--ink);
+        text-decoration: none;
+    }
+
+    .kv-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 35;
+        background: var(--overlay);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+    }
+
+    .kv-main {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: var(--size-content-max);
+        margin: 0 auto;
+        padding: var(--space-6) var(--space-4) var(--space-16);
+    }
+
+    /* A bar that sticks under the header (filters, editor modes). */
+    .kv-toolbar {
+        position: sticky;
+        top: var(--size-header);
+        z-index: 20;
+        background: var(--header-bg);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+
+    @media (min-width: 640px) {
+        .kv-header {
+            padding: 0 var(--space-6);
+        }
+
+        .kv-main {
+            padding-left: var(--space-6);
+            padding-right: var(--space-6);
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .kv-sidebar {
+            transform: none;
+        }
+
+        .kv-shell {
+            padding-left: var(--size-sidebar);
+        }
+
+        .kv-backdrop {
+            display: none;
+        }
+    }
+}

@@ -2,10 +2,10 @@
 
 import React, {useActionState, useEffect, useEffectEvent} from 'react';
 
-import {mdiEye, mdiEyeOff} from '@mdi/js';
+import {Eye, EyeOff} from 'lucide-react';
 
 import {EntryBase} from '@/types/entry';
-import {Button} from '@/admin/components/button/button';
+import {IconButton} from '@/admin/components/button/icon-button';
 import {patchEntryAction} from '@/admin/actions/patch-entry-action';
 
 type Props = {
@@ -53,15 +53,14 @@ export const EditVisibility = ({entry, className, onUpdate}: Props) => {
                 value={FormBoolean.toFormValue(!entry.published)}
             />
 
-            <Button
-                color={entry.published ? 'danger' : 'success'}
-                title={entry.published ? 'Unpublish' : 'Publish'}
-                icon={entry.published ? mdiEyeOff : mdiEye}
+            <IconButton
+                icon={entry.published ? EyeOff : Eye}
+                label={entry.published ? 'Ukryj' : 'Opublikuj'}
+                tone={entry.published ? 'danger' : 'default'}
                 disabled={isPending}
                 loading={isPending}
                 className={className}
                 type={'submit'}
-                small
             />
         </form>
     );

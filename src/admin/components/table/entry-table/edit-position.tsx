@@ -2,11 +2,10 @@
 
 import React, {useActionState, useEffect, useState, useEffectEvent} from 'react';
 
-import {mdiCheck, mdiClose} from '@mdi/js';
+import {Check, X} from 'lucide-react';
 
 import {EntryBase} from '@/types/entry';
-import ButtonsGroup from '@/admin/components/button/buttons-group';
-import {Button} from '@/admin/components/button/button';
+import {IconButton} from '@/admin/components/button/icon-button';
 import {patchEntryAction} from '@/admin/actions/patch-entry-action';
 
 type Props = {
@@ -37,46 +36,42 @@ export const EditPosition = ({entry, onUpdate}: Props) => {
     }, [isPending]);
 
     return (
-        <form className={'flex w-50 items-center'} action={formAction}>
+        <form className="flex items-center justify-end gap-1" action={formAction}>
             <input type={'hidden'} name={'id'} value={entry.id} />
             <input type={'hidden'} name={'name'} value={'position'} />
             {isEditing ? (
                 <>
                     <input
-                        className="h-10 w-full max-w-full rounded border border-gray-700 bg-slate-800 px-3 py-1 placeholder:text-gray-400 focus:border-blue-600 focus:ring focus:ring-blue-600 focus:outline-none "
+                        className="kv-input kv-num w-20 py-1.5 text-right"
                         onChange={(e) => setValue(parseInt(e.target.value))}
+                        aria-label="Pozycja"
                         type={'number'}
                         name={'value'}
                         value={value}
                     />
-
-                    <ButtonsGroup className={'ml-2'} noWrap>
-                        <Button
-                            color="info"
-                            icon={mdiCheck}
-                            disabled={isPending}
-                            loading={isPending}
-                            title={'Save position'}
-                            type={'submit'}
-                            small
-                        />
-                        <Button
-                            onClick={() => setIsEditing(false)}
-                            disabled={isPending}
-                            color={'danger'}
-                            title={'Cancel'}
-                            icon={mdiClose}
-                            small
-                        />
-                    </ButtonsGroup>
+                    <IconButton
+                        icon={Check}
+                        label="Zapisz pozycję"
+                        disabled={isPending}
+                        loading={isPending}
+                        type={'submit'}
+                    />
+                    <IconButton
+                        icon={X}
+                        label="Anuluj"
+                        onClick={() => setIsEditing(false)}
+                        disabled={isPending}
+                    />
                 </>
             ) : (
-                <div
-                    className={'flex w-50 items-center'}
+                <button
+                    type="button"
+                    title="Zmień pozycję"
+                    className="kv-num cursor-pointer rounded-lg px-2 py-1 hover:bg-(--surface-sunken)"
                     onClick={() => setIsEditing(true)}
                 >
                     {entry.position}
-                </div>
+                </button>
             )}
         </form>
     );

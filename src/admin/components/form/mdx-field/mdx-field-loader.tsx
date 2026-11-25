@@ -1,13 +1,14 @@
 import React from 'react';
 
-import {mdiLoading} from '@mdi/js';
-
-import {Icon} from '../../icon/icon';
+import {LoaderCircle} from 'lucide-react';
 
 export const MdxFieldLoader = () => {
     return (
-        <div className={`flex items-center justify-center`} style={{minHeight: 500}}>
-            <Icon path={mdiLoading} size={40} className={'animate-spin'} />
+        <div
+            className="flex items-center justify-center text-(--ink-muted)"
+            style={{minHeight: 500}}
+        >
+            <LoaderCircle className="kv-spin size-8" strokeWidth={1.8} />
         </div>
     );
 };

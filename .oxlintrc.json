@@ -60,23 +60,11 @@
             "warn",
             {
                 "whitelist": [
-                    // custom classes styled in src/admin/css or used as markers
-                    "check",
-                    "dark-scrollbars-compat",
-                    "wrapper",
-                    "overlay",
-                    "aside",
-                    "aside-brand",
-                    "aside-menu-dropdown",
-                    "navbar-item-label",
-                    "navbar-item-label-active",
+                    // Kivo component classes of the admin (src/admin/css)
+                    "kv-.*",
                     // the plugin reports identifiers passed to clsx() by their name
                     "className",
-                    "componentClass",
-                    "controlClassName",
-                    "layoutAsidePadding",
-                    "type",
-                    "mb"
+                    "classes"
                 ]
             }
         ],

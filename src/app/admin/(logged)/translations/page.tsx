@@ -1,10 +1,8 @@
 import React from 'react';
 
-import {mdiTranslate} from '@mdi/js';
-
 import {auth} from '@/utils/auth/auth';
-import SectionMain from '@/admin/components/Section/Main';
-import SectionTitleLineWithButton from '@/admin/components/Section/TitleLineWithButton';
+import SectionMain from '@/admin/components/section/section-main';
+import {PageHeader} from '@/admin/components/section/page-header';
 import {MessagesForm} from '@/admin/components/form/forms/messages/messages-form';
 import {loadContentValues} from '@/admin/content-values';
 
@@ -14,7 +12,10 @@ export default async function PrivatePage() {
 
     return (
         <SectionMain>
-            <SectionTitleLineWithButton icon={mdiTranslate} title="Translations" main />
+            <PageHeader
+                title="Tłumaczenia"
+                description="Teksty interfejsu strony w obu językach. Zmienione pola mają bursztynowy obrys."
+            />
             <MessagesForm messages={messages} />
         </SectionMain>
     );

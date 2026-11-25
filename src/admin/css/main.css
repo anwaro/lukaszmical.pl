@@ -1,6 +1,8 @@
+/* The admin stylesheet is a separate entry: state the layer order before any
+   layer appears, so its components sit between Tailwind's base and utilities. */
+@layer theme, base, components, utilities;
+
 @reference '../../app/globals.css';
 
-@import './_table.css';
-@import './_checkbox.css';
-@import './_progress.css';
-@import './_scrollbars.css';
+@import './kivo-tokens.css';
+@import './kivo-components.css';

@@ -23,7 +23,6 @@
     },
     "dependencies": {
         "@aws-sdk/client-s3": "3.1175.0",
-        "@mdi/js": "7.4.47",
         "@monaco-editor/react": "^4.7.0",
         "argon2": "^0.45.2",
         "clsx": "2.1.1",
@@ -33,6 +32,7 @@
         "jose": "^6.2.18",
         "js-base64": "3.9.7",
         "js-cookie": "3.0.8",
+        "lucide-react": "0.468.0",
         "mime": "4.1.2",
         "minify": "15.3.1",
         "monaco-editor": "0.57.0",

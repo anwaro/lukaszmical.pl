@@ -2,21 +2,39 @@
 
 import React, {ReactNode, useMemo, useState} from 'react';
 
-import {Button} from '../button/button';
-import ButtonsGroup from '../button/buttons-group';
+import {clsx} from 'clsx';
 
-type Props<Item, Key extends keyof Partial<Item> | string> = {
-    data: Item[];
-    itemId: (item: Item) => string;
-    head: Record<Key, ReactNode | (() => ReactNode)>;
-    renderData: Partial<Record<Key, (object: Item) => ReactNode>>;
-    limit?: number;
+import {Button} from '../button/button';
+
+type Column = {
+    label: ReactNode;
+    // Tabular numbers, right aligned.
+    numeric?: boolean;
+    // The main column of a row: ink, medium weight.
+    strong?: boolean;
+    align?: 'start' | 'end';
 };
 
-export function BaseTable<
-    Item extends object,
-    Key extends keyof Partial<Item> | string,
->({data, limit = 5, renderData, head, itemId}: Props<Item, Key>) {
+type Props<Item, Key extends string> = {
+    data: Item[];
+    itemId: (item: Item) => string;
+    // A column set to undefined is left out.
+    columns: Partial<Record<Key, Column>>;
+    renderData: Partial<Record<Key, (object: Item) => ReactNode>>;
+    limit?: number;
+    empty?: ReactNode;
+};
+
+// A table for a flush card: micro-label header, rows split by border-subtle,
+// scrolls sideways on narrow screens.
+export function BaseTable<Item extends object, Key extends string>({
+    data,
+    limit = 20,
+    renderData,
+    columns,
+    itemId,
+    empty = 'Brak pozycji.',
+}: Props<Item, Key>) {
     const [currentPage, setCurrentPage] = useState(0);
 
     const {showedItem, pages} = useMemo(() => {
@@ -28,67 +46,85 @@ export function BaseTable<
         };
     }, [currentPage, data, limit]);
 
+    const entries = (Object.entries(columns) as [Key, Column | undefined][]).filter(
+        (entry): entry is [Key, Column] => Boolean(entry[1]),
+    );
+
     function renderItem(key: Key, item: Item) {
-        if (renderData && key in renderData && renderData[key]) {
-            return renderData[key](item);
+        const render = renderData[key];
+        if (render) {
+            return render(item);
         }
-        const objKey = key as keyof typeof item;
+        const objKey = key as unknown as keyof Item;
 
-        if (objKey in item) {
-            return `${item[objKey]}`;
-        }
+        return objKey in item ? `${item[objKey]}` : '';
+    }
 
-        return '';
+    const cellClass = (column: Column) =>
+        clsx(
+            column.numeric && 'kv-num',
+            column.strong && 'kv-table-strong',
+            (column.align === 'end' || column.numeric) && 'text-right',
+        );
+
+    if (data.length === 0) {
+        return <p className="kv-table-empty">{empty}</p>;
     }
 
     return (
         <>
-            <table>
-                <thead>
-                    <tr>
-                        {Object.entries(head).map(([key, label]) => (
-                            <th key={key}>
-                                {typeof label === 'function' ? label() : label}
-                            </th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {showedItem.map((item: Item) => (
-                        <tr key={itemId(item)}>
-                            {Object.entries(head).map(([key, label]) => (
-                                <td
-                                    key={`${itemId(item)}-${key}`}
-                                    data-label={label}
-                                >
-                                    {renderItem(key as Key, item)}
-                                </td>
+            <div className="kv-table-wrap">
+                <table className="kv-table">
+                    <thead>
+                        <tr>
+                            {entries.map(([key, column]) => (
+                                <th key={key} className={cellClass(column)}>
+                                    {column.label}
+                                </th>
                             ))}
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-            <div className="border-t border-slate-800 p-3 lg:px-6">
-                <div className="flex flex-col items-center justify-between py-3 md:flex-row md:py-0">
-                    <ButtonsGroup>
+                    </thead>
+                    <tbody>
+                        {showedItem.map((item: Item) => (
+                            <tr key={itemId(item)}>
+                                {entries.map(([key, column]) => (
+                                    <td
+                                        key={`${itemId(item)}-${key}`}
+                                        className={cellClass(column)}
+                                    >
+                                        {renderItem(key, item)}
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+            {pages.length > 1 && (
+                <div className="flex flex-wrap items-center justify-between gap-3 border-t border-(--border-subtle) px-4 py-3">
+                    <div className="flex flex-wrap gap-1">
                         {pages.map((page) => (
                             <Button
                                 key={page}
-                                active={page === currentPage}
-                                label={page + 1}
-                                color={
-                                    page === currentPage ? 'lightDark' : 'whiteDark'
+                                variant={
+                                    page === currentPage ? 'primary' : 'secondary'
                                 }
-                                small
+                                size="sm"
+                                className="kv-num"
+                                aria-current={
+                                    page === currentPage ? 'page' : undefined
+                                }
                                 onClick={() => setCurrentPage(page)}
-                            />
+                            >
+                                {page + 1}
+                            </Button>
                         ))}
-                    </ButtonsGroup>
-                    <small className="mt-6 md:mt-0">
-                        Page {currentPage + 1} of {pages.length}
-                    </small>
+                    </div>
+                    <span className="kv-caption kv-num">
+                        Strona {currentPage + 1} z {pages.length}
+                    </span>
                 </div>
-            </div>
+            )}
         </>
     );
 }

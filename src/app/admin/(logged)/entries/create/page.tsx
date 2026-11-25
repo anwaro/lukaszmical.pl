@@ -1,10 +1,8 @@
 import React from 'react';
 
-import {mdiTableBorder} from '@mdi/js';
-
 import {auth} from '@/utils/auth/auth';
-import SectionTitleLineWithButton from '@/admin/components/Section/TitleLineWithButton';
-import SectionMain from '@/admin/components/Section/Main';
+import SectionMain from '@/admin/components/section/section-main';
+import {PageHeader} from '@/admin/components/section/page-header';
 import {CreateEntryForm} from '@/admin/components/form/forms/entry/create-entry-form/create-entry-form';
 import {EntryKind, EntryKindList} from '@/types/entry';
 
@@ -13,9 +11,9 @@ type Props = {
 };
 
 const titles: Record<EntryKind, string> = {
-    page: 'Create new page',
-    case_study: 'Create new case study',
-    project: 'Create new project',
+    page: 'Nowa strona',
+    case_study: 'Nowe case study',
+    project: 'Nowy projekt',
 };
 
 export default async function PrivatePage({searchParams}: Props) {
@@ -25,7 +23,7 @@ export default async function PrivatePage({searchParams}: Props) {
 
     return (
         <SectionMain>
-            <SectionTitleLineWithButton icon={mdiTableBorder} title={titles[kind]} main />
+            <PageHeader title={titles[kind]} />
             <CreateEntryForm kind={kind} />
         </SectionMain>
     );
