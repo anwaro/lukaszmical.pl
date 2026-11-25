@@ -1,18 +1,18 @@
 import type {Metadata} from 'next';
 
-import React from 'react';
+import React, {cache} from 'react';
 
 import {notFound, redirect} from 'next/navigation';
 
 import {EntryRepository} from '@/services/content/repository-entry';
+import {resolveEntryVisibility} from '@/services/content/entry-visibility';
 import {LocalProjectService} from '@/services/local-project-service';
 import {ProjectRenderer} from '@/services/project-renderer';
 import {Locale} from '@/types/locale';
 import {JsonLd} from '@/ui/components/seo/json-ld';
 import {ProjectIframe} from '@/ui/pages/project/iframe/project-iframe';
 import {ProjectPage} from '@/ui/pages/project/project-page';
-import {entryJsonLd, entryMetadata} from '@/utils/seo';
-import {isLoggedIn} from '@/utils/auth/auth';
+import {draftMetadata, entryJsonLd, entryMetadata} from '@/utils/seo';
 
 type Props = {
     params: Promise<{
@@ -21,8 +21,10 @@ type Props = {
     }>;
 };
 
-const getProject = (slug: string, locale: Locale) =>
-    new EntryRepository().getLocalized('project', slug, locale);
+// Cached per request: generateMetadata and the page both need it.
+const getProject = cache((slug: string, locale: Locale) =>
+    new EntryRepository().getLocalized('project', slug, locale),
+);
 
 // How many other projects the write-up page links to.
 const OTHERS_LIMIT = 3;
@@ -31,27 +33,24 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
     const {slug, locale} = await params;
     const project = await getProject(slug, locale);
 
-    if (!project || (!project.published && !(await isLoggedIn()))) {
+    if (!project) {
         return {};
     }
 
-    return entryMetadata(project, locale, `/projects/${slug}`);
+    return project.published
+        ? entryMetadata(project, locale, `/projects/${slug}`)
+        : draftMetadata;
 }
 
 export default async function Page({params}: Props) {
     const {slug, locale} = await params;
-    const project = await getProject(slug, locale);
+    const visible = await resolveEntryVisibility(await getProject(slug, locale));
 
-    if (!project) {
+    if (!visible) {
         notFound();
     }
 
-    const loggedIn = await isLoggedIn();
-
-    // Drafts are only visible to the logged-in admin.
-    if (!project.published && !loggedIn) {
-        notFound();
-    }
+    const {entry: project, editHref} = visible;
 
     if (project.presentation === 'link') {
         if (!project.linkUrl) {
@@ -66,7 +65,6 @@ export default async function Page({params}: Props) {
         const others = (await new EntryRepository().list(locale, {kind: 'project'}))
             .filter((other) => other.id !== project.id)
             .slice(0, OTHERS_LIMIT);
-        const editHref = loggedIn ? `/admin/entries/${project.id}` : undefined;
 
         return (
             <>

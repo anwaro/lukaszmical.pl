@@ -101,6 +101,13 @@ export function entryMetadata(
     };
 }
 
+// Metadata for a draft: never exposes the real title/description (whoever is
+// looking, admin included), but still explicitly noindexes it — a safety net
+// on top of the login gate, in case a draft URL ever leaks.
+export const draftMetadata: Metadata = {
+    robots: {index: false, follow: false},
+};
+
 const author = {
     '@type': 'Person',
     name: siteName,
