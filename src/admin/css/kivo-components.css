@@ -684,4 +684,88 @@
             display: none;
         }
     }
+
+    .kv-modal-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 45;
+        background: var(--overlay);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+    }
+
+    /* Resets the browser's default <dialog> box (border, padding, background,
+       auto-sized/centered via margin) — this one is positioned and painted
+       entirely by the rules below. */
+    .kv-modal-wrap {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        height: auto;
+        max-width: none;
+        max-height: none;
+        margin: 0;
+        padding: var(--space-4);
+        border: none;
+        background: transparent;
+        color: inherit;
+    }
+
+    .kv-modal {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 520px;
+        max-height: calc(100vh - var(--space-8));
+        border: 1px solid var(--border);
+        border-radius: var(--radius-2xl);
+        background: var(--surface);
+        overflow: hidden;
+    }
+
+    .kv-modal-lg {
+        max-width: 840px;
+    }
+
+    .kv-modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-3);
+        padding: var(--space-4) var(--space-5);
+        border-bottom: 1px solid var(--border);
+    }
+
+    .kv-modal-body {
+        padding: var(--space-5);
+        overflow-y: auto;
+    }
+
+    .kv-media-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: var(--space-3);
+    }
+
+    .kv-media-tile {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: var(--space-2);
+        background: var(--surface);
+    }
+
+    .kv-media-tile[role='button'] {
+        cursor: pointer;
+    }
+
+    .kv-media-tile[role='button']:hover {
+        border-color: var(--border-control);
+        background: var(--surface-hover);
+    }
 }

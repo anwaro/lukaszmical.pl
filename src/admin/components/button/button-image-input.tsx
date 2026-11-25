@@ -1,8 +1,8 @@
-import React, {ChangeEvent, useEffect, useEffectEvent} from 'react';
+import {useState} from 'react';
 
 import {Image} from 'lucide-react';
 
-import {useImageField} from '@/admin/components/form/image-field/image-field.hook';
+import {MediaPickerModal} from '@/admin/components/media/media-picker-modal';
 
 import {Button} from './button';
 
@@ -12,34 +12,22 @@ type Props = {
 };
 
 export function ButtonImageInput({onChange, className}: Props) {
-    const {url, isPending, upload} = useImageField();
-
-    const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-        if (event.currentTarget?.files?.[0]) {
-            upload(event.currentTarget.files[0]);
-        }
-    };
-
-    const onUploaded = useEffectEvent((uploadedUrl: string) => {
-        onChange(uploadedUrl);
-    });
-
-    useEffect(() => {
-        if (url) {
-            onUploaded(url);
-        }
-    }, [url]);
+    const [open, setOpen] = useState(false);
 
     return (
-        <div className={`relative ${className}`}>
-            <Button variant="secondary" size="sm" icon={Image} loading={isPending}>
+        <div className={className}>
+            <Button
+                variant="secondary"
+                size="sm"
+                icon={Image}
+                onClick={() => setOpen(true)}
+            >
                 Wstaw obraz
             </Button>
-            <input
-                type="file"
-                aria-label="Wstaw obraz"
-                className="absolute top-0 left-0 size-full cursor-pointer opacity-0 outline-none"
-                onChange={handleFileChange}
+            <MediaPickerModal
+                open={open}
+                onClose={() => setOpen(false)}
+                onSelect={(asset) => onChange(asset.url)}
             />
         </div>
     );
