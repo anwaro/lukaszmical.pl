@@ -1,4 +1,5 @@
 import {
+    Blocks,
     BookOpen,
     Code,
     Files,
@@ -21,4 +22,5 @@ export const adminMenu: MenuItem[] = [
     {href: '/admin/case-studies', icon: BookOpen, label: 'Case studies'},
     {href: '/admin/projects', icon: Code, label: 'Projekty'},
     {href: '/admin/translations', icon: Languages, label: 'Tłumaczenia'},
+    {href: '/admin/blocks', icon: Blocks, label: 'Bloczki'},
 ];

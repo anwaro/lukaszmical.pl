@@ -1,34 +1,50 @@
 import React, {useState} from 'react';
 
+import {X} from 'lucide-react';
+
+import {IconButton} from '@/admin/components/button/icon-button';
+import {BlockPreview} from '@/admin/components/form/mdx-field/block-preview';
+import {Locale} from '@/types/locale';
 import {blockSections, BlockSection} from '@/ui/site/blocks/block-library';
 
 type Props = {
+    locale: Locale;
     onInsert: (snippet: string) => void;
+    onClose: () => void;
 };
 
 const sections: readonly BlockSection[] = blockSections;
 
 // The block library next to the editor: pick a section, click a block to
-// insert its snippet at the cursor.
-export function BlockPicker({onInsert}: Props) {
+// insert its snippet at the cursor. Collapsible — see `onClose` — so the
+// editor can take the full width on small screens.
+export function BlockPicker({locale, onInsert, onClose}: Props) {
     const [active, setActive] = useState(sections[0].id);
     const section = sections.find((item) => item.id === active) ?? sections[0];
 
     return (
-        <aside className="flex w-72 flex-none flex-col border-l border-(--border) bg-(--surface)">
-            <div className="flex flex-wrap gap-1.5 border-b border-(--border-subtle) p-3">
-                {sections.map((item) => (
-                    <button
-                        key={item.id}
-                        type="button"
-                        title={item.description}
-                        aria-pressed={item.id === active}
-                        onClick={() => setActive(item.id)}
-                        className="kv-chip"
-                    >
-                        {item.title}
-                    </button>
-                ))}
+        <aside className="flex max-h-[50vh] w-full flex-none flex-col border-t border-(--border) bg-(--surface) lg:h-full lg:max-h-none lg:w-80 lg:border-t-0 lg:border-l">
+            <div className="flex items-center gap-2 border-b border-(--border-subtle) p-3">
+                <div className="flex flex-1 flex-wrap gap-1.5">
+                    {sections.map((item) => (
+                        <button
+                            key={item.id}
+                            type="button"
+                            title={item.description}
+                            aria-pressed={item.id === active}
+                            onClick={() => setActive(item.id)}
+                            className="kv-chip"
+                        >
+                            {item.title}
+                        </button>
+                    ))}
+                </div>
+                <IconButton
+                    icon={X}
+                    label="Zamknij bloczki"
+                    onClick={onClose}
+                    className="flex-none"
+                />
             </div>
             <p className="kv-caption px-3 pt-3">{section.description}</p>
             <ul className="flex flex-col gap-2 overflow-y-auto p-3">
@@ -53,6 +69,7 @@ export function BlockPicker({onInsert}: Props) {
                             <span className="kv-caption mt-1 block font-normal">
                                 {block.description}
                             </span>
+                            <BlockPreview snippet={block.snippet} locale={locale} />
                         </button>
                     </li>
                 ))}
