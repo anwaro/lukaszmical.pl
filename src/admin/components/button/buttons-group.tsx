@@ -1,44 +1,30 @@
 import type {ReactNode} from 'react';
-import {Children, cloneElement, ReactElement} from 'react';
 
 import {clsx} from 'clsx';
 
 type Props = {
-    type?: string;
-    mb?: string;
+    align?: 'start' | 'end';
     noWrap?: boolean;
-    classAddon?: string;
-    children: ReactNode;
     className?: string;
+    children: ReactNode;
 };
 
 export const ButtonsGroup = ({
-    type = 'justify-start',
-    mb = '-mb-3',
-    classAddon = 'mr-3 last:mr-0 mb-3',
+    align = 'start',
     noWrap = false,
-    children,
     className,
+    children,
 }: Props) => {
     return (
         <div
             className={clsx(
-                'flex items-center',
-                type,
-                className,
-                mb,
+                'flex items-center gap-2',
+                align === 'end' ? 'justify-end' : 'justify-start',
                 noWrap ? 'flex-nowrap' : 'flex-wrap',
+                className,
             )}
         >
-            {/* @ts-ignore */}
-            {Children.map(children, (child: ReactElement) =>
-                child
-                    ? cloneElement(child, {
-                          /* @ts-ignore */
-                          className: `${classAddon} ${child.props.className}`,
-                      })
-                    : null,
-            )}
+            {children}
         </div>
     );
 };

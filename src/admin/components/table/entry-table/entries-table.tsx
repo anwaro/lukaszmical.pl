@@ -2,20 +2,33 @@
 
 import React, {useCallback, useState} from 'react';
 
-import {mdiOpenInNew, mdiPencil} from '@mdi/js';
+import {ExternalLink, Pencil} from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import {BaseTable} from '@/admin/components/table/base-table';
 import {EditVisibility} from '@/admin/components/table/entry-table/edit-visibility';
-import {EntryBase, HOMEPAGE_SLUG} from '@/types/entry';
+import {Badge} from '@/admin/components/badge/badge';
+import {IconButton} from '@/admin/components/button/icon-button';
+import {EntryBase, EntryPresentation, HOMEPAGE_SLUG} from '@/types/entry';
 
-import {Button} from '../../button/button';
-import ButtonsGroup from '../../button/buttons-group';
 import {EditPosition} from './edit-position';
 
 type Props = {
     entries: EntryBase[];
 };
+
+const presentationLabels: Record<EntryPresentation, string> = {
+    article: 'Artykuł',
+    app: 'Aplikacja',
+    link: 'Link',
+};
+
+const dateFormat = new Intl.DateTimeFormat('pl-PL', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+});
 
 function siteHref(item: EntryBase): string {
     switch (item.kind) {
@@ -32,6 +45,7 @@ function siteHref(item: EntryBase): string {
 
 export const EntriesTable = ({entries}: Props) => {
     const [data, setData] = useState(entries);
+    const showPresentation = entries.some((entry) => entry.kind === 'project');
 
     const update = useCallback(
         (id: number, patch: Partial<EntryBase>) => {
@@ -45,17 +59,20 @@ export const EntriesTable = ({entries}: Props) => {
             data={data}
             itemId={(item) => `${item.id}`}
             limit={300}
-            head={{
-                id: 'Id',
-                slug: 'Slug',
-                presentation: 'Presentation',
-                cover: 'Cover',
-                createdAt: 'Created at',
-                position: 'Position',
-                actions: '',
+            empty="Nie ma jeszcze żadnych wpisów."
+            columns={{
+                cover: {label: 'Okładka'},
+                slug: {label: 'Slug', strong: true},
+                presentation: showPresentation ? {label: 'Prezentacja'} : undefined,
+                published: {label: 'Status'},
+                createdAt: {label: 'Utworzono'},
+                position: {label: 'Pozycja', numeric: true},
+                actions: {
+                    label: <span className="sr-only">Akcje</span>,
+                    align: 'end',
+                },
             }}
             renderData={{
-                position: (item) => <EditPosition entry={item} onUpdate={update} />,
                 cover: (item) =>
                     item.cover || item.presentation === 'app' ? (
                         <Image
@@ -64,37 +81,52 @@ export const EntriesTable = ({entries}: Props) => {
                                     ? item.cover
                                     : `/projects/${item.slug}/image/cover.jpg`
                             }
-                            alt={item.slug}
-                            height={40}
-                            width={80}
+                            alt=""
+                            height={36}
+                            width={64}
+                            className="h-9 w-16 rounded-md border border-(--border) object-cover"
                         />
-                    ) : null,
-                createdAt: (item) => (
-                    <small className="text-slate-400">
-                        {new Date(item.createdAt).toDateString()}
-                    </small>
+                    ) : (
+                        <span className="block h-9 w-16 rounded-md bg-(--surface-sunken)" />
+                    ),
+                slug: (item) => (
+                    <Link
+                        href={`/admin/entries/${item.id}`}
+                        className="hover:underline"
+                    >
+                        {item.slug}
+                    </Link>
                 ),
+                presentation: (item) => (
+                    <Badge size="sm">{presentationLabels[item.presentation]}</Badge>
+                ),
+                published: (item) =>
+                    item.published ? (
+                        <Badge tone="success">Opublikowane</Badge>
+                    ) : (
+                        <Badge>Szkic</Badge>
+                    ),
+                createdAt: (item) => (
+                    <span className="kv-num whitespace-nowrap">
+                        {dateFormat.format(new Date(item.createdAt))}
+                    </span>
+                ),
+                position: (item) => <EditPosition entry={item} onUpdate={update} />,
                 actions: (item) => (
-                    <ButtonsGroup type="justify-start lg:justify-end" noWrap>
-                        <Button
+                    <div className="flex items-center justify-end gap-1">
+                        <IconButton
+                            icon={ExternalLink}
+                            label="Otwórz na stronie"
                             href={siteHref(item)}
-                            color="info"
-                            icon={mdiOpenInNew}
-                            title={'Open on site'}
-                            target={'_blank'}
-                            asAnchor
-                            small
+                            target="_blank"
                         />
-                        <Button
+                        <IconButton
+                            icon={Pencil}
+                            label="Edytuj"
                             href={`/admin/entries/${item.id}`}
-                            color="info"
-                            icon={mdiPencil}
-                            title={'Edit'}
-                            asAnchor
-                            small
                         />
                         <EditVisibility entry={item} onUpdate={update} />
-                    </ButtonsGroup>
+                    </div>
                 ),
             }}
         />

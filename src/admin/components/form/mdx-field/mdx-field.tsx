@@ -3,16 +3,14 @@ import type {editor} from 'monaco-editor';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 
 import {useField} from 'formik';
-import Editor, {Monaco, OnMount} from '@monaco-editor/react';
+import Editor, {BeforeMount, OnMount} from '@monaco-editor/react';
 import {Freeze} from 'react-freeze';
-import {mdiEye, mdiFileCode} from '@mdi/js';
-import {clsx} from 'clsx';
 
-import ButtonsGroup from '@/admin/components/button/buttons-group';
-import {Button} from '@/admin/components/button/button';
 import {MdxPreview} from '@/admin/components/form/mdx-field/mdx-preview';
 import {ButtonImageInput} from '@/admin/components/button/button-image-input';
 import {BlockPicker} from '@/admin/components/form/mdx-field/block-picker';
+import {SegmentedControl} from '@/admin/components/segmented-control/segmented-control';
+import {useAdminTheme} from '@/admin/theme/theme-provider';
 import {Locale} from '@/types/locale';
 
 type Props = {
@@ -26,22 +24,27 @@ export const MdxField = ({name, locale, className}: Props) => {
     const [field, , helpers] = useField<string>(name);
     const [showPreview, setShowPreview] = useState(true);
     const editorRef = useRef<editor.IStandaloneCodeEditor>(null);
+    const {theme} = useAdminTheme();
 
-    const onEditorMount = useCallback<OnMount>(
-        (editor: editor.IStandaloneCodeEditor, monaco: Monaco) => {
-            editorRef.current = editor;
-            monaco.editor.defineTheme('default', {
-                base: 'vs-dark',
-                inherit: true,
-                rules: [],
-                colors: {
-                    'editor.background': '#1e293b',
-                },
-            });
-            monaco.editor.setTheme('default');
-        },
-        [],
-    );
+    // The editor sits on the card: its background is the surface token.
+    const defineThemes = useCallback<BeforeMount>((monaco) => {
+        monaco.editor.defineTheme('kivo-light', {
+            base: 'vs',
+            inherit: true,
+            rules: [],
+            colors: {'editor.background': '#ffffff'},
+        });
+        monaco.editor.defineTheme('kivo-dark', {
+            base: 'vs-dark',
+            inherit: true,
+            rules: [],
+            colors: {'editor.background': '#0f172a'},
+        });
+    }, []);
+
+    const onEditorMount = useCallback<OnMount>((editor) => {
+        editorRef.current = editor;
+    }, []);
 
     const insertText = useCallback((text: string) => {
         const editor = editorRef.current;
@@ -57,7 +60,7 @@ export const MdxField = ({name, locale, className}: Props) => {
     }, []);
 
     const insertImage = useCallback(
-        (url: string) => insertText(`![Image description](${url})`),
+        (url: string) => insertText(`![Opis obrazu](${url})`),
         [insertText],
     );
 
@@ -68,41 +71,36 @@ export const MdxField = ({name, locale, className}: Props) => {
     );
 
     const cls = useMemo(() => {
-        return (className || '').replace(/(h|px)-\d+/g, '');
+        return (className || '').replace(/kv-input|(h|px)-\d+/g, '');
     }, [className]);
 
     return (
         <div className={cls} style={{minHeight: 1200}}>
-            <div className="sticky top-14 z-10 mb-3 flex border-b border-b-gray-700 bg-slate-800 px-3 pb-3">
-                <ButtonsGroup noWrap>
-                    <Button
-                        color="whiteDark"
-                        className={clsx(!showPreview && 'opacity-55')}
-                        onClick={() => setShowPreview(true)}
-                        icon={mdiEye}
-                        title={'Preview mode'}
-                        type={'button'}
-                        small
-                    />
-                    <Button
-                        color="whiteDark"
-                        className={clsx(showPreview && 'opacity-55')}
-                        onClick={() => setShowPreview(false)}
-                        icon={mdiFileCode}
-                        title={'Edit mdx mode'}
-                        type={'button'}
-                        small
-                    />
-                    {!showPreview && <ButtonImageInput onChange={insertImage} />}
-                </ButtonsGroup>
+            <div className="kv-toolbar mb-3 flex items-center gap-2 border-b border-(--border-subtle) py-2">
+                <SegmentedControl
+                    label="Tryb edytora"
+                    hideLabel
+                    size="sm"
+                    className="w-52"
+                    value={showPreview ? 'preview' : 'edit'}
+                    onChange={(mode) => setShowPreview(mode === 'preview')}
+                    options={[
+                        {value: 'preview', label: 'Podgląd'},
+                        {value: 'edit', label: 'Edycja MDX'},
+                    ]}
+                />
+                {!showPreview && <ButtonImageInput onChange={insertImage} />}
             </div>
             <Freeze freeze={showPreview}>
-                <div className="flex" style={{height: 1200}}>
+                <div
+                    className="flex overflow-hidden rounded-lg border border-(--border-control)"
+                    style={{height: 1200}}
+                >
                     <div className="min-w-0 flex-1">
                         <Editor
                             height="1200px"
                             defaultLanguage="mdx"
-                            theme="vs-dark"
+                            theme={theme === 'dark' ? 'kivo-dark' : 'kivo-light'}
                             value={field.value || ''}
                             options={{
                                 minimap: {
@@ -110,19 +108,16 @@ export const MdxField = ({name, locale, className}: Props) => {
                                 },
                                 wordWrap: 'on',
                             }}
+                            beforeMount={defineThemes}
                             onMount={onEditorMount}
-                            onChange={(value) =>
-                                helpers.setValue(value ?? '')
-                            }
+                            onChange={(value) => helpers.setValue(value ?? '')}
                         />
                     </div>
                     <BlockPicker onInsert={insertBlock} />
                 </div>
             </Freeze>
             <Freeze freeze={!showPreview}>
-                <div className={'px-3'}>
-                    <MdxPreview mdx={field.value} locale={locale} />
-                </div>
+                <MdxPreview mdx={field.value} locale={locale} />
             </Freeze>
         </div>
     );

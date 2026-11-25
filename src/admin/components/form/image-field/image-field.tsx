@@ -1,9 +1,8 @@
 import {ChangeEvent, useEffect, useEffectEvent} from 'react';
 
 import {useField} from 'formik';
-import {mdiClose, mdiLoading} from '@mdi/js';
+import {LoaderCircle, X} from 'lucide-react';
 
-import {Icon} from '../../icon/icon';
 import {useImageField} from './image-field.hook';
 
 type Props = {
@@ -49,17 +48,20 @@ export const ImageField = ({name, accept, className, placeholder}: Props) => {
             />
 
             {isPending && (
-                <div className="absolute inset-y-0 right-0 flex w-12 items-center justify-center">
-                    <Icon path={mdiLoading} size={34} className="animate-spin" />
+                <div className="kv-input-addon right-0 text-(--ink-muted)">
+                    <LoaderCircle className="kv-spin size-4" strokeWidth={1.8} />
                 </div>
             )}
             {Boolean(field.value && !isPending) && (
-                <div
+                <button
+                    type="button"
                     onClick={() => setValue('')}
-                    className="absolute inset-y-0 right-0 flex w-12 cursor-pointer items-center justify-center"
+                    aria-label="Usuń obraz"
+                    title="Usuń obraz"
+                    className="kv-input-addon pointer-events-auto right-0 z-10 cursor-pointer text-(--ink-muted) hover:text-(--ink)"
                 >
-                    <Icon path={mdiClose} size={34} />
-                </div>
+                    <X className="size-4" strokeWidth={1.8} />
+                </button>
             )}
         </>
     );

@@ -1,87 +1,67 @@
 import {Children, cloneElement, ReactElement} from 'react';
 
 import {clsx} from 'clsx';
-
-import {Icon} from '../../icon/icon';
+import {LucideIcon} from 'lucide-react';
 
 type Props = PWC<{
     label?: string;
+    // Shown at the right edge of every control: the language of the value.
     locale?: string;
     labelFor?: string;
     help?: string;
-    icons?: string[] | null[];
-    isBorderless?: boolean;
-    isTransparent?: boolean;
+    // An icon per control, at its left edge.
+    icons?: (LucideIcon | undefined)[];
     hasTextareaHeight?: boolean;
 }>;
 
+const columns: Record<number, string> = {
+    2: 'grid grid-cols-1 gap-3 sm:grid-cols-2',
+    3: 'grid grid-cols-1 gap-3 sm:grid-cols-3',
+    4: 'grid grid-cols-1 gap-3 sm:grid-cols-4',
+};
+
+// A label over one or more controls (side by side from sm) and a help line.
 export const FormField = ({icons = [], locale, ...props}: Props) => {
     // toArray drops the empty nodes left by conditional children.
-    const children = Children.toArray(props.children);
-    const childrenCount = children.length;
-
-    let elementWrapperClass = '';
-
-    switch (childrenCount) {
-        case 2:
-            elementWrapperClass = 'grid grid-cols-1 gap-3 md:grid-cols-2';
-            break;
-        case 3:
-            elementWrapperClass = 'grid grid-cols-1 gap-3 md:grid-cols-3';
-            break;
-        case 4:
-            elementWrapperClass = 'grid grid-cols-1 gap-3 md:grid-cols-4';
-    }
-
-    const controlClassName = [
-        'px-3 py-2 max-w-full border-gray-700 rounded w-full placeholder-gray-400',
-        'focus:ring focus:ring-blue-600 focus:border-blue-600 focus:outline-none',
-        props.hasTextareaHeight ? 'h-24' : 'h-12',
-        props.isBorderless ? 'border-0' : 'border',
-        props.isTransparent ? 'bg-transparent' : 'bg-slate-800',
-    ].join(' ');
+    const children = Children.toArray(props.children) as ReactElement<{
+        className?: string;
+    }>[];
 
     return (
-        <div className="mb-6 last:mb-0">
+        <div className="kv-field mb-5 last:mb-0">
             {props.label && (
-                <label
-                    htmlFor={props.labelFor}
-                    className={`mb-2 block font-bold ${props.labelFor ? 'cursor-pointer' : ''}`}
-                >
+                <label htmlFor={props.labelFor} className="kv-field-label">
                     {props.label}
                 </label>
             )}
-            <div className={elementWrapperClass}>
-                {/* @ts-ignore */}
-                {children.map((child: ReactElement, index) => (
-                    <div key={child.key} className="relative">
-                        {cloneElement(child, {
-                            /* @ts-ignore */
-                            className: clsx(
-                                controlClassName,
-                                icons[index] && 'pl-10',
-                                locale && !props.hasTextareaHeight && 'pr-10',
-                            ),
-                        })}
-                        {icons[index] && (
-                            <Icon
-                                path={icons[index]}
-                                w="w-10"
-                                h={props.hasTextareaHeight ? 'h-full' : 'h-12'}
-                                className="pointer-events-none absolute top-0 left-0 z-10 text-slate-400"
-                            />
-                        )}
-                        {locale && (
-                            <div className="pointer-events-none absolute top-0 right-0 z-10 flex h-12 w-10 items-center justify-center text-slate-400">
-                                {locale.toLocaleUpperCase()}
-                            </div>
-                        )}
-                    </div>
-                ))}
+            <div className={columns[children.length]}>
+                {children.map((child, index) => {
+                    const Icon = icons[index];
+                    return (
+                        <div key={child.key} className="relative">
+                            {cloneElement(child, {
+                                className: clsx(
+                                    'kv-input',
+                                    Icon && 'pl-10',
+                                    locale && !props.hasTextareaHeight && 'pr-10',
+                                    child.props.className,
+                                ),
+                            })}
+                            {Icon && (
+                                <span className="kv-input-addon left-0">
+                                    <Icon className="size-4" strokeWidth={1.8} />
+                                </span>
+                            )}
+                            {locale && (
+                                <span className="kv-input-addon kv-kbd right-0">
+                                    {locale.toLocaleUpperCase()}
+                                </span>
+                            )}
+                        </div>
+                    );
+                })}
             </div>
-            {props.help && (
-                <div className="mt-1 text-xs text-slate-400">{props.help}</div>
-            )}
+            {props.help && <p className="kv-field-help">{props.help}</p>}
         </div>
     );
 };

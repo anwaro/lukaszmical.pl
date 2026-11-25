@@ -17,8 +17,7 @@ type Props = {
     locale: Locale;
 };
 
-const errorClass =
-    'rounded-lg border border-red-500/50 bg-slate-900 p-4 text-sm whitespace-pre-wrap text-red-300';
+const errorClass = 'kv-notice kv-notice-danger';
 
 // A block can still fail while the preview is rendered in the browser; that
 // must not take the whole form down with it.
@@ -33,7 +32,7 @@ class PreviewBoundary extends React.Component<PWC, {error?: string}> {
         if (this.state.error !== undefined) {
             return (
                 <pre className={errorClass}>
-                    Preview failed to render: {this.state.error}
+                    Nie udało się wyrenderować podglądu: {this.state.error}
                 </pre>
             );
         }

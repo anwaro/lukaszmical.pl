@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useEffect, useEffectEvent} from 'react';
 
-import {mdiImage} from '@mdi/js';
+import {Image} from 'lucide-react';
 
 import {useImageField} from '@/admin/components/form/image-field/image-field.hook';
 
@@ -32,16 +32,12 @@ export function ButtonImageInput({onChange, className}: Props) {
 
     return (
         <div className={`relative ${className}`}>
-            <Button
-                color="info"
-                icon={mdiImage}
-                title={'Insert image'}
-                type={'button'}
-                loading={isPending}
-                small
-            />
+            <Button variant="secondary" size="sm" icon={Image} loading={isPending}>
+                Wstaw obraz
+            </Button>
             <input
                 type="file"
+                aria-label="Wstaw obraz"
                 className="absolute top-0 left-0 size-full cursor-pointer opacity-0 outline-none"
                 onChange={handleFileChange}
             />

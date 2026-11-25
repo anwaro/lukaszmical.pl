@@ -43,7 +43,7 @@ from the Next.js app.
 
 ```
 src/app/            App Router — [locale]/ (public), admin/, api/
-src/admin/          admin panel UI (pages, components, layouts, hooks)
+src/admin/          admin panel UI (components, layouts, theme, css)
 src/services/       domain logic
   projects/monogram-resolver/   detector, resolver, helper, model, image, canvas, task
   projects/number-sums-resolver/
@@ -72,6 +72,18 @@ a pipeline of small, single-responsibility **resolvers**.
 - Shared logic goes in `helper/` (e.g. `GroupHelper`); shared shapes in `model/`.
 - **Always add/adjust a `*.spec.ts`** for resolver changes — this module is test-driven
   and each rule is verified in isolation.
+
+## Admin panel
+
+- Styled with the **Kivo** design system (shared by all my CMSes): semantic tokens in
+  `src/admin/css/kivo-tokens.css` (light/dark), component classes `kv-*` in
+  `kivo-components.css`, Geist font, `lucide-react` icons (stroke 1.8). Colours come
+  from tokens only — in markup use `kv-*` classes or `bg-(--surface)`-style utilities,
+  never raw Tailwind palette colours.
+- Theme: system preference, overridden by the header toggle (`admin-theme` cookie,
+  `ThemeProvider` in `src/admin/theme/`).
+- Interface copy is Polish: verbs in the infinitive, sentence case, no full stop
+  („Zapisz zmiany”), ongoing states with an ellipsis („Zapisywanie…”).
 
 ## Database & auth
 

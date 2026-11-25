@@ -59,7 +59,7 @@ export default async function RootLayout({children}: PWC) {
     return (
         <html
             lang={locale}
-            className={clsx('dark-scrollbars-compat dark', font.className)}
+            className={clsx('dark', font.className)}
         >
             <body>{children}</body>
         </html>
