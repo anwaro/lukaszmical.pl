@@ -12,6 +12,7 @@ import {JsonLd} from '@/ui/components/seo/json-ld';
 import {ProjectIframe} from '@/ui/pages/project/iframe/project-iframe';
 import {ProjectPage} from '@/ui/pages/project/project-page';
 import {entryJsonLd, entryMetadata} from '@/utils/seo';
+import {isLoggedIn} from '@/utils/auth/auth';
 
 type Props = {
     params: Promise<{
@@ -30,7 +31,11 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
     const {slug, locale} = await params;
     const project = await getProject(slug, locale);
 
-    return project ? entryMetadata(project, locale, `/projects/${slug}`) : {};
+    if (!project || (!project.published && !(await isLoggedIn()))) {
+        return {};
+    }
+
+    return entryMetadata(project, locale, `/projects/${slug}`);
 }
 
 export default async function Page({params}: Props) {
@@ -38,6 +43,13 @@ export default async function Page({params}: Props) {
     const project = await getProject(slug, locale);
 
     if (!project) {
+        notFound();
+    }
+
+    const loggedIn = await isLoggedIn();
+
+    // Drafts are only visible to the logged-in admin.
+    if (!project.published && !loggedIn) {
         notFound();
     }
 
@@ -54,11 +66,12 @@ export default async function Page({params}: Props) {
         const others = (await new EntryRepository().list(locale, {kind: 'project'}))
             .filter((other) => other.id !== project.id)
             .slice(0, OTHERS_LIMIT);
+        const editHref = loggedIn ? `/admin/entries/${project.id}` : undefined;
 
         return (
             <>
                 <JsonLd data={jsonLd} />
-                <ProjectPage project={project} others={others} />
+                <ProjectPage project={project} others={others} editHref={editHref} />
             </>
         );
     }

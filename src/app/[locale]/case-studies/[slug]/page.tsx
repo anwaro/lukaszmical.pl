@@ -9,6 +9,7 @@ import {Locale} from '@/types/locale';
 import {PageCaseStudy} from '@/ui/pages/case-study/case-study';
 import {JsonLd} from '@/ui/components/seo/json-ld';
 import {entryJsonLd, entryMetadata} from '@/utils/seo';
+import {isLoggedIn} from '@/utils/auth/auth';
 
 type Props = {
     params: Promise<{
@@ -25,9 +26,11 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
     const {slug, locale} = await params;
     const caseStudy = await getCaseStudy(slug, locale);
 
-    return caseStudy
-        ? entryMetadata(caseStudy, locale, `/case-studies/${slug}`)
-        : {};
+    if (!caseStudy || (!caseStudy.published && !(await isLoggedIn()))) {
+        return {};
+    }
+
+    return entryMetadata(caseStudy, locale, `/case-studies/${slug}`);
 }
 
 export default async function Page({params}: Props) {
@@ -38,6 +41,13 @@ export default async function Page({params}: Props) {
         notFound();
     }
 
+    const loggedIn = await isLoggedIn();
+
+    // Drafts are only visible to the logged-in admin.
+    if (!caseStudy.published && !loggedIn) {
+        notFound();
+    }
+
     const list = await new EntryRepository().list(locale, {
         kind: 'case_study',
     });
@@ -45,6 +55,7 @@ export default async function Page({params}: Props) {
     // Unpublished drafts are not on the list: number them last, link to the first.
     const position = index === -1 ? list.length + 1 : index + 1;
     const next = list.length ? list[(index + 1) % list.length] : null;
+    const editHref = loggedIn ? `/admin/entries/${caseStudy.id}` : undefined;
 
     return (
         <>
@@ -55,6 +66,7 @@ export default async function Page({params}: Props) {
                 caseStudy={caseStudy}
                 position={position}
                 next={next && next.id !== caseStudy.id ? next : null}
+                editHref={editHref}
             />
         </>
     );

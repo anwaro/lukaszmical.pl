@@ -1,5 +1,6 @@
 import React from 'react';
 
+import NextLink from 'next/link';
 import {getTranslations} from 'next-intl/server';
 import {clsx} from 'clsx';
 
@@ -11,6 +12,9 @@ type Section = 'caseStudies' | 'projects';
 
 type Props = PWC<{
     active?: Section;
+    // Admin edit link for the current entry, shown when logged in. The admin
+    // section lives outside `[locale]`, so this uses a plain (non-localized) link.
+    editHref?: string;
 }>;
 
 function Logo({label}: {label: string}) {
@@ -31,7 +35,7 @@ function Logo({label}: {label: string}) {
     );
 }
 
-export async function SiteShell({children, active}: Props) {
+export async function SiteShell({children, active, editHref}: Props) {
     const t = await getTranslations('common');
 
     const nav: {href: string; label: string; section?: Section}[] = [
@@ -78,6 +82,14 @@ export async function SiteShell({children, active}: Props) {
                         </Link>
                     ))}
                     <LocaleSwitch />
+                    {editHref && (
+                        <NextLink
+                            href={editHref}
+                            className="py-3 text-accent hover:text-fg"
+                        >
+                            {t('editPage')}
+                        </NextLink>
+                    )}
                 </nav>
             </header>
 

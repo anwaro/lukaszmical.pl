@@ -9,6 +9,7 @@ import {HOMEPAGE_SLUG} from '@/types/entry';
 import {Locale} from '@/types/locale';
 import {PageStatic} from '@/ui/pages/static/static-page';
 import {entryMetadata} from '@/utils/seo';
+import {isLoggedIn} from '@/utils/auth/auth';
 
 type Props = {
     params: Promise<{
@@ -28,7 +29,11 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
     const {slug, locale} = await params;
     const page = await getPage(slug, locale);
 
-    return page ? entryMetadata(page, locale, `/${slug}`) : {};
+    if (!page || (!page.published && !(await isLoggedIn()))) {
+        return {};
+    }
+
+    return entryMetadata(page, locale, `/${slug}`);
 }
 
 export default async function Page({params}: Props) {
@@ -39,5 +44,16 @@ export default async function Page({params}: Props) {
         notFound();
     }
 
-    return <PageStatic source={page.content} locale={locale} />;
+    const loggedIn = await isLoggedIn();
+
+    // Drafts are only visible to the logged-in admin.
+    if (!page.published && !loggedIn) {
+        notFound();
+    }
+
+    const editHref = loggedIn ? `/admin/entries/${page.id}` : undefined;
+
+    return (
+        <PageStatic source={page.content} locale={locale} editHref={editHref} />
+    );
 }

@@ -14,6 +14,7 @@ type Props = {
     // 1-based position on the case studies list.
     position: number;
     next: EntryListItem | null;
+    editHref?: string;
 };
 
 // "label: value" lines from the CMS, appended to the fixed facts.
@@ -29,7 +30,7 @@ function displayUrl(url: string) {
     return url.replace(/^https?:\/\//, '').replace(/\/$/, '');
 }
 
-export async function PageCaseStudy({caseStudy, position, next}: Props) {
+export async function PageCaseStudy({caseStudy, position, next, editHref}: Props) {
     const t = await getTranslations('caseStudies');
 
     const facts: [string, React.ReactNode][] = [
@@ -54,7 +55,7 @@ export async function PageCaseStudy({caseStudy, position, next}: Props) {
     ];
 
     return (
-        <SiteShell active="caseStudies">
+        <SiteShell active="caseStudies" editHref={editHref}>
             <section className="flex flex-col gap-7 pt-[clamp(32px,5vw,64px)] pb-[clamp(32px,5vw,56px)]">
                 <Link href="/case-studies" className="self-start py-3">
                     <Prompt>
