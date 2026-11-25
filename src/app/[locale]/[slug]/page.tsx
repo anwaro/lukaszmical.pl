@@ -1,14 +1,15 @@
 import type {Metadata} from 'next';
 
-import React from 'react';
+import React, {cache} from 'react';
 
 import {notFound} from 'next/navigation';
 
 import {EntryRepository} from '@/services/content/repository-entry';
+import {resolveEntryVisibility} from '@/services/content/entry-visibility';
 import {HOMEPAGE_SLUG} from '@/types/entry';
 import {Locale} from '@/types/locale';
 import {PageStatic} from '@/ui/pages/static/static-page';
-import {entryMetadata} from '@/utils/seo';
+import {draftMetadata, entryMetadata} from '@/utils/seo';
 
 type Props = {
     params: Promise<{
@@ -17,27 +18,36 @@ type Props = {
     }>;
 };
 
-// The homepage entry is served at `/`, not under its slug.
-async function getPage(slug: string, locale: Locale) {
-    return slug === HOMEPAGE_SLUG
+// The homepage entry is served at `/`, not under its slug. Cached per
+// request: generateMetadata and the page both need it.
+const getPage = cache((slug: string, locale: Locale) =>
+    slug === HOMEPAGE_SLUG
         ? null
-        : new EntryRepository().getLocalized('page', slug, locale);
-}
+        : new EntryRepository().getLocalized('page', slug, locale),
+);
 
 export async function generateMetadata({params}: Props): Promise<Metadata> {
     const {slug, locale} = await params;
     const page = await getPage(slug, locale);
 
-    return page ? entryMetadata(page, locale, `/${slug}`) : {};
+    if (!page) {
+        return {};
+    }
+
+    return page.published ? entryMetadata(page, locale, `/${slug}`) : draftMetadata;
 }
 
 export default async function Page({params}: Props) {
     const {slug, locale} = await params;
-    const page = await getPage(slug, locale);
+    const visible = await resolveEntryVisibility(await getPage(slug, locale));
 
-    if (!page) {
+    if (!visible) {
         notFound();
     }
 
-    return <PageStatic source={page.content} locale={locale} />;
+    const {entry: page, editHref} = visible;
+
+    return (
+        <PageStatic source={page.content} locale={locale} editHref={editHref} />
+    );
 }

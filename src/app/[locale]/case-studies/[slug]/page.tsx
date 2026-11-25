@@ -1,14 +1,15 @@
 import type {Metadata} from 'next';
 
-import React from 'react';
+import React, {cache} from 'react';
 
 import {notFound} from 'next/navigation';
 
 import {EntryRepository} from '@/services/content/repository-entry';
+import {resolveEntryVisibility} from '@/services/content/entry-visibility';
 import {Locale} from '@/types/locale';
 import {PageCaseStudy} from '@/ui/pages/case-study/case-study';
 import {JsonLd} from '@/ui/components/seo/json-ld';
-import {entryJsonLd, entryMetadata} from '@/utils/seo';
+import {draftMetadata, entryJsonLd, entryMetadata} from '@/utils/seo';
 
 type Props = {
     params: Promise<{
@@ -17,26 +18,33 @@ type Props = {
     }>;
 };
 
-async function getCaseStudy(slug: string, locale: Locale) {
-    return new EntryRepository().getLocalized('case_study', slug, locale);
-}
+// Cached per request: generateMetadata and the page both need it.
+const getCaseStudy = cache((slug: string, locale: Locale) =>
+    new EntryRepository().getLocalized('case_study', slug, locale),
+);
 
 export async function generateMetadata({params}: Props): Promise<Metadata> {
     const {slug, locale} = await params;
     const caseStudy = await getCaseStudy(slug, locale);
 
-    return caseStudy
+    if (!caseStudy) {
+        return {};
+    }
+
+    return caseStudy.published
         ? entryMetadata(caseStudy, locale, `/case-studies/${slug}`)
-        : {};
+        : draftMetadata;
 }
 
 export default async function Page({params}: Props) {
     const {slug, locale} = await params;
-    const caseStudy = await getCaseStudy(slug, locale);
+    const visible = await resolveEntryVisibility(await getCaseStudy(slug, locale));
 
-    if (!caseStudy) {
+    if (!visible) {
         notFound();
     }
+
+    const {entry: caseStudy, editHref} = visible;
 
     const list = await new EntryRepository().list(locale, {
         kind: 'case_study',
@@ -55,6 +63,7 @@ export default async function Page({params}: Props) {
                 caseStudy={caseStudy}
                 position={position}
                 next={next && next.id !== caseStudy.id ? next : null}
+                editHref={editHref}
             />
         </>
     );

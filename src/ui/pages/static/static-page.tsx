@@ -8,11 +8,12 @@ type Props = {
     // Block source (MDX) — the whole page between the header and the footer.
     source: string;
     locale: Locale;
+    editHref?: string;
 };
 
-export function PageStatic({source, locale}: Props) {
+export function PageStatic({source, locale, editHref}: Props) {
     return (
-        <SiteShell>
+        <SiteShell editHref={editHref}>
             <ContentMdx source={source} locale={locale} />
         </SiteShell>
     );

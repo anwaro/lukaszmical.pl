@@ -15,14 +15,15 @@ import {Link} from '@/navigation';
 type Props = {
     project: LocalizedEntry;
     others: EntryListItem[];
+    editHref?: string;
 };
 
-export async function ProjectPage({project, others}: Props) {
+export async function ProjectPage({project, others, editHref}: Props) {
     const t = await getTranslations('projects');
     const facts = [...project.stack, project.period].filter(Boolean) as string[];
 
     return (
-        <SiteShell active="projects">
+        <SiteShell active="projects" editHref={editHref}>
             <section className="flex flex-wrap items-center gap-x-16 gap-y-12 pt-[clamp(32px,5vw,64px)]">
                 <div className="flex min-w-0 flex-[3_1_440px] flex-col gap-6">
                     <Link href="/projects" className="self-start py-3">

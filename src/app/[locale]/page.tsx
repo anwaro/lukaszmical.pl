@@ -5,11 +5,12 @@ import React, {cache} from 'react';
 import {notFound} from 'next/navigation';
 
 import {EntryRepository} from '@/services/content/repository-entry';
+import {resolveEntryVisibility} from '@/services/content/entry-visibility';
 import {HOMEPAGE_SLUG} from '@/types/entry';
 import {Locale} from '@/types/locale';
 import {JsonLd} from '@/ui/components/seo/json-ld';
 import {PageStatic} from '@/ui/pages/static/static-page';
-import {entryMetadata, personJsonLd} from '@/utils/seo';
+import {draftMetadata, entryMetadata, personJsonLd} from '@/utils/seo';
 
 type Props = {
     params: Promise<{locale: Locale}>;
@@ -25,21 +26,27 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
     const {locale} = await params;
     const page = await getHomepage(locale);
 
-    return page ? entryMetadata(page, locale, '/') : {};
+    if (!page) {
+        return {};
+    }
+
+    return page.published ? entryMetadata(page, locale, '/') : draftMetadata;
 }
 
 export default async function Page({params}: Props) {
     const {locale} = await params;
-    const page = await getHomepage(locale);
+    const visible = await resolveEntryVisibility(await getHomepage(locale));
 
-    if (!page) {
+    if (!visible) {
         notFound();
     }
+
+    const {entry: page, editHref} = visible;
 
     return (
         <>
             <JsonLd data={personJsonLd()} />
-            <PageStatic source={page.content} locale={locale} />
+            <PageStatic source={page.content} locale={locale} editHref={editHref} />
         </>
     );
 }
