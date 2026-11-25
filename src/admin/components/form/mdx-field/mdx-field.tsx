@@ -5,6 +5,7 @@ import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {useField} from 'formik';
 import Editor, {BeforeMount, OnMount} from '@monaco-editor/react';
 import {Freeze} from 'react-freeze';
+import {Blocks} from 'lucide-react';
 
 import {MdxPreview} from '@/admin/components/form/mdx-field/mdx-preview';
 import {ButtonImageInput} from '@/admin/components/button/button-image-input';
@@ -23,6 +24,7 @@ type Props = {
 export const MdxField = ({name, locale, className}: Props) => {
     const [field, , helpers] = useField<string>(name);
     const [showPreview, setShowPreview] = useState(true);
+    const [showBlocks, setShowBlocks] = useState(false);
     const editorRef = useRef<editor.IStandaloneCodeEditor>(null);
     const {theme} = useAdminTheme();
 
@@ -89,13 +91,27 @@ export const MdxField = ({name, locale, className}: Props) => {
                         {value: 'edit', label: 'Edycja MDX'},
                     ]}
                 />
-                {!showPreview && <ButtonImageInput onChange={insertImage} />}
+                {!showPreview && (
+                    <>
+                        <ButtonImageInput onChange={insertImage} />
+                        <button
+                            type="button"
+                            aria-pressed={showBlocks}
+                            onClick={() => setShowBlocks((prev) => !prev)}
+                            className="kv-chip ml-auto inline-flex items-center gap-1.5"
+                        >
+                            <Blocks
+                                className="kv-icon"
+                                strokeWidth={1.8}
+                                aria-hidden
+                            />
+                            Bloczki
+                        </button>
+                    </>
+                )}
             </div>
             <Freeze freeze={showPreview}>
-                <div
-                    className="flex overflow-hidden rounded-lg border border-(--border-control)"
-                    style={{height: 1200}}
-                >
+                <div className="flex flex-col overflow-hidden rounded-lg border border-(--border-control) lg:h-[1200px] lg:flex-row">
                     <div className="min-w-0 flex-1">
                         <Editor
                             height="1200px"
@@ -113,7 +129,13 @@ export const MdxField = ({name, locale, className}: Props) => {
                             onChange={(value) => helpers.setValue(value ?? '')}
                         />
                     </div>
-                    <BlockPicker onInsert={insertBlock} />
+                    {showBlocks && (
+                        <BlockPicker
+                            locale={locale}
+                            onInsert={insertBlock}
+                            onClose={() => setShowBlocks(false)}
+                        />
+                    )}
                 </div>
             </Freeze>
             <Freeze freeze={!showPreview}>
