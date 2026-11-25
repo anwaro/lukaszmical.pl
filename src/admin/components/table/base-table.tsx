@@ -1,8 +1,10 @@
 'use client';
 
-import React, {ReactNode, useMemo, useState} from 'react';
+import React, {ReactNode} from 'react';
 
 import {clsx} from 'clsx';
+
+import {usePagination} from '@/admin/components/pagination/use-pagination';
 
 import {Button} from '../button/button';
 
@@ -35,16 +37,9 @@ export function BaseTable<Item extends object, Key extends string>({
     itemId,
     empty = 'Brak pozycji.',
 }: Props<Item, Key>) {
-    const [currentPage, setCurrentPage] = useState(0);
-
-    const {showedItem, pages} = useMemo(() => {
-        const count = Math.ceil(data.length / limit);
-
-        return {
-            showedItem: data.slice(limit * currentPage, limit * (currentPage + 1)),
-            pages: new Array(count).fill(0).map((_, i) => i),
-        };
-    }, [currentPage, data, limit]);
+    const {page: currentPage, setPage: setCurrentPage, pageCount, pageItems: showedItem} =
+        usePagination(data, limit);
+    const pages = new Array(pageCount).fill(0).map((_, i) => i);
 
     const entries = (Object.entries(columns) as [Key, Column | undefined][]).filter(
         (entry): entry is [Key, Column] => Boolean(entry[1]),

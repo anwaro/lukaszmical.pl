@@ -24,9 +24,29 @@ type Props = PWC<{initialAssets: MediaAsset[]}>;
 // wouldn't re-render an already-mounted client tree.
 export function MediaLibraryProvider({initialAssets, children}: Props) {
     const [assets, setAssets] = useState(initialAssets);
+    // Tracks the last `initialAssets` reference seen, so a genuinely new one
+    // (the layout re-rendering with a fresh list — this tab's own
+    // uploads/deletes, but also, once Next refreshes this route, another
+    // tab's) resets `assets` during render instead of needing an effect.
+    // `useState`'s initial value only applies at mount, so without this the
+    // context would otherwise keep serving the list it was first seeded with.
+    const [seenAssets, setSeenAssets] = useState(initialAssets);
+    if (initialAssets !== seenAssets) {
+        setSeenAssets(initialAssets);
+        setAssets(initialAssets);
+    }
 
+    // Deduped by key: a server refresh (triggered by this same upload's
+    // `updateTag`) can deliver the fresh list — already containing this
+    // asset — before or after this optimistic add runs, so without the
+    // check the asset could end up listed twice.
     const addAsset = useCallback(
-        (asset: MediaAsset) => setAssets((current) => [asset, ...current]),
+        (asset: MediaAsset) =>
+            setAssets((current) =>
+                current.some((existing) => existing.key === asset.key)
+                    ? current
+                    : [asset, ...current],
+            ),
         [],
     );
     const removeAsset = useCallback(

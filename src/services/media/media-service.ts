@@ -9,7 +9,7 @@ function fileName(name: string): string {
         name
             .toLowerCase()
             .replace(/ /g, '-')
-            .replace(/[^\-.a-z0-9]/, ''),
+            .replace(/[^\-.a-z0-9]/g, ''),
     ].join('-');
 }
 

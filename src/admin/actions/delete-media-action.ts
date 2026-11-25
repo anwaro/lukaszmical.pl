@@ -20,8 +20,12 @@ export const deleteMediaAction = async (
     form: FormData,
 ): Promise<DeleteMediaResult> => {
     await auth();
-    const key = String(form.get('key'));
-    const url = String(form.get('url'));
+    const key = form.get('key');
+    const url = form.get('url');
+
+    if (typeof key !== 'string' || typeof url !== 'string' || !key || !url) {
+        return {status: 'error', error: 'Nieprawidłowe żądanie'};
+    }
 
     const usages = await new MediaUsageScanner().findUsages(url);
     if (usages.length > 0) {

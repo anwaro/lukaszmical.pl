@@ -26,8 +26,11 @@ export const uploadMediaAction = async (
     form: FormData,
 ): Promise<UploadMediaResult> => {
     await auth();
-    const file = form.get('file') as File;
+    const file = form.get('file');
 
+    if (!(file instanceof File)) {
+        return {status: 'error', error: 'Brak pliku'};
+    }
     if (!ALLOWED_TYPES.includes(file.type)) {
         return {status: 'error', error: 'Nieobsługiwany format pliku'};
     }

@@ -5,6 +5,7 @@ import React, {ReactNode, useMemo, useState} from 'react';
 import Image from 'next/image';
 
 import {Button} from '@/admin/components/button/button';
+import {usePagination} from '@/admin/components/pagination/use-pagination';
 import {MediaAsset} from '@/types/media';
 
 type Props = {
@@ -20,15 +21,13 @@ type Props = {
 // `BaseTable` — the whole (cached) bucket listing is already in memory.
 export function MediaGrid({assets, mode, limit = 24, onSelect, renderActions}: Props) {
     const [query, setQuery] = useState('');
-    const [page, setPage] = useState(0);
 
     const filtered = useMemo(
         () => assets.filter((asset) => asset.key.toLowerCase().includes(query.toLowerCase())),
         [assets, query],
     );
 
-    const pages = Math.ceil(filtered.length / limit);
-    const shown = filtered.slice(limit * page, limit * (page + 1));
+    const {page, setPage, pageCount, pageItems: shown} = usePagination(filtered, limit);
 
     return (
         <div>
@@ -54,6 +53,12 @@ export function MediaGrid({assets, mode, limit = 24, onSelect, renderActions}: P
                                       role: 'button' as const,
                                       tabIndex: 0,
                                       onClick: () => onSelect?.(asset),
+                                      onKeyDown: (event: React.KeyboardEvent) => {
+                                          if (event.key === 'Enter' || event.key === ' ') {
+                                              event.preventDefault();
+                                              onSelect?.(asset);
+                                          }
+                                      },
                                   }
                                 : {})}
                         >
@@ -73,9 +78,9 @@ export function MediaGrid({assets, mode, limit = 24, onSelect, renderActions}: P
                     ))}
                 </div>
             )}
-            {pages > 1 && (
+            {pageCount > 1 && (
                 <div className="mt-4 flex flex-wrap gap-1">
-                    {new Array(pages).fill(0).map((_, i) => (
+                    {new Array(pageCount).fill(0).map((_, i) => (
                         <Button
                             key={i}
                             variant={i === page ? 'primary' : 'secondary'}

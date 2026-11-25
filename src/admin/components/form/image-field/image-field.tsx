@@ -23,6 +23,12 @@ export const ImageField = ({name, className, placeholder}: Props) => {
                 placeholder={placeholder}
                 readOnly
                 onClick={() => setOpen(true)}
+                onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        setOpen(true);
+                    }
+                }}
             />
 
             {Boolean(field.value) && (
