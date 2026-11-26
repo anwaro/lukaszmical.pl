@@ -2,37 +2,28 @@
 
 import React, {useMemo, useState, useTransition} from 'react';
 
-import {clsx} from 'clsx';
 import {Save} from 'lucide-react';
 
-import {
-    ContentChanges,
-    saveContentAction,
-    SaveContentResult,
-} from '@/admin/actions/save-content-action';
+import {saveContentAction, SaveContentResult} from '@/admin/actions/save-content-action';
 import {Button} from '@/admin/components/button/button';
 import {Badge} from '@/admin/components/badge/badge';
-import {Card, CardHeader} from '@/admin/components/card/card';
+import {Card} from '@/admin/components/card/card';
+import {fieldInputClassName} from '@/admin/components/form/field-input-class-name';
 import {Locale} from '@/types/locale';
+
+import {MessageNamespaceCard} from './message-namespace-card';
+import {
+    buildMessageChanges,
+    buildMessageGroups,
+    buildMessageRows,
+    MessageValues,
+    setMessageValue,
+} from './messages-form-model';
 
 type Props = {
     // Effective values (CMS over file defaults), keyed by `namespace.key`.
-    messages: Record<Locale, Record<string, string>>;
+    messages: MessageValues;
 };
-
-// Column order of the editor.
-const locales: Locale[] = ['pl', 'en'];
-
-const namespaceTitles: Record<string, string> = {
-    common: 'Wspólne — nawigacja i stopka',
-    caseStudies: 'Case studies',
-    projects: 'Projekty',
-};
-
-// Values longer than this get a textarea.
-const LONG_TEXT = 60;
-
-type Row = {id: string; namespace: string; key: string};
 
 // Every message of the site: one card per namespace, one row per key, both
 // languages next to each other.
@@ -44,63 +35,19 @@ export function MessagesForm({messages}: Props) {
     const [state, setState] = useState<SaveContentResult>({status: undefined});
     const [isPending, startTransition] = useTransition();
 
-    // The files define the keys, so both languages list the same ones.
-    const rows = useMemo((): Row[] => {
-        const ids = new Set(
-            locales.flatMap((locale) => Object.keys(messages[locale])),
-        );
-        return [...ids].sort().map((id) => {
-            const [namespace, ...rest] = id.split('.');
-            return {id, namespace, key: rest.join('.')};
-        });
-    }, [messages]);
-
-    const changes = useMemo((): ContentChanges => {
-        const result: ContentChanges = {messages: []};
-        for (const row of rows) {
-            for (const locale of locales) {
-                const value = draft[locale][row.id] ?? '';
-                if (value !== (saved[locale][row.id] ?? '')) {
-                    result.messages.push({
-                        namespace: row.namespace,
-                        key: row.key,
-                        locale,
-                        value,
-                    });
-                }
-            }
-        }
-        return result;
-    }, [rows, draft, saved]);
-
+    const rows = useMemo(() => buildMessageRows(messages), [messages]);
+    const changes = useMemo(
+        () => buildMessageChanges(rows, draft, saved),
+        [rows, draft, saved],
+    );
     const changeCount = changes.messages.length;
-
-    const groups = useMemo(() => {
-        const query = filter.trim().toLowerCase();
-        const visible = rows.filter(
-            (row) =>
-                !query ||
-                row.id.toLowerCase().includes(query) ||
-                locales.some((locale) =>
-                    // Saved texts, so a row does not vanish while it is edited.
-                    (saved[locale][row.id] ?? '').toLowerCase().includes(query),
-                ),
-        );
-        const byNamespace = new Map<string, Row[]>();
-        for (const row of visible) {
-            byNamespace.set(row.namespace, [
-                ...(byNamespace.get(row.namespace) ?? []),
-                row,
-            ]);
-        }
-        return [...byNamespace];
-    }, [rows, filter, saved]);
+    const groups = useMemo(
+        () => buildMessageGroups(rows, filter, saved),
+        [rows, filter, saved],
+    );
 
     const setValue = (locale: Locale, id: string, value: string) =>
-        setDraft((current) => ({
-            ...current,
-            [locale]: {...current[locale], [id]: value},
-        }));
+        setDraft((current) => setMessageValue(current, locale, id, value));
 
     return (
         <form
@@ -115,14 +62,14 @@ export function MessagesForm({messages}: Props) {
                 })
             }
         >
-            <div className="kv-toolbar -mx-4 mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-(--border) px-4 py-3 sm:-mx-6 sm:px-6">
+            <div className="sticky top-14 z-20 -mx-4 mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 bg-white/90 px-4 py-3 backdrop-blur-sm sm:-mx-6 sm:px-6 dark:border-slate-800 dark:bg-slate-900/90">
                 <input
                     type="search"
                     value={filter}
                     onChange={(event) => setFilter(event.target.value)}
                     placeholder="np. footer"
                     aria-label="Filtruj po kluczu lub tekście"
-                    className="kv-input max-w-sm"
+                    className={fieldInputClassName('max-w-sm')}
                 />
                 <div className="flex items-center gap-3">
                     {state.status === 'error' && (
@@ -133,7 +80,7 @@ export function MessagesForm({messages}: Props) {
                     )}
                     {changeCount > 0 && (
                         <Badge tone="warning">
-                            <span className="kv-num">{changeCount}</span>{' '}
+                            <span className="tabular-nums">{changeCount}</span>{' '}
                             niezapisanych
                         </Badge>
                     )}
@@ -149,70 +96,20 @@ export function MessagesForm({messages}: Props) {
             </div>
 
             {groups.length === 0 && (
-                <Card className="kv-table-empty">
+                <Card className="py-10 text-center text-slate-500 dark:text-slate-400">
                     Żaden tekst nie pasuje do filtra.
                 </Card>
             )}
 
             {groups.map(([namespace, items]) => (
-                <Card key={namespace} padding="lg" className="mb-6">
-                    <CardHeader
-                        title={namespaceTitles[namespace] ?? namespace}
-                        description={`${namespace} · ${items.length}`}
-                    />
-                    <div className="kv-micro-label hidden grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,2fr)] gap-3 border-b border-(--border-subtle) pb-2 lg:grid">
-                        <span>Klucz</span>
-                        {locales.map((locale) => (
-                            <span key={locale}>{locale}</span>
-                        ))}
-                    </div>
-                    {items.map((row) => {
-                        const multiline = locales.some(
-                            (locale) =>
-                                (saved[locale][row.id] ?? '').length > LONG_TEXT,
-                        );
-                        return (
-                            <div
-                                key={row.id}
-                                className="grid grid-cols-1 gap-x-3 gap-y-2 border-b border-(--border-subtle) py-3 last:border-b-0 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,2fr)]"
-                            >
-                                <span className="kv-kbd pt-2.5 break-all text-(--ink-body)">
-                                    {row.key}
-                                </span>
-                                {locales.map((locale) => {
-                                    const value = draft[locale][row.id] ?? '';
-                                    const props = {
-                                        value,
-                                        'aria-label': `${row.id} (${locale.toUpperCase()})`,
-                                        placeholder: locale.toUpperCase(),
-                                        className: clsx(
-                                            'kv-input',
-                                            value !==
-                                                (saved[locale][row.id] ?? '') &&
-                                                'kv-input-changed',
-                                        ),
-                                        onChange: (
-                                            event: React.ChangeEvent<
-                                                | HTMLInputElement
-                                                | HTMLTextAreaElement
-                                            >,
-                                        ) =>
-                                            setValue(
-                                                locale,
-                                                row.id,
-                                                event.target.value,
-                                            ),
-                                    };
-                                    return multiline ? (
-                                        <textarea key={locale} rows={3} {...props} />
-                                    ) : (
-                                        <input key={locale} {...props} />
-                                    );
-                                })}
-                            </div>
-                        );
-                    })}
-                </Card>
+                <MessageNamespaceCard
+                    key={namespace}
+                    namespace={namespace}
+                    rows={items}
+                    draft={draft}
+                    saved={saved}
+                    onChange={setValue}
+                />
             ))}
         </form>
     );

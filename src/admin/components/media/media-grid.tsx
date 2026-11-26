@@ -3,8 +3,11 @@
 import React, {ReactNode, useMemo, useState} from 'react';
 
 import Image from 'next/image';
+import {clsx} from 'clsx';
 
 import {Button} from '@/admin/components/button/button';
+import {chipClassName} from '@/admin/components/chip-class-name';
+import {fieldInputClassName} from '@/admin/components/form/field-input-class-name';
 import {usePagination} from '@/admin/components/pagination/use-pagination';
 import {distinctFolders, folderOf} from '@/services/media/media-path';
 import {MediaAsset} from '@/types/media';
@@ -54,7 +57,7 @@ export function MediaGrid({
     return (
         <div>
             <input
-                className="kv-input mb-4"
+                className={fieldInputClassName('mb-4')}
                 placeholder="Szukaj po nazwie pliku…"
                 value={query}
                 onChange={(event) => {
@@ -67,7 +70,7 @@ export function MediaGrid({
                     <button
                         type="button"
                         aria-pressed={folder === null}
-                        className="kv-chip"
+                        className={chipClassName()}
                         onClick={() => {
                             setFolder(null);
                             setPage(0);
@@ -80,7 +83,7 @@ export function MediaGrid({
                             key={name}
                             type="button"
                             aria-pressed={folder === name}
-                            className="kv-chip"
+                            className={chipClassName()}
                             onClick={() => {
                                 setFolder(name);
                                 setPage(0);
@@ -92,13 +95,19 @@ export function MediaGrid({
                 </div>
             )}
             {filtered.length === 0 ? (
-                <p className="kv-table-empty">Nie ma jeszcze żadnych plików.</p>
+                <p className="px-4 py-10 text-center text-slate-500 dark:text-slate-400">
+                    Nie ma jeszcze żadnych plików.
+                </p>
             ) : (
-                <div className="kv-media-grid">
+                <div className="grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-3">
                     {shown.map((asset) => (
                         <div
                             key={asset.key}
-                            className="kv-media-tile"
+                            className={clsx(
+                                'flex flex-col rounded-lg border border-slate-200 bg-white p-2 dark:border-slate-800 dark:bg-slate-900',
+                                mode === 'pick' &&
+                                    'cursor-pointer hover:border-slate-300 hover:bg-slate-50 dark:hover:border-slate-600 dark:hover:bg-slate-800',
+                            )}
                             {...(mode === 'pick'
                                 ? {
                                       role: 'button' as const,
@@ -125,7 +134,7 @@ export function MediaGrid({
                                 unoptimized={asset.key.endsWith('.svg')}
                             />
                             <p
-                                className="kv-caption mt-1 truncate"
+                                className="mt-1 truncate text-xs font-medium text-slate-500 dark:text-slate-400"
                                 title={asset.key}
                             >
                                 {asset.key}
@@ -142,7 +151,7 @@ export function MediaGrid({
                             key={i}
                             variant={i === page ? 'primary' : 'secondary'}
                             size="sm"
-                            className="kv-num"
+                            className="tabular-nums"
                             onClick={() => setPage(i)}
                         >
                             {i + 1}

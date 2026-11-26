@@ -1,8 +1,8 @@
 import React, {ReactNode} from 'react';
 
-import {clsx} from 'clsx';
+import {BadgeTone, badgeClassName, badgeDotClassName} from './badge-model';
 
-export type BadgeTone = 'success' | 'warning' | 'danger' | 'neutral';
+export type {BadgeTone};
 
 type Props = {
     tone?: BadgeTone;
@@ -25,15 +25,8 @@ export function Badge({
     const showDot = dot ?? size === 'md';
 
     return (
-        <span
-            className={clsx(
-                'kv-badge',
-                `kv-badge-${tone}`,
-                size === 'sm' && 'kv-badge-sm',
-                className,
-            )}
-        >
-            {showDot && <span className="kv-badge-dot" aria-hidden />}
+        <span className={badgeClassName(tone, size, className)}>
+            {showDot && <span className={badgeDotClassName(tone)} aria-hidden />}
             {children}
         </span>
     );

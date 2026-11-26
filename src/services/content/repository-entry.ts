@@ -3,10 +3,8 @@ import {and, asc, eq, inArray, sql} from 'drizzle-orm';
 import {db} from '@/services/db/db-client';
 import {entries, entryTranslations} from '@/services/db/schema';
 import {
-    emptyEntryTexts,
     Entry,
     EntryBase,
-    entryExtraFields,
     EntryInput,
     EntryKind,
     EntryListItem,
@@ -15,8 +13,14 @@ import {
 } from '@/types/entry';
 import {Locale, LocaleList} from '@/types/locale';
 
-type EntryRow = typeof entries.$inferSelect;
-type TranslationRow = typeof entryTranslations.$inferSelect;
+import {
+    EntryRow,
+    listCover,
+    toBase,
+    toRow,
+    toTexts,
+    toTranslation,
+} from './entry-row-mapper';
 
 export type EntryListFilter = {
     kind: EntryKind;
@@ -25,87 +29,6 @@ export type EntryListFilter = {
 
 // Fields the admin changes straight from a list.
 export type EntryPatch = Partial<Pick<EntryBase, 'position' | 'published'>>;
-
-// A stored cover may point at a host that is not allowed by `next/image`
-// (e.g. a decommissioned `*.r2.dev` bucket URL from before the R2 migration).
-// `next/image` throws synchronously at render for an unconfigured host, which
-// would crash the whole page. Keep only same-origin paths and URLs on the
-// configured public domain; drop everything else so the UI falls back to the
-// local placeholder instead.
-function normalizeCover(cover: string | null): string | null {
-    if (!cover) {
-        return null;
-    }
-    if (cover.startsWith('/')) {
-        return cover;
-    }
-    const publicUrl = process.env.R2_BUCKET_PUBLIC_URL;
-    try {
-        if (publicUrl && new URL(cover).host === new URL(publicUrl).host) {
-            return cover;
-        }
-    } catch {
-        // Not a valid absolute URL — treat as absent.
-    }
-    return null;
-}
-
-// Bundled apps ship their cover in `public/`, so they need no stored one.
-function listCover(row: EntryRow): string | null {
-    const cover = normalizeCover(row.cover);
-    if (cover || row.kind !== 'project' || row.presentation !== 'app') {
-        return cover;
-    }
-    return `/projects/${row.slug}/image/cover.jpg`;
-}
-
-const toBase = (row: EntryRow): EntryBase => ({
-    ...row,
-    cover: normalizeCover(row.cover),
-});
-
-function toTexts(row?: Omit<TranslationRow, 'content'> & {content?: string}): EntryTexts {
-    const texts = emptyEntryTexts();
-    if (row) {
-        texts.title = row.title;
-        texts.description = row.description;
-        texts.lead = row.lead;
-        texts.content = row.content ?? '';
-        for (const field of entryExtraFields) {
-            texts[field] = row.extra[field] ?? '';
-        }
-    }
-    return texts;
-}
-
-function toTranslation(entryId: number, locale: Locale, texts: EntryTexts) {
-    return {
-        entryId,
-        locale,
-        title: texts.title,
-        description: texts.description,
-        lead: texts.lead,
-        content: texts.content,
-        extra: Object.fromEntries(
-            entryExtraFields
-                .filter((field) => texts[field])
-                .map((field) => [field, texts[field]]),
-        ),
-    };
-}
-
-// Empty optional values are stored as NULL.
-function toRow({texts: _texts, createdAt, ...base}: EntryInput) {
-    return {
-        ...base,
-        cover: base.cover || null,
-        period: base.period || null,
-        siteUrl: base.siteUrl || null,
-        repoUrl: base.repoUrl || null,
-        linkUrl: base.linkUrl || null,
-        ...(createdAt ? {createdAt} : {}),
-    };
-}
 
 // Access to CMS entries. The only place that knows how they are stored —
 // the rest of the app works with the types from `@/types/entry`.

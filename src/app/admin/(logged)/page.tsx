@@ -86,23 +86,25 @@ export default async function PrivatePage() {
                 ))}
             </div>
 
-            <h2 className="kv-section-title mb-4">Przejdź do</h2>
+            <h2 className="mb-4 text-lg/7 font-semibold text-slate-900 dark:text-white">
+                Przejdź do
+            </h2>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {shortcuts.map(({href, icon: Icon, title, description}) => (
                     <Link key={href} href={href} className="group">
-                        <Card className="flex h-full items-start gap-3 transition-colors group-hover:border-(--accent-dot)">
-                            <span className="flex size-9 flex-none items-center justify-center rounded-lg bg-(--accent-soft) text-(--accent-soft-ink)">
+                        <Card className="flex h-full items-start gap-3 transition-colors group-hover:border-blue-500">
+                            <span className="flex size-9 flex-none items-center justify-center rounded-lg bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-300">
                                 <Icon
-                                    className="kv-icon"
+                                    className="size-5 shrink-0"
                                     strokeWidth={1.8}
                                     aria-hidden
                                 />
                             </span>
                             <span className="min-w-0">
-                                <span className="block text-sm font-semibold text-(--ink)">
+                                <span className="block text-sm font-semibold text-slate-900 dark:text-white">
                                     {title}
                                 </span>
-                                <span className="kv-caption mt-0.5 block font-normal">
+                                <span className="mt-0.5 block text-xs font-normal text-slate-500 dark:text-slate-400">
                                     {description}
                                 </span>
                             </span>

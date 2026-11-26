@@ -2,34 +2,16 @@ import React from 'react';
 
 import {NextIntlClientProvider} from 'next-intl';
 
+import {noticeDangerClassName} from '@/admin/components/notice-class-name';
 import {PreviewMdxResult} from '@/admin/actions/preview-mdx-action';
 import {Locale} from '@/types/locale';
+
+import {RenderErrorBoundary} from './render-error-boundary';
 
 type Props = {
     result: PreviewMdxResult;
     locale: Locale;
 };
-
-// A block can still fail while its already-compiled output is rendered; that
-// must not take the whole preview (or picker) down with it.
-class RenderErrorBoundary extends React.Component<PWC, {error?: string}> {
-    state: {error?: string} = {};
-
-    static getDerivedStateFromError(error: unknown) {
-        return {error: error instanceof Error ? error.message : String(error)};
-    }
-
-    render() {
-        if (this.state.error !== undefined) {
-            return (
-                <pre className="kv-notice kv-notice-danger">
-                    Nie udało się wyrenderować podglądu: {this.state.error}
-                </pre>
-            );
-        }
-        return this.props.children;
-    }
-}
 
 // Renders a `previewMdxAction` result: the compile error if there is one,
 // otherwise the compiled node wrapped the way CMS blocks need to render
@@ -39,7 +21,7 @@ class RenderErrorBoundary extends React.Component<PWC, {error?: string}> {
 // its own layout around this, only the result-rendering is common.
 export function PreviewResult({result, locale}: Props) {
     if ('error' in result) {
-        return <pre className="kv-notice kv-notice-danger">{result.error}</pre>;
+        return <pre className={noticeDangerClassName()}>{result.error}</pre>;
     }
 
     return (

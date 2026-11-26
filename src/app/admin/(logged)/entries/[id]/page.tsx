@@ -34,7 +34,7 @@ export default async function PrivatePage({params}: Props) {
                 description={
                     <span className="flex flex-wrap items-center gap-2">
                         <Badge size="sm">{entryKindLabels[entry.kind]}</Badge>
-                        <span className="kv-kbd">{entry.slug}</span>
+                        <span className="font-mono text-xs">{entry.slug}</span>
                     </span>
                 }
             />

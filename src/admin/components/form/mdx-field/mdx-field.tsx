@@ -1,9 +1,9 @@
 import type {editor} from 'monaco-editor';
 
-import React, {useCallback, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 
 import {useField} from 'formik';
-import Editor, {BeforeMount, OnMount} from '@monaco-editor/react';
+import Editor, {OnMount} from '@monaco-editor/react';
 import {Freeze} from 'react-freeze';
 import {Blocks} from 'lucide-react';
 
@@ -11,8 +11,18 @@ import {MdxPreview} from '@/admin/components/form/mdx-field/mdx-preview';
 import {ButtonImageInput} from '@/admin/components/button/button-image-input';
 import {BlockPicker} from '@/admin/components/form/mdx-field/block-picker';
 import {SegmentedControl} from '@/admin/components/segmented-control/segmented-control';
+import {chipClassName} from '@/admin/components/chip-class-name';
+import {stripFieldInputClassName} from '@/admin/components/form/field-input-class-name';
 import {useAdminTheme} from '@/admin/theme/theme-provider';
 import {Locale} from '@/types/locale';
+
+import {
+    blockSnippet,
+    defineMdxEditorThemes,
+    imageMarkdownSnippet,
+    insertTextAtSelection,
+    mdxEditorThemeName,
+} from './mdx-field-model';
 
 type Props = {
     name: string;
@@ -28,57 +38,28 @@ export const MdxField = ({name, locale, className}: Props) => {
     const editorRef = useRef<editor.IStandaloneCodeEditor>(null);
     const {theme} = useAdminTheme();
 
-    // The editor sits on the card: its background is the surface token.
-    const defineThemes = useCallback<BeforeMount>((monaco) => {
-        monaco.editor.defineTheme('kivo-light', {
-            base: 'vs',
-            inherit: true,
-            rules: [],
-            colors: {'editor.background': '#ffffff'},
-        });
-        monaco.editor.defineTheme('kivo-dark', {
-            base: 'vs-dark',
-            inherit: true,
-            rules: [],
-            colors: {'editor.background': '#0f172a'},
-        });
-    }, []);
-
     const onEditorMount = useCallback<OnMount>((editor) => {
         editorRef.current = editor;
     }, []);
 
-    const insertText = useCallback((text: string) => {
-        const editor = editorRef.current;
-        const selection = editor?.getSelection();
-        if (!editor || !selection) {
-            return;
-        }
-        // An edit, unlike simulated typing, is not touched by auto-indent.
-        editor.executeEdits('mdx-field', [
-            {range: selection, text, forceMoveMarkers: true},
-        ]);
-        editor.focus();
-    }, []);
+    const insertText = useCallback(
+        (text: string) => insertTextAtSelection(editorRef.current, text),
+        [],
+    );
 
     const insertImage = useCallback(
-        (url: string) => insertText(`![Opis obrazu](${url})`),
+        (url: string) => insertText(imageMarkdownSnippet(url)),
         [insertText],
     );
 
-    // A block starts on a line of its own, with a blank line around it.
     const insertBlock = useCallback(
-        (snippet: string) => insertText(`\n${snippet}\n`),
+        (snippet: string) => insertText(blockSnippet(snippet)),
         [insertText],
     );
-
-    const cls = useMemo(() => {
-        return (className || '').replace(/kv-input|(h|px)-\d+/g, '');
-    }, [className]);
 
     return (
-        <div className={cls} style={{minHeight: 1200}}>
-            <div className="kv-toolbar mb-3 flex items-center gap-2 border-b border-(--border-subtle) py-2">
+        <div className={stripFieldInputClassName(className)} style={{minHeight: 1200}}>
+            <div className="sticky top-14 z-20 mb-3 flex items-center gap-2 border-b border-slate-100 bg-white/90 py-2 backdrop-blur-sm dark:border-slate-800 dark:bg-slate-900/90">
                 <SegmentedControl
                     label="Tryb edytora"
                     hideLabel
@@ -98,25 +79,21 @@ export const MdxField = ({name, locale, className}: Props) => {
                             type="button"
                             aria-pressed={showBlocks}
                             onClick={() => setShowBlocks((prev) => !prev)}
-                            className="kv-chip ml-auto inline-flex items-center gap-1.5"
+                            className={chipClassName('ml-auto inline-flex items-center gap-1.5')}
                         >
-                            <Blocks
-                                className="kv-icon"
-                                strokeWidth={1.8}
-                                aria-hidden
-                            />
+                            <Blocks className="size-5 shrink-0" strokeWidth={1.8} aria-hidden />
                             Bloczki
                         </button>
                     </>
                 )}
             </div>
             <Freeze freeze={showPreview}>
-                <div className="flex flex-col overflow-hidden rounded-lg border border-(--border-control) lg:h-[1200px] lg:flex-row">
+                <div className="flex flex-col overflow-hidden rounded-lg border border-slate-200 lg:h-300 lg:flex-row dark:border-slate-700">
                     <div className="min-w-0 flex-1">
                         <Editor
                             height="1200px"
                             defaultLanguage="mdx"
-                            theme={theme === 'dark' ? 'kivo-dark' : 'kivo-light'}
+                            theme={mdxEditorThemeName(theme)}
                             value={field.value || ''}
                             options={{
                                 minimap: {
@@ -124,7 +101,7 @@ export const MdxField = ({name, locale, className}: Props) => {
                                 },
                                 wordWrap: 'on',
                             }}
-                            beforeMount={defineThemes}
+                            beforeMount={defineMdxEditorThemes}
                             onMount={onEditorMount}
                             onChange={(value) => helpers.setValue(value ?? '')}
                         />

@@ -2,6 +2,7 @@
 
 import React, {ReactNode, useEffect} from 'react';
 
+import {clsx} from 'clsx';
 import {X} from 'lucide-react';
 
 import {IconButton} from '@/admin/components/button/icon-button';
@@ -36,14 +37,29 @@ export function Modal({open, onClose, title, size = 'md', children}: Props) {
 
     return (
         <>
-            <div className="kv-modal-backdrop" onClick={onClose} />
-            <dialog open className="kv-modal-wrap" aria-label={title}>
-                <div className={`kv-modal ${size === 'lg' ? 'kv-modal-lg' : ''}`}>
-                    <div className="kv-modal-header">
-                        <h2 className="kv-card-title">{title}</h2>
+            <div
+                className="fixed inset-0 z-45 bg-slate-900/50 backdrop-blur-xs"
+                onClick={onClose}
+            />
+            <dialog
+                open
+                className="fixed inset-0 z-50 m-0 flex size-auto max-h-none max-w-none items-center justify-center border-none bg-transparent p-4 text-inherit"
+                aria-label={title}
+            >
+                <div
+                    className={clsx(
+                        'flex max-h-[calc(100vh-2rem)] w-full flex-col overflow-hidden',
+                        'rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900',
+                        size === 'lg' ? 'max-w-210' : 'max-w-130',
+                    )}
+                >
+                    <div className="flex items-center justify-between gap-3 border-b border-slate-200 px-5 py-4 dark:border-slate-800">
+                        <h2 className="text-base/6 font-semibold text-slate-900 dark:text-white">
+                            {title}
+                        </h2>
                         <IconButton icon={X} label="Zamknij" onClick={onClose} />
                     </div>
-                    <div className="kv-modal-body">{children}</div>
+                    <div className="overflow-y-auto p-5">{children}</div>
                 </div>
             </dialog>
         </>

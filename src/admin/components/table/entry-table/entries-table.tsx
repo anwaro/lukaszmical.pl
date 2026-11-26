@@ -10,48 +10,28 @@ import {BaseTable} from '@/admin/components/table/base-table';
 import {EditVisibility} from '@/admin/components/table/entry-table/edit-visibility';
 import {Badge} from '@/admin/components/badge/badge';
 import {IconButton} from '@/admin/components/button/icon-button';
-import {EntryBase, EntryPresentation, HOMEPAGE_SLUG} from '@/types/entry';
+import {EntryBase} from '@/types/entry';
 
 import {EditPosition} from './edit-position';
+import {
+    entryDateFormat,
+    entrySiteHref,
+    presentationLabels,
+    updateEntryInList,
+} from './entries-table-model';
 
 type Props = {
     entries: EntryBase[];
 };
-
-const presentationLabels: Record<EntryPresentation, string> = {
-    article: 'Artykuł',
-    app: 'Aplikacja',
-    link: 'Link',
-};
-
-const dateFormat = new Intl.DateTimeFormat('pl-PL', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-});
-
-function siteHref(item: EntryBase): string {
-    switch (item.kind) {
-        case 'page':
-            return item.slug === HOMEPAGE_SLUG ? '/' : `/${item.slug}`;
-        case 'case_study':
-            return `/case-studies/${item.slug}`;
-        default:
-            return item.presentation === 'app'
-                ? `/api/projects/show?slug=${item.slug}`
-                : `/projects/${item.slug}`;
-    }
-}
 
 export const EntriesTable = ({entries}: Props) => {
     const [data, setData] = useState(entries);
     const showPresentation = entries.some((entry) => entry.kind === 'project');
 
     const update = useCallback(
-        (id: number, patch: Partial<EntryBase>) => {
-            setData(data.map((p) => (p.id === id ? {...p, ...patch} : p)));
-        },
-        [data],
+        (id: number, patch: Partial<EntryBase>) =>
+            setData((prev) => updateEntryInList(prev, id, patch)),
+        [],
     );
 
     return (
@@ -84,10 +64,10 @@ export const EntriesTable = ({entries}: Props) => {
                             alt=""
                             height={36}
                             width={64}
-                            className="h-9 w-16 rounded-md border border-(--border) object-cover"
+                            className="h-9 w-16 rounded-md border border-slate-200 object-cover dark:border-slate-800"
                         />
                     ) : (
-                        <span className="block h-9 w-16 rounded-md bg-(--surface-sunken)" />
+                        <span className="block h-9 w-16 rounded-md bg-slate-100 dark:bg-slate-800" />
                     ),
                 slug: (item) => (
                     <Link
@@ -107,8 +87,8 @@ export const EntriesTable = ({entries}: Props) => {
                         <Badge>Szkic</Badge>
                     ),
                 createdAt: (item) => (
-                    <span className="kv-num whitespace-nowrap">
-                        {dateFormat.format(new Date(item.createdAt))}
+                    <span className="whitespace-nowrap tabular-nums">
+                        {entryDateFormat.format(new Date(item.createdAt))}
                     </span>
                 ),
                 position: (item) => <EditPosition entry={item} onUpdate={update} />,
@@ -117,7 +97,7 @@ export const EntriesTable = ({entries}: Props) => {
                         <IconButton
                             icon={ExternalLink}
                             label="Otwórz na stronie"
-                            href={siteHref(item)}
+                            href={entrySiteHref(item)}
                             target="_blank"
                         />
                         <IconButton

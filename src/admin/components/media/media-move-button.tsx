@@ -7,8 +7,11 @@ import {FolderInput} from 'lucide-react';
 import {moveMediaAction, MoveMediaResult} from '@/admin/actions/move-media-action';
 import {Button} from '@/admin/components/button/button';
 import {IconButton} from '@/admin/components/button/icon-button';
+import {chipClassName} from '@/admin/components/chip-class-name';
+import {fieldInputClassName} from '@/admin/components/form/field-input-class-name';
 import {MediaUsageList} from '@/admin/components/media/media-usage-list';
 import {Modal} from '@/admin/components/modal/modal';
+import {noticeDangerClassName} from '@/admin/components/notice-class-name';
 import {useMediaLibrary} from '@/admin/media/media-library-provider';
 import {folderOf, sanitizeFolder} from '@/services/media/media-path';
 import {MediaAsset} from '@/types/media';
@@ -80,7 +83,7 @@ export function MediaMoveButton({asset, folders}: Props) {
                         value={asset.contentType ?? ''}
                     />
                     <input
-                        className="kv-input mb-3"
+                        className={fieldInputClassName('mb-3')}
                         name="folder"
                         list={`media-folders-${asset.key}`}
                         placeholder="Katalog główny"
@@ -99,7 +102,7 @@ export function MediaMoveButton({asset, folders}: Props) {
                                     key={name}
                                     type="button"
                                     aria-pressed={folder === name}
-                                    className="kv-chip"
+                                    className={chipClassName()}
                                     onClick={() => setFolder(name)}
                                 >
                                     {name}
@@ -108,15 +111,13 @@ export function MediaMoveButton({asset, folders}: Props) {
                         </div>
                     )}
                     {state.status === 'blocked' && (
-                        <p className="kv-notice kv-notice-danger mb-3">
+                        <p className={noticeDangerClassName('mb-3')}>
                             Ten plik jest używany, nie można go przenieść:{' '}
                             <MediaUsageList usages={state.usages} />
                         </p>
                     )}
                     {state.status === 'error' && (
-                        <p className="kv-notice kv-notice-danger mb-3">
-                            {state.error}
-                        </p>
+                        <p className={noticeDangerClassName('mb-3')}>{state.error}</p>
                     )}
                     <div className="flex justify-end gap-2">
                         <Button
