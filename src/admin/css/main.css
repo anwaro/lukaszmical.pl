@@ -4,5 +4,19 @@
 
 @reference '../../app/globals.css';
 
-@import './kivo-tokens.css';
-@import './kivo-components.css';
+/* `dark:` here means: explicit `data-theme="dark"` on the admin root, or no
+   explicit choice while the system prefers dark (and no explicit "light"). */
+@custom-variant dark {
+    &:is(.admin-root[data-theme='dark'], .admin-root[data-theme='dark'] *) {
+        @slot;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        &:is(
+            .admin-root:not([data-theme='light']),
+            .admin-root:not([data-theme='light']) *
+        ) {
+            @slot;
+        }
+    }
+}

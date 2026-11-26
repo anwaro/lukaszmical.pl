@@ -7,6 +7,7 @@ import {Check, X} from 'lucide-react';
 import {EntryBase} from '@/types/entry';
 import {IconButton} from '@/admin/components/button/icon-button';
 import {patchEntryAction} from '@/admin/actions/patch-entry-action';
+import {fieldInputClassName} from '@/admin/components/form/field-input-class-name';
 
 type Props = {
     entry: EntryBase;
@@ -42,7 +43,7 @@ export const EditPosition = ({entry, onUpdate}: Props) => {
             {isEditing ? (
                 <>
                     <input
-                        className="kv-input kv-num w-20 py-1.5 text-right"
+                        className={fieldInputClassName('w-20 py-1.5 text-right tabular-nums')}
                         onChange={(e) => setValue(parseInt(e.target.value))}
                         aria-label="Pozycja"
                         type={'number'}
@@ -67,7 +68,7 @@ export const EditPosition = ({entry, onUpdate}: Props) => {
                 <button
                     type="button"
                     title="Zmień pozycję"
-                    className="kv-num cursor-pointer rounded-lg px-2 py-1 hover:bg-(--surface-sunken)"
+                    className="cursor-pointer rounded-lg px-2 py-1 tabular-nums hover:bg-slate-100 dark:hover:bg-slate-800"
                     onClick={() => setIsEditing(true)}
                 >
                     {entry.position}

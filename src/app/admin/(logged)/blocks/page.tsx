@@ -8,7 +8,10 @@ import {
     previewMdxAction,
     PreviewMdxResult,
 } from '@/admin/actions/preview-mdx-action';
-import {Card, CardHeader} from '@/admin/components/card/card';
+import {Card} from '@/admin/components/card/card';
+import {CardHeader} from '@/admin/components/card/card-header';
+import {chipClassName} from '@/admin/components/chip-class-name';
+import {noticeDangerClassName} from '@/admin/components/notice-class-name';
 import {PageHeader} from '@/admin/components/section/page-header';
 import SectionMain from '@/admin/components/section/section-main';
 import {Locale, LocaleList} from '@/types/locale';
@@ -59,7 +62,7 @@ export default async function BlocksPage({searchParams}: Props) {
                             key={item}
                             href={`/admin/blocks?locale=${item}`}
                             aria-pressed={item === locale}
-                            className="kv-chip"
+                            className={chipClassName()}
                         >
                             {item.toUpperCase()}
                         </Link>
@@ -82,25 +85,25 @@ export default async function BlocksPage({searchParams}: Props) {
                                 {section.blocks.map((block) => (
                                     <div
                                         key={block.name}
-                                        className="overflow-hidden rounded-lg border border-(--border-control)"
+                                        className="overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700"
                                     >
-                                        <div className="border-b border-(--border-subtle) px-4 py-3">
-                                            <span className="kv-kbd font-medium text-(--accent-ink)">
+                                        <div className="border-b border-slate-100 px-4 py-3 dark:border-slate-800">
+                                            <span className="font-mono text-xs font-medium text-blue-600 dark:text-blue-400">
                                                 {`<${block.name}>`}
                                             </span>
                                             {block.parts && (
-                                                <span className="kv-kbd ml-2 text-(--ink-faint)">
+                                                <span className="ml-2 font-mono text-xs text-slate-400">
                                                     {block.parts
                                                         .map((part) => `<${part}>`)
                                                         .join(' ')}
                                                 </span>
                                             )}
-                                            <p className="kv-caption mt-1">
+                                            <p className="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">
                                                 {block.description}
                                             </p>
                                         </div>
                                         <div className="grid lg:grid-cols-2">
-                                            <pre className="kv-code m-0 rounded-none">
+                                            <pre className="m-0 overflow-x-auto rounded-none bg-slate-900 p-3 font-mono text-xs/[18px] whitespace-pre-wrap text-slate-300 dark:bg-black">
                                                 {block.snippet}
                                             </pre>
                                             <div
@@ -110,7 +113,7 @@ export default async function BlocksPage({searchParams}: Props) {
                                                 )}
                                             >
                                                 {'error' in block.result ? (
-                                                    <pre className="kv-notice kv-notice-danger">
+                                                    <pre className={noticeDangerClassName()}>
                                                         {block.result.error}
                                                     </pre>
                                                 ) : (

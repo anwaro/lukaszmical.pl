@@ -59,7 +59,15 @@ export function ThemeProvider({initialTheme, className, children}: Props) {
 
     return (
         <ThemeContext.Provider value={{theme, toggle}}>
-            <div className={clsx('kv-admin', className)} data-theme={chosen}>
+            <div
+                className={clsx(
+                    'admin-root min-h-screen bg-slate-50 text-sm/5 text-slate-900',
+                    'antialiased dark:bg-slate-950 dark:text-white',
+                    'font-(family-name:--font-geist)',
+                    className,
+                )}
+                data-theme={chosen}
+            >
                 {children}
             </div>
         </ThemeContext.Provider>

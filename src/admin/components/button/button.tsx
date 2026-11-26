@@ -4,7 +4,9 @@ import Link from 'next/link';
 import {clsx} from 'clsx';
 import {LoaderCircle, LucideIcon} from 'lucide-react';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'danger';
+import {ButtonVariant, buttonClassName} from './button-model';
+
+export type {ButtonVariant};
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
     // primary: the one main action of a view; secondary: cancel and the rest;
@@ -31,18 +33,13 @@ export function Button({
     type = 'button',
     ...props
 }: ButtonProps) {
-    const classes = clsx(
-        'kv-btn',
-        `kv-btn-${variant}`,
-        size === 'sm' && 'kv-btn-sm',
-        className,
-    );
+    const classes = buttonClassName(variant, size, className);
     const Icon = loading ? LoaderCircle : IconComponent;
     const content = (
         <>
             {Icon && (
                 <Icon
-                    className={clsx('kv-icon', loading && 'kv-spin')}
+                    className={clsx('size-4 shrink-0', loading && 'animate-spin')}
                     strokeWidth={1.8}
                     aria-hidden
                 />

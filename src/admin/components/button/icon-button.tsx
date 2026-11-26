@@ -4,12 +4,14 @@ import Link from 'next/link';
 import {clsx} from 'clsx';
 import {LoaderCircle, LucideIcon} from 'lucide-react';
 
+import {IconButtonTone, iconButtonClassName} from './icon-button-model';
+
 type Props = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'> & {
     icon: LucideIcon;
     // Required: the accessible name (aria-label and title) of the icon.
     label: string;
     // danger: the hover turns rose — for removing actions.
-    tone?: 'default' | 'danger';
+    tone?: IconButtonTone;
     loading?: boolean;
     href?: string;
     target?: string;
@@ -28,14 +30,10 @@ export function IconButton({
     ...props
 }: Props) {
     const Icon = loading ? LoaderCircle : icon;
-    const classes = clsx(
-        'kv-icon-btn',
-        tone === 'danger' && 'kv-icon-btn-danger',
-        className,
-    );
+    const classes = iconButtonClassName(tone, className);
     const content = (
         <Icon
-            className={clsx('kv-icon', loading && 'kv-spin')}
+            className={clsx('size-5 shrink-0', loading && 'animate-spin')}
             strokeWidth={1.8}
             aria-hidden
         />

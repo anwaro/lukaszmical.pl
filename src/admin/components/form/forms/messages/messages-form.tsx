@@ -2,7 +2,6 @@
 
 import React, {useMemo, useState, useTransition} from 'react';
 
-import {clsx} from 'clsx';
 import {Save} from 'lucide-react';
 
 import {
@@ -12,7 +11,9 @@ import {
 } from '@/admin/actions/save-content-action';
 import {Button} from '@/admin/components/button/button';
 import {Badge} from '@/admin/components/badge/badge';
-import {Card, CardHeader} from '@/admin/components/card/card';
+import {Card} from '@/admin/components/card/card';
+import {CardHeader} from '@/admin/components/card/card-header';
+import {fieldInputClassName} from '@/admin/components/form/field-input-class-name';
 import {Locale} from '@/types/locale';
 
 type Props = {
@@ -115,14 +116,14 @@ export function MessagesForm({messages}: Props) {
                 })
             }
         >
-            <div className="kv-toolbar -mx-4 mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-(--border) px-4 py-3 sm:-mx-6 sm:px-6">
+            <div className="sticky top-14 z-20 -mx-4 mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 bg-white/90 px-4 py-3 backdrop-blur-sm sm:-mx-6 sm:px-6 dark:border-slate-800 dark:bg-slate-900/90">
                 <input
                     type="search"
                     value={filter}
                     onChange={(event) => setFilter(event.target.value)}
                     placeholder="np. footer"
                     aria-label="Filtruj po kluczu lub tekście"
-                    className="kv-input max-w-sm"
+                    className={fieldInputClassName('max-w-sm')}
                 />
                 <div className="flex items-center gap-3">
                     {state.status === 'error' && (
@@ -133,7 +134,7 @@ export function MessagesForm({messages}: Props) {
                     )}
                     {changeCount > 0 && (
                         <Badge tone="warning">
-                            <span className="kv-num">{changeCount}</span>{' '}
+                            <span className="tabular-nums">{changeCount}</span>{' '}
                             niezapisanych
                         </Badge>
                     )}
@@ -149,7 +150,7 @@ export function MessagesForm({messages}: Props) {
             </div>
 
             {groups.length === 0 && (
-                <Card className="kv-table-empty">
+                <Card className="py-10 text-center text-slate-500 dark:text-slate-400">
                     Żaden tekst nie pasuje do filtra.
                 </Card>
             )}
@@ -160,7 +161,7 @@ export function MessagesForm({messages}: Props) {
                         title={namespaceTitles[namespace] ?? namespace}
                         description={`${namespace} · ${items.length}`}
                     />
-                    <div className="kv-micro-label hidden grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,2fr)] gap-3 border-b border-(--border-subtle) pb-2 lg:grid">
+                    <div className="hidden grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,2fr)] gap-3 border-b border-slate-100 pb-2 text-[11px]/4 font-medium tracking-wide text-slate-400 uppercase lg:grid dark:border-slate-800">
                         <span>Klucz</span>
                         {locales.map((locale) => (
                             <span key={locale}>{locale}</span>
@@ -174,9 +175,9 @@ export function MessagesForm({messages}: Props) {
                         return (
                             <div
                                 key={row.id}
-                                className="grid grid-cols-1 gap-x-3 gap-y-2 border-b border-(--border-subtle) py-3 last:border-b-0 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,2fr)]"
+                                className="grid grid-cols-1 gap-x-3 gap-y-2 border-b border-slate-100 py-3 last:border-b-0 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,2fr)] dark:border-slate-800"
                             >
-                                <span className="kv-kbd pt-2.5 break-all text-(--ink-body)">
+                                <span className="pt-2.5 font-mono text-xs break-all text-slate-700 dark:text-slate-300">
                                     {row.key}
                                 </span>
                                 {locales.map((locale) => {
@@ -185,11 +186,10 @@ export function MessagesForm({messages}: Props) {
                                         value,
                                         'aria-label': `${row.id} (${locale.toUpperCase()})`,
                                         placeholder: locale.toUpperCase(),
-                                        className: clsx(
-                                            'kv-input',
+                                        className: fieldInputClassName(
                                             value !==
                                                 (saved[locale][row.id] ?? '') &&
-                                                'kv-input-changed',
+                                                'border-amber-500',
                                         ),
                                         onChange: (
                                             event: React.ChangeEvent<

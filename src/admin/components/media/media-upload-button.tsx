@@ -6,6 +6,7 @@ import {Upload} from 'lucide-react';
 
 import {uploadMediaAction} from '@/admin/actions/upload-media-action';
 import {Button} from '@/admin/components/button/button';
+import {noticeDangerClassName} from '@/admin/components/notice-class-name';
 import {useMediaLibrary} from '@/admin/media/media-library-provider';
 import {MediaAsset} from '@/types/media';
 
@@ -57,7 +58,7 @@ export function MediaUploadButton({onUploaded, className}: Props) {
                 />
             </div>
             {state.status === 'error' && (
-                <p className="kv-notice kv-notice-danger mt-2">{state.error}</p>
+                <p className={noticeDangerClassName('mt-2')}>{state.error}</p>
             )}
         </div>
     );

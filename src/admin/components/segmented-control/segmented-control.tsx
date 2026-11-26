@@ -30,12 +30,18 @@ export function SegmentedControl<Value extends string>({
     const name = useId();
 
     return (
-        <fieldset className={clsx('kv-field m-0 min-w-0 border-0 p-0', className)}>
-            <legend className={hideLabel ? 'sr-only' : 'kv-field-label'}>
+        <fieldset className={clsx('m-0 min-w-0 border-0 p-0', className)}>
+            <legend
+                className={
+                    hideLabel
+                        ? 'sr-only'
+                        : 'mb-1.5 block text-xs font-medium text-slate-500 dark:text-slate-400'
+                }
+            >
                 {label}
             </legend>
             <div
-                className={clsx('kv-seg', size === 'sm' && 'kv-seg-sm')}
+                className={clsx('grid gap-2', size === 'sm' && 'text-xs/4')}
                 style={{
                     gridTemplateColumns: `repeat(${options.length}, minmax(0, 1fr))`,
                 }}
@@ -43,7 +49,17 @@ export function SegmentedControl<Value extends string>({
                 {options.map((option) => (
                     <label
                         key={option.value}
-                        className="kv-seg-opt"
+                        className={clsx(
+                            'cursor-pointer rounded-lg border border-slate-200 bg-transparent',
+                            'text-center text-sm font-medium text-slate-500 transition-colors',
+                            'hover:bg-slate-50 has-checked:border-blue-500',
+                            'has-checked:bg-blue-50 has-[:checked]:text-blue-700',
+                            'has-focus-visible:outline-2 has-[:focus-visible]:outline-blue-500',
+                            'has-focus-visible:outline-offset-2 dark:border-slate-700',
+                            'dark:text-slate-400 dark:hover:bg-slate-800',
+                            'dark:has-checked:bg-blue-500/10 dark:has-[:checked]:text-blue-300',
+                            size === 'sm' ? 'px-3 py-1.5' : 'px-3 py-2',
+                        )}
                         title={option.title}
                     >
                         <input

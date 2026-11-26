@@ -11,6 +11,7 @@ import {MediaGrid} from '@/admin/components/media/media-grid';
 import {MediaMoveButton} from '@/admin/components/media/media-move-button';
 import {MediaUploadButton} from '@/admin/components/media/media-upload-button';
 import {MediaUsageList} from '@/admin/components/media/media-usage-list';
+import {noticeDangerClassName} from '@/admin/components/notice-class-name';
 import {useMediaLibrary} from '@/admin/media/media-library-provider';
 import {distinctFolders} from '@/services/media/media-path';
 
@@ -42,7 +43,7 @@ export function MediaLibraryView() {
         <div>
             <MediaUploadButton className="mb-4" />
             {notice && (
-                <p className="kv-notice kv-notice-danger mb-4">{notice.message}</p>
+                <p className={noticeDangerClassName('mb-4')}>{notice.message}</p>
             )}
             <MediaGrid
                 assets={assets}

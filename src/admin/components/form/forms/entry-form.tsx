@@ -18,6 +18,7 @@ import {CheckboxFieldGroup} from '@/admin/components/form/checkbox-field/checkbo
 import {CheckboxField} from '@/admin/components/form/checkbox-field/checkbox-field';
 import {SegmentedControl} from '@/admin/components/segmented-control/segmented-control';
 import {Badge} from '@/admin/components/badge/badge';
+import {noticeDangerClassName} from '@/admin/components/notice-class-name';
 
 const MdxField = dynamic(
     () =>
@@ -309,7 +310,7 @@ export function EntryForm({initialState, onSubmit, isPending, error, saved}: Pro
             <Form>
                 <Card padding="lg">
                     <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-                        <p className="kv-caption">
+                        <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
                             Pola z oznaczeniem języka edytujesz osobno dla każdej
                             wersji.
                         </p>
@@ -338,9 +339,7 @@ export function EntryForm({initialState, onSubmit, isPending, error, saved}: Pro
 
                     <Divider />
 
-                    {error && (
-                        <p className="kv-notice kv-notice-danger mb-4">{error}</p>
-                    )}
+                    {error && <p className={noticeDangerClassName('mb-4')}>{error}</p>}
 
                     <div className="flex items-center justify-end gap-3">
                         {saved && !error && !isPending && (

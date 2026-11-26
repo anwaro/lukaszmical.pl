@@ -2,32 +2,28 @@
 
 import React, {ReactNode} from 'react';
 
-import {clsx} from 'clsx';
-
 import {usePagination} from '@/admin/components/pagination/use-pagination';
 
 import {Button} from '../button/button';
-
-type Column = {
-    label: ReactNode;
-    // Tabular numbers, right aligned.
-    numeric?: boolean;
-    // The main column of a row: ink, medium weight.
-    strong?: boolean;
-    align?: 'start' | 'end';
-};
+import {
+    BaseTableColumn,
+    baseTableCellClassName,
+    baseTableCellValue,
+    baseTableColumnEntries,
+    baseTablePageNumbers,
+} from './base-table-model';
 
 type Props<Item, Key extends string> = {
     data: Item[];
     itemId: (item: Item) => string;
     // A column set to undefined is left out.
-    columns: Partial<Record<Key, Column>>;
+    columns: Partial<Record<Key, BaseTableColumn>>;
     renderData: Partial<Record<Key, (object: Item) => ReactNode>>;
     limit?: number;
     empty?: ReactNode;
 };
 
-// A table for a flush card: micro-label header, rows split by border-subtle,
+// A table for a flush card: micro-label header, rows split by a thin border,
 // scrolls sideways on narrow screens.
 export function BaseTable<Item extends object, Key extends string>({
     data,
@@ -39,41 +35,28 @@ export function BaseTable<Item extends object, Key extends string>({
 }: Props<Item, Key>) {
     const {page: currentPage, setPage: setCurrentPage, pageCount, pageItems: showedItem} =
         usePagination(data, limit);
-    const pages = new Array(pageCount).fill(0).map((_, i) => i);
-
-    const entries = (Object.entries(columns) as [Key, Column | undefined][]).filter(
-        (entry): entry is [Key, Column] => Boolean(entry[1]),
-    );
-
-    function renderItem(key: Key, item: Item) {
-        const render = renderData[key];
-        if (render) {
-            return render(item);
-        }
-        const objKey = key as unknown as keyof Item;
-
-        return objKey in item ? `${item[objKey]}` : '';
-    }
-
-    const cellClass = (column: Column) =>
-        clsx(
-            column.numeric && 'kv-num',
-            column.strong && 'kv-table-strong',
-            (column.align === 'end' || column.numeric) && 'text-right',
-        );
+    const pages = baseTablePageNumbers(pageCount);
+    const entries = baseTableColumnEntries(columns);
 
     if (data.length === 0) {
-        return <p className="kv-table-empty">{empty}</p>;
+        return (
+            <p className="px-4 py-10 text-center text-slate-500 dark:text-slate-400">
+                {empty}
+            </p>
+        );
     }
 
     return (
         <>
-            <div className="kv-table-wrap">
-                <table className="kv-table">
+            <div className="overflow-x-auto">
+                <table className="w-full border-collapse text-left text-sm">
                     <thead>
                         <tr>
                             {entries.map(([key, column]) => (
-                                <th key={key} className={cellClass(column)}>
+                                <th
+                                    key={key}
+                                    className={`bg-slate-50 px-4 py-2.5 text-xs font-medium tracking-wide whitespace-nowrap text-slate-400 uppercase dark:bg-slate-800/50 ${baseTableCellClassName(column)}`}
+                                >
                                     {column.label}
                                 </th>
                             ))}
@@ -85,9 +68,9 @@ export function BaseTable<Item extends object, Key extends string>({
                                 {entries.map(([key, column]) => (
                                     <td
                                         key={`${itemId(item)}-${key}`}
-                                        className={cellClass(column)}
+                                        className={`border-t border-slate-100 px-4 py-3 align-middle text-slate-500 dark:border-slate-800 dark:text-slate-400 ${baseTableCellClassName(column)}`}
                                     >
-                                        {renderItem(key, item)}
+                                        {baseTableCellValue(key, item, renderData)}
                                     </td>
                                 ))}
                             </tr>
@@ -96,7 +79,7 @@ export function BaseTable<Item extends object, Key extends string>({
                 </table>
             </div>
             {pages.length > 1 && (
-                <div className="flex flex-wrap items-center justify-between gap-3 border-t border-(--border-subtle) px-4 py-3">
+                <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 px-4 py-3 dark:border-slate-800">
                     <div className="flex flex-wrap gap-1">
                         {pages.map((page) => (
                             <Button
@@ -105,7 +88,7 @@ export function BaseTable<Item extends object, Key extends string>({
                                     page === currentPage ? 'primary' : 'secondary'
                                 }
                                 size="sm"
-                                className="kv-num"
+                                className="tabular-nums"
                                 aria-current={
                                     page === currentPage ? 'page' : undefined
                                 }
@@ -115,7 +98,7 @@ export function BaseTable<Item extends object, Key extends string>({
                             </Button>
                         ))}
                     </div>
-                    <span className="kv-caption kv-num">
+                    <span className="text-xs font-medium text-slate-500 tabular-nums dark:text-slate-400">
                         Strona {currentPage + 1} z {pages.length}
                     </span>
                 </div>
