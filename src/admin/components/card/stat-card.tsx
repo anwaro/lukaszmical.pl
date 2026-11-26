@@ -18,7 +18,7 @@ export function StatCard({label, value, meta, className}: Props) {
             <p className="text-xs font-medium tracking-wide text-slate-400 uppercase">
                 {label}
             </p>
-            <p className="mt-1 text-lg font-semibold tabular-nums text-slate-900 dark:text-white truncate">
+            <p className="mt-1 truncate text-lg font-semibold text-slate-900 tabular-nums dark:text-white">
                 {value}
             </p>
             {meta && (

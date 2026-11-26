@@ -43,7 +43,7 @@ export function Modal({open, onClose, title, size = 'md', children}: Props) {
             />
             <dialog
                 open
-                className="fixed inset-0 z-50 m-0 flex max-h-none max-w-none items-center justify-center border-none bg-transparent p-4 text-inherit size-auto"
+                className="fixed inset-0 z-50 m-0 flex size-auto max-h-none max-w-none items-center justify-center border-none bg-transparent p-4 text-inherit"
                 aria-label={title}
             >
                 <div

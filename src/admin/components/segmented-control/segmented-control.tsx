@@ -53,11 +53,11 @@ export function SegmentedControl<Value extends string>({
                             'cursor-pointer rounded-lg border border-slate-200 bg-transparent',
                             'text-center text-sm font-medium text-slate-500 transition-colors',
                             'hover:bg-slate-50 has-checked:border-blue-500',
-                            'has-checked:bg-blue-50 has-[:checked]:text-blue-700',
-                            'has-focus-visible:outline-2 has-[:focus-visible]:outline-blue-500',
+                            'has-checked:bg-blue-50 has-checked:text-blue-700',
+                            'has-focus-visible:outline-2 has-focus-visible:outline-blue-500',
                             'has-focus-visible:outline-offset-2 dark:border-slate-700',
                             'dark:text-slate-400 dark:hover:bg-slate-800',
-                            'dark:has-checked:bg-blue-500/10 dark:has-[:checked]:text-blue-300',
+                            'dark:has-checked:bg-blue-500/10 dark:has-checked:text-blue-300',
                             size === 'sm' ? 'px-3 py-1.5' : 'px-3 py-2',
                         )}
                         title={option.title}
