@@ -73,13 +73,39 @@ a pipeline of small, single-responsibility **resolvers**.
 - **Always add/adjust a `*.spec.ts`** for resolver changes — this module is test-driven
   and each rule is verified in isolation.
 
+## Components and pages
+
+- **One React component per file.** A file that renders more than one component
+  (even a small helper one) gets split; the sub-component's own file sits next to it.
+- **No logic in a component** — only JSX and the hook calls that wire it to React
+  (`useState`, the event handlers that call a model function, effects). Helper
+  functions, derived values, data transforms and `clsx` class composition move to a
+  co-located `<name>-model.ts` (plain exported functions, not a class, unless the
+  module already uses classes as in the resolvers below).
+- **Every `page.tsx` has its own page service** — a co-located `<name>-page-service.ts`
+  exporting a `<Name>PageService` class that does the data fetching, `notFound()`/
+  `redirect()` branching and shaping; the page itself just calls it and renders. Several
+  near-identical list pages may share one service (e.g. `EntryListPageService` for the
+  admin's pages/projects/case-studies lists) rather than duplicating it three times.
+  Skip the service only when a page is genuinely just composing other components with
+  no data or branching of its own (e.g. the monogram/number-sums resolver's `page.tsx`,
+  which only wires up a dynamic import).
+- Soft goal, not a hard limit: keep files under ~200 lines. A cohesive single-purpose
+  class or a plain data catalogue (e.g. `block-library.ts`) that runs a little over is
+  fine — don't fragment it just to hit the number.
+
 ## Admin panel
 
-- Styled with the **Kivo** design system (shared by all my CMSes): semantic tokens in
-  `src/admin/css/kivo-tokens.css` (light/dark), component classes `kv-*` in
-  `kivo-components.css`, Geist font, `lucide-react` icons (stroke 1.8). Colours come
-  from tokens only — in markup use `kv-*` classes or `bg-(--surface)`-style utilities,
-  never raw Tailwind palette colours.
+- Styled with **Tailwind utility classes directly in markup** — no component CSS
+  classes. Colours are the plain Tailwind palette (slate for neutrals, blue for the
+  accent, emerald/amber/rose for success/warning/danger); dark mode uses the `dark:`
+  variant, redefined in `src/admin/css/main.css` as a `@custom-variant` so it follows
+  either an explicit `data-theme` on the admin root or, absent a choice, the system
+  preference. Geist font, `lucide-react` icons (stroke 1.8).
+- A repeated utility string (a button, a field, a chip, a notice, ...) is a `clsx`
+  function in a co-located `*-class-name.ts`/`*-model.ts` (e.g. `button-model.ts`'s
+  `buttonClassName`, `field-input-class-name.ts`'s `fieldInputClassName`) — compose
+  that instead of re-deriving the Tailwind classes at each call site.
 - Theme: system preference, overridden by the header toggle (`admin-theme` cookie,
   `ThemeProvider` in `src/admin/theme/`).
 - Interface copy is Polish: verbs in the infinitive, sentence case, no full stop
