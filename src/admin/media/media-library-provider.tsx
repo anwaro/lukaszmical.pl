@@ -8,12 +8,15 @@ type MediaLibraryContextValue = {
     assets: MediaAsset[];
     addAsset: (asset: MediaAsset) => void;
     removeAsset: (key: string) => void;
+    // A move changes the asset's key (and url) — swaps the entry in place.
+    replaceAsset: (previousKey: string, asset: MediaAsset) => void;
 };
 
 const MediaLibraryContext = createContext<MediaLibraryContextValue>({
     assets: [],
     addAsset: () => undefined,
     removeAsset: () => undefined,
+    replaceAsset: () => undefined,
 });
 
 type Props = PWC<{initialAssets: MediaAsset[]}>;
@@ -50,12 +53,24 @@ export function MediaLibraryProvider({initialAssets, children}: Props) {
         [],
     );
     const removeAsset = useCallback(
-        (key: string) => setAssets((current) => current.filter((asset) => asset.key !== key)),
+        (key: string) =>
+            setAssets((current) => current.filter((asset) => asset.key !== key)),
+        [],
+    );
+    const replaceAsset = useCallback(
+        (previousKey: string, asset: MediaAsset) =>
+            setAssets((current) =>
+                current.map((existing) =>
+                    existing.key === previousKey ? asset : existing,
+                ),
+            ),
         [],
     );
 
     return (
-        <MediaLibraryContext.Provider value={{assets, addAsset, removeAsset}}>
+        <MediaLibraryContext.Provider
+            value={{assets, addAsset, removeAsset, replaceAsset}}
+        >
             {children}
         </MediaLibraryContext.Provider>
     );
