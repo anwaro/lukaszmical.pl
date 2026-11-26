@@ -8,11 +8,13 @@ import {PageHeader} from '@/admin/components/section/page-header';
 import {Card} from '@/admin/components/card/card';
 import {EntriesTable} from '@/admin/components/table/entry-table/entries-table';
 import {Button} from '@/admin/components/button/button';
-import {EntryRepository} from '@/services/content/repository-entry';
+import {EntryListPageService} from '@/admin/pages/entry-list-page-service';
+
+const service = new EntryListPageService();
 
 export default async function PrivatePage() {
     await auth();
-    const entries = await new EntryRepository().listAll('case_study');
+    const entries = await service.getEntries('case_study');
 
     return (
         <SectionMain>

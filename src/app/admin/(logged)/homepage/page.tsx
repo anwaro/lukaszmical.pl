@@ -8,14 +8,15 @@ import {PageHeader} from '@/admin/components/section/page-header';
 import {Button} from '@/admin/components/button/button';
 import {CreateEntryForm} from '@/admin/components/form/forms/entry/create-entry-form/create-entry-form';
 import {EditEntryForm} from '@/admin/components/form/forms/entry/edit-entry-form/edit-entry-form';
-import {EntryRepository} from '@/services/content/repository-entry';
 import {HOMEPAGE_SLUG} from '@/types/entry';
 
-// The homepage is a `page` entry with a reserved slug; the site has no
-// homepage until it is created here.
+import {HomepageAdminPageService} from './homepage-admin-page-service';
+
+const service = new HomepageAdminPageService();
+
 export default async function PrivatePage() {
     await auth();
-    const homepage = await new EntryRepository().getBySlug('page', HOMEPAGE_SLUG);
+    const homepage = await service.getHomepage();
 
     return (
         <SectionMain>
