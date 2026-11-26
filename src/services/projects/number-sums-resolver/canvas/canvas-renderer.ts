@@ -1,22 +1,26 @@
 import {RefObject} from 'react';
 
 import {CellStatus} from '@/services/projects/number-sums-resolver/model/model-cell';
-import {CellHelper} from '@/services/projects/number-sums-resolver/helper/helper-cell';
-import {ColorGroupHelper} from '@/services/projects/number-sums-resolver/helper/helper-color-group';
 
 import {EventModel, EventType} from '../model/model-event';
 import {StoreData} from '../model/model-store';
+import {NumberSumsResolverDebugCanvas} from './canvas-debug-renderer';
 
 export class NumberSumsResolverCanvas {
     private ctxBg: CanvasRenderingContext2D | null = null;
     private ctx: CanvasRenderingContext2D | null = null;
     private scale = 1;
     private width = 400;
+    private readonly debug = new NumberSumsResolverDebugCanvas(this);
 
     constructor(
         private readonly canvasBg: RefObject<HTMLCanvasElement>,
         private readonly canvas: RefObject<HTMLCanvasElement>,
     ) {}
+
+    get canvasBgElement(): HTMLCanvasElement {
+        return this.canvasBg.current;
+    }
 
     getCtx(): CanvasRenderingContext2D | null {
         if (!this.ctx) {
@@ -56,14 +60,14 @@ export class NumberSumsResolverCanvas {
     updateDev(store: StoreData, currentEvent: EventModel) {
         switch (currentEvent.type) {
             case EventType.imageProcessedToNumberDetect:
-                this.imageProcessedToNumberDetect(store);
-                return this.detectGrid(store);
+                this.debug.imageProcessedToNumberDetect(store);
+                return this.debug.detectGrid(store);
             case EventType.detectGrid:
-                return this.detectGrid(store);
+                return this.debug.detectGrid(store);
             case EventType.detectCellsSums:
-                return this.detectCells(store);
+                return this.debug.detectCells(store);
             case EventType.detectColorGroupsSums:
-                return this.detectColorGroups(store);
+                return this.debug.detectColorGroups(store);
         }
     }
 
@@ -99,43 +103,6 @@ export class NumberSumsResolverCanvas {
             this.canvas.current.width,
             this.canvas.current.height,
         );
-    }
-
-    imageProcessedToNumberDetect(store: StoreData) {
-        this.setupSizes(store.imageProcessed);
-        this.getCtxBg()?.drawImage(
-            this.renderer(store.imageProcessed),
-            0,
-            0,
-            this.canvasBg.current.width,
-            this.canvasBg.current.height,
-        );
-    }
-
-    detectGrid(store: StoreData) {
-        const colors = ['red', 'green', 'blue'];
-        [
-            // kjk
-            store.columnSumsBounds,
-            store.rowSumsBounds,
-            store.gridBounds,
-        ].forEach((rect, i) => {
-            const ctx = this.getCtx();
-
-            if (!ctx) {
-                return;
-            }
-            ctx.beginPath();
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = colors[i];
-            ctx.rect(
-                this.ctxPoint(rect.x),
-                this.ctxPoint(rect.y),
-                this.ctxPoint(rect.width),
-                this.ctxPoint(rect.height),
-            );
-            ctx.stroke();
-        });
     }
 
     printCells(store: StoreData) {
@@ -174,59 +141,6 @@ export class NumberSumsResolverCanvas {
                 );
                 ctx.stroke();
             }
-        }
-    }
-
-    detectCells(store: StoreData) {
-        const ctx = this.getCtx();
-        if (!ctx) {
-            return;
-        }
-
-        for (const cell of store.cells) {
-            const {left, top, height, width} = CellHelper.valueRectangle({
-                left: cell.x,
-                top: cell.y,
-                width: cell.width,
-                height: cell.height,
-            });
-
-            ctx.beginPath();
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = 'violet';
-            ctx.rect(
-                this.ctxPoint(left),
-                this.ctxPoint(top),
-                this.ctxPoint(width),
-                this.ctxPoint(height),
-            );
-            ctx.stroke();
-        }
-    }
-
-    detectColorGroups(store: StoreData) {
-        const ctx = this.getCtx();
-        if (!ctx) {
-            return;
-        }
-
-        const colorGroups = store.groups.filter((g) => g.type === 'color');
-
-        for (const group of colorGroups) {
-            const {left, top, height, width} = ColorGroupHelper.sumRectangle(
-                group.cells(store.cells),
-            );
-
-            ctx.beginPath();
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = 'red';
-            ctx.rect(
-                this.ctxPoint(left),
-                this.ctxPoint(top),
-                this.ctxPoint(width),
-                this.ctxPoint(height),
-            );
-            ctx.stroke();
         }
     }
 }
