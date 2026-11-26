@@ -50,7 +50,8 @@ const nextConfig = {
     },
     experimental: {
         serverActions: {
-            bodySizeLimit: '5mb',
+            // Matches the media library's own upload limit (uploadMediaAction).
+            bodySizeLimit: '10mb',
         },
     },
     // The routes that render bundled interactive projects read files from

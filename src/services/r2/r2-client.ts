@@ -2,9 +2,16 @@ import {
     CopyObjectCommand,
     DeleteObjectsCommand,
     GetObjectCommand,
+    ListObjectsV2Command,
     PutObjectCommand,
     S3Client,
 } from '@aws-sdk/client-s3';
+
+export type R2Object = {
+    key: string;
+    size: number;
+    lastModified: Date;
+};
 
 export class R2Client {
     protected client: S3Client;
@@ -66,6 +73,39 @@ export class R2Client {
         });
 
         return this.client.send(command);
+    }
+
+    // Every object at the bucket root. Fine for a personal site's bucket
+    // (hundreds to low thousands of objects) since the whole result is held
+    // in memory and cached — a large bucket would need a server-side cursor
+    // instead of listing everything up front.
+    public async list(): Promise<R2Object[]> {
+        const objects: R2Object[] = [];
+        let continuationToken: string | undefined;
+
+        do {
+            const command = new ListObjectsV2Command({
+                Bucket: this.bucket,
+                ContinuationToken: continuationToken,
+            });
+            const response = await this.client.send(command);
+
+            for (const item of response.Contents ?? []) {
+                if (item.Key) {
+                    objects.push({
+                        key: item.Key,
+                        size: item.Size ?? 0,
+                        lastModified: item.LastModified ?? new Date(0),
+                    });
+                }
+            }
+
+            continuationToken = response.IsTruncated
+                ? response.NextContinuationToken
+                : undefined;
+        } while (continuationToken);
+
+        return objects;
     }
 
     public async get(key: string, contentType?: string) {

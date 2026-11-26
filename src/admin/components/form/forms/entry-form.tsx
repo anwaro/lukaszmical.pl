@@ -110,7 +110,7 @@ function EntryFields({locale, placeholder}: FieldsProps) {
                           ? 'Ikona (kwadrat)'
                           : 'Okładka'
                 }
-                help="Kliknij pole, aby wgrać plik"
+                help="Kliknij pole, aby wybrać z biblioteki lub wgrać nowy plik"
                 icons={[Image]}
             >
                 <ImageField name="cover" placeholder={placeholder} />

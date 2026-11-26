@@ -4,6 +4,7 @@ import {
     Code,
     Files,
     House,
+    Images,
     Languages,
     LayoutDashboard,
     LucideIcon,
@@ -21,6 +22,7 @@ export const adminMenu: MenuItem[] = [
     {href: '/admin/pages', icon: Files, label: 'Strony'},
     {href: '/admin/case-studies', icon: BookOpen, label: 'Case studies'},
     {href: '/admin/projects', icon: Code, label: 'Projekty'},
+    {href: '/admin/media', icon: Images, label: 'Biblioteka mediów'},
     {href: '/admin/translations', icon: Languages, label: 'Tłumaczenia'},
     {href: '/admin/blocks', icon: Blocks, label: 'Bloczki'},
 ];

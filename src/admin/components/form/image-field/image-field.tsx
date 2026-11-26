@@ -1,36 +1,19 @@
-import {ChangeEvent, useEffect, useEffectEvent} from 'react';
+import {useState} from 'react';
 
 import {useField} from 'formik';
-import {LoaderCircle, X} from 'lucide-react';
+import {X} from 'lucide-react';
 
-import {useImageField} from './image-field.hook';
+import {MediaPickerModal} from '@/admin/components/media/media-picker-modal';
 
 type Props = {
     name: string;
-    accept?: string;
     className?: string;
     placeholder?: string;
 };
 
-export const ImageField = ({name, accept, className, placeholder}: Props) => {
+export const ImageField = ({name, className, placeholder}: Props) => {
     const [field, _, {setValue}] = useField<string>(name);
-    const {url, isPending, upload} = useImageField();
-
-    const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-        if (event.currentTarget?.files?.[0]) {
-            upload(event.currentTarget.files[0]);
-        }
-    };
-
-    const onUploaded = useEffectEvent((uploadedUrl: string) => {
-        setValue(uploadedUrl);
-    });
-
-    useEffect(() => {
-        if (url) {
-            onUploaded(url);
-        }
-    }, [url]);
+    const [open, setOpen] = useState(false);
 
     return (
         <>
@@ -39,20 +22,16 @@ export const ImageField = ({name, accept, className, placeholder}: Props) => {
                 className={className}
                 placeholder={placeholder}
                 readOnly
-            />
-            <input
-                type="file"
-                className="absolute top-0 left-0 size-full cursor-pointer opacity-0 outline-none"
-                onChange={handleFileChange}
-                accept={accept}
+                onClick={() => setOpen(true)}
+                onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        setOpen(true);
+                    }
+                }}
             />
 
-            {isPending && (
-                <div className="kv-input-addon right-0 text-(--ink-muted)">
-                    <LoaderCircle className="kv-spin size-4" strokeWidth={1.8} />
-                </div>
-            )}
-            {Boolean(field.value && !isPending) && (
+            {Boolean(field.value) && (
                 <button
                     type="button"
                     onClick={() => setValue('')}
@@ -63,6 +42,12 @@ export const ImageField = ({name, accept, className, placeholder}: Props) => {
                     <X className="size-4" strokeWidth={1.8} />
                 </button>
             )}
+
+            <MediaPickerModal
+                open={open}
+                onClose={() => setOpen(false)}
+                onSelect={(asset) => setValue(asset.url)}
+            />
         </>
     );
 };
