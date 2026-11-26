@@ -229,6 +229,15 @@
         box-shadow: var(--shadow-focus);
     }
 
+    /* iOS Safari zooms the page in whenever a focused form control's
+       computed font-size is under 16px — below the `sm` breakpoint only, so
+       the desktop size stays untouched. */
+    @media (max-width: 640px) {
+        .kv-input {
+            font-size: 16px;
+        }
+    }
+
     .kv-input[readonly] {
         cursor: pointer;
     }

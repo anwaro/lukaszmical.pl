@@ -1,3 +1,4 @@
+import {keyInFolder} from '@/services/media/media-path';
 import {R2Client} from '@/services/r2/r2-client';
 import {MediaAsset} from '@/types/media';
 
@@ -47,5 +48,24 @@ export class MediaService {
 
     async remove(key: string): Promise<void> {
         await this.r2.remove([key]);
+    }
+
+    // `folder` is the target: null moves the asset back to the bucket root.
+    async move(
+        asset: Pick<MediaAsset, 'key' | 'size' | 'contentType'>,
+        folder: string | null,
+    ): Promise<MediaAsset> {
+        const key = keyInFolder(asset.key, folder);
+        if (key !== asset.key) {
+            await this.r2.move(asset.key, key);
+        }
+
+        return {
+            key,
+            url: `${this.r2.publicDomain()}/${key}`,
+            size: asset.size,
+            lastModified: new Date().toISOString(),
+            contentType: asset.contentType,
+        };
     }
 }

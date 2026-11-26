@@ -4,7 +4,9 @@ import {R2Client} from '@/services/r2/r2-client';
 
 import {MediaService} from './media-service';
 
-vi.spyOn(R2Client.prototype, 'publicDomain').mockReturnValue('https://assets.example.com');
+vi.spyOn(R2Client.prototype, 'publicDomain').mockReturnValue(
+    'https://assets.example.com',
+);
 
 describe('MediaService', () => {
     describe('list', () => {
@@ -16,7 +18,10 @@ describe('MediaService', () => {
 
             const assets = await new MediaService().list();
 
-            expect(assets.map((asset) => asset.key)).toEqual(['b-new.jpg', 'a-old.jpg']);
+            expect(assets.map((asset) => asset.key)).toEqual([
+                'b-new.jpg',
+                'a-old.jpg',
+            ]);
             expect(assets[0].url).toBe('https://assets.example.com/b-new.jpg');
             expect(assets[0].size).toBe(20);
         });
@@ -30,7 +35,9 @@ describe('MediaService', () => {
 
     describe('upload', () => {
         it('uploads the file under a generated key and returns its asset', async () => {
-            const upload = vi.spyOn(R2Client.prototype, 'upload').mockResolvedValue(undefined as never);
+            const upload = vi
+                .spyOn(R2Client.prototype, 'upload')
+                .mockResolvedValue(undefined as never);
             const file = new File(['content'], 'My Photo.JPG', {type: 'image/jpeg'});
 
             const asset = await new MediaService().upload(file);
@@ -48,11 +55,60 @@ describe('MediaService', () => {
 
     describe('remove', () => {
         it('removes the object by key', async () => {
-            const remove = vi.spyOn(R2Client.prototype, 'remove').mockResolvedValue(undefined);
+            const remove = vi
+                .spyOn(R2Client.prototype, 'remove')
+                .mockResolvedValue(undefined);
 
             await new MediaService().remove('some-key.jpg');
 
             expect(remove).toHaveBeenCalledWith(['some-key.jpg']);
+        });
+    });
+
+    describe('move', () => {
+        it('moves the object under the folder and returns the new asset', async () => {
+            const move = vi
+                .spyOn(R2Client.prototype, 'move')
+                .mockResolvedValue(undefined as never);
+
+            const asset = await new MediaService().move(
+                {key: 'some-key.jpg', size: 123, contentType: 'image/jpeg'},
+                'logos',
+            );
+
+            expect(move).toHaveBeenCalledWith('some-key.jpg', 'logos/some-key.jpg');
+            expect(asset.key).toBe('logos/some-key.jpg');
+            expect(asset.url).toBe('https://assets.example.com/logos/some-key.jpg');
+            expect(asset.size).toBe(123);
+            expect(asset.contentType).toBe('image/jpeg');
+        });
+
+        it('moves a nested object back to the root', async () => {
+            const move = vi
+                .spyOn(R2Client.prototype, 'move')
+                .mockResolvedValue(undefined as never);
+
+            const asset = await new MediaService().move(
+                {key: 'logos/some-key.jpg', size: 123},
+                null,
+            );
+
+            expect(move).toHaveBeenCalledWith('logos/some-key.jpg', 'some-key.jpg');
+            expect(asset.key).toBe('some-key.jpg');
+        });
+
+        it('does nothing when the key is unchanged', async () => {
+            const move = vi
+                .spyOn(R2Client.prototype, 'move')
+                .mockResolvedValue(undefined as never);
+
+            const asset = await new MediaService().move(
+                {key: 'logos/some-key.jpg', size: 123},
+                'logos',
+            );
+
+            expect(move).not.toHaveBeenCalled();
+            expect(asset.key).toBe('logos/some-key.jpg');
         });
     });
 });

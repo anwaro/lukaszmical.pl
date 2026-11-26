@@ -6,6 +6,7 @@ import Image from 'next/image';
 
 import {Button} from '@/admin/components/button/button';
 import {usePagination} from '@/admin/components/pagination/use-pagination';
+import {distinctFolders, folderOf} from '@/services/media/media-path';
 import {MediaAsset} from '@/types/media';
 
 type Props = {
@@ -19,15 +20,36 @@ type Props = {
 
 // A thumbnail grid over the media library, paginated client-side like
 // `BaseTable` — the whole (cached) bucket listing is already in memory.
-export function MediaGrid({assets, mode, limit = 24, onSelect, renderActions}: Props) {
+export function MediaGrid({
+    assets,
+    mode,
+    limit = 24,
+    onSelect,
+    renderActions,
+}: Props) {
     const [query, setQuery] = useState('');
+    const [folder, setFolder] = useState<string | null>(null);
 
-    const filtered = useMemo(
-        () => assets.filter((asset) => asset.key.toLowerCase().includes(query.toLowerCase())),
-        [assets, query],
-    );
+    const folders = useMemo(() => distinctFolders(assets), [assets]);
 
-    const {page, setPage, pageCount, pageItems: shown} = usePagination(filtered, limit);
+    // A search looks across every folder; with no query, the grid is scoped
+    // to the current one (folders are navigated, not filtered by typing).
+    const filtered = useMemo(() => {
+        const needle = query.toLowerCase();
+        return assets.filter((asset) => {
+            if (!asset.key.toLowerCase().includes(needle)) {
+                return false;
+            }
+            return query !== '' || folderOf(asset.key) === folder;
+        });
+    }, [assets, query, folder]);
+
+    const {
+        page,
+        setPage,
+        pageCount,
+        pageItems: shown,
+    } = usePagination(filtered, limit);
 
     return (
         <div>
@@ -40,6 +62,35 @@ export function MediaGrid({assets, mode, limit = 24, onSelect, renderActions}: P
                     setPage(0);
                 }}
             />
+            {!query && folders.length > 0 && (
+                <div className="mb-4 flex flex-wrap gap-1">
+                    <button
+                        type="button"
+                        aria-pressed={folder === null}
+                        className="kv-chip"
+                        onClick={() => {
+                            setFolder(null);
+                            setPage(0);
+                        }}
+                    >
+                        Wszystkie pliki
+                    </button>
+                    {folders.map((name) => (
+                        <button
+                            key={name}
+                            type="button"
+                            aria-pressed={folder === name}
+                            className="kv-chip"
+                            onClick={() => {
+                                setFolder(name);
+                                setPage(0);
+                            }}
+                        >
+                            {name}
+                        </button>
+                    ))}
+                </div>
+            )}
             {filtered.length === 0 ? (
                 <p className="kv-table-empty">Nie ma jeszcze żadnych plików.</p>
             ) : (
@@ -54,7 +105,10 @@ export function MediaGrid({assets, mode, limit = 24, onSelect, renderActions}: P
                                       tabIndex: 0,
                                       onClick: () => onSelect?.(asset),
                                       onKeyDown: (event: React.KeyboardEvent) => {
-                                          if (event.key === 'Enter' || event.key === ' ') {
+                                          if (
+                                              event.key === 'Enter' ||
+                                              event.key === ' '
+                                          ) {
                                               event.preventDefault();
                                               onSelect?.(asset);
                                           }
@@ -70,7 +124,10 @@ export function MediaGrid({assets, mode, limit = 24, onSelect, renderActions}: P
                                 className="h-28 w-full rounded-lg object-cover"
                                 unoptimized={asset.key.endsWith('.svg')}
                             />
-                            <p className="kv-caption mt-1 truncate" title={asset.key}>
+                            <p
+                                className="kv-caption mt-1 truncate"
+                                title={asset.key}
+                            >
                                 {asset.key}
                             </p>
                             {mode === 'manage' && renderActions?.(asset)}
