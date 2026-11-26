@@ -1,6 +1,7 @@
 'use server';
 
 import {updateTag} from 'next/cache';
+import {z} from 'zod';
 
 import {MediaService} from '@/services/media/media-service';
 import {MEDIA_TAG} from '@/services/media/media-store';
@@ -21,22 +22,31 @@ const ALLOWED_TYPES = [
 ];
 const MAX_SIZE = 10 * 1024 * 1024;
 
+const uploadMediaSchema = z.object({
+    file: z
+        .instanceof(File, {message: 'Brak pliku'})
+        .refine((file) => ALLOWED_TYPES.includes(file.type), {
+            message: 'Nieobsługiwany format pliku',
+        })
+        .refine((file) => file.size <= MAX_SIZE, {
+            message: 'Plik jest większy niż 10 MB',
+        }),
+});
+
 export const uploadMediaAction = async (
     _prevState: UploadMediaResult,
     form: FormData,
 ): Promise<UploadMediaResult> => {
     await auth();
-    const file = form.get('file');
 
-    if (!(file instanceof File)) {
-        return {status: 'error', error: 'Brak pliku'};
+    const parsed = uploadMediaSchema.safeParse(Object.fromEntries(form));
+    if (!parsed.success) {
+        return {
+            status: 'error',
+            error: parsed.error.issues[0]?.message ?? 'Nieprawidłowe żądanie',
+        };
     }
-    if (!ALLOWED_TYPES.includes(file.type)) {
-        return {status: 'error', error: 'Nieobsługiwany format pliku'};
-    }
-    if (file.size > MAX_SIZE) {
-        return {status: 'error', error: 'Plik jest większy niż 10 MB'};
-    }
+    const {file} = parsed.data;
 
     try {
         const asset = await new MediaService().upload(file);

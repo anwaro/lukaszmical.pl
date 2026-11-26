@@ -1,6 +1,7 @@
 'use server';
 
 import {updateTag} from 'next/cache';
+import {z} from 'zod';
 
 import {sanitizeFolder} from '@/services/media/media-path';
 import {MediaService} from '@/services/media/media-service';
@@ -15,6 +16,17 @@ export type MoveMediaResult =
     | {status: 'error'; error: string}
     | {status: 'success'; previousKey: string; asset: MediaAsset};
 
+const moveMediaSchema = z.object({
+    key: z.string().min(1),
+    url: z.string().min(1),
+    size: z.coerce.number(),
+    contentType: z
+        .string()
+        .optional()
+        .transform((value) => (value ? value : undefined)),
+    folder: z.string(),
+});
+
 // The form sends the asset's own fields (so the service never has to
 // re-fetch its metadata) plus the target `folder` — empty for the root.
 export const moveMediaAction = async (
@@ -22,22 +34,12 @@ export const moveMediaAction = async (
     form: FormData,
 ): Promise<MoveMediaResult> => {
     await auth();
-    const key = form.get('key');
-    const url = form.get('url');
-    const size = form.get('size');
-    const contentType = form.get('contentType');
-    const folder = form.get('folder');
 
-    if (
-        typeof key !== 'string' ||
-        typeof url !== 'string' ||
-        typeof size !== 'string' ||
-        typeof folder !== 'string' ||
-        !key ||
-        !url
-    ) {
+    const parsed = moveMediaSchema.safeParse(Object.fromEntries(form));
+    if (!parsed.success) {
         return {status: 'error', error: 'Nieprawidłowe żądanie'};
     }
+    const {key, url, size, contentType, folder} = parsed.data;
 
     const usages = await new MediaUsageScanner().findUsages(url);
     if (usages.length > 0) {
@@ -46,14 +48,7 @@ export const moveMediaAction = async (
 
     try {
         const asset = await new MediaService().move(
-            {
-                key,
-                size: Number(size),
-                contentType:
-                    typeof contentType === 'string' && contentType
-                        ? contentType
-                        : undefined,
-            },
+            {key, size, contentType},
             sanitizeFolder(folder),
         );
         updateTag(MEDIA_TAG);

@@ -1,6 +1,7 @@
 'use server';
 
 import {updateTag} from 'next/cache';
+import {z} from 'zod';
 
 import {CONTENT_TAG} from '@/services/content/content-store';
 import {messageNamespaces} from '@/services/content/content-messages';
@@ -17,18 +18,36 @@ export type SaveContentResult =
     | {status: 'error'; error: string}
     | {status: 'success'; savedAt: number};
 
+const contentChangesSchema = z.object({
+    messages: z.array(
+        z.object({
+            namespace: z.string(),
+            key: z.string(),
+            locale: z.string(),
+            value: z.string(),
+        }),
+    ),
+});
+
 export const saveContentAction = async (
     _prevState: SaveContentResult,
     changes: ContentChanges,
 ): Promise<SaveContentResult> => {
     await auth();
 
+    const parsed = contentChangesSchema.safeParse(changes);
+    if (!parsed.success) {
+        return {status: 'error', error: 'Nieprawidłowe żądanie'};
+    }
+
     const namespaces: readonly string[] = messageNamespaces;
-    const messages = changes.messages.filter(
-        (row) =>
+    const messages = parsed.data.messages.filter(
+        (
+            row,
+        ): row is {namespace: string; key: string; locale: Locale; value: string} =>
             namespaces.includes(row.namespace) &&
-            LocaleList.includes(row.locale) &&
-            row.key,
+            LocaleList.includes(row.locale as Locale) &&
+            Boolean(row.key),
     );
 
     try {

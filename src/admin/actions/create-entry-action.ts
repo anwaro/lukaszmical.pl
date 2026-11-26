@@ -2,6 +2,7 @@
 
 import {EntryRepository} from '@/services/content/repository-entry';
 import {EntryInput} from '@/types/entry';
+import {entryInputSchema} from '@/types/entry-schema';
 import {auth} from '@/utils/auth/auth';
 
 type CreateEntryResult =
@@ -15,8 +16,16 @@ export const createEntryAction = async (
 ): Promise<CreateEntryResult> => {
     await auth();
 
+    const parsed = entryInputSchema.safeParse(input);
+    if (!parsed.success) {
+        return {status: 'error', error: 'Nieprawidłowe żądanie'};
+    }
+
     try {
-        return {status: 'success', id: await new EntryRepository().create(input)};
+        return {
+            status: 'success',
+            id: await new EntryRepository().create(parsed.data),
+        };
     } catch (error) {
         return {
             status: 'error',
