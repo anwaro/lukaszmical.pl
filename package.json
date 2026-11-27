@@ -48,7 +48,8 @@
         "rehype-slug": "^6.0.0",
         "socket.io": "4.8.4",
         "socket.io-client": "4.8.4",
-        "tesseract.js": "^7.0.0"
+        "tesseract.js": "^7.0.0",
+        "zod": "^4.6.7"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.11",

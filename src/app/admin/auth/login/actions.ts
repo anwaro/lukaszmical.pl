@@ -2,6 +2,7 @@
 
 import {cookies} from 'next/headers';
 import {redirect} from 'next/navigation';
+import {z} from 'zod';
 
 import {
     createSessionToken,
@@ -10,10 +11,14 @@ import {
 } from '@/utils/auth/session';
 import {verifyPassword} from '@/utils/auth/password';
 
-export async function login(formData: FormData) {
-    const password = formData.get('password') as string;
+const loginSchema = z.object({
+    password: z.string().min(1),
+});
 
-    if (!(await verifyPassword(password))) {
+export async function login(formData: FormData) {
+    const parsed = loginSchema.safeParse(Object.fromEntries(formData));
+
+    if (!parsed.success || !(await verifyPassword(parsed.data.password))) {
         redirect('/admin/auth/login?error=1');
     }
 
