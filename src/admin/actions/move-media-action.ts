@@ -4,15 +4,14 @@ import {updateTag} from 'next/cache';
 import {z} from 'zod';
 
 import {sanitizeFolder} from '@/services/media/media-path';
+import {MediaReferenceUpdater} from '@/services/media/media-reference-updater';
 import {MediaService} from '@/services/media/media-service';
 import {MEDIA_TAG} from '@/services/media/media-store';
-import {MediaUsage, MediaUsageScanner} from '@/services/media/media-usage-scanner';
 import {MediaAsset} from '@/types/media';
 import {auth} from '@/utils/auth/auth';
 
 export type MoveMediaResult =
     | {status: undefined}
-    | {status: 'blocked'; usages: MediaUsage[]}
     | {status: 'error'; error: string}
     | {status: 'success'; previousKey: string; asset: MediaAsset};
 
@@ -29,6 +28,8 @@ const moveMediaSchema = z.object({
 
 // The form sends the asset's own fields (so the service never has to
 // re-fetch its metadata) plus the target `folder` — empty for the root.
+// A used asset is moved all the same: its references in the entries are
+// rewritten to the new url.
 export const moveMediaAction = async (
     _prevState: MoveMediaResult,
     form: FormData,
@@ -41,16 +42,12 @@ export const moveMediaAction = async (
     }
     const {key, url, size, contentType, folder} = parsed.data;
 
-    const usages = await new MediaUsageScanner().findUsages(url);
-    if (usages.length > 0) {
-        return {status: 'blocked', usages};
-    }
-
     try {
         const asset = await new MediaService().move(
             {key, size, contentType},
             sanitizeFolder(folder),
         );
+        await new MediaReferenceUpdater().replaceUrl(url, asset.url);
         updateTag(MEDIA_TAG);
         return {status: 'success', previousKey: key, asset};
     } catch (error) {

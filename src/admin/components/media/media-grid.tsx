@@ -135,8 +135,8 @@ export function MediaGrid({
                                 key={name}
                                 type="button"
                                 className={clsx(
-                                    'flex flex-col items-center justify-center gap-1 rounded-lg',
-                                    'border border-slate-200 bg-white p-2 text-center',
+                                    'flex flex-col items-center rounded-lg',
+                                    'border border-slate-200 bg-white p-1.5 text-center',
                                     'hover:border-slate-300 hover:bg-slate-50',
                                     'dark:border-slate-800 dark:bg-slate-900',
                                     'dark:hover:border-slate-600 dark:hover:bg-slate-800',
@@ -150,11 +150,11 @@ export function MediaGrid({
                                 {...dropTargetProps(name)}
                             >
                                 <Folder
-                                    className="size-10 shrink-0 text-slate-400 dark:text-slate-500"
-                                    strokeWidth={1.4}
+                                    className="h-20 w-full shrink-0 text-slate-400 dark:text-slate-500"
+                                    strokeWidth={1}
                                     aria-hidden
                                 />
-                                <span className="w-full truncate text-xs font-medium text-slate-600 dark:text-slate-300">
+                                <span className="mt-1 w-full truncate text-xs font-medium text-slate-600 dark:text-slate-300">
                                     {name}
                                 </span>
                             </button>

@@ -9,7 +9,6 @@ import {Button} from '@/admin/components/button/button';
 import {IconButton} from '@/admin/components/button/icon-button';
 import {chipClassName} from '@/admin/components/chip-class-name';
 import {fieldInputClassName} from '@/admin/components/form/field-input-class-name';
-import {MediaUsageList} from '@/admin/components/media/media-usage-list';
 import {Modal} from '@/admin/components/modal/modal';
 import {noticeDangerClassName} from '@/admin/components/notice-class-name';
 import {useMediaLibrary} from '@/admin/media/media-library-provider';
@@ -109,12 +108,6 @@ export function MediaMoveButton({asset, folders}: Props) {
                                 </button>
                             ))}
                         </div>
-                    )}
-                    {state.status === 'blocked' && (
-                        <p className={noticeDangerClassName('mb-3')}>
-                            Ten plik jest używany, nie można go przenieść:{' '}
-                            <MediaUsageList usages={state.usages} />
-                        </p>
                     )}
                     {state.status === 'error' && (
                         <p className={noticeDangerClassName('mb-3')}>{state.error}</p>

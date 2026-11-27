@@ -2,11 +2,8 @@
 
 import React, {useMemo, useState} from 'react';
 
-import {Copy} from 'lucide-react';
-
 import {DeleteMediaResult} from '@/admin/actions/delete-media-action';
 import {moveMediaAction, MoveMediaResult} from '@/admin/actions/move-media-action';
-import {IconButton} from '@/admin/components/button/icon-button';
 import {MediaDeleteButton} from '@/admin/components/media/media-delete-button';
 import {MediaGrid} from '@/admin/components/media/media-grid';
 import {MediaMoveButton} from '@/admin/components/media/media-move-button';
@@ -28,14 +25,13 @@ export function MediaLibraryView() {
     const onActionResult = (
         key: string,
         result: DeleteMediaResult | MoveMediaResult,
-        action: 'usunąć' | 'przenieść',
     ) => {
         if (result.status === 'blocked') {
             setNotice({
                 key,
                 message: (
                     <>
-                        Ten plik jest używany, nie można go {action}:{' '}
+                        Ten plik jest używany, nie można go usunąć:{' '}
                         <MediaUsageList usages={result.usages} />
                     </>
                 ),
@@ -44,9 +40,6 @@ export function MediaLibraryView() {
             setNotice({key, message: result.error});
         }
     };
-
-    const onDeleteResult = (key: string, result: DeleteMediaResult) =>
-        onActionResult(key, result, 'usunąć');
 
     // Dragging a tile onto a folder (or the back-to-root breadcrumb) moves
     // it there directly — the move modal is for picking a folder by hand.
@@ -61,7 +54,7 @@ export function MediaLibraryView() {
         if (result.status === 'success') {
             replaceAsset(result.previousKey, result.asset);
         } else {
-            onActionResult(asset.key, result, 'przenieść');
+            onActionResult(asset.key, result);
         }
     };
 
@@ -77,15 +70,10 @@ export function MediaLibraryView() {
                 onMoveAsset={onMoveAsset}
                 renderActions={(asset) => (
                     <div className="mt-2 flex flex-wrap justify-center gap-1">
-                        <IconButton
-                            icon={Copy}
-                            label="Skopiuj adres"
-                            onClick={() => navigator.clipboard.writeText(asset.url)}
-                        />
                         <MediaMoveButton asset={asset} folders={folders} />
                         <MediaDeleteButton
                             asset={asset}
-                            onResult={(result) => onDeleteResult(asset.key, result)}
+                            onResult={(result) => onActionResult(asset.key, result)}
                         />
                     </div>
                 )}
