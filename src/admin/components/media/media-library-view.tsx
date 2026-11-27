@@ -5,6 +5,7 @@ import React, {useMemo, useState} from 'react';
 import {Copy} from 'lucide-react';
 
 import {DeleteMediaResult} from '@/admin/actions/delete-media-action';
+import {moveMediaAction, MoveMediaResult} from '@/admin/actions/move-media-action';
 import {IconButton} from '@/admin/components/button/icon-button';
 import {MediaDeleteButton} from '@/admin/components/media/media-delete-button';
 import {MediaGrid} from '@/admin/components/media/media-grid';
@@ -14,28 +15,53 @@ import {MediaUsageList} from '@/admin/components/media/media-usage-list';
 import {noticeDangerClassName} from '@/admin/components/notice-class-name';
 import {useMediaLibrary} from '@/admin/media/media-library-provider';
 import {distinctFolders} from '@/services/media/media-path';
+import {MediaAsset} from '@/types/media';
 
 export function MediaLibraryView() {
-    const {assets} = useMediaLibrary();
+    const {assets, replaceAsset} = useMediaLibrary();
     const folders = useMemo(() => distinctFolders(assets), [assets]);
     const [notice, setNotice] = useState<{
         key: string;
         message: React.ReactNode;
     } | null>(null);
 
-    const onDeleteResult = (key: string, result: DeleteMediaResult) => {
+    const onActionResult = (
+        key: string,
+        result: DeleteMediaResult | MoveMediaResult,
+        action: 'usunąć' | 'przenieść',
+    ) => {
         if (result.status === 'blocked') {
             setNotice({
                 key,
                 message: (
                     <>
-                        Ten plik jest używany, nie można go usunąć:{' '}
+                        Ten plik jest używany, nie można go {action}:{' '}
                         <MediaUsageList usages={result.usages} />
                     </>
                 ),
             });
         } else if (result.status === 'error') {
             setNotice({key, message: result.error});
+        }
+    };
+
+    const onDeleteResult = (key: string, result: DeleteMediaResult) =>
+        onActionResult(key, result, 'usunąć');
+
+    // Dragging a tile onto a folder (or the back-to-root breadcrumb) moves
+    // it there directly — the move modal is for picking a folder by hand.
+    const onMoveAsset = async (asset: MediaAsset, folder: string | null) => {
+        const form = new FormData();
+        form.append('key', asset.key);
+        form.append('url', asset.url);
+        form.append('size', String(asset.size));
+        form.append('contentType', asset.contentType ?? '');
+        form.append('folder', folder ?? '');
+        const result = await moveMediaAction({status: undefined}, form);
+        if (result.status === 'success') {
+            replaceAsset(result.previousKey, result.asset);
+        } else {
+            onActionResult(asset.key, result, 'przenieść');
         }
     };
 
@@ -48,8 +74,9 @@ export function MediaLibraryView() {
             <MediaGrid
                 assets={assets}
                 mode="manage"
+                onMoveAsset={onMoveAsset}
                 renderActions={(asset) => (
-                    <div className="mt-2 flex gap-1">
+                    <div className="mt-2 flex flex-wrap justify-center gap-1">
                         <IconButton
                             icon={Copy}
                             label="Skopiuj adres"
