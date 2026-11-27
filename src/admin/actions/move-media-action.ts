@@ -3,6 +3,7 @@
 import {updateTag} from 'next/cache';
 import {z} from 'zod';
 
+import {CONTENT_TAG} from '@/services/content/content-store';
 import {sanitizeFolder} from '@/services/media/media-path';
 import {MediaReferenceUpdater} from '@/services/media/media-reference-updater';
 import {MediaService} from '@/services/media/media-service';
@@ -49,6 +50,8 @@ export const moveMediaAction = async (
         );
         await new MediaReferenceUpdater().replaceUrl(url, asset.url);
         updateTag(MEDIA_TAG);
+        // Entries that referenced the old URL were rewritten.
+        updateTag(CONTENT_TAG);
         return {status: 'success', previousKey: key, asset};
     } catch (error) {
         return {

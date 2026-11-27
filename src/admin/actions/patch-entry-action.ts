@@ -1,7 +1,9 @@
 'use server';
 
+import {updateTag} from 'next/cache';
 import {z} from 'zod';
 
+import {CONTENT_TAG} from '@/services/content/content-store';
 import {EntryPatch, EntryRepository} from '@/services/content/repository-entry';
 import {auth} from '@/utils/auth/auth';
 
@@ -37,6 +39,7 @@ export const patchEntryAction = async (
     }
 
     await new EntryRepository().patch(id, patch);
+    updateTag(CONTENT_TAG);
 
     return {id, ...patch};
 };

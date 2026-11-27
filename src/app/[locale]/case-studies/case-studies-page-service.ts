@@ -1,6 +1,6 @@
 import type {Metadata} from 'next';
 
-import {EntryRepository} from '@/services/content/repository-entry';
+import {listEntries} from '@/services/content/entry-store';
 import {Locale} from '@/types/locale';
 import {metadataForPage} from '@/utils/seo';
 
@@ -10,6 +10,6 @@ export class CaseStudiesPageService {
     }
 
     async getCaseStudies(locale: Locale) {
-        return new EntryRepository().list(locale, {kind: 'case_study'});
+        return listEntries(locale, {kind: 'case_study'});
     }
 }
