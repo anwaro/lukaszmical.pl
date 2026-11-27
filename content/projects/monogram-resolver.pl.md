@@ -25,7 +25,7 @@ monogram-resolver
 
 ### Description
 
-Solver nonogramów na żywo — wgraj planszę i patrz na kolejne kroki.
+Solver nonogramów na żywo — wgraj planszę i patrz na kolejne kroki rozwiązania.
 
 ### Lead
 

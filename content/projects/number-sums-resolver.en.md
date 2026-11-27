@@ -21,3 +21,7 @@ Treść do wklejenia w panelu: /admin/projects → pola w języku EN.
 ### Name
 
 number-sums-resolver
+
+### Description
+
+A solver for the Number Sums puzzle — upload a screenshot of the board and it detects the grid, colours and numbers, then works out which cells to pick.

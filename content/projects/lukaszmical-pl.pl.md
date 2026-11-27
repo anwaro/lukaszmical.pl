@@ -25,4 +25,4 @@ lukaszmical.pl
 
 ### Description
 
-Ta strona: dwujęzyczny serwis z własnym panelem admina.
+Ta strona — dwujęzyczny serwis na Next.js z własnym panelem admina i edytorem treści.

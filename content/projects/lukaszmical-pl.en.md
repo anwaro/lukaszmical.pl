@@ -25,4 +25,4 @@ lukaszmical.pl
 
 ### Description
 
-This site: a bilingual website with its own admin panel.
+This site — a bilingual Next.js portfolio with its own admin panel and content editor.

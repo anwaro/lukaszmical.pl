@@ -21,3 +21,7 @@ Treść do wklejenia w panelu: /admin/projects → pola w języku PL.
 ### Name
 
 number-sums-resolver
+
+### Description
+
+Solver puzzli Number Sums — wgraj zrzut ekranu planszy, a aplikacja wykryje siatkę, kolory i liczby i wskaże, które pola zaznaczyć.
