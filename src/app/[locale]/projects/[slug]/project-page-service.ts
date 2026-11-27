@@ -4,7 +4,7 @@ import {cache} from 'react';
 
 import {notFound, redirect} from 'next/navigation';
 
-import {EntryRepository} from '@/services/content/repository-entry';
+import {getLocalizedEntry, listEntries} from '@/services/content/entry-store';
 import {resolveEntryVisibility} from '@/services/content/entry-visibility';
 import {LocalProjectService} from '@/services/local-project-service';
 import {ProjectRenderer} from '@/services/project-renderer';
@@ -14,7 +14,7 @@ import {draftMetadata, entryJsonLd, entryMetadata} from '@/utils/seo';
 
 // Cached per request: generateMetadata and the page both need it.
 const getProject = cache((slug: string, locale: Locale) =>
-    new EntryRepository().getLocalized('project', slug, locale),
+    getLocalizedEntry('project', slug, locale),
 );
 
 // How many other projects the write-up page links to.
@@ -61,9 +61,7 @@ export class ProjectPageService {
         const jsonLd = entryJsonLd(project, locale, `/projects/${slug}`);
 
         if (project.presentation === 'article') {
-            const others = (
-                await new EntryRepository().list(locale, {kind: 'project'})
-            )
+            const others = (await listEntries(locale, {kind: 'project'}))
                 .filter((other) => other.id !== project.id)
                 .slice(0, OTHERS_LIMIT);
 

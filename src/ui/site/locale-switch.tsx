@@ -23,6 +23,9 @@ export function LocaleSwitch() {
                         href={pathname}
                         locale={locale}
                         hrefLang={locale}
+                        // Fully prefetch the other language, so switching
+                        // to it is instant.
+                        prefetch
                         aria-current={locale === current ? 'true' : undefined}
                         className={clsx(
                             'hover:text-accent',

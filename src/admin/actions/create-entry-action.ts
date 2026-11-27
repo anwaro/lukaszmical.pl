@@ -1,5 +1,8 @@
 'use server';
 
+import {updateTag} from 'next/cache';
+
+import {CONTENT_TAG} from '@/services/content/content-store';
 import {EntryRepository} from '@/services/content/repository-entry';
 import {EntryInput} from '@/types/entry';
 import {entryInputSchema} from '@/types/entry-schema';
@@ -22,10 +25,9 @@ export const createEntryAction = async (
     }
 
     try {
-        return {
-            status: 'success',
-            id: await new EntryRepository().create(parsed.data),
-        };
+        const id = await new EntryRepository().create(parsed.data);
+        updateTag(CONTENT_TAG);
+        return {status: 'success', id};
     } catch (error) {
         return {
             status: 'error',

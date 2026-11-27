@@ -49,6 +49,13 @@ const nextConfig = {
         ];
     },
     experimental: {
+        // Keep visited pages in the client router cache, so going back to a
+        // page (e.g. switching the language back) does not hit the server
+        // again. Pages here are dynamic (the session cookie), whose default
+        // stale time is 0.
+        staleTimes: {
+            dynamic: 300,
+        },
         serverActions: {
             // Matches the media library's own upload limit (uploadMediaAction).
             bodySizeLimit: '10mb',

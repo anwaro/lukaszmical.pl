@@ -2,7 +2,7 @@ import type {Metadata} from 'next';
 
 import {cache} from 'react';
 
-import {EntryRepository} from '@/services/content/repository-entry';
+import {getLocalizedEntry, listEntries} from '@/services/content/entry-store';
 import {resolveEntryVisibility} from '@/services/content/entry-visibility';
 import {LocalizedEntry} from '@/types/entry';
 import {Locale} from '@/types/locale';
@@ -10,7 +10,7 @@ import {draftMetadata, entryJsonLd, entryMetadata} from '@/utils/seo';
 
 // Cached per request: generateMetadata and the page both need it.
 const getCaseStudy = cache((slug: string, locale: Locale) =>
-    new EntryRepository().getLocalized('case_study', slug, locale),
+    getLocalizedEntry('case_study', slug, locale),
 );
 
 export class CaseStudyPageService {
@@ -36,7 +36,7 @@ export class CaseStudyPageService {
     // list. Unpublished drafts are not on that list: number them last, link
     // to the first.
     async getPositionAndNext(caseStudy: LocalizedEntry, locale: Locale) {
-        const list = await new EntryRepository().list(locale, {
+        const list = await listEntries(locale, {
             kind: 'case_study',
         });
         const index = list.findIndex((item) => item.id === caseStudy.id);

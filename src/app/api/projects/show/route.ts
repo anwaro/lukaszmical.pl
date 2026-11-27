@@ -3,7 +3,7 @@ import {notFound} from 'next/navigation';
 import {ProjectRenderer} from '@/services/project-renderer';
 import {params} from '@/app/api/projects/show/params';
 import {LocalProjectService} from '@/services/local-project-service';
-import {EntryRepository} from '@/services/content/repository-entry';
+import {getLocalizedEntry} from '@/services/content/entry-store';
 
 export async function GET(request: Request) {
     const service = new LocalProjectService();
@@ -14,7 +14,7 @@ export async function GET(request: Request) {
     if (!slug) {
         notFound();
     }
-    const project = await new EntryRepository().getLocalized('project', slug, locale);
+    const project = await getLocalizedEntry('project', slug, locale);
 
     if (!project || project.presentation !== 'app') {
         notFound();

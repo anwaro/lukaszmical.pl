@@ -2,7 +2,7 @@ import type {Metadata} from 'next';
 
 import {cache} from 'react';
 
-import {EntryRepository} from '@/services/content/repository-entry';
+import {getLocalizedEntry} from '@/services/content/entry-store';
 import {resolveEntryVisibility} from '@/services/content/entry-visibility';
 import {HOMEPAGE_SLUG} from '@/types/entry';
 import {Locale} from '@/types/locale';
@@ -11,9 +11,7 @@ import {draftMetadata, entryMetadata} from '@/utils/seo';
 // The homepage entry is served at `/`, not under its slug. Cached per
 // request: generateMetadata and the page both need it.
 const getPage = cache((slug: string, locale: Locale) =>
-    slug === HOMEPAGE_SLUG
-        ? null
-        : new EntryRepository().getLocalized('page', slug, locale),
+    slug === HOMEPAGE_SLUG ? null : getLocalizedEntry('page', slug, locale),
 );
 
 export class StaticPageService {

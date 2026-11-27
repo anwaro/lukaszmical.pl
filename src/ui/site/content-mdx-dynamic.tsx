@@ -2,7 +2,7 @@ import React from 'react';
 
 import {getTranslations} from 'next-intl/server';
 
-import {EntryRepository} from '@/services/content/repository-entry';
+import {listEntries} from '@/services/content/entry-store';
 import {Locale} from '@/types/locale';
 
 import {DynamicBlockName} from './blocks/block-library';
@@ -24,7 +24,7 @@ export function contentMdxDynamicComponents(locale: Locale) {
     async function CaseStudyList({id, command}: ListProps) {
         const [t, caseStudies] = await Promise.all([
             getTranslations({locale, namespace: 'caseStudies'}),
-            new EntryRepository().list(locale, {kind: 'case_study'}),
+            listEntries(locale, {kind: 'case_study'}),
         ]);
 
         if (!caseStudies.length) {
@@ -89,11 +89,13 @@ export function contentMdxDynamicComponents(locale: Locale) {
     }
 
     async function ProjectList({id, command, limit}: ListProps & {limit?: string}) {
-        const client = new EntryRepository();
-        const featured = await client.list(locale, {kind: 'project', featured: true});
+        const featured = await listEntries(locale, {
+            kind: 'project',
+            featured: true,
+        });
         const projects = featured.length
             ? featured
-            : (await client.list(locale, {kind: 'project'})).slice(
+            : (await listEntries(locale, {kind: 'project'})).slice(
                   0,
                   Number(limit) || PROJECTS_FALLBACK,
               );
@@ -122,8 +124,5 @@ export function contentMdxDynamicComponents(locale: Locale) {
         );
     }
 
-    return {CaseStudyList, ProjectList} satisfies Record<
-        DynamicBlockName,
-        unknown
-    >;
+    return {CaseStudyList, ProjectList} satisfies Record<DynamicBlockName, unknown>;
 }

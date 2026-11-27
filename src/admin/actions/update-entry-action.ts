@@ -1,7 +1,9 @@
 'use server';
 
+import {updateTag} from 'next/cache';
 import {z} from 'zod';
 
+import {CONTENT_TAG} from '@/services/content/content-store';
 import {EntryRepository} from '@/services/content/repository-entry';
 import {EntryInput} from '@/types/entry';
 import {entryInputSchema} from '@/types/entry-schema';
@@ -37,6 +39,9 @@ export const updateEntryAction = async (
             error: error instanceof Error ? error.message : String(error),
         };
     }
+
+    // The public site reads entries through this cache tag.
+    updateTag(CONTENT_TAG);
 
     return {status: 'success', savedAt: Date.now()};
 };
