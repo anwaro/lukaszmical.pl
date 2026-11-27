@@ -78,4 +78,8 @@ export const contentProseClass = [
     '[&_:not(pre)>code]:font-term [&_:not(pre)>code]:text-[0.9em] [&_:not(pre)>code]:text-accent',
     '[&_pre]:m-0 [&_pre]:overflow-x-auto [&_pre]:p-5 [&_pre]:font-term [&_pre]:text-sm [&_pre]:leading-[1.7]',
     '[&_pre_code]:bg-transparent [&_pre_code]:p-0',
+    // Markdown tables (remark-gfm).
+    '[&_table]:w-full [&_table]:border-collapse [&_table]:text-left',
+    '[&_:is(th,td)]:border-b [&_:is(th,td)]:border-line [&_:is(th,td)]:px-3 [&_:is(th,td)]:py-2 [&_:is(th,td)]:align-top',
+    '[&_th]:font-term [&_th]:font-bold [&_th]:text-fg',
 ].join(' ');
