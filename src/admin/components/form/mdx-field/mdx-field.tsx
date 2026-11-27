@@ -5,6 +5,7 @@ import React, {useCallback, useRef, useState} from 'react';
 import {useField} from 'formik';
 import Editor, {OnMount} from '@monaco-editor/react';
 import {Freeze} from 'react-freeze';
+import {clsx} from 'clsx';
 import {Blocks} from 'lucide-react';
 
 import {MdxPreview} from '@/admin/components/form/mdx-field/mdx-preview';
@@ -22,6 +23,11 @@ import {
     imageMarkdownSnippet,
     insertTextAtSelection,
     mdxEditorThemeName,
+    mdxFieldBoxClassName,
+    mdxFieldEditorWrapperClassName,
+    mdxFieldRootClassName,
+    mdxFieldToolbarClassName,
+    useIsMobileViewport,
 } from './mdx-field-model';
 
 type Props = {
@@ -37,6 +43,8 @@ export const MdxField = ({name, locale, className}: Props) => {
     const [showBlocks, setShowBlocks] = useState(false);
     const editorRef = useRef<editor.IStandaloneCodeEditor>(null);
     const {theme} = useAdminTheme();
+    const isMobile = useIsMobileViewport();
+    const fullscreenEdit = isMobile && !showPreview;
 
     const onEditorMount = useCallback<OnMount>((editor) => {
         editorRef.current = editor;
@@ -58,8 +66,14 @@ export const MdxField = ({name, locale, className}: Props) => {
     );
 
     return (
-        <div className={stripFieldInputClassName(className)} style={{minHeight: 1200}}>
-            <div className="sticky top-14 z-20 mb-3 flex items-center gap-2 border-b border-slate-100 bg-white/90 py-2 backdrop-blur-sm dark:border-slate-800 dark:bg-slate-900/90">
+        <div
+            className={clsx(
+                stripFieldInputClassName(className),
+                mdxFieldRootClassName(fullscreenEdit),
+            )}
+            style={fullscreenEdit ? undefined : {minHeight: 1200}}
+        >
+            <div className={mdxFieldToolbarClassName(fullscreenEdit)}>
                 <SegmentedControl
                     label="Tryb edytora"
                     hideLabel
@@ -88,10 +102,10 @@ export const MdxField = ({name, locale, className}: Props) => {
                 )}
             </div>
             <Freeze freeze={showPreview}>
-                <div className="flex flex-col overflow-hidden rounded-lg border border-slate-200 lg:h-300 lg:flex-row dark:border-slate-700">
-                    <div className="min-w-0 flex-1">
+                <div className={mdxFieldBoxClassName(fullscreenEdit)}>
+                    <div className={mdxFieldEditorWrapperClassName(fullscreenEdit)}>
                         <Editor
-                            height="1200px"
+                            height={fullscreenEdit ? '100%' : '1200px'}
                             defaultLanguage="mdx"
                             theme={mdxEditorThemeName(theme)}
                             value={field.value || ''}
