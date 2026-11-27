@@ -4,7 +4,7 @@ Guidance for Claude Code when working in this repository.
 
 ## Project
 
-`lukaszmical.pl` — a personal website + portfolio built on **Next.js (App Router, RC)**
+`lukaszmical.pl` — a personal website + portfolio built on **Next.js (App Router)**
 with TypeScript. It serves a public localized site, an admin panel, and interactive
 "projects" (notably the **monogram/nonogram resolver** and **number-sums resolver**).
 
@@ -171,6 +171,6 @@ a pipeline of small, single-responsibility **resolvers**.
 
 ## Notes
 
-- Do not commit unless asked. When you do, keep the existing terse commit style.
+- Keep the existing terse commit style when committing.
 - Prefer editing existing files and following the surrounding patterns over introducing
   new abstractions.
